@@ -1,0 +1,117 @@
+---
+title: "App"
+format: 
+  html:
+    toc: true
+    toc-depth: 4
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "# " 
+
+execute:
+  echo: true
+
+vignette: >
+  %\VignetteIndexEntry{App}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(dplyr)
+library(tidyr)
+library(inspectdf)
+library(lobstr)
+```
+
+```{r}
+#| label: package
+library(ttdviewer)
+```
+
+## App structure 
+
+The application's functions are in the abstract syntax tree below:
+
+```{r}
+#| eval: true
+#| include: true
+#| echo: false
+#| comment: ""
+ast(
+  launch_app(
+    app_ui(
+      mod_var_input_ui(),
+      mod_viz_ui(),
+      mod_table_ui(),
+      mod_report_ui()
+    ),
+    app_server(
+      mod_var_input_server(),
+      mod_viz_server(),
+      mod_table_server(),
+      mod_report_server()
+    )
+  )
+)
+```
+
+
+### Variable inputs 
+
+The variable input (`input$dataset_title`) is collected in the `mod_var_input_ui()` and `mod_var_input_server()` functions and passed to the `get_tt_data()` function: 
+
+```{r}
+#| eval: false
+#| code-fold: false
+tryCatch({
+  result <- get_tt_data(input$dataset_title)
+  if (length(result) == 0) {
+    logr_msg("Empty dataset returned", level = "WARN")
+    showNotification("No data available for selected dataset",
+                   type = "warning", duration = 5)
+  } else {
+    logr_msg("Dataset successfully loaded in reactive",
+      level = "SUCCESS")
+  }
+  return(result)
+
+}, error = function(e) {
+  logr_msg(paste("Error in data reactive:", e$message), 
+    level = "ERROR")
+  showNotification(paste("Error loading data:", e$message),
+                 type = "error", duration = 10)
+  return(list())
+})
+```
+
+`mod_var_input_server()` returns the dataset list and title as a reactive.
+
+```{r}
+#| eval: false
+#| code-fold: false
+    return(
+      list(
+      data = data,
+      dataset_title = reactive({ input$dataset_title })
+        )
+      )
+```
+
+In the `app_server()`, the inputs are assigned to the `var_input_result`:
+
+```{r}
+#| eval: false
+#| code-fold: false
+var_input_result <- mod_var_input_server("var_input")
+```
+
+These reactive values are passed to the `mod_viz` module.
+
+### Visualizations
+
+The reactive values are passed from the 
+

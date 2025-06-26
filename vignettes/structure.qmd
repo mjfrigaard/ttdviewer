@@ -1,0 +1,37 @@
+---
+title: "Structure"
+format: 
+  html:
+    toc: true
+    toc-depth: 4
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "# " 
+
+execute:
+  echo: true
+
+vignette: >
+  %\VignetteIndexEntry{Structure}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(dplyr)
+library(tidyr)
+library(inspectdf)
+library(lobstr)
+```
+
+```{r}
+#| label: package
+library(ttdviewer)
+```
+
+The goal of `ttdviewer` is to demonstrate how to use parameterized reports (R Markdown and/or Quarto) in Shiny applications. This document covers, '*all you need to know to download reports from your Shiny app.*'
+
+

@@ -1,0 +1,246 @@
+---
+title: "`r params$title`"
+subtitle: "TidyTuesday Data Report"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: bootstrap
+    toc: true
+    toc_float: true
+    code_folding: hide
+    df_print: paged
+    self_contained: true
+params:
+  dataset_title: "Dataset"
+  title: "TidyTuesday Report"
+  data_list: NULL
+  plots: NULL
+  plot_type: "type"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 10,
+  fig.height = 6,
+  dpi = 300,
+  results = 'asis'
+)
+
+# Load required packages
+library(ggplot2)
+library(gt)
+library(dplyr)
+library(knitr)
+library(htmltools)
+```
+
+## Executive Summary
+
+This report provides an overview of the **`r params$dataset_title`** dataset from TidyTuesday. The analysis includes data exploration visualizations and a preview of the dataset structure.
+
+**Report Generated:** `r Sys.time()`
+
+```{r data-info, results='markup'}
+# Get basic info about the data
+if (!is.null(params$data_list) && length(params$data_list) > 0) {
+  first_df <- params$data_list[[1]]
+  dataset_names <- names(params$data_list)
+  
+  cat("**Number of datasets:**", length(params$data_list), "\n\n")
+  cat("**Dataset names:**", paste(dataset_names, collapse = ", "), "\n\n")
+  cat("**Main dataset dimensions:**", nrow(first_df), "rows ×", ncol(first_df), "columns\n\n")
+}
+```
+
+## Data Visualization
+
+The following visualization shows the **`r switch(params$plot_type, "type" = "variable types", "na" = "missing data patterns", "cor" = "correlation matrix", "num" = "numeric variable distributions", "cat" = "categorical variable frequencies")`** for the selected dataset(s).
+
+```{r plots, fig.cap=paste("Data visualization:", params$plot_type)}
+if (!is.null(params$plots)) {
+  if (inherits(params$plots, "gg")) {
+    # Single plot
+    print(params$plots)
+  } else if (is.list(params$plots)) {
+    # Multiple plots
+    for (i in seq_along(params$plots)) {
+      if (inherits(params$plots[[i]], "gg")) {
+        print(params$plots[[i]])
+      }
+    }
+  }
+} else {
+  cat("No visualization available for the current selection.")
+}
+```
+
+## Data Preview
+
+### Dataset Overview
+
+```{r data-summary}
+if (!is.null(params$data_list) && length(params$data_list) > 0) {
+  
+  for (i in seq_along(params$data_list)) {
+    dataset_name <- names(params$data_list)[i]
+    df <- params$data_list[[i]]
+    
+    cat("#### Dataset:", dataset_name, "\n\n")
+    
+    # Create summary table using gt with explicit HTML rendering
+    summary_data <- data.frame(
+      Metric = c("Rows", "Columns", "Missing Values", "Complete Rows", "Data Types"),
+      Value = c(
+        format(nrow(df), big.mark = ","),
+        format(ncol(df), big.mark = ","),
+        format(sum(is.na(df)), big.mark = ","),
+        format(sum(complete.cases(df)), big.mark = ","),
+        paste(unique(sapply(df, class)), collapse = ", ")
+      ),
+      stringsAsFactors = FALSE
+    )
+    
+    summary_table <- summary_data |>
+      gt() |>
+      gt::tab_header(
+        title = paste("Summary Statistics:", dataset_name)
+      ) |>
+      gt::tab_style(
+        style = gt::cell_text(weight = "bold"),
+        locations = gt::cells_column_labels()
+      ) |>
+      gt::tab_style(
+        style = gt::cell_fill(color = "#f8f9fa"),
+        locations = gt::cells_column_labels()
+      ) |>
+      gt::tab_options(
+        table.width = "100%",
+        table.font.size = "14px"
+      )
+    
+    # Render gt table as HTML and print
+    table_html <- gt::as_raw_html(summary_table)
+    cat(table_html)
+    cat("\n\n")
+  }
+}
+```
+
+### Data Sample
+
+```{r data-preview}
+if (!is.null(params$data_list) && length(params$data_list) > 0) {
+  
+  for (i in seq_along(params$data_list)) {
+    dataset_name <- names(params$data_list)[i]
+    df <- params$data_list[[i]]
+    
+    cat("#### Sample Data:", dataset_name, "\n\n")
+    
+    # Show first 10 rows with gt
+    preview_df <- head(df, 10)
+    
+    # Handle wide tables by limiting columns if necessary
+    if (ncol(preview_df) > 10) {
+      preview_df <- preview_df[, 1:10]
+      cat("*Note: Showing first 10 columns only*\n\n")
+    }
+    
+    preview_table <- preview_df |>
+      gt() |>
+      gt::tab_header(
+        title = paste("Data Preview:", dataset_name),
+        subtitle = paste("Showing first", min(10, nrow(df)), "rows")
+      ) |>
+      gt::tab_style(
+        style = gt::cell_text(size = "12px"),
+        locations = gt::cells_body()
+      ) |>
+      gt::tab_style(
+        style = gt::cell_fill(color = "#f8f9fa"),
+        locations = gt::cells_column_labels()
+      ) |>
+      gt::tab_options(
+        table.width = "100%",
+        table.font.size = "12px",
+        data_row.padding = "3px"
+      )
+    
+    # Render gt table as HTML and print
+    table_html <- gt::as_raw_html(preview_table)
+    cat(table_html)
+    cat("\n\n")
+  }
+}
+```
+
+### Variable Information
+
+```{r variable-info}
+if (!is.null(params$data_list) && length(params$data_list) > 0) {
+  first_df <- params$data_list[[1]]
+  
+  # Create variable information table
+  var_info <- data.frame(
+    Variable = names(first_df),
+    Type = sapply(first_df, function(x) class(x)[1]),
+    Missing = sapply(first_df, function(x) sum(is.na(x))),
+    Missing_Percent = round(sapply(first_df, function(x) sum(is.na(x))/length(x) * 100), 2),
+    Unique_Values = sapply(first_df, function(x) length(unique(x))),
+    stringsAsFactors = FALSE
+  )
+  
+  var_table <- var_info |>
+    gt() |>
+    gt::tab_header(
+      title = "Variable Information",
+      subtitle = names(params$data_list)[1]
+    ) |>
+    gt::cols_label(
+      Variable = "Variable Name",
+      Type = "Data Type",
+      Missing = "Missing Count",
+      Missing_Percent = "Missing %",
+      Unique_Values = "Unique Values"
+    ) |>
+    gt::fmt_number(
+      columns = Missing_Percent,
+      decimals = 1
+    ) |>
+    gt::tab_style(
+      style = gt::cell_fill(color = "#fff3cd"),
+      locations = gt::cells_body(
+        columns = Missing_Percent,
+        rows = Missing_Percent > 10
+      )
+    ) |>
+    gt::tab_style(
+      style = gt::cell_fill(color = "#f8d7da"),
+      locations = gt::cells_body(
+        columns = Missing_Percent,
+        rows = Missing_Percent > 50
+      )
+    ) |>
+    gt::tab_options(
+      table.width = "80%",
+      table.font.size = "13px"
+    )
+  
+  # Render gt table as HTML and print
+  table_html <- gt::as_raw_html(var_table)
+  cat(table_html)
+}
+```
+
+## Technical Details
+
+**R Version:** `r R.version.string`  
+**Report Generated:** `r Sys.time()`  
+**TidyTuesday Dataset:** `r params$dataset_title`  
+
+---
+
+*This report was generated automatically using the ttdviewer package.*
