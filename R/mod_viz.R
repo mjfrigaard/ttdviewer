@@ -22,9 +22,11 @@ mod_viz_ui <- function(id) {
           ),
           selected = "type"
         ),
+        code("graphs"),
+        # code to display the graphs
         hr(),
         code("data()"),
-        uiOutput(ns("dev"))
+        uiOutput(ns("viz_dev"))
       )
     },
     error = function(e) {
@@ -48,11 +50,15 @@ mod_viz_ui <- function(id) {
 mod_viz_server <- function(id, data) {
   moduleServer(id, function(input, output, session) {
 
-    logr_msg("Initializing visualization server module", level = "DEBUG")
+    logr_msg(
+      message = "Initializing visualization server module",
+      level = "DEBUG")
 
-    output$dev <- renderUI({
+    output$viz_dev <- renderUI({
       req(data())
-      listviewerlite::listview(x = data())
+      if (is.list(data())) {
+        listviewerlite::listview(x = data())
+      }
     })
 
   })

@@ -32,6 +32,6 @@ library(lobstr)
 library(ttdviewer)
 ```
 
-The goal of `ttdviewer` is to demonstrate how to use parameterized reports (R Markdown and/or Quarto) in Shiny applications. This document covers, '*all you need to know to download reports from your Shiny app.*'
+The goal of `ttdviewer` is to demonstrate how to use parameterized reports (R Markdown and/or Quarto) in Shiny applications. This document covers it's overall structure and design. 
 
 

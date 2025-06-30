@@ -3,17 +3,18 @@
 #' @param id Namespace ID
 #'
 #' @return UI element for list output using listviewerlite
-#' 
+#'
 #' @export
-#' 
+#'
 mod_list_ui <- function(id) {
   ns <- NS(id)
   logr_msg("Initializing list UI module", level = "DEBUG")
-  tryCatch({
+  tryCatch(
+    {
       bslib::card(
         bslib::card_header("List Preview"),
         bslib::card_body(
-            uiOutput(ns("list"))
+          uiOutput(ns("list"))
         )
       )
     },
@@ -35,7 +36,7 @@ mod_list_ui <- function(id) {
 #' @param data A reactive expression returning the dataset list
 #'
 #' @export
-#' 
+#'
 mod_list_server <- function(id, data) {
   moduleServer(id, function(input, output, session) {
     logr_msg("Initializing list server module", level = "DEBUG")

@@ -7,7 +7,7 @@
 ttd_length(ttd)
 }
 \arguments{
-\item{ttd}{A list of data frames from \code{\link[=get_tt_data]{get_tt_data()}}}
+\item{ttd}{A list of data frames from \code{\link[=load_tt_data]{load_tt_data()}}}
 }
 \value{
 integer length of \code{ttd}
@@ -16,7 +16,7 @@ integer length of \code{ttd}
 Determine length of TidyTuesday Data
 }
 \examples{
-ttd <- get_tt_data("Moore’s Law")
+ttd <- load_tt_data("Moore’s Law")
 ttd_length(ttd)
 
 }

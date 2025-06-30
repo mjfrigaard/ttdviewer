@@ -40,20 +40,24 @@ The `get_template_path()` function return the specified
 #| label: get_template_path_rmd
 identical(
   # response from function
-  x = ttdviewer:::get_template_path('rmarkdown'), 
+  x = ttdviewer:::get_template_path("rmarkdown"),
   # response from system.file()
-  y = system.file("rmarkdown", "report_template.Rmd", 
-                  package = "ttdviewer"))
+  y = system.file("rmarkdown", "report_template.Rmd",
+    package = "ttdviewer"
+  )
+)
 ```
 
 ```{r}
 #| label: get_template_path_qmd
 identical(
   # response from function
-  x = ttdviewer:::get_template_path('quarto'), 
+  x = ttdviewer:::get_template_path("quarto"),
   # response from system.file()
-  y = system.file("quarto", "report_template.qmd", 
-                  package = "ttdviewer"))
+  y = system.file("quarto", "report_template.qmd",
+    package = "ttdviewer"
+  )
+)
 ```
 
 ```{r}
@@ -71,7 +75,7 @@ basename(qmd_temp)
 
 ```{r}
 #| label: unlink_create_fallback_template
-#| echo: false 
+#| echo: false
 #| results: hide
 unlink(rmd_temp)
 unlink(qmd_temp)

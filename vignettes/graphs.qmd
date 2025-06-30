@@ -43,7 +43,7 @@ Below are examples of the data visualizations using `inspectdf` in the Shiny app
 
 ## Data 
 
-We'll need data to demonstrate how the `inspect_plot()` function works. The `get_tt_data()` function can be used to collect [TidyTuesday](https://github.com/rfordatascience/tidytuesday) datasets, and we'll create four lists of data: 
+We'll need data to demonstrate how the `inspect_plot()` function works. The `load_tt_data()` function can be used to collect [TidyTuesday](https://github.com/rfordatascience/tidytuesday) datasets, and we'll create four lists of data: 
 
 ### One dataset (`ttd`)
 
@@ -52,8 +52,8 @@ We'll need data to demonstrate how the `inspect_plot()` function works. The `get
 ```{r}
 #| label: ttd_netflix_titles
 #| eval: true
-ttd <- get_tt_data("Netflix Titles")
-attr(ttd, "clean_title")
+ttd <- load_tt_data("Netflix Titles")
+purrr::map(.x = ttd, .f = attr, "clean_title")
 ```
 
 ### Two datasets (`ttd2`)
@@ -63,8 +63,8 @@ For a list with two datasets, we'll use the `"Space Launches"` data:
 ```{r}
 #| label: ttd2_space_launches
 #| eval: true
-ttd2 <- get_tt_data("Space Launches")
-attr(ttd2, "clean_title")
+ttd2 <- load_tt_data("Space Launches")
+purrr::map(.x = ttd2, .f = attr, "clean_title")
 ```
 
 ### Three datasets (`ttd3`)
@@ -74,12 +74,12 @@ attr(ttd2, "clean_title")
 ```{r}
 #| label: ttd3_moores_law
 #| eval: true
-ttd3 <- get_tt_data("Moore’s Law")
+ttd3 <- load_tt_data("Moore’s Law")
 str(ttd3)
 ```
 
 ```{r}
-attr(ttd3, "clean_title")
+purrr::map(.x = ttd3, .f = attr, "clean_title")
 ```
 
 ### Many datasets (`ttd_many`)
@@ -89,8 +89,8 @@ Finally, we'll download the `"LEGO database"` data with 12 datasets into the `tt
 ```{r}
 #| label: ttd_many_lego_database
 #| eval: true
-ttd_many <- get_tt_data("LEGO database")
-attr(ttd_many, "clean_title")
+ttd_many <- load_tt_data("LEGO database")
+purrr::map(.x = ttd_many, .f = attr, "clean_title")
 ```
 
 ## Utility functions
@@ -158,20 +158,20 @@ These are wrapped in the `check_col_types()` function:
 
 ```{r}
 #| label: check_col_types
-identical( # check the 
-  x = check_col_types(ttd = ttd3, type = "cat"), 
+identical( # check the
+  x = check_col_types(ttd = ttd3, type = "cat"),
   y = check_ttd_cat_cols(ttd3)
 )
 identical(
-  x = check_col_types(ttd = ttd3, type = "date"), 
+  x = check_col_types(ttd = ttd3, type = "date"),
   y = check_ttd_date_cols(ttd3)
 )
 identical(
-  x = check_col_types(ttd = ttd3, type = "log"), 
+  x = check_col_types(ttd = ttd3, type = "log"),
   y = check_ttd_log_cols(ttd3)
 )
 identical(
-  x = check_col_types(ttd = ttd3, type = "num"), 
+  x = check_col_types(ttd = ttd3, type = "num"),
   y = check_ttd_num_cols(ttd3)
 )
 ```
@@ -204,7 +204,8 @@ If one dataset in `ttd`:
 inspect_cat(
   df1 = ttd2[[1]],
   df2 = NULL,
-  include_int = TRUE) |>
+  include_int = TRUE
+) |>
   show_plot(text_labels = TRUE)
 ```
 
@@ -216,8 +217,9 @@ If two datasets in `ttd`:
   
 ```{r}
 length(intersect(
-  x = names(ttd2[[1]]), 
-  y = names(ttd2[[2]]))) > 0
+  x = names(ttd2[[1]]),
+  y = names(ttd2[[2]])
+)) > 0
 ```
 
   - if columns intersect, store column names as `intersecting_columns`
@@ -230,10 +232,11 @@ intersecting_columns <- intersect(x = names(ttd2[[1]]), y = names(ttd2[[2]]))
 
 ```{r}
 inspect_cat(
-  df1 = ttd2[[1]][intersecting_columns], 
-  df2 = ttd2[[1]][intersecting_columns], 
-  include_int = TRUE) |> 
-	show_plot(text_labels = TRUE)
+  df1 = ttd2[[1]][intersecting_columns],
+  df2 = ttd2[[1]][intersecting_columns],
+  include_int = TRUE
+) |>
+  show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) >= 3)`
@@ -241,17 +244,23 @@ inspect_cat(
 If more than two datasets in `ttd`: 
 
 ```{r}
-inspect_cat(df1 = ttd3[[1]],
+inspect_cat(
+  df1 = ttd3[[1]],
   df2 = NULL,
-  include_int = TRUE) |>
+  include_int = TRUE
+) |>
   show_plot(text_labels = TRUE)
-inspect_cat(df1 = ttd3[[2]],
+inspect_cat(
+  df1 = ttd3[[2]],
   df2 = NULL,
-  include_int = TRUE) |>
+  include_int = TRUE
+) |>
   show_plot(text_labels = TRUE)
-inspect_cat(df1 = ttd3[[3]],
+inspect_cat(
+  df1 = ttd3[[3]],
   df2 = NULL,
-  include_int = TRUE) |>
+  include_int = TRUE
+) |>
   show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```
@@ -263,8 +272,8 @@ inspect_cat(df1 = ttd3[[3]],
 If one dataset in `ttd`:
 
 ```{r}
-inspect_mem(df1 = ttd[[1]], df2 = NULL) |> 
-	show_plot(text_labels = TRUE)
+inspect_mem(df1 = ttd[[1]], df2 = NULL) |>
+  show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) == 2)`
@@ -272,8 +281,8 @@ inspect_mem(df1 = ttd[[1]], df2 = NULL) |>
 If two datasets in `ttd`:
 
 ```{r}
-inspect_mem(df1 = ttd2[[1]], df2 = ttd2[[2]]) |> 
-	show_plot(text_labels = TRUE)
+inspect_mem(df1 = ttd2[[1]], df2 = ttd2[[2]]) |>
+  show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) >= 3)`
@@ -282,16 +291,19 @@ If more than two datasets in `ttd`:
 
 ```{r}
 inspect_mem(
-  df1 = ttd3[[1]], 
-  df2 = NULL) |>
+  df1 = ttd3[[1]],
+  df2 = NULL
+) |>
   show_plot(text_labels = TRUE)
 inspect_mem(
-  df1 = ttd3[[2]], 
-  df2 = NULL) |>
+  df1 = ttd3[[2]],
+  df2 = NULL
+) |>
   show_plot(text_labels = TRUE)
 inspect_mem(
-  df1 = ttd3[[3]], 
-  df2 = NULL) |>
+  df1 = ttd3[[3]],
+  df2 = NULL
+) |>
   show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```
@@ -308,24 +320,26 @@ If one dataset in `ttd`:
 ```{r}
 if (ttd_length(ttd2) == 2) { # check for two datasets
   # check for two numerical columns in ttd[[1]]
-  if (length(check_ttd_num_cols(ttd = ttd2)[[1]]) == 2) { 
+  if (length(check_ttd_num_cols(ttd = ttd2)[[1]]) == 2) {
     # plot first dataset
     inspect_cor(
       df1 = ttd2[[1]],
-      df2 = NULL, 
-      method = "pearson", 
-      with_col = NULL, 
-      alpha = 0.05) |> 
+      df2 = NULL,
+      method = "pearson",
+      with_col = NULL,
+      alpha = 0.05
+    ) |>
       show_plot(text_labels = TRUE)
     # check for two numerical columns in ttd[[2]]
-  } else if (length(check_ttd_num_cols(ttd = ttd2)[[2]]) >= 2) { 
+  } else if (length(check_ttd_num_cols(ttd = ttd2)[[2]]) >= 2) {
     # plot second dataset
     inspect_cor(
       df1 = ttd2[[2]],
-      df2 = NULL, 
-      method = "pearson", 
-      with_col = NULL, 
-      alpha = 0.05) |> 
+      df2 = NULL,
+      method = "pearson",
+      with_col = NULL,
+      alpha = 0.05
+    ) |>
       show_plot(text_labels = TRUE)
   } else {
     logr_msg("Error", level = "INFO")
@@ -351,21 +365,23 @@ check_col_types(ttd3, type = "num")
   
 ```{r}
 inspect_cor(
-  df1 = ttd2[[1]], 
-  df2 = ttd2[[2]], 
-  method = "pearson", 
-  with_col = NULL, 
-  alpha = 0.05) |> 
+  df1 = ttd2[[1]],
+  df2 = ttd2[[2]],
+  method = "pearson",
+  with_col = NULL,
+  alpha = 0.05
+) |>
   show_plot(text_labels = TRUE)
 ```
 
 ```{r}
 inspect_cor(
-  df1 = ttd3[[1]], 
-  df2 = ttd3[[2]], 
-  method = "pearson", 
-  with_col = NULL, 
-  alpha = 0.05) |> 
+  df1 = ttd3[[1]],
+  df2 = ttd3[[2]],
+  method = "pearson",
+  with_col = NULL,
+  alpha = 0.05
+) |>
   show_plot(text_labels = TRUE)
 ```
 
@@ -387,21 +403,24 @@ inspect_cor(
   df2 = NULL,
   method = "pearson",
   with_col = NULL,
-  alpha = 0.05) |>
+  alpha = 0.05
+) |>
   show_plot(text_labels = TRUE)
 inspect_cor(
   df1 = ttd3[[2]],
   df2 = NULL,
   method = "pearson",
   with_col = NULL,
-  alpha = 0.05) |>
+  alpha = 0.05
+) |>
   show_plot(text_labels = TRUE)
 inspect_cor(
   df1 = ttd3[[3]],
   df2 = NULL,
   method = "pearson",
   with_col = NULL,
-  alpha = 0.05) |>
+  alpha = 0.05
+) |>
   show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```
@@ -413,9 +432,11 @@ inspect_cor(
 If one dataset in `ttd`:
 
 ```{r}
-inspect_imb(df1 = ttd[[1]],
+inspect_imb(
+  df1 = ttd[[1]],
   df2 = NULL,
-  include_na = FALSE) |>
+  include_na = FALSE
+) |>
   show_plot(text_labels = TRUE)
 ```
 
@@ -425,10 +446,11 @@ If two datasets in `ttd`:
 
 ```{r}
 inspect_imb(
-  df1 = ttd2[[1]], 
-  df2 = ttd2[[2]], 
-  include_na = FALSE) |> 
-	show_plot(text_labels = TRUE)
+  df1 = ttd2[[1]],
+  df2 = ttd2[[2]],
+  include_na = FALSE
+) |>
+  show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) >= 3)`
@@ -439,17 +461,20 @@ If more than two datasets in `ttd`:
 inspect_imb(
   df1 = ttd3[[1]],
   df2 = NULL,
-  include_na = FALSE) |>
+  include_na = FALSE
+) |>
   show_plot(text_labels = TRUE)
 inspect_imb(
   df1 = ttd3[[2]],
   df2 = NULL,
-  include_na = FALSE) |>
+  include_na = FALSE
+) |>
   show_plot(text_labels = TRUE)
 inspect_imb(
   df1 = ttd3[[3]],
   df2 = NULL,
-  include_na = FALSE) |>
+  include_na = FALSE
+) |>
   show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```
@@ -547,9 +572,11 @@ If one dataset in `ttd`:
     - if so, run: 
 
 ```{r}
-inspect_cat(df1 = ttd[[1]],
+inspect_cat(
+  df1 = ttd[[1]],
   df2 = NULL,
-  include_int = FALSE) |>
+  include_int = FALSE
+) |>
   show_plot(text_labels = TRUE)
 ```
 
@@ -562,9 +589,10 @@ If two datasets in `ttd`:
 ```{r}
 length(
   intersect(
-    x = check_ttd_cat_cols(ttd2)[[1]], 
-    y = check_ttd_cat_cols(ttd2)[[2]])
-  ) > 0
+    x = check_ttd_cat_cols(ttd2)[[1]],
+    y = check_ttd_cat_cols(ttd2)[[2]]
+  )
+) > 0
 ```
 
   - If `TRUE`, store `intersecting_columns`  
@@ -579,7 +607,8 @@ intersecting_columns <- intersect(x = names(ttd2[[1]]), y = names(ttd2[[2]]))
 inspect_cat(
   df1 = ttd2[[1]][intersecting_columns],
   df2 = ttd2[[2]][intersecting_columns],
-  include_int = FALSE) |>
+  include_int = FALSE
+) |>
   show_plot(text_labels = TRUE)
 ```
 
@@ -589,7 +618,8 @@ inspect_cat(
 inspect_cat(
   df1 = ttd[[1]],
   df2 = NULL,
-  include_int = FALSE) |>
+  include_int = FALSE
+) |>
   show_plot(text_labels = TRUE)
 ```
 
@@ -598,17 +628,23 @@ inspect_cat(
 If more than two datasets in `ttd`:
 
 ```{r}
-inspect_cat(df1 = ttd_many[[1]],
+inspect_cat(
+  df1 = ttd_many[[1]],
   df2 = NULL,
-  include_int = FALSE) |>
+  include_int = FALSE
+) |>
   show_plot(text_labels = TRUE)
-inspect_cat(df1 = ttd_many[[2]],
+inspect_cat(
+  df1 = ttd_many[[2]],
   df2 = NULL,
-  include_int = FALSE) |>
+  include_int = FALSE
+) |>
   show_plot(text_labels = TRUE)
-inspect_cat(df1 = ttd_many[[3]],
+inspect_cat(
+  df1 = ttd_many[[3]],
   df2 = NULL,
-  include_int = FALSE) |>
+  include_int = FALSE
+) |>
   show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```

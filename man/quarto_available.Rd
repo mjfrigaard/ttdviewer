@@ -2,7 +2,7 @@
 % Please edit documentation in R/render_report.R
 \name{quarto_available}
 \alias{quarto_available}
-\title{Enhanced Quarto availability check}
+\title{Quarto availability check}
 \usage{
 quarto_available()
 }
@@ -10,6 +10,6 @@ quarto_available()
 Logical indicating if Quarto is available
 }
 \description{
-Enhanced Quarto availability check
+Quarto availability check
 }
 \keyword{internal}

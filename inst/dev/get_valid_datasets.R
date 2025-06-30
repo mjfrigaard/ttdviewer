@@ -12,7 +12,7 @@
 #' @export
 #'
 #' @examples
-#' ttd <- get_tt_data("Moore's Law")
+#' ttd <- load_tt_data("Moore's Law")
 #' num_cols <- check_col_types(ttd, "num")
 #' get_valid_datasets(num_cols, min_count = 2)
 #'

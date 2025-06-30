@@ -7,7 +7,7 @@
 check_ttd_date_cols(ttd)
 }
 \arguments{
-\item{ttd}{A list of data frames from \code{\link[=get_tt_data]{get_tt_data()}}}
+\item{ttd}{A list of data frames from \code{\link[=load_tt_data]{load_tt_data()}}}
 }
 \value{
 A named list where each element contains column names of date/datetime type,

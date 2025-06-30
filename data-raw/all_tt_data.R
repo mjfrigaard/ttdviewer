@@ -29,8 +29,11 @@ all_tt_data <- dplyr::bind_rows(
 
 # create clean title
 all_tt_data <- dplyr::mutate(all_tt_data,
-  clean_title = purrr::map_chr(title, ttdviewer:::clean_title_string)) |>
-  dplyr::select(year, week, date, title, clean_title, source_title,
-    source_urls, article_title, article_urls)
+  clean_title = purrr::map_chr(title, ttdviewer:::clean_title_string)
+) |>
+  dplyr::select(
+    year, week, date, title, clean_title, source_title,
+    source_urls, article_title, article_urls
+  )
 
 usethis::use_data(all_tt_data, overwrite = TRUE)

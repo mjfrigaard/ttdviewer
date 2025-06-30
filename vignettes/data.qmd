@@ -11,6 +11,7 @@ knitr:
 
 execute:
   echo: true
+  error: true
 
 vignette: >
   %\VignetteIndexEntry{Data}
@@ -36,7 +37,16 @@ The goal of `ttdviewer` is to demonstrate how to use parameterized reports (R Ma
 
 ## TidyTuesday data 
 
-The application uses the [TidyTuesday data](https://github.com/rfordatascience/tidytuesday) via the [`tidytuesdayR`](https://github.com/dslc-io/tidytuesdayR) and [`ttmeta`](https://github.com/r4ds/ttmeta).
+The application uses [TidyTuesday data](https://github.com/rfordatascience/tidytuesday) via the [`tidytuesdayR`](https://github.com/dslc-io/tidytuesdayR) and [`ttmeta`](https://github.com/r4ds/ttmeta) packages. 
+
+### TidyTuesday GitHub URLs
+
+The `tt_github_urls` data comes from the [.csv file in TidyTuesday repo](https://github.com/rfordatascience/tidytuesday/blob/main/static/tt_data_type.csv):
+
+```{r}
+#| label: tt_github_urls
+dplyr::glimpse(tt_github_urls)
+```
 
 ### All TidyTuesday Data 
 
@@ -47,10 +57,9 @@ The `all_tt_data.rda` dataset contains all years (2018 - current) from the `ttme
 glimpse(all_tt_data)
 ```
 
-
 ### All TidyTuesday Meta 
 
-The `all_tt_meta.rda` dataset contains all years (2018 - current) from the `ttmeta::get_tt_datasets_metadata()`. This dataset the following columns:
+The `all_tt_meta.rda` dataset contains all years (2018 - current) from the `ttmeta::load_tt_datasets_metadata()`. This dataset the following columns:
 
 ```{r}
 #| label: all_tt_meta
@@ -77,9 +86,9 @@ glimpse(all_tt_combined)
 
 The `clean_title` variable has been added to create an attribute we can use to join to the `all_tt_var_details` data. 
 
-## get_tt_data()
+## load_tt_data()
 
-The `get_tt_data()` function uses the `title` from the `ttmeta::get_tt_tbl()` function to the return the datasets from the GitHub repo. 
+The `load_tt_data()` function uses the `title` from `all_tt_combined`  to the return the datasets from the GitHub repo. 
 
 ### A single dataset
 
@@ -87,7 +96,7 @@ If the tile contains a single dataset, the list returns `ttd` with a single elem
 
 ```{r}
 #| label: ttd
-ttd <- get_tt_data("Netflix Titles")
+ttd <- load_tt_data("Netflix Titles")
 ```
 
 ```{r}
@@ -100,7 +109,7 @@ The `clean_title` can be used to join back to `all_tt_combined` or `all_tt_data`
 
 ```{r}
 #| label: ttd_clean_title
-attr(ttd, "clean_title")
+attr(ttd[["netflix_titles.csv"]], "clean_title")
 ```
 
 ### Two datasets 
@@ -109,7 +118,7 @@ If `ttd` has two datasets, subset the list with the name position:
 
 ```{r}
 #| label: ttd2
-ttd2 <- get_tt_data("Space Launches")
+ttd2 <- load_tt_data("Space Launches")
 ```
 
 ```{r}
@@ -120,7 +129,7 @@ ttd2_nms
 
 ```{r}
 #| label: ttd2_clean_title
-attr(ttd2, "clean_title")
+purrr::map(.x = ttd2, .f = attr, "clean_title")
 ```
 
 ```{r}
@@ -139,7 +148,7 @@ If there are three datasets, we can see the names are assigned to each element i
 
 ```{r}
 #| label: ttd3
-ttd3 <- get_tt_data("Moore’s Law")
+ttd3 <- load_tt_data("Moore’s Law")
 ```
 
 ```{r}
@@ -167,20 +176,7 @@ The `clean_title` attribute will give us a joining variable:
 
 ```{r}
 #| label: ttd3_clean_title
-attr(ttd3, "clean_title")
-```
-
-
-```{r}
-#| label: create_new_joining_vars
-dplyr::mutate(.data = ttd3[[ttd3_nms[1]]],
-  dataset_name = rep(x = ttd3_nms[1], nrow(ttd3[[ttd3_nms[1]]])),
-  clean_title = rep(x = attr(ttd3, "clean_title"), nrow(ttd3[[ttd3_nms[1]]]))
-) |>
-  dplyr::select(
-    dataset_name, 
-    clean_title, 
-    dplyr::everything())
+purrr::map(.x = ttd3, .f = attr, "clean_title")
 ```
 
 ### Many datasets
@@ -189,7 +185,7 @@ If there are more than two datasets, the same rules apply.
 
 ```{r}
 #| label: ttd_many
-ttd_many <- get_tt_data("LEGO database")
+ttd_many <- load_tt_data("LEGO database")
 ```
 
 ```{r}
@@ -200,7 +196,7 @@ ttd_many_nms
 
 ```{r}
 #| label: ttd_many_nms_clean_title
-attr(ttd_many, "clean_title")
+purrr::map(.x = ttd_many, .f = attr, "clean_title")
 ```
 
 ## Meta data
@@ -209,10 +205,16 @@ The `get_tt_title_meta()` function returns info on the columns in each dataset i
 
 ```{r}
 #| label: get_tt_title_meta_ttd_chr_cols
+#| eval: true
 ttd_meta <- get_tt_title_meta(ttd = ttd)
-ttd_meta |> 
-  dplyr::filter(col_type == "character") |> 
-  dplyr::count(clean_title, dataset, col_type, name = "chr_cols") |> 
+ttd_meta
+```
+
+```{r}
+#| eval: false
+ttd_meta |>
+  dplyr::filter(col_type == "character") |>
+  dplyr::count(clean_title, dataset, col_type, name = "chr_cols") |>
   dplyr::arrange(desc(chr_cols))
 ```
 
@@ -226,12 +228,14 @@ head(ttd2_meta)
 
 ```{r}
 #| label: get_tt_title_meta_ttd3
+#| eval: false
 ttd3_meta <- get_tt_title_meta(ttd = ttd3)
 head(ttd3_meta)
 ```
 
 ```{r}
 #| label: get_tt_title_meta_ttd_many
+#| eval: false
 ttd_many_meta <- get_tt_title_meta(ttd = ttd_many)
 head(ttd_many_meta)
 ```
@@ -240,9 +244,10 @@ Below is the number of numeric columns per `dataset` and `clean_title`:
 
 ```{r}
 #| label: ttd_many_meta_num_cols
-ttd_many_meta |> 
-  dplyr::filter(col_type == "numeric") |> 
-  dplyr::count(clean_title, dataset, col_type, name = "num_cols") |> 
+#| eval: false
+ttd_many_meta |>
+  dplyr::filter(col_type == "numeric") |>
+  dplyr::count(clean_title, dataset, col_type, name = "num_cols") |>
   dplyr::arrange(desc(num_cols))
 ```
 

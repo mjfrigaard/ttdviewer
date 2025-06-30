@@ -47,13 +47,13 @@ ast(
       mod_var_input_ui(),
       mod_viz_ui(),
       mod_table_ui(),
-      mod_report_ui()
+      mod_report_download_ui()
     ),
     app_server(
       mod_var_input_server(),
       mod_viz_server(),
       mod_table_server(),
-      mod_report_server()
+      mod_report_download_server()
     )
   )
 )
@@ -62,30 +62,36 @@ ast(
 
 ### Variable inputs 
 
-The variable input (`input$dataset_title`) is collected in the `mod_var_input_ui()` and `mod_var_input_server()` functions and passed to the `get_tt_data()` function: 
+The variable input (`input$dataset_title`) is collected in the `mod_var_input_ui()` and `mod_var_input_server()` functions and passed to the `load_tt_data()` function: 
 
 ```{r}
 #| eval: false
 #| code-fold: false
-tryCatch({
-  result <- get_tt_data(input$dataset_title)
-  if (length(result) == 0) {
-    logr_msg("Empty dataset returned", level = "WARN")
-    showNotification("No data available for selected dataset",
-                   type = "warning", duration = 5)
-  } else {
-    logr_msg("Dataset successfully loaded in reactive",
-      level = "SUCCESS")
+tryCatch(
+  {
+    result <- load_tt_data(input$dataset_title)
+    if (length(result) == 0) {
+      logr_msg("Empty dataset returned", level = "WARN")
+      showNotification("No data available for selected dataset",
+        type = "warning", duration = 5
+      )
+    } else {
+      logr_msg("Dataset successfully loaded in reactive",
+        level = "SUCCESS"
+      )
+    }
+    return(result)
+  },
+  error = function(e) {
+    logr_msg(paste("Error in data reactive:", e$message),
+      level = "ERROR"
+    )
+    showNotification(paste("Error loading data:", e$message),
+      type = "error", duration = 10
+    )
+    return(list())
   }
-  return(result)
-
-}, error = function(e) {
-  logr_msg(paste("Error in data reactive:", e$message), 
-    level = "ERROR")
-  showNotification(paste("Error loading data:", e$message),
-                 type = "error", duration = 10)
-  return(list())
-})
+)
 ```
 
 `mod_var_input_server()` returns the dataset list and title as a reactive.
@@ -93,12 +99,14 @@ tryCatch({
 ```{r}
 #| eval: false
 #| code-fold: false
-    return(
-      list(
-      data = data,
-      dataset_title = reactive({ input$dataset_title })
-        )
-      )
+return(
+  list(
+    data = data,
+    dataset_title = reactive({
+      input$dataset_title
+    })
+  )
+)
 ```
 
 In the `app_server()`, the inputs are assigned to the `var_input_result`:

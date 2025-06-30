@@ -10,7 +10,6 @@
 #'
 #' @export
 test_title_cleaning <- function() {
-
   test_titles <- c(
     "Bring your own data from 2024!",
     "Donuts, Data, and D'oh - A Deep Dive into The Simpsons",

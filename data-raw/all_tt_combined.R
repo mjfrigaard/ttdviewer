@@ -20,4 +20,15 @@ all_tt_combined <- dplyr::left_join(
     article_title
   ) |>
   tidyr::unnest(variable_details)
+
+all_tt_combined <- dplyr::left_join(
+  x = all_tt_combined,
+  y = tt_github_urls,
+  by = dplyr::intersect(
+    names(all_tt_combined),
+    names(tt_github_urls)
+  ),
+  relationship = "many-to-many"
+)
+
 usethis::use_data(all_tt_combined, overwrite = TRUE)

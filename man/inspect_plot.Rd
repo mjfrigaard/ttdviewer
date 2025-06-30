@@ -7,7 +7,7 @@
 inspect_plot(ttd, plot = "all")
 }
 \arguments{
-\item{ttd}{A list of data frames from \code{\link[=get_tt_data]{get_tt_data()}}}
+\item{ttd}{A list of data frames from \code{\link[=load_tt_data]{load_tt_data()}}}
 
 \item{plot}{Character vector specifying which plots to generate. Options include:
 \itemize{
@@ -29,7 +29,7 @@ A comprehensive function that analyzes TidyTuesday datasets and generates
 appropriate inspection plots based on data characteristics and number of datasets.
 }
 \examples{
-ttd <- get_tt_data("Moore’s Law")
+ttd <- load_tt_data("Moore’s Law")
 
 # Generate all plots
 inspect_plot(ttd)

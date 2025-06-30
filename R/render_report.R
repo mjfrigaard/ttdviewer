@@ -18,11 +18,15 @@ render_report <- function(format = c("rmarkdown", "quarto"),
                           template_path = NULL) {
   format <- match.arg(format)
 
-  logr_msg(paste("Starting", format, "report rendering"),
-    level = "INFO")
+  logr_msg(
+    message = paste("Starting", format, "report rendering"),
+    level = "INFO"
+  )
 
-  logr_msg(paste("Parameters:", paste(names(params), collapse = ", ")),
-    level = "DEBUG")
+  logr_msg(
+    message = paste("Parameters:", paste(names(params), collapse = ", ")),
+    level = "DEBUG"
+  )
 
   tryCatch({
       # Get appropriate template
@@ -57,36 +61,47 @@ render_report <- function(format = c("rmarkdown", "quarto"),
       # Create error report as fallback
       create_error_report(output_file, e$message, params$dataset_title %||% "Unknown", format)
       return(output_file)
-    })
+    }
+  )
 }
 
-#' Enhanced Quarto availability check
+#' Quarto availability check
+#'
 #' @return Logical indicating if Quarto is available
+#'
 #' @keywords internal
+#'
 quarto_available <- function() {
-
   # Method 1: Check for quarto R package
   if (requireNamespace("quarto", quietly = TRUE)) {
-    tryCatch({
-      quarto::quarto_version()
-      logr_msg("Quarto R package available", level = "DEBUG")
-      return(TRUE)
-    }, error = function(e) {
-      logr_msg("Quarto R package found but not functional", level = "DEBUG")
-    })
+    tryCatch(
+      {
+        quarto::quarto_version()
+        logr_msg("Quarto R package available", level = "DEBUG")
+        return(TRUE)
+      },
+      error = function(e) {
+        logr_msg("Quarto R package found but not functional", level = "DEBUG")
+      }
+    )
   }
 
   # Method 2: Check for system quarto
-  tryCatch({
-    result <- system2("quarto", args = "--version",
-                     stdout = TRUE, stderr = TRUE, timeout = 5)
-    if (!is.null(result) && length(result) > 0) {
-      logr_msg(paste("System Quarto version:", result[1]), level = "DEBUG")
-      return(TRUE)
+  tryCatch(
+    {
+      result <- system2("quarto",
+        args = "--version",
+        stdout = TRUE, stderr = TRUE, timeout = 5
+      )
+      if (!is.null(result) && length(result) > 0) {
+        logr_msg(paste("System Quarto version:", result[1]), level = "DEBUG")
+        return(TRUE)
+      }
+    },
+    error = function(e) {
+      logr_msg("System Quarto not available", level = "DEBUG")
     }
-  }, error = function(e) {
-    logr_msg("System Quarto not available", level = "DEBUG")
-  })
+  )
 
   # Method 3: Check common installation paths
   quarto_paths <- c(
@@ -109,9 +124,10 @@ quarto_available <- function() {
 
 
 #' Alternative Quarto Rendering using rmarkdown
+#'
 #' @keywords internal
+#'
 render_quarto_alternative <- function(template_path, output_file, params) {
-
   logr_msg("Using alternative Quarto rendering method", level = "INFO")
 
   # Create a modified template for rmarkdown compatibility
@@ -146,8 +162,8 @@ render_quarto_alternative <- function(template_path, output_file, params) {
 #' @param params Report parameters
 #'
 #' @keywords internal
+#'
 render_quarto_report <- function(template_path, output_file, params) {
-
   logr_msg("Rendering Quarto report", level = "DEBUG")
   logr_msg(paste("Template:", template_path), level = "DEBUG")
   logr_msg(paste("Output:", output_file), level = "DEBUG")
@@ -160,53 +176,54 @@ render_quarto_report <- function(template_path, output_file, params) {
   # Validate parameters for Quarto
   params <- validate_quarto_params(params)
 
-  tryCatch({
-    # Method 1: Try using the quarto R package
-    if (requireNamespace("quarto", quietly = TRUE)) {
-      logr_msg("Using quarto R package", level = "DEBUG")
+  tryCatch(
+    {
+      # Method 1: Try using the quarto R package
+      if (requireNamespace("quarto", quietly = TRUE)) {
+        logr_msg("Using quarto R package", level = "DEBUG")
 
-      # Create temporary directory for rendering
-      temp_dir <- tempdir()
-      temp_qmd <- file.path(temp_dir, "temp_report.qmd")
+        # Create temporary directory for rendering
+        temp_dir <- tempdir()
+        temp_qmd <- file.path(temp_dir, "temp_report.qmd")
 
-      # Copy template to temp location
-      file.copy(template_path, temp_qmd, overwrite = TRUE)
+        # Copy template to temp location
+        file.copy(template_path, temp_qmd, overwrite = TRUE)
 
-      # Create params file
-      params_file <- file.path(temp_dir, "params.yml")
-      yaml_content <- yaml::as.yaml(list(params = params))
-      writeLines(yaml_content, params_file)
+        # Create params file
+        params_file <- file.path(temp_dir, "params.yml")
+        yaml_content <- yaml::as.yaml(list(params = params))
+        writeLines(yaml_content, params_file)
 
-      # Render with quarto package
-      quarto::quarto_render(
-        input = temp_qmd,
-        output_file = basename(output_file),
-        # output_dir = dirname(output_file),
-        execute_params = params,
-        quiet = TRUE
-      )
+        # Render with quarto package
+        quarto::quarto_render(
+          input = temp_qmd,
+          output_file = basename(output_file),
+          # output_dir = dirname(output_file),
+          execute_params = params,
+          quiet = TRUE
+        )
 
-      # Clean up
-      unlink(c(temp_qmd, params_file))
+        # Clean up
+        unlink(c(temp_qmd, params_file))
+      } else {
+        # Method 2: System call fallback
+        render_quarto_system_call(template_path, output_file, params)
+      }
 
-    } else {
-      # Method 2: System call fallback
-      render_quarto_system_call(template_path, output_file, params)
+      logr_msg("Quarto rendering completed successfully", level = "SUCCESS")
+    },
+    error = function(e) {
+      logr_msg(paste("Quarto rendering error:", e$message), level = "ERROR")
+
+      # Try fallback method
+      if (grepl("quarto", e$message, ignore.case = TRUE)) {
+        logr_msg("Trying alternative rendering method", level = "INFO")
+        render_quarto_alternative(template_path, output_file, params)
+      } else {
+        stop(e)
+      }
     }
-
-    logr_msg("Quarto rendering completed successfully", level = "SUCCESS")
-
-  }, error = function(e) {
-    logr_msg(paste("Quarto rendering error:", e$message), level = "ERROR")
-
-    # Try fallback method
-    if (grepl("quarto", e$message, ignore.case = TRUE)) {
-      logr_msg("Trying alternative rendering method", level = "INFO")
-      render_quarto_alternative(template_path, output_file, params)
-    } else {
-      stop(e)
-    }
-  })
+  )
 }
 
 
@@ -218,7 +235,6 @@ render_quarto_report <- function(template_path, output_file, params) {
 #' @keywords internal
 #'
 render_quarto_system_call <- function(template_path, output_file, params) {
-
   logr_msg("Using system call for Quarto rendering", level = "DEBUG")
 
   # Create temporary parameter file
@@ -244,8 +260,10 @@ render_quarto_system_call <- function(template_path, output_file, params) {
   )
 
   # Execute system call
-  result <- system2("quarto", args = cmd_args,
-                   stdout = TRUE, stderr = TRUE)
+  result <- system2("quarto",
+    args = cmd_args,
+    stdout = TRUE, stderr = TRUE
+  )
 
   # Check for errors
   if (!is.null(attr(result, "status")) && attr(result, "status") != 0) {
@@ -264,7 +282,6 @@ render_quarto_system_call <- function(template_path, output_file, params) {
 #'
 #' @keywords internal
 validate_quarto_params <- function(params) {
-
   logr_msg("Validating Quarto parameters", level = "DEBUG")
 
   # Ensure all required parameters exist with proper types
@@ -272,13 +289,13 @@ validate_quarto_params <- function(params) {
     dataset_title = as.character(params$dataset_title %||% "TidyTuesday Dataset"),
     title = as.character(params$title %||% "TidyTuesday Report"),
     data_list = if (is.list(params$data_list)) params$data_list else list(),
-    plots = params$plots,  # Can be NULL
+    plots = params$plots, # Can be NULL
     plot_type = as.character(params$plot_type %||% "type")
   )
 
   # Clean dataset title for Quarto
-  validated_params$dataset_title <- gsub('["\']', '', validated_params$dataset_title)
-  validated_params$title <- gsub('["\']', '', validated_params$title)
+  validated_params$dataset_title <- gsub('["\']', "", validated_params$dataset_title)
+  validated_params$title <- gsub('["\']', "", validated_params$title)
 
   logr_msg(paste("Validated dataset_title:", validated_params$dataset_title), level = "DEBUG")
   logr_msg(paste("Validated data_list length:", length(validated_params$data_list)), level = "DEBUG")
@@ -295,7 +312,6 @@ validate_quarto_params <- function(params) {
 #' @keywords internal
 #'
 validate_and_clean_params <- function(params) {
-
   logr_msg("Validating and cleaning report parameters", level = "DEBUG")
 
   # Ensure required parameters exist
@@ -353,7 +369,6 @@ validate_and_clean_params <- function(params) {
 #' @keywords internal
 #'
 render_rmarkdown_report <- function(template_path, output_file, params) {
-
   logr_msg("Rendering R Markdown report", level = "DEBUG")
   logr_msg(paste("Output file:", output_file), level = "DEBUG")
 
@@ -373,7 +388,7 @@ render_rmarkdown_report <- function(template_path, output_file, params) {
     output_file = output_file,
     params = params,
     envir = render_env,
-    quiet = FALSE,  # Change to FALSE for debugging
+    quiet = FALSE, # Change to FALSE for debugging
     clean = TRUE
   )
 }
@@ -389,7 +404,6 @@ render_rmarkdown_report <- function(template_path, output_file, params) {
 #' @keywords internal
 #'
 create_error_report <- function(file, error_msg, dataset_title = "Unknown", format = "rmarkdown") {
-
   logr_msg(paste("Creating error report for", format), level = "INFO")
 
   error_html <- paste0(
@@ -454,7 +468,6 @@ create_error_report <- function(file, error_msg, dataset_title = "Unknown", form
 #' @keywords internal
 #'
 convert_qmd_to_rmd <- function(qmd_lines) {
-
   # Basic conversions for compatibility
   rmd_lines <- qmd_lines
 
@@ -505,7 +518,6 @@ convert_qmd_to_rmd <- function(qmd_lines) {
 #' @keywords internal
 #'
 create_fallback_template <- function(format = c("rmarkdown", "quarto")) {
-
   format <- match.arg(format)
   logr_msg(paste("Creating fallback", format, "template"), level = "INFO")
 
@@ -522,7 +534,6 @@ create_fallback_template <- function(format = c("rmarkdown", "quarto")) {
 #' @keywords internal
 #'
 create_fallback_rmd_template <- function() {
-
   template_path <- tempfile(fileext = ".Rmd")
 
   template_content <- '---
@@ -588,7 +599,6 @@ if (!is.null(params$plots) && inherits(params$plots, "gg")) {
 #' @keywords internal
 #'
 create_fallback_qmd_template <- function() {
-
   template_path <- tempfile(fileext = ".qmd")
 
   template_content <- '---
@@ -647,7 +657,6 @@ if (!is.null(params$plots) && inherits(params$plots, "gg")) {
 #' @keywords internal
 #'
 get_template_path <- function(format) {
-
   template_file <- switch(format,
     "rmarkdown" = "report_template.Rmd",
     "quarto" = "report_template.qmd"
