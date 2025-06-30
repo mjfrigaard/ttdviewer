@@ -8,18 +8,23 @@
 #'
 mod_list_ui <- function(id) {
   ns <- NS(id)
-  logr_msg("Initializing list UI module", level = "DEBUG")
-  tryCatch(
-    {
+  logr_msg(
+    message = "Initializing list UI module", level = "DEBUG")
+
+  tryCatch({
+
       bslib::card(
-        bslib::card_header("List Preview"),
+        # bslib::card_header(""),
         bslib::card_body(
+          markdown("Below is a preview of the [#TidyTuesday](https://github.com/rfordatascience/tidytuesday) dataset(s) provided by [`listviewerlite`](https://long39ng.github.io/listviewerlite/)"),
           uiOutput(ns("list"))
         )
       )
     },
     error = function(e) {
-      logr_msg(paste("Error creating list UI:", e$message), level = "ERROR")
+      logr_msg(
+        message = paste("Error creating list UI:", e$message),
+        level = "ERROR")
       bslib::card(
         bslib::card_header("List Error"),
         bslib::card_body(

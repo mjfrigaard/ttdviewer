@@ -1,11 +1,11 @@
 Type: Package
 Package: ttdviewer
-Title: Shiny App with Downloadable TidyTuesday dataset and Reports.
+Title: Shiny App with Downloadable TidyTuesday data and R Markdown/Quarto reports.
 Version: 0.1.0
 Authors@R: 
     person("Martin", "Frigaard", , "mjfrigaard@pm.me", role = c("aut", "cre"))
-Description: A Shiny application that demonstrates downloadable reports
-    with modular design.
+Description: A Shiny application with modular design that demonstrates 
+    downloadable data and scientific reports.
 License: MIT + file LICENSE
 Depends: 
     R (>= 3.5)

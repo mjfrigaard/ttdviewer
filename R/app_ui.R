@@ -14,7 +14,7 @@ app_ui <- function() {
     sidebar = bslib::sidebar(
       padding = c(12, 12, 12, 12),
       width = "300px",
-      mod_var_input_ui("var_input"),
+      mod_var_input_ui("input"),
       mod_report_input_ui("rep_form"),
       mod_report_desc_ui("rep_desc"),
       mod_report_download_ui("rep_dwnld"),
@@ -27,12 +27,12 @@ app_ui <- function() {
     ),
     bslib::navset_tab(
       bslib::nav_panel(
-        "List Preview",
+        "List",
         mod_list_ui("listviewerlite")
       ),
       bslib::nav_panel(
-        "Data Table",
-        mod_table_ui("table")
+        "Data",
+        mod_table_ui("data")
       ),
       bslib::nav_panel(
         "Visualization",

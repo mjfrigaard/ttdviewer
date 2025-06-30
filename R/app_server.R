@@ -21,7 +21,7 @@ app_server <- function(input, output, session) {
 
   tryCatch({
       # initialize modules
-      var_input_result <- mod_var_input_server("var_input")
+      var_input_result <- mod_var_input_server("input")
       # return the data and title
       selected_data <- var_input_result$data
       dataset_title <- var_input_result$dataset_title
@@ -36,35 +36,44 @@ app_server <- function(input, output, session) {
 
       # reactive values for visualization
       viz_result <- mod_viz_server("viz", selected_data)
-      logr_msg("Visualization module initialized",
+      logr_msg(
+        message = "Visualization module initialized",
         level = "DEBUG"
       )
 
       # reactive values for table
-      mod_table_server("table", selected_data)
-      logr_msg("Table module initialized", level = "DEBUG")
+      mod_table_server("data", selected_data)
+      logr_msg(
+        message = "Table module initialized",
+        level = "DEBUG")
 
       # initialize report modules
       report_format <- mod_report_input_server("rep_form")
       mod_report_desc_server("rep_desc", format = report_format)
-      logr_msg("Report module initialized", level = "DEBUG")
+      logr_msg(
+        message = "Report module initialized",
+        level = "DEBUG")
       # mod_report_download_server(id = "rep_dwnld",
       #   data = selected_data,
       #   selected_plot_type = viz_result,
       #   dataset_title = dataset_title)
 
-      logr_msg("All modules successfully initialized", level = "SUCCESS")
+      logr_msg(
+        message = "All modules successfully initialized",
+        level = "SUCCESS")
 
       # Add session end logging
       session$onSessionEnded(function() {
-        logr_msg(paste("Session ended for user:", session$user),
+        logr_msg(
+          message = paste("Session ended for user:", session$user),
           level = "INFO"
         )
       })
     },
     error = function(e) {
       logr_msg(
-        paste("Critical error in app server initialization:", e$message),
+        message =
+            paste("Critical error in app server initialization:", e$message),
         level = "FATAL"
       )
 

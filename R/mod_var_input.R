@@ -8,14 +8,18 @@
 #'
 mod_var_input_ui <- function(id) {
   ns <- NS(id)
-  logr_msg("Initializing variable input UI module", level = "DEBUG")
+  logr_msg(
+    message = "Initializing variable input UI module",
+    level = "DEBUG")
   tryCatch(
     {
       choices <- unique(all_tt_combined$title)
-      logr_msg(paste("Available dataset choices:", length(choices)), level = "INFO")
+      logr_msg(
+        message = paste("Available dataset choices:", length(choices)),
+        level = "INFO")
       tagList(
         selectInput(
-          inputId = ns("dataset_title"),
+          inputId = ns("ds_title"),
           label = strong("Choose Dataset Title:"),
           choices = choices,
           selected = "Moore’s Law"
@@ -48,24 +52,33 @@ mod_var_input_server <- function(id) {
     logr_msg("Initializing variable input server module", level = "DEBUG")
 
     data <- reactive({
-      req(input$dataset_title)
-      logr_msg(paste("User selected dataset:", input$dataset_title), level = "INFO")
+      req(input$ds_title)
+      logr_msg(
+        message = paste("User selected dataset:", input$ds_title),
+        level = "INFO")
 
-      tryCatch(
-        {
-          result <- load_tt_data(input$dataset_title)
+      tryCatch({
+          # load data ----
+          result <- load_tt_data(input$ds_title)
+
           if (length(result) == 0) {
-            logr_msg("Empty dataset returned", level = "WARN")
+            logr_msg(
+              message = "Empty dataset returned",
+              level = "WARN")
             showNotification("No data available for selected dataset",
               type = "warning", duration = 5
             )
           } else {
-            logr_msg("Dataset successfully loaded in reactive", level = "SUCCESS")
+            logr_msg(
+              message = "Dataset successfully loaded in reactive",
+              level = "SUCCESS")
           }
           return(result)
         },
         error = function(e) {
-          logr_msg(paste("Error in data reactive:", e$message), level = "ERROR")
+          logr_msg(
+            message = paste("Error in data reactive:", e$message),
+            level = "ERROR")
           showNotification(paste("Error loading data:", e$message),
             type = "error", duration = 10
           )
@@ -73,7 +86,7 @@ mod_var_input_server <- function(id) {
         }
       )
     }) |>
-      bindEvent(input$dataset_title)
+      bindEvent(input$ds_title)
 
     # print names of datasets from title
     output$vals <- renderPrint({
@@ -91,7 +104,7 @@ mod_var_input_server <- function(id) {
       list(
         data = data,
         dataset_title = reactive({
-          input$dataset_title
+          input$ds_title
         })
       )
     )

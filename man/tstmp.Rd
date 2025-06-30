@@ -14,4 +14,5 @@ Timestamp
 }
 \examples{
 tstmp()
+cat(paste("Last updated:", tstmp()))
 }

@@ -13,7 +13,7 @@
 #'
 #' @export
 #'
-launch_app <- function(..., log_file = NULL, json = FALSE) {
+launch <- function(..., log_file = NULL, json = FALSE) {
   # initialize logging
   if (!is.null(log_file)) {
     logr_msg("Application starting with file logging enabled",

@@ -42,7 +42,7 @@ The application's functions are in the abstract syntax tree below:
 #| echo: false
 #| comment: ""
 ast(
-  launch_app(
+  launch(
     app_ui(
       mod_var_input_ui(),
       mod_viz_ui(),

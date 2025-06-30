@@ -11,16 +11,17 @@ mod_table_ui <- function(id) {
   logr_msg(message = "Initializing table UI module", level = "DEBUG")
   tryCatch({
       bslib::card(
-        bslib::card_header("Data Preview"),
+        # bslib::card_header(""),
         bslib::card_body(
           selectInput(
             inputId = ns("ds_input"),
-            label = "Choose dataset",
+            label = "Dataset",
             choices = c(
               c("", NULL)
             ),
             selected = ""
           ),
+          markdown("The table display below is provided by [`reactable`](https://glin.github.io/reactable/):"),
           reactable::reactableOutput(ns("table")),
           # uiOutput(ns("dev"))
         )

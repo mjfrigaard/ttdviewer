@@ -24,5 +24,5 @@ pak::pak("mjfrigaard/ttdviewer")
 
 ``` r
 library(ttdviewer)
-launch_app()
+launch()
 ```
