@@ -36,10 +36,8 @@ mod_table_ui <- function(id) {
         bslib::card_header("Table Error"),
         bslib::card_body(
           h4("Error loading table interface", class = "text-danger")
-        )
-      )
-    }
-  )
+        ))
+    })
 }
 
 #' Table Server Module (reactable)

@@ -33,5 +33,3 @@ library(ttdviewer)
 ```
 
 The goal of `ttdviewer` is to demonstrate how to use parameterized reports (R Markdown and/or Quarto) in Shiny applications. This document covers it's overall structure and design. 
-
-

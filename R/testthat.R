@@ -1,3 +1,45 @@
+#' Timestamp
+#'
+#' @returns character string of date/time.
+#'
+#' @export
+#'
+#' @examples
+#' tstmp()
+#' cat(paste("Last updated:", tstmp()))
+tstmp <- function() {
+  # Format current system time as "YYYY-MM-DD-HH.MM.SS-"
+  format(Sys.time(), "%Y-%m-%d-%H.%M.%S")
+}
+
+#' Test logger (test utility)
+#'
+#' @param start test start message 
+#' @param end test end message 
+#' @param msg test message 
+#'
+#' @return message to test output
+#' 
+#' @keywords internal
+#'
+test_logger <- function(start = NULL, end = NULL, msg) {
+  if (is.null(start) & is.null(end)) {
+    cat("\n")
+    logger::log_info("{msg}")
+  } else if (!is.null(start) & is.null(end)) {
+    cat("\n")
+    logger::log_info("\n[ START {start} = {msg}]")
+  } else if (is.null(start) & !is.null(end)) {
+    cat("\n")
+    logger::log_info("\n[ END {end} = {msg}]")
+  } else {
+    cat("\n")
+    logger::log_info("\n[ START {start} = {msg}]")
+    cat("\n")
+    logger::log_info("\n[ END {end} = {msg}]")
+  }
+}
+
 #' Test Dataset Title Cleaning
 #'
 #' A utility function to test the title cleaning functionality with

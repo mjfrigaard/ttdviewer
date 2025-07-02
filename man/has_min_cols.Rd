@@ -24,5 +24,4 @@ of a given type for analysis.
 ttd <- load_tt_data("Moore’s Law")
 num_cols <- check_col_types(ttd, "num")
 has_min_cols(num_cols, 1, min_count = 2)
-
 }

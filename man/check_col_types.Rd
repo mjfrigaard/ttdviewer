@@ -38,5 +38,4 @@ check_col_types(ttd, "cat")
 
 # Check for logical columns
 check_col_types(ttd, "log")
-
 }

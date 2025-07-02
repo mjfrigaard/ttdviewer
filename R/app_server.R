@@ -21,28 +21,33 @@ app_server <- function(input, output, session) {
 
   tryCatch({
       # initialize modules
-      var_input_result <- mod_var_input_server("input")
+      title_input <- mod_input_server("input")
       # return the data and title
-      selected_data <- var_input_result$data
-      dataset_title <- var_input_result$dataset_title
+      selected_data <- title_input$data
+      dataset_title <- title_input$ds_title
 
-      logr_msg("Variable input module initialized",
+      logr_msg(
+        message = "Variable input module initialized",
         level = "DEBUG"
       )
 
       # reactive values for list
-      mod_list_server("listviewerlite", selected_data)
-      logr_msg("Table module initialized", level = "DEBUG")
+      mod_list_server(id = "listviewerlite", data = selected_data)
+      logr_msg(
+        message = "Table module initialized",
+        level = "DEBUG")
 
       # reactive values for visualization
-      viz_result <- mod_viz_server("viz", selected_data)
-      logr_msg(
-        message = "Visualization module initialized",
-        level = "DEBUG"
-      )
+      # viz_result <- mod_viz_server(id = "viz", data = selected_data)
+      # logr_msg(
+      #   message = "Visualization module initialized",
+      #   level = "DEBUG"
+      # )
+      # ttd_reactive <- reactive(selected_data)
+      mod_plot_server("viz", ttd = selected_data)
 
       # reactive values for table
-      mod_table_server("data", selected_data)
+      mod_table_server(id = "table", data = selected_data)
       logr_msg(
         message = "Table module initialized",
         level = "DEBUG")
@@ -88,12 +93,10 @@ app_server <- function(input, output, session) {
 
   # reactive values for app
   output$dev <- renderUI({
-    req(var_input_result)
-    vals <- reactiveValuesToList(
-      x = input,
-      all.names = TRUE)
+    req(title_input)
+    vals <- reactiveValuesToList(x = input, all.names = TRUE)
     listviewerlite::listview(vals)
   }) |>
-    bindEvent(var_input_result)
+    bindEvent(title_input)
 
 }

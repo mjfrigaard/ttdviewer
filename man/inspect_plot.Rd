@@ -4,7 +4,7 @@
 \alias{inspect_plot}
 \title{Inspect and Plot TidyTuesday Data}
 \usage{
-inspect_plot(ttd, plot = "all")
+inspect_plot(ttd, plots = "all")
 }
 \arguments{
 \item{ttd}{A list of data frames from \code{\link[=load_tt_data]{load_tt_data()}}}

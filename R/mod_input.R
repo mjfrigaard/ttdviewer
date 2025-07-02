@@ -6,13 +6,12 @@
 #'
 #' @export
 #'
-mod_var_input_ui <- function(id) {
+mod_input_ui <- function(id) {
   ns <- NS(id)
   logr_msg(
     message = "Initializing variable input UI module",
     level = "DEBUG")
-  tryCatch(
-    {
+  tryCatch({
       choices <- unique(all_tt_combined$title)
       logr_msg(
         message = paste("Available dataset choices:", length(choices)),
@@ -24,8 +23,12 @@ mod_var_input_ui <- function(id) {
           choices = choices,
           selected = "Moore’s Law"
         ),
-        em("The following data are being loaded:"),
-        verbatimTextOutput(ns("vals"))
+        tags$details(
+          tags$summary(
+            em("View download details:")
+          ),
+          verbatimTextOutput(ns("vals"))
+        )
       )
     },
     error = function(e) {
@@ -39,15 +42,15 @@ mod_var_input_ui <- function(id) {
   )
 }
 
-#' Variable Input Server Module - Enhanced with Dataset Title
+#' Variable Input Server Module
 #'
 #' @param id Module ID
 #'
-#' @return A list with reactive expressions for both data and dataset title
+#' @return A list with the reactive data from `load_tt_data()` and the dataset title.
 #'
 #' @export
 #'
-mod_var_input_server <- function(id) {
+mod_input_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     logr_msg("Initializing variable input server module", level = "DEBUG")
 
@@ -56,11 +59,9 @@ mod_var_input_server <- function(id) {
       logr_msg(
         message = paste("User selected dataset:", input$ds_title),
         level = "INFO")
-
       tryCatch({
           # load data ----
           result <- load_tt_data(input$ds_title)
-
           if (length(result) == 0) {
             logr_msg(
               message = "Empty dataset returned",
@@ -83,8 +84,7 @@ mod_var_input_server <- function(id) {
             type = "error", duration = 10
           )
           return(list())
-        }
-      )
+        })
     }) |>
       bindEvent(input$ds_title)
 
@@ -101,12 +101,10 @@ mod_var_input_server <- function(id) {
 
     # return both data and dataset title
     return(
-      list(
-        data = data,
-        dataset_title = reactive({
-          input$ds_title
-        })
+        list(
+          data = data,
+          'ds_title' = reactive(input$ds_title)
+        )
       )
-    )
   })
 }

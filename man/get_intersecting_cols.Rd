@@ -21,5 +21,4 @@ there are exactly two datasets in the
 \examples{
 ttd <- load_tt_data("Moore’s Law")
 get_intersecting_cols(ttd)
-
 }
