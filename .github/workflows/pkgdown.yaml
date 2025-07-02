@@ -32,6 +32,12 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Install Quarto CLI
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 'release'
+          # version: 1.4.515
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages: |
@@ -39,11 +45,6 @@ jobs:
             github::long39ng/listviewerlite
           extra-packages: any::sessioninfo, any::pkgdown
           needs: website
-          install-quarto: true
-          # either:
-          quarto-version: release
-          # or pin:
-          # quarto-version: "1.4.1254"
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = TRUE)
