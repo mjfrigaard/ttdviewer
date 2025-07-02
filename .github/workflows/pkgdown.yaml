@@ -38,8 +38,6 @@ jobs:
             github::long39ng/listviewerlite
           extra-packages: any::sessioninfo, any::pkgdown
           needs: website
-          upgrade: "FALSE"
-          dependencies: all
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
