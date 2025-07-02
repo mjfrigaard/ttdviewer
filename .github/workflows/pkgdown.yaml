@@ -15,11 +15,13 @@ permissions: read-all
 jobs:
   pkgdown:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -31,19 +33,20 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          # 1) Install your ttdviewer package
+          # 2) Install listviewerlite from GitHub
+          # 3) Then make pkgdown & sessioninfo available
           packages: |
             deps::.
             github::long39ng/listviewerlite
           extra-packages: any::sessioninfo, any::pkgdown
           needs: website
+          # optional: pin or upgrade behaviour
           upgrade: false
           dependencies: all
 
       - name: Build site
-        run: pkgdown::build_site_github_pages(
-          new_process = FALSE,
-          install     = FALSE
-        )
+        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
       - name: Deploy to GitHub pages 🚀
