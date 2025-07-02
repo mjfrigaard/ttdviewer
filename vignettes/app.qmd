@@ -44,16 +44,22 @@ The application's functions are in the abstract syntax tree below:
 ast(
   launch(
     app_ui(
-      mod_var_input_ui(),
-      mod_viz_ui(),
-      mod_table_ui(),
-      mod_report_download_ui()
+      mod_input_ui(),
+      mod_report_input_ui(),
+      mod_report_desc_ui(),
+      mod_report_download_ui(),
+      mod_list_ui(),
+      mod_plot_ui(),
+      mod_table_ui()
     ),
     app_server(
-      mod_var_input_server(),
-      mod_viz_server(),
-      mod_table_server(),
-      mod_report_download_server()
+      mod_input_server(),
+      mod_report_input_server(),
+      mod_report_desc_server(),
+      mod_report_download_server(),
+      mod_list_server(),
+      mod_plot_server(),
+      mod_table_server()
     )
   )
 )
@@ -62,7 +68,7 @@ ast(
 
 ### Variable inputs 
 
-The variable input (`input$dataset_title`) is collected in the `mod_var_input_ui()` and `mod_var_input_server()` functions and passed to the `load_tt_data()` function: 
+The variable input (`input$dataset_title`) is collected in the `mod_input_ui()` and `mod_input_server()` functions and passed to the `load_tt_data()` function: 
 
 ```{r}
 #| eval: false
@@ -94,32 +100,36 @@ tryCatch(
 )
 ```
 
-`mod_var_input_server()` returns the dataset list and title as a reactive.
+`mod_input_server()` returns the dataset list and title as a reactive.
 
 ```{r}
 #| eval: false
 #| code-fold: false
 return(
-  list(
-    data = data,
-    dataset_title = reactive({
-      input$dataset_title
-    })
+    list(
+      data = data,
+      'ds_title' = reactive(input$ds_title)
+    )
   )
-)
 ```
 
-In the `app_server()`, the inputs are assigned to the `var_input_result`:
+In the `app_server()`, the inputs are assigned to the `title_input` and separated into `selected_data` and `dataset_title`:
 
 ```{r}
 #| eval: false
 #| code-fold: false
-var_input_result <- mod_var_input_server("var_input")
+# initialize modules
+title_input <- mod_input_server("input")
+# return the data and title
+selected_data <- title_input$data
+dataset_title <- title_input$ds_title
 ```
 
-These reactive values are passed to the `mod_viz` module.
+These reactive values are passed to the output modules.
 
-### Visualizations
+## Lists 
 
-The reactive values are passed from the 
+## Table
+
+## Graphs
 

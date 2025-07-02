@@ -1,4 +1,5 @@
 ### \--- LOAD TIDY TUESDAY DATA --\ ----
+
 #' Load TidyTuesday datasets from GitHub by title
 #'
 #' Filters an internal dataset `all_tt_combined` by `title`, and loads
@@ -32,13 +33,14 @@
 #' @examples
 #' load_tt_data("posit::conf talks")
 load_tt_data <- function(title, log_file = NULL) {
-  # Required packages
+
+  # required packages
   requireNamespace("purrr", quietly = TRUE)
   requireNamespace("vroom", quietly = TRUE)
   requireNamespace("readxl", quietly = TRUE)
   requireNamespace("logger", quietly = TRUE)
 
-  # Load internal metadata
+  # load metadata
   if (!exists("all_tt_combined", envir = .GlobalEnv)) {
     stop("Internal dataset `all_tt_combined` not found in global environment.")
   }
@@ -62,7 +64,7 @@ load_tt_data <- function(title, log_file = NULL) {
       cname = files$clean_title
     ),
     function(file, type, url, cname) {
-      # Determine true file type based on file name extension
+      # determine true file type using extension
       effective_type <- dplyr::case_when(
         grepl("\\.csv\\.gz$", file, ignore.case = TRUE) ~ "csv.gz",
         grepl("\\.csv$", file, ignore.case = TRUE) ~ "csv",
@@ -107,7 +109,9 @@ load_tt_data <- function(title, log_file = NULL) {
     rlang::set_names(files$data_files) |>
     purrr::compact()
 }
+
 ### \--- GET TIDY TUESDAY TITLE METADATA --\ ----
+
 #' Get Dataset Metadata
 #'
 #' Analyzes the column types across all datasets in a TidyTuesday data list
@@ -132,13 +136,14 @@ load_tt_data <- function(title, log_file = NULL) {
 #' print(meta)
 #'
 get_tt_title_meta <- function(ttd) {
-  # Check if input is a list
+
+  # check if input is a list
   if (!is.list(ttd)) {
     logr_msg(paste("Error: Input is not a list:", class(ttd)), level = "ERROR")
     stop("Input must be a list of data frames")
   }
 
-  # Filter to data.frame elements only
+  # filter to data.frames only
   data_frames <- ttd[sapply(ttd, is.data.frame)]
 
   if (length(data_frames) == 0) {
@@ -150,7 +155,7 @@ get_tt_title_meta <- function(ttd) {
     level = "INFO"
   )
 
-  # Type checking functions
+  # type checking
   type_checks <- list(
     numeric = function(x) is.numeric(x) || is.integer(x),
     logical = is.logical,
@@ -158,13 +163,13 @@ get_tt_title_meta <- function(ttd) {
     list = is.list
   )
 
-  # Function to get columns by type
+  # get columns by type
   get_cols_by_type <- function(df, type_name, type_check_fn) {
     cols <- names(df)[sapply(df, type_check_fn)]
     if (length(cols) == 0) NA_character_ else cols
   }
 
-  # Process a single dataset
+  # process single dataset
   process_dataset <- function(dataset_name, df) {
     logr_msg(paste("Analyzing dataset:", dataset_name, "with", ncol(df), "columns"),
       level = "DEBUG"
@@ -179,10 +184,10 @@ get_tt_title_meta <- function(ttd) {
       )
     }, names(type_checks), type_checks)
 
-    # Combine results for dataset
+    # combine results
     dataset_result <- do.call(rbind, type_results)
 
-    # Log type counts
+    # log type counts
     type_counts <- sapply(type_checks, function(fn) sum(sapply(df, fn)))
 
     logr_msg(paste(
@@ -195,18 +200,18 @@ get_tt_title_meta <- function(ttd) {
     return(dataset_result)
   }
 
-  # Process all datasets in the list
+  # process datasets in list
   all_results <- Map(process_dataset, names(data_frames), data_frames)
   result <- do.call(rbind, all_results)
 
-  ## Add clean_title attribute as a column
+  ## clean_title attribute as a column
   clean_titles <- purrr::map_chr(data_frames, ~ attr(.x, "clean_title") %||% NA_character_)
   result$clean_title <- clean_titles[match(result$dataset, names(data_frames))]
 
-  # Reorder columns
+  # reorder columns
   result <- result[, c("clean_title", "dataset", "col", "col_type")]
 
-  # Log summary
+  # log summary
   logr_msg(paste(
     "Created metadata tibble with", nrow(result), "rows covering",
     length(unique(result$dataset)), "datasets"
@@ -216,6 +221,7 @@ get_tt_title_meta <- function(ttd) {
 }
 
 ### \--- EXTRACT FILE NAMES --\ ----
+
 #' Extract file names from TidyTuesday data object
 #'
 #' @param tt_data list of TidyTuesday data from [load_tt_data()]
@@ -243,7 +249,8 @@ extract_file_names <- function(tt_data) {
   return(file_names)
 }
 
-### \--- CLEAN TITLE STREAM --\ ----
+### \--- CLEAN TITLE STRING --\ ----
+
 #' Clean Title String
 #'
 #' Internal function that performs the actual string cleaning operations.
@@ -273,16 +280,20 @@ clean_title_string <- function(title) {
 
   # quotes and apostrophes
   # unicode escape sequences for special quote characters
-  cleaned <- gsub('["\'`\u201C\u201D\u2018\u2019]', "", cleaned) # Remove all types of quotes
+  # remove all types of quotes
+  cleaned <- gsub('["\'`\u201C\u201D\u2018\u2019]', "", cleaned)
 
   # contractions and possessives
-  # convert common contractions (e.g., "D'oh" -> "Doh", "it's" -> "its")
-  cleaned <- gsub("'([a-zA-Z])", "\\1", cleaned) # Remove apostrophes before letters
-  cleaned <- gsub("([a-zA-Z])'s\\b", "\\1s", cleaned) # Convert possessives
-  cleaned <- gsub("([a-zA-Z])'([a-zA-Z])", "\\1\\2", cleaned) # Handle internal apostrophes
+  # remove apostrophes before letters
+  cleaned <- gsub("'([a-zA-Z])", "\\1", cleaned)
+  # convert possessives
+  cleaned <- gsub("([a-zA-Z])'s\\b", "\\1s", cleaned)
+  # internal apostrophes
+  cleaned <- gsub("([a-zA-Z])'([a-zA-Z])", "\\1\\2", cleaned)
 
   # punctuation marks (note: escaped curly braces)
-  cleaned <- gsub("[!@#$%^&*()+=\\[\\]\\{\\}|;:,.<>?/~`]", " ", cleaned) # Replace with spaces
+  # replace with spaces
+  cleaned <- gsub("[!@#$%^&*()+=\\[\\]\\{\\}|;:,.<>?/~`]", " ", cleaned)
 
   # dashes and special separators
   cleaned <- gsub("[-–—]", " ", cleaned) # Convert all types of dashes to spaces
@@ -291,8 +302,10 @@ clean_title_string <- function(title) {
   cleaned <- gsub("[©®™°§¶†‡•‰‱€£¥₹₽¢]", "", cleaned) # Remove special symbols
 
   # normalize whitespace
-  cleaned <- gsub("\\s+", " ", cleaned) # Multiple spaces to single space
-  cleaned <- trimws(cleaned) # Remove leading/trailing whitespace
+  # multiple spaces to single space
+  # remove leading/trailing whitespace
+  cleaned <- gsub("\\s+", " ", cleaned)
+  cleaned <- trimws(cleaned)
 
   # convert to snake_case using snakecase package
   cleaned <- snakecase::to_snake_case(cleaned)
@@ -300,11 +313,6 @@ clean_title_string <- function(title) {
   # final cleanup
   cleaned <- gsub("_+", "_", cleaned) # Multiple underscores to single
   cleaned <- gsub("^_|_$", "", cleaned) # Remove leading/trailing underscores
-
-  # empty results
-  # if (cleaned == "" || is.na(cleaned)) {
-  #   cleaned <- "untitled_dataset"
-  # }
 
   # make sure it starts with a letter (for valid R names)
   if (grepl("^[0-9]", cleaned)) {
@@ -316,6 +324,7 @@ clean_title_string <- function(title) {
 
 
 ### \--- EXTRACT DATASET TITLE --\ ----
+
 #' Extract and Clean Dataset Title
 #'
 #' `extract_dataset_title()` takes a dataset title and returns a cleaned version suitable
@@ -355,6 +364,7 @@ clean_title_string <- function(title) {
 #' @export
 #'
 extract_dataset_title <- function(dataset_title) {
+
   # validate input
   if (is.null(dataset_title) || !is.character(dataset_title) || length(dataset_title) == 0) {
     logr_msg("Invalid dataset_title provided",
@@ -368,10 +378,9 @@ extract_dataset_title <- function(dataset_title) {
     level = "DEBUG"
   )
 
-  tryCatch(
-    {
+  tryCatch({
       if (dataset_title != "") {
-        # check if dataset exists in the metadata
+        # check if dataset exists in metadata
         title_exists <- TRUE
       } else {
         logr_msg("Empty dataset_title provided", level = "WARN")
@@ -383,12 +392,12 @@ extract_dataset_title <- function(dataset_title) {
           paste("Dataset title found in metadata!", dataset_title),
           level = "SUCCESS"
         )
-        # clean the title even if not found
+        # clean title (even if doesn't exist)
         cleaned_title <- clean_title_string(dataset_title)
         return(cleaned_title)
       }
 
-      # get title from metadata and clean it
+      # get title from metadata
       title_tbl <- dplyr::inner_join(all_tt_data, all_tt_meta,
         by = c("year", "week")
       ) |>
@@ -401,8 +410,10 @@ extract_dataset_title <- function(dataset_title) {
       cleaned_result <- unique(title_tbl[["clean_title"]])
 
       if (length(cleaned_result) == 0) {
+
         logr_msg("No clean title extracted, using fallback", level = "WARN")
         return(clean_title_string(dataset_title))
+
       }
 
       logr_msg(
@@ -414,8 +425,10 @@ extract_dataset_title <- function(dataset_title) {
     },
     error = function(e) {
       logr_msg(paste("Error extracting dataset title:", e$message), level = "ERROR")
-      # fallback to direct string cleaning
+
+      # fallback to string cleaning
       return(clean_title_string(dataset_title))
+
     }
   )
 }

@@ -31,52 +31,87 @@
 #' inspect_plot(ttd, plot = "cor")
 #'
 inspect_plot <- function(ttd, plots = "all") {
-  all_plots <- c("types","mem","na","cor","imb","num","cat")
-  # normalize
-  if ("all" %in% plots) plots <- all_plots
-  bad <- setdiff(plots, all_plots)
-  if (length(bad)) {
-    stop("Invalid plot type(s): ", paste(bad, collapse = ", "),
-         "\nValid are: ", paste(all_plots, collapse = ", "))
-  }
 
-  n   <- ttd_length(ttd)
-  num <- check_col_types(ttd, "num")
+  logr_msg("inspect_plot(): starting analysis", level = "INFO")
 
-  # mapping of names → inspectdf functions
-  funs <- list(
-    types = inspectdf::inspect_types,
-    mem   = inspectdf::inspect_mem,
-    na    = inspectdf::inspect_na,
-    cor   = inspectdf::inspect_cor,
-    imb   = inspectdf::inspect_imb,
-    num   = inspectdf::inspect_num,
-    cat   = inspectdf::inspect_cat
-  )
+  out <- tryCatch({
+    # normalize requested plots
+    all_plots <- c("types","mem","na","cor","imb","num","cat")
+    if ("all" %in% plots) plots <- all_plots
+    invalid <- setdiff(plots, all_plots)
+    if (length(invalid) > 0) {
+      msg <- paste0(
+        "Invalid plot type(s): ", paste(invalid, collapse = ", "),
+        " — valid are: ", paste(all_plots, collapse = ", ")
+      )
+      logr_msg(msg, level = "ERROR")
+      stop(msg)
+    }
+    logr_msg(paste0("Requested plots: ", paste(plots, collapse = ", ")),
+             level = "DEBUG")
 
-  # for each requested plot type, dispatch
-  for (plt in plots) {
-    fn <- funs[[plt]]
-    # if n == 2, compare the two frames; else do each separately
-    if (n == 2) {
-      p <- fn(df1 = ttd[[1]], df2 = ttd[[2]])
-      print(p |> inspectdf::show_plot(text_labels = TRUE))
-    } else {
-      purrr::imap(ttd, function(df, nm) {
-        # skip non–data.frame
-        if (!is.data.frame(df)) return()
-        # for cor/num, require ≥2 numeric cols
-        if (plt %in% c("cor","num") &&
-            !has_min_cols(num, which(names(ttd) == nm), min_count = 2)) {
-          return()
+    # precompute metadata
+    n_datasets <- ttd_length(ttd)
+    num_cols   <- check_col_types(ttd, "num")
+
+    # map plot names to inspectdf functions
+    funs <- list(
+      types = inspectdf::inspect_types,
+      mem   = inspectdf::inspect_mem,
+      na    = inspectdf::inspect_na,
+      cor   = inspectdf::inspect_cor,
+      imb   = inspectdf::inspect_imb,
+      num   = inspectdf::inspect_num,
+      cat   = inspectdf::inspect_cat
+    )
+
+    # iterate over each plot type
+    for (plt in plots) {
+      logr_msg(paste0("Beginning plot type '", plt, "'"), level = "INFO")
+      fn <- funs[[plt]]
+
+      # wrap each plot-type block in its own tryCatch
+      tryCatch({
+        if (n_datasets == 2) {
+          # two‐dataframe comparison
+          p <- fn(df1 = ttd[[1]], df2 = ttd[[2]])
+          print(p |> inspectdf::show_plot(text_labels = TRUE))
+        } else {
+          # single or multiple dataframes: do each separately
+          purrr::imap(ttd, function(df, nm) {
+            if (!is.data.frame(df)) {
+              logr_msg(paste0("Skipping non‐data.frame element '", nm, "'"), level = "TRACE")
+              return()
+            }
+            # for correlation or numeric distribution, require ≥2 numeric cols
+            if (plt %in% c("cor","num") &&
+                !has_min_cols(num_cols, which(names(ttd) == nm), min_count = 2)) {
+              logr_msg(
+                paste0("Skipping '", nm, "' for plot '", plt, "' (insufficient numeric columns)"),
+                level = "TRACE"
+              )
+              return()
+            }
+            p <- fn(df1 = df, df2 = NULL)
+            print(p |> inspectdf::show_plot(text_labels = TRUE))
+          })
         }
-        p <- fn(df1 = df, df2 = NULL)
-        print(p |> inspectdf::show_plot(text_labels = TRUE))
+        logr_msg(paste0("Completed plot type '", plt, "'"), level = "SUCCESS")
+      }, error = function(e_plot) {
+        logr_msg(paste0("Error in plot type '", plt, "': ", e_plot$message),
+                 level = "ERROR")
+        # continue with next plot type
       })
     }
-  }
 
-  invisible(NULL)
+    logr_msg("inspect_plot(): all requested plots finished", level = "SUCCESS")
+    invisible(NULL)
+
+  }, error = function(e) {
+    logr_msg(paste0("inspect_plot(): FATAL error — ", e$message), level = "FATAL")
+    stop(e)
+  })
+  out
 }
 
 #' Check if Dataset Has Minimum Required Columns
@@ -159,7 +194,6 @@ check_col_types <- function(ttd, type) {
   type <- rlang::arg_match(
     type, c("num", "cat", "log", "date", "list")
   )
-  # a small helper to pick columns of each class
   pick_cols <- function(df, predicate) {
     names(df)[purrr::map_lgl(df, predicate)]
   }
@@ -169,17 +203,15 @@ check_col_types <- function(ttd, type) {
     cat = function(df) pick_cols(df, is.character),
     log = function(df) pick_cols(df, is.logical),
     date = function(df) {
-      pick_cols(
-        df,
-        ~ inherits(.x, "Date") || inherits(.x, "POSIXt")
-      )
-    },
+            pick_cols(df, ~ inherits(.x, "Date") || inherits(.x, "POSIXt"))
+            },
     list = function(df) pick_cols(df, is.list)
   )
+
   purrr::map(ttd, checker) |>
     purrr::map(~ if (length(.x) == 0) character(0) else .x)
-}
 
+}
 
 #' Check for Numeric Columns in TidyTuesday Data
 #'

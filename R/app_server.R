@@ -25,32 +25,10 @@ app_server <- function(input, output, session) {
       # return the data and title
       selected_data <- title_input$data
       dataset_title <- title_input$ds_title
-
       logr_msg(
         message = "Variable input module initialized",
         level = "DEBUG"
       )
-
-      # reactive values for list
-      mod_list_server(id = "listviewerlite", data = selected_data)
-      logr_msg(
-        message = "Table module initialized",
-        level = "DEBUG")
-
-      # reactive values for visualization
-      # viz_result <- mod_viz_server(id = "viz", data = selected_data)
-      # logr_msg(
-      #   message = "Visualization module initialized",
-      #   level = "DEBUG"
-      # )
-      # ttd_reactive <- reactive(selected_data)
-      mod_plot_server("viz", ttd = selected_data)
-
-      # reactive values for table
-      mod_table_server(id = "table", data = selected_data)
-      logr_msg(
-        message = "Table module initialized",
-        level = "DEBUG")
 
       # initialize report modules
       report_format <- mod_report_input_server("rep_form")
@@ -62,6 +40,24 @@ app_server <- function(input, output, session) {
       #   data = selected_data,
       #   selected_plot_type = viz_result,
       #   dataset_title = dataset_title)
+
+      # reactive values for list
+      mod_list_server(id = "listviewerlite", data = selected_data)
+      logr_msg(
+        message = "Table module initialized",
+        level = "DEBUG")
+
+      # reactive values for table
+      mod_table_server(id = "table", data = selected_data)
+      logr_msg(
+        message = "Table module initialized",
+        level = "DEBUG")
+
+      # reactive values for visualization
+      mod_plot_server("viz", ttd = selected_data)
+      logr_msg(
+        message = "Plot module initialized",
+        level = "DEBUG")
 
       logr_msg(
         message = "All modules successfully initialized",
