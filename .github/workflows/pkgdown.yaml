@@ -41,8 +41,7 @@ jobs:
             github::long39ng/listviewerlite
           extra-packages: any::sessioninfo, any::pkgdown
           needs: website
-          # optional: pin or upgrade behaviour
-          upgrade: false
+          upgrade: FALSE
           dependencies: all
 
       - name: Build site
