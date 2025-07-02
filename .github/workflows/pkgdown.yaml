@@ -31,18 +31,10 @@ jobs:
         with:
           use-public-rspm: true
 
-      - name: Install dependencies
-        run: |
-          Rscript -e 'pak::lockfile_create(
-            c("deps::.", "any::pkgdown", sprintf("local::%s", Sys.getenv("GITHUB_WORKSPACE"))),
-            lockfile = ".github/pkg.lock",
-            upgrade = FALSE,
-            dependencies = "all"
-          )'
-      # - uses: r-lib/actions/setup-r-dependencies@v2
-      #   with:
-      #     extra-packages: any::pkgdown, local::.
-      #     needs: website
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::pkgdown, local::${{ github.workspace }}
+          needs: website
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
