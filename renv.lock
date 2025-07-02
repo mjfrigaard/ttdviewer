@@ -7,6 +7,10 @@
         "URL": "https://packagemanager.posit.co/cran/latest"
       },
       {
+        "Name": "ropensci",
+        "URL": "https://ropensci.r-universe.dev"
+      },
+      {
         "Name": "CRAN",
         "URL": "https://cloud.r-project.org"
       }
