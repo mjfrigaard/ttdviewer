@@ -1782,16 +1782,14 @@
       "Encoding": "UTF-8",
       "Roxygen": "list(markdown = TRUE)",
       "RoxygenNote": "7.2.3",
+      "Author": "Long Nguyen [aut, cre] (ORCID: <https://orcid.org/0000-0001-8878-7386>), Kate Rose Morley [aut] (CSS custom properties <https://iamkate.com/code/tree-views/>)",
+      "Maintainer": "Long Nguyen <long.nguyen@uni-bielefeld.de>",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "listviewerlite",
       "RemoteUsername": "long39ng",
-      "RemotePkgRef": "long39ng/listviewerlite",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "bcd737c9ae12bac61196324a3d08e1a50cccd0cd",
-      "NeedsCompilation": "no",
-      "Author": "Long Nguyen [aut, cre] (ORCID: <https://orcid.org/0000-0001-8878-7386>), Kate Rose Morley [aut] (CSS custom properties <https://iamkate.com/code/tree-views/>)",
-      "Maintainer": "Long Nguyen <long.nguyen@uni-bielefeld.de>"
+      "RemoteRepo": "listviewerlite",
+      "RemoteRef": "main",
+      "RemoteSha": "bcd737c9ae12bac61196324a3d08e1a50cccd0cd"
     },
     "litedown": {
       "Package": "litedown",
