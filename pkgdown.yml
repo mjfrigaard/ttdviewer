@@ -1,0 +1,14 @@
+pandoc: 3.1.11
+pkgdown: 2.1.3
+pkgdown_sha: ~
+articles:
+  app: app.html
+  data: data.html
+  graphs: graphs.html
+  lists: lists.html
+  reports: reports.html
+  structure: structure.html
+last_built: 2025-07-03T18:10Z
+urls:
+  reference: https://mjfrigaard.github.io/ttdviewer/reference
+  article: https://mjfrigaard.github.io/ttdviewer/articles
