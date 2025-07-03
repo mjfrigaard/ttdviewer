@@ -1,38 +1,26 @@
 ---
 title: "Graphs"
-format: 
-  html:
-    toc: true
-    toc-depth: 4
-
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: "# " 
-    fig-dpi: 320
-    fig-width: 6
-    out-width: '80%'
-    fig-format: png
-    fig-align: 'center'
-
-execute:
-  echo: true
-  error: true
-
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Graphs}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r}
 #| label: setup
 #| include: false
-library(dplyr)
-library(tidyr)
-library(inspectdf)
-library(lobstr)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+    fig.dpi = 320,
+    fig.width = 6,
+    out.width = '80%',
+    fig.format =  "png",
+    fig.align = 'center'
+)
 ```
+
 
 ```{r}
 #| label: package
@@ -201,12 +189,12 @@ Using the functions above, write the custom `inspect_plot()` function and have i
 If one dataset in `ttd`: 
 
 ```{r}
-inspect_cat(
+inspectdf::inspect_cat(
   df1 = ttd2[[1]],
   df2 = NULL,
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) == 2)`
@@ -231,12 +219,12 @@ intersecting_columns <- intersect(x = names(ttd2[[1]]), y = names(ttd2[[2]]))
   - Then use `intersecting_columns` to subset `ttd` for the `inspect_cat()` function: 
 
 ```{r}
-inspect_cat(
+inspectdf::inspect_cat(
   df1 = ttd2[[1]][intersecting_columns],
   df2 = ttd2[[1]][intersecting_columns],
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) >= 3)`
@@ -244,24 +232,24 @@ inspect_cat(
 If more than two datasets in `ttd`: 
 
 ```{r}
-inspect_cat(
+inspectdf::inspect_cat(
   df1 = ttd3[[1]],
   df2 = NULL,
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_cat(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_cat(
   df1 = ttd3[[2]],
   df2 = NULL,
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_cat(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_cat(
   df1 = ttd3[[3]],
   df2 = NULL,
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```
 
@@ -272,8 +260,8 @@ inspect_cat(
 If one dataset in `ttd`:
 
 ```{r}
-inspect_mem(df1 = ttd[[1]], df2 = NULL) |>
-  show_plot(text_labels = TRUE)
+inspectdf::inspect_mem(df1 = ttd[[1]], df2 = NULL) |>
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) == 2)`
@@ -281,8 +269,8 @@ inspect_mem(df1 = ttd[[1]], df2 = NULL) |>
 If two datasets in `ttd`:
 
 ```{r}
-inspect_mem(df1 = ttd2[[1]], df2 = ttd2[[2]]) |>
-  show_plot(text_labels = TRUE)
+inspectdf::inspect_mem(df1 = ttd2[[1]], df2 = ttd2[[2]]) |>
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) >= 3)`
@@ -290,21 +278,21 @@ inspect_mem(df1 = ttd2[[1]], df2 = ttd2[[2]]) |>
 If more than two datasets in `ttd`:
 
 ```{r}
-inspect_mem(
+inspectdf::inspect_mem(
   df1 = ttd3[[1]],
   df2 = NULL
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_mem(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_mem(
   df1 = ttd3[[2]],
   df2 = NULL
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_mem(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_mem(
   df1 = ttd3[[3]],
   df2 = NULL
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```
 
@@ -322,25 +310,25 @@ if (ttd_length(ttd2) == 2) { # check for two datasets
   # check for two numerical columns in ttd[[1]]
   if (length(check_ttd_num_cols(ttd = ttd2)[[1]]) == 2) {
     # plot first dataset
-    inspect_cor(
+    inspectdf::inspect_cor(
       df1 = ttd2[[1]],
       df2 = NULL,
       method = "pearson",
       with_col = NULL,
       alpha = 0.05
     ) |>
-      show_plot(text_labels = TRUE)
+      inspectdf::show_plot(text_labels = TRUE)
     # check for two numerical columns in ttd[[2]]
   } else if (length(check_ttd_num_cols(ttd = ttd2)[[2]]) >= 2) {
     # plot second dataset
-    inspect_cor(
+    inspectdf::inspect_cor(
       df1 = ttd2[[2]],
       df2 = NULL,
       method = "pearson",
       with_col = NULL,
       alpha = 0.05
     ) |>
-      show_plot(text_labels = TRUE)
+      inspectdf::show_plot(text_labels = TRUE)
   } else {
     logr_msg("Error", level = "INFO")
   }
@@ -361,28 +349,28 @@ check_col_types(ttd2, type = "num")
 check_col_types(ttd3, type = "num")
 ```
 
-  - Run `inspect_cor()`if at least one numerical column is in each dataset: 
+  - Run `inspectdf::inspect_cor()`if at least one numerical column is in each dataset: 
   
 ```{r}
-inspect_cor(
+inspectdf::inspect_cor(
   df1 = ttd2[[1]],
   df2 = ttd2[[2]],
   method = "pearson",
   with_col = NULL,
   alpha = 0.05
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 ```{r}
-inspect_cor(
+inspectdf::inspect_cor(
   df1 = ttd3[[1]],
   df2 = ttd3[[2]],
   method = "pearson",
   with_col = NULL,
   alpha = 0.05
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) >= 3)`
@@ -398,30 +386,30 @@ check_col_types(ttd3, type = "num")
   - Run the following on all datasets with at least two numerical columns. 
 
 ```{r}
-inspect_cor(
+inspectdf::inspect_cor(
   df1 = ttd3[[1]],
   df2 = NULL,
   method = "pearson",
   with_col = NULL,
   alpha = 0.05
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_cor(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_cor(
   df1 = ttd3[[2]],
   df2 = NULL,
   method = "pearson",
   with_col = NULL,
   alpha = 0.05
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_cor(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_cor(
   df1 = ttd3[[3]],
   df2 = NULL,
   method = "pearson",
   with_col = NULL,
   alpha = 0.05
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```
 
@@ -432,12 +420,12 @@ inspect_cor(
 If one dataset in `ttd`:
 
 ```{r}
-inspect_imb(
+inspectdf::inspect_imb(
   df1 = ttd[[1]],
   df2 = NULL,
   include_na = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) == 2)`
@@ -445,12 +433,12 @@ inspect_imb(
 If two datasets in `ttd`:
 
 ```{r}
-inspect_imb(
+inspectdf::inspect_imb(
   df1 = ttd2[[1]],
   df2 = ttd2[[2]],
   include_na = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) >= 3)`
@@ -458,24 +446,24 @@ inspect_imb(
 If more than two datasets in `ttd`:
 
 ```{r}
-inspect_imb(
+inspectdf::inspect_imb(
   df1 = ttd3[[1]],
   df2 = NULL,
   include_na = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_imb(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_imb(
   df1 = ttd3[[2]],
   df2 = NULL,
   include_na = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_imb(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_imb(
   df1 = ttd3[[3]],
   df2 = NULL,
   include_na = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```
 
@@ -493,13 +481,13 @@ check_ttd_num_cols(ttd)
     - if so, run: 
 
 ```{r}
-inspect_num(
+inspectdf::inspect_num(
   df1 = ttd[[1]],
   df2 = NULL,
   breaks = 20,
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) == 2)`
@@ -511,25 +499,25 @@ If two datasets in `ttd`:
     - if so, run: 
 
 ```{r}
-inspect_num(
+inspectdf::inspect_num(
   df1 = ttd2[[1]],
   df2 = ttd2[[2]],
   breaks = 20,
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
   - if there is only one numeric column, run the following on the dataset with the numeric column:
 
 ```{r}
-inspect_num(
+inspectdf::inspect_num(
   df1 = ttd[[1]],
   df2 = NULL,
   breaks = 20,
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) >= 3)`
@@ -537,27 +525,27 @@ inspect_num(
 If more than two datasets in `ttd`:
 
 ```{r}
-inspect_num(
+inspectdf::inspect_num(
   df1 = ttd3[[1]],
   df2 = NULL,
   breaks = 20,
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_num(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_num(
   df1 = ttd3[[2]],
   df2 = NULL,
   breaks = 20,
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_num(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_num(
   df1 = ttd3[[3]],
   df2 = NULL,
   breaks = 20,
   include_int = TRUE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```
 
@@ -572,12 +560,12 @@ If one dataset in `ttd`:
     - if so, run: 
 
 ```{r}
-inspect_cat(
+inspectdf::inspect_cat(
   df1 = ttd[[1]],
   df2 = NULL,
   include_int = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) == 2)`
@@ -604,23 +592,23 @@ intersecting_columns <- intersect(x = names(ttd2[[1]]), y = names(ttd2[[2]]))
   - Use `intersecting_columns` to subset each dataset in `ttd` list.
 
 ```{r}
-inspect_cat(
+inspectdf::inspect_cat(
   df1 = ttd2[[1]][intersecting_columns],
   df2 = ttd2[[2]][intersecting_columns],
   include_int = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
   - if there aren't any intersecting categorical columns, run the following on the dataset with the categorical column `ttd[[?]]`:
 
 ```{r}
-inspect_cat(
+inspectdf::inspect_cat(
   df1 = ttd[[1]],
   df2 = NULL,
   include_int = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 ```
 
 #### `if (length(ttd) >= 3)`
@@ -628,24 +616,24 @@ inspect_cat(
 If more than two datasets in `ttd`:
 
 ```{r}
-inspect_cat(
+inspectdf::inspect_cat(
   df1 = ttd_many[[1]],
   df2 = NULL,
   include_int = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_cat(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_cat(
   df1 = ttd_many[[2]],
   df2 = NULL,
   include_int = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
-inspect_cat(
+  inspectdf::show_plot(text_labels = TRUE)
+inspectdf::inspect_cat(
   df1 = ttd_many[[3]],
   df2 = NULL,
   include_int = FALSE
 ) |>
-  show_plot(text_labels = TRUE)
+  inspectdf::show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
 ```
 

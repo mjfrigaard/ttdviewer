@@ -1,37 +1,32 @@
 ---
 title: "Data"
-format: 
-  html:
-    toc: true
-    toc-depth: 4
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: "# " 
-
-execute:
-  echo: true
-  error: true
-
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Data}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r}
 #| label: setup
 #| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  error = TRUE,
+  echo = TRUE,
+  comment = "#>"
+)
+```
+
+```{r}
+#| label: package
+library(ttdviewer)
 library(dplyr)
 library(tidyr)
 library(inspectdf)
 library(lobstr)
 ```
 
-```{r}
-#| label: package
-library(ttdviewer)
-```
 
 The goal of `ttdviewer` is to demonstrate how to use parameterized reports (R Markdown and/or Quarto) in Shiny applications. This document covers the TidyTuesday data used in the application. '*all you need to know to download reports from your Shiny app.*'
 
@@ -250,4 +245,5 @@ ttd_many_meta |>
   dplyr::count(clean_title, dataset, col_type, name = "num_cols") |>
   dplyr::arrange(desc(num_cols))
 ```
+
 

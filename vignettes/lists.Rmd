@@ -1,27 +1,19 @@
 ---
 title: "Lists"
-format: 
-  html:
-    toc: true
-    toc-depth: 4
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: "# " 
-
-execute:
-  echo: true
-
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Lists}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r}
 #| label: setup
 #| include: false
-library(rlang)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 ```
 
 ```{r}
@@ -34,6 +26,7 @@ library(lobstr)
 library(dplyr)
 library(tidyr)
 ```
+
 
 ## List objects
 
