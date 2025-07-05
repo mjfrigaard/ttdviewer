@@ -95,7 +95,7 @@ data</a> via the <a href="https://github.com/dslc-io/tidytuesdayR" class="extern
 and <a href="https://github.com/r4ds/ttmeta" class="external-link"><code>ttmeta</code></a>
 packages.</p>
 <div class="section level3">
-<h3 id="tidytuesday-github-urls">TidyTuesday GitHub URLs<a class="anchor" aria-label="anchor" href="#tidytuesday-github-urls"></a>
+<h3 id="github-urls">GitHub URLs<a class="anchor" aria-label="anchor" href="#github-urls"></a>
 </h3>
 <p>The <code>tt_github_urls</code> data comes from the <a href="https://github.com/rfordatascience/tidytuesday/blob/main/static/tt_data_type.csv" class="external-link">.csv
 file in TidyTuesday repo</a>:</p>
@@ -217,14 +217,15 @@ GitHub repo.</p>
 <code>ttd</code> with a single element:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Netflix Titles"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:22] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:23] Successfully loaded netflix_titles.csv</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:43] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:44] Successfully loaded netflix_titles.csv</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd</span><span class="op">)</span></span>
 <span><span class="va">ttd_nms</span></span>
 <span><span class="co">#&gt; [1] "netflix_titles.csv"</span></span></code></pre></div>
-<p>The <code>clean_title</code> can be used to join back to
-<code>all_tt_combined</code> or <code>all_tt_data</code>:</p>
+<p>The <code>clean_title</code> attribute can be used to join each
+dataset back to <code>all_tt_combined</code> or
+<code>all_tt_data</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">ttd</span><span class="op">[[</span><span class="st">"netflix_titles.csv"</span><span class="op">]</span><span class="op">]</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "netflix_titles"</span></span></code></pre></div>
@@ -232,28 +233,24 @@ GitHub repo.</p>
 <div class="section level3">
 <h3 id="two-datasets">Two datasets<a class="anchor" aria-label="anchor" href="#two-datasets"></a>
 </h3>
-<p>If <code>ttd</code> has two datasets, subset the list with the name
-position:</p>
+<p>If <code>ttd</code> has two datasets, we can subset the list with the
+name position:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Space Launches"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:23] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:23] Successfully loaded agencies.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:23] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:24] Successfully loaded launches.csv</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ttd2_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd2</span><span class="op">)</span></span>
-<span><span class="va">ttd2_nms</span></span>
-<span><span class="co">#&gt; [1] "agencies.csv" "launches.csv"</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd2</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:44] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:44] Successfully loaded agencies.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:44] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:44] Successfully loaded launches.csv</span></span>
+<span><span class="co"># store names </span></span>
+<span><span class="va">ttd2_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd2</span><span class="op">)</span></span>
+<span><span class="co"># check attr</span></span>
+<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd2</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $agencies.csv</span></span>
 <span><span class="co">#&gt; [1] "space_launches"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $launches.csv</span></span>
-<span><span class="co">#&gt; [1] "space_launches"</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ttd2_nms</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "agencies.csv"</span></span>
+<span><span class="co">#&gt; [1] "space_launches"</span></span>
+<span><span class="co"># check first dataset </span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ttd2</span><span class="op">[[</span><span class="va">ttd2_nms</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 74</span></span>
 <span><span class="co">#&gt; Columns: 19</span></span>
@@ -275,10 +272,8 @@ position:</p>
 <span><span class="co">#&gt; $ short_english_name <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "-"<span style="color: #949494;">, </span>"-"<span style="color: #949494;">, </span>"-"<span style="color: #949494;">, </span>"-"<span style="color: #949494;">, </span>"Arianespace"<span style="color: #949494;">, </span>"-"<span style="color: #949494;">, </span>"-"<span style="color: #949494;">, </span>"CALT"…</span></span>
 <span><span class="co">#&gt; $ english_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Strategic Rocket Forces"<span style="color: #949494;">, </span>"-"<span style="color: #949494;">, </span>"-"<span style="color: #949494;">, </span>"-"<span style="color: #949494;">, </span>"-"<span style="color: #949494;">, </span>"-"<span style="color: #949494;">,</span>…</span></span>
 <span><span class="co">#&gt; $ unicode_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Ракетные войска стратегического назначения"<span style="color: #949494;">, </span>"Упра…</span></span>
-<span><span class="co">#&gt; $ agency_type        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "state"<span style="color: #949494;">, </span>"state"<span style="color: #949494;">, </span>"state"<span style="color: #949494;">, </span>"state"<span style="color: #949494;">, </span>"private"<span style="color: #949494;">, </span>"sta…</span></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ttd2_nms</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "launches.csv"</span></span>
+<span><span class="co">#&gt; $ agency_type        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "state"<span style="color: #949494;">, </span>"state"<span style="color: #949494;">, </span>"state"<span style="color: #949494;">, </span>"state"<span style="color: #949494;">, </span>"private"<span style="color: #949494;">, </span>"sta…</span></span>
+<span><span class="co"># check second dataset</span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ttd2</span><span class="op">[[</span><span class="va">ttd2_nms</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 5,726</span></span>
 <span><span class="co">#&gt; Columns: 11</span></span>
@@ -299,21 +294,26 @@ position:</p>
 </h3>
 <p>If there are three datasets, we can see the names are assigned to
 each element in the list:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Moore’s Law"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:24] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:24] Successfully loaded cpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:24] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:24] Successfully loaded gpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:24] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:24] Successfully loaded ram.csv</span></span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ttd3_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">)</span></span>
-<span><span class="va">ttd3_nms</span></span>
-<span><span class="co">#&gt; [1] "cpu.csv" "gpu.csv" "ram.csv"</span></span></code></pre></div>
-<p>These names can be used to subset the list:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">[[</span><span class="va">ttd3_nms</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:44] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:44] Successfully loaded cpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:44] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:44] Successfully loaded gpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:44] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:44] Successfully loaded ram.csv</span></span>
+<span><span class="va">ttd3_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">)</span></span>
+<span><span class="co"># attr</span></span>
+<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd3</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $cpu.csv</span></span>
+<span><span class="co">#&gt; [1] "moores_law"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $gpu.csv</span></span>
+<span><span class="co">#&gt; [1] "moores_law"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ram.csv</span></span>
+<span><span class="co">#&gt; [1] "moores_law"</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">[[</span><span class="va">ttd3_nms</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 176</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
 <span><span class="co">#&gt; $ processor            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "MP944 (20-bit, 6-chip)"<span style="color: #949494;">, </span>"Intel 4004 (4-bit, 16-…</span></span>
@@ -321,9 +321,8 @@ each element in the list:</p>
 <span><span class="co">#&gt; $ date_of_introduction <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1970<span style="color: #949494;">, </span>1971<span style="color: #949494;">, </span>1972<span style="color: #949494;">, </span>1973<span style="color: #949494;">, </span>1973<span style="color: #949494;">, </span>1974<span style="color: #949494;">, </span>1974<span style="color: #949494;">, </span>1974<span style="color: #949494;">, </span>1…</span></span>
 <span><span class="co">#&gt; $ designer             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Garrett AiResearch"<span style="color: #949494;">, </span>"Intel"<span style="color: #949494;">, </span>"Intel"<span style="color: #949494;">, </span>"NEC"<span style="color: #949494;">, </span>"T…</span></span>
 <span><span class="co">#&gt; $ process              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>10000<span style="color: #949494;">, </span>10000<span style="color: #949494;">, </span>7500<span style="color: #949494;">, </span>6000<span style="color: #949494;">, </span>10000<span style="color: #949494;">, </span>6000<span style="color: #949494;">, </span>6000<span style="color: #949494;">, </span>…</span></span>
-<span><span class="co">#&gt; $ area                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>12<span style="color: #949494;">, </span>14<span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>32<span style="color: #949494;">, </span>12<span style="color: #949494;">, </span>16<span style="color: #949494;">, </span>20<span style="color: #949494;">, </span>11<span style="color: #949494;">, </span>21<span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>2…</span></span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">[[</span><span class="va">ttd3_nms</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $ area                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>12<span style="color: #949494;">, </span>14<span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>32<span style="color: #949494;">, </span>12<span style="color: #949494;">, </span>16<span style="color: #949494;">, </span>20<span style="color: #949494;">, </span>11<span style="color: #949494;">, </span>21<span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>2…</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">[[</span><span class="va">ttd3_nms</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 112</span></span>
 <span><span class="co">#&gt; Columns: 8</span></span>
 <span><span class="co">#&gt; $ processor            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "µPD7220 GDC"<span style="color: #949494;">, </span>"ARTC HD63484"<span style="color: #949494;">, </span>"YM7101 VDP"<span style="color: #949494;">, </span>"Tom…</span></span>
@@ -333,9 +332,8 @@ each element in the list:</p>
 <span><span class="co">#&gt; $ manufacturer_s       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "NEC"<span style="color: #949494;">, </span>"Hitachi"<span style="color: #949494;">, </span>"Yamaha"<span style="color: #949494;">, </span>"IBM"<span style="color: #949494;">, </span>"Hitachi"<span style="color: #949494;">, </span>"LS…</span></span>
 <span><span class="co">#&gt; $ process              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5000<span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>500<span style="color: #949494;">, </span>500<span style="color: #949494;">, </span>500<span style="color: #949494;">, </span>350<span style="color: #949494;">, </span>350<span style="color: #949494;">, </span>500<span style="color: #949494;">, </span>5…</span></span>
 <span><span class="co">#&gt; $ area                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>90<span style="color: #949494;">, </span>81<span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>90<span style="color: #949494;">, </span>1…</span></span>
-<span><span class="co">#&gt; $ ref                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "[107]"<span style="color: #949494;">, </span>"[108]"<span style="color: #949494;">, </span>"[109]"<span style="color: #949494;">, </span>"[109]"<span style="color: #949494;">, </span>"[110][111]"<span style="color: #949494;">,</span>…</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">[[</span><span class="va">ttd3_nms</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $ ref                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "[107]"<span style="color: #949494;">, </span>"[108]"<span style="color: #949494;">, </span>"[109]"<span style="color: #949494;">, </span>"[109]"<span style="color: #949494;">, </span>"[110][111]"<span style="color: #949494;">,</span>…</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">[[</span><span class="va">ttd3_nms</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 47</span></span>
 <span><span class="co">#&gt; Columns: 10</span></span>
 <span><span class="co">#&gt; $ chip_name            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "N/A"<span style="color: #949494;">, </span>"N/A"<span style="color: #949494;">, </span>"?"<span style="color: #949494;">, </span>"SP95"<span style="color: #949494;">, </span>"TMC3162"<span style="color: #949494;">, </span>"?"<span style="color: #949494;">, </span>"?"<span style="color: #949494;">, </span>"…</span></span>
@@ -348,60 +346,40 @@ each element in the list:</p>
 <span><span class="co">#&gt; $ process              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>12000<span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>80…</span></span>
 <span><span class="co">#&gt; $ area                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>10<span style="color: #949494;">, </span><span style="color: #BB0000;">N</span>…</span></span>
 <span><span class="co">#&gt; $ ref                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "[162]"<span style="color: #949494;">, </span>"[163][164]"<span style="color: #949494;">, </span>"[162]"<span style="color: #949494;">, </span>"[165]"<span style="color: #949494;">, </span>"[160]"<span style="color: #949494;">,</span>…</span></span></code></pre></div>
-<p>The <code>clean_title</code> attribute will give us a joining
-variable:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd3</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $cpu.csv</span></span>
-<span><span class="co">#&gt; [1] "moores_law"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $gpu.csv</span></span>
-<span><span class="co">#&gt; [1] "moores_law"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $ram.csv</span></span>
-<span><span class="co">#&gt; [1] "moores_law"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="many-datasets">Many datasets<a class="anchor" aria-label="anchor" href="#many-datasets"></a>
 </h3>
 <p>If there are more than two datasets, the same rules apply.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_many</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"LEGO database"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:25] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:25] Successfully loaded colors.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:25] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:25] Successfully loaded elements.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:25] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:25] Successfully loaded inventories.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:25] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:25] Successfully loaded inventory_minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:25] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:26] Successfully loaded inventory_parts.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:26] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:26] Successfully loaded inventory_sets.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:26] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:27] Successfully loaded minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:27] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:27] Successfully loaded part_categories.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:27] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:27] Successfully loaded part_relationships.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:27] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:27] Successfully loaded parts.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:27] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:27] Successfully loaded sets.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:27] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-03 18:11:28] Successfully loaded themes.csv.gz</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ttd_many_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd_many</span><span class="op">)</span></span>
-<span><span class="va">ttd_many_nms</span></span>
-<span><span class="co">#&gt;  [1] "colors.csv.gz"             "elements.csv.gz"          </span></span>
-<span><span class="co">#&gt;  [3] "inventories.csv.gz"        "inventory_minifigs.csv.gz"</span></span>
-<span><span class="co">#&gt;  [5] "inventory_parts.csv.gz"    "inventory_sets.csv.gz"    </span></span>
-<span><span class="co">#&gt;  [7] "minifigs.csv.gz"           "part_categories.csv.gz"   </span></span>
-<span><span class="co">#&gt;  [9] "part_relationships.csv.gz" "parts.csv.gz"             </span></span>
-<span><span class="co">#&gt; [11] "sets.csv.gz"               "themes.csv.gz"</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd_many</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:44] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:45] Successfully loaded colors.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:45] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:45] Successfully loaded elements.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:45] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:45] Successfully loaded inventories.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:45] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:45] Successfully loaded inventory_minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:45] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:46] Successfully loaded inventory_parts.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:46] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:46] Successfully loaded inventory_sets.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:46] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:46] Successfully loaded minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:46] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:46] Successfully loaded part_categories.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:46] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:47] Successfully loaded part_relationships.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:47] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:47] Successfully loaded parts.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:47] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:47] Successfully loaded sets.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:47] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:47] Successfully loaded themes.csv.gz</span></span>
+<span><span class="va">ttd_many_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd_many</span><span class="op">)</span></span>
+<span><span class="co"># check attr</span></span>
+<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd_many</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $colors.csv.gz</span></span>
 <span><span class="co">#&gt; [1] "lego_database"</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -444,10 +422,10 @@ variable:</p>
 </h2>
 <p>The <code><a href="../reference/get_tt_title_meta.html">get_tt_title_meta()</a></code> function returns info on the
 columns in each dataset in a <code>ttd</code> list.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:28] Datasets in list: netflix_titles.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:28] Created metadata tibble with 14 rows covering 1 datasets</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:47] Datasets in list: netflix_titles.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:47] Created metadata tibble with 14 rows covering 1 datasets</span></span>
 <span><span class="va">ttd_meta</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 × 4</span></span></span>
 <span><span class="co">#&gt;    clean_title    dataset            col          col_type </span></span>
@@ -466,15 +444,19 @@ columns in each dataset in a <code>ttd</code> list.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> netflix_titles netflix_titles.csv listed_in    character</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> netflix_titles netflix_titles.csv description  character</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> netflix_titles netflix_titles.csv <span style="color: #BB0000;">NA</span>           list</span></span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_meta</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">col_type</span> <span class="op">==</span> <span class="st">"character"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">clean_title</span>, <span class="va">dataset</span>, <span class="va">col_type</span>, name <span class="op">=</span> <span class="st">"chr_cols"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">chr_cols</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">chr_cols</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
+<span><span class="co">#&gt;   clean_title    dataset            col_type  chr_cols</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> netflix_titles netflix_titles.csv character       11</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd2_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:28] Datasets in list: agencies.csv, launches.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-03 18:11:28] Created metadata tibble with 33 rows covering 2 datasets</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:48] Datasets in list: agencies.csv, launches.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:48] Created metadata tibble with 33 rows covering 2 datasets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd2_meta</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   clean_title    dataset      col        col_type </span></span>
@@ -485,19 +467,56 @@ columns in each dataset in a <code>ttd</code> list.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> space_launches agencies.csv ucode      character</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> space_launches agencies.csv state_code character</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> space_launches agencies.csv type       character</span></span></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd3_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd3</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd3_meta</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:48] Datasets in list: cpu.csv, gpu.csv, ram.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:48] Created metadata tibble with 30 rows covering 3 datasets</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd3_meta</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;   clean_title dataset col                  col_type </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> moores_law  cpu.csv transistor_count     numeric  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> moores_law  cpu.csv date_of_introduction numeric  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> moores_law  cpu.csv process              numeric  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> moores_law  cpu.csv area                 numeric  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> moores_law  cpu.csv <span style="color: #BB0000;">NA</span>                   logical  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> moores_law  cpu.csv processor            character</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_many_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd_many</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd_many_meta</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:48] Datasets in list: colors.csv.gz, elements.csv.gz, inventories.csv.gz, inventory_minifigs.csv.gz, inventory_parts.csv.gz, inventory_sets.csv.gz, minifigs.csv.gz, part_categories.csv.gz, part_relationships.csv.gz, parts.csv.gz, sets.csv.gz, themes.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-05 06:50:48] Created metadata tibble with 67 rows covering 12 datasets</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd_many_meta</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;   clean_title   dataset         col        col_type </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> lego_database colors.csv.gz   id         numeric  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> lego_database colors.csv.gz   is_trans   logical  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> lego_database colors.csv.gz   name       character</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> lego_database colors.csv.gz   rgb        character</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> lego_database colors.csv.gz   <span style="color: #BB0000;">NA</span>         list     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> lego_database elements.csv.gz element_id numeric</span></span></code></pre></div>
 <p>Below is the number of numeric columns per <code>dataset</code> and
 <code>clean_title</code>:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_many_meta</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">col_type</span> <span class="op">==</span> <span class="st">"numeric"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">clean_title</span>, <span class="va">dataset</span>, <span class="va">col_type</span>, name <span class="op">=</span> <span class="st">"num_cols"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">num_cols</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">num_cols</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 4</span></span></span>
+<span><span class="co">#&gt;    clean_title   dataset                   col_type num_cols</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> lego_database inventory_parts.csv.gz    numeric         3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> lego_database sets.csv.gz               numeric         3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> lego_database elements.csv.gz           numeric         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> lego_database inventories.csv.gz        numeric         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> lego_database inventory_minifigs.csv.gz numeric         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> lego_database inventory_sets.csv.gz     numeric         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> lego_database themes.csv.gz             numeric         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> lego_database colors.csv.gz             numeric         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> lego_database minifigs.csv.gz           numeric         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> lego_database part_categories.csv.gz    numeric         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> lego_database part_relationships.csv.gz numeric         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> lego_database parts.csv.gz              numeric         1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

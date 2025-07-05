@@ -70,14 +70,6 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://alastairrushworth.github.io/inspectdf/" class="external-link">inspectdf</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lobstr.r-lib.org/" class="external-link">lobstr</a></span><span class="op">)</span></span>
@@ -87,23 +79,23 @@
 </h2>
 <p>The application’s functions are in the abstract syntax tree
 below:</p>
-<pre><code> [38;5;214m█ [39m─ [1m [35mlaunch [39m [22m 
-├─ [38;5;214m█ [39m─ [1m [35mapp_ui [39m [22m 
-│ ├─ [38;5;214m█ [39m─ [1m [35mmod_input_ui [39m [22m 
-│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_ui [39m [22m 
-│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_desc_ui [39m [22m 
-│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_download_ui [39m [22m 
-│ ├─ [38;5;214m█ [39m─ [1m [35mmod_list_ui [39m [22m 
-│ ├─ [38;5;214m█ [39m─ [1m [35mmod_plot_ui [39m [22m 
-│ └─ [38;5;214m█ [39m─ [1m [35mmod_table_ui [39m [22m 
-└─ [38;5;214m█ [39m─ [1m [35mapp_server [39m [22m 
-  ├─ [38;5;214m█ [39m─ [1m [35mmod_input_server [39m [22m 
-  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_server [39m [22m 
-  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_desc_server [39m [22m 
-  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_download_server [39m [22m 
-  ├─ [38;5;214m█ [39m─ [1m [35mmod_list_server [39m [22m 
-  ├─ [38;5;214m█ [39m─ [1m [35mmod_plot_server [39m [22m 
-  └─ [38;5;214m█ [39m─ [1m [35mmod_table_server [39m [22m </code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>█─launch </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>├─█─app_ui </span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>│ ├─█─mod_input_ui </span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>│ ├─█─mod_report_input_ui </span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>│ ├─█─mod_report_desc_ui </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>│ ├─█─mod_report_download_ui </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>│ ├─█─mod_list_ui </span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>│ ├─█─mod_plot_ui </span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>│ └─█─mod_table_ui </span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>└─█─app_server </span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  ├─█─mod_input_server </span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  ├─█─mod_report_input_server </span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  ├─█─mod_report_desc_server </span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  ├─█─mod_report_download_server </span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  ├─█─mod_list_server </span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  ├─█─mod_plot_server </span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  └─█─mod_table_server</span></code></pre></div>
 <div class="section level3">
 <h3 id="variable-inputs">Variable inputs<a class="anchor" aria-label="anchor" href="#variable-inputs"></a>
 </h3>
@@ -111,8 +103,7 @@ below:</p>
 the <code><a href="../reference/mod_input_ui.html">mod_input_ui()</a></code> and <code><a href="../reference/mod_input_server.html">mod_input_server()</a></code>
 functions and passed to the <code><a href="../reference/load_tt_data.html">load_tt_data()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span></span>
-<span>  <span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">dataset_title</span><span class="op">)</span></span>
 <span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
 <span>      <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span><span class="st">"Empty dataset returned"</span>, level <span class="op">=</span> <span class="st">"WARN"</span><span class="op">)</span></span>
@@ -158,16 +149,677 @@ and <code>dataset_title</code>:</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="lists">Lists<a class="anchor" aria-label="anchor" href="#lists"></a>
+<h2 id="list">List<a class="anchor" aria-label="anchor" href="#list"></a>
 </h2>
+<p><code>mod_list</code> is a simple module that collects the list of
+<code>#TidyTuesday</code> datasets from the
+<code><a href="../reference/mod_input_server.html">mod_input_server()</a></code>:</p>
+<div class="section level3">
+<h3 id="input-controls">Input Controls<a class="anchor" aria-label="anchor" href="#input-controls"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># collect data</span></span>
+<span><span class="fu"><a href="../reference/mod_list_server.html">mod_list_server</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"listviewerlite"</span>, data <span class="op">=</span> <span class="va">selected_data</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="list-display">List Display<a class="anchor" aria-label="anchor" href="#list-display"></a>
+</h3>
+<p>The list display comes from the <a href="https://long39ng.github.io/listviewerlite/" class="external-link"><code>listviewerlite</code>
+package</a>. The <code><a href="../reference/mod_list_server.html">mod_list_server()</a></code> accepts the
+<code>selected_data</code> as <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># render data()</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">list</span> <span class="op">&lt;-</span> <span class="fu">renderUI</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="fu">req</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">listviewerlite</span><span class="fu">::</span><span class="fu"><a href="https://long39ng.github.io/listviewerlite/reference/listview.html" class="external-link">listview</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="table">Table<a class="anchor" aria-label="anchor" href="#table"></a>
 </h2>
+<p>The <code>mod_table</code> module is a Shiny module that provides
+interactive data table functionality for <code>#TidyTuesday</code>
+datasets using <a href="https://glin.github.io/reactable/" class="external-link">the
+<code>reactable</code> package</a>. This module provides users with a
+powerful interface for exploring tabular data with built-in search,
+sorting, and pagination capabilities.</p>
+<div class="section level3">
+<h3 id="input-controls-1">Input Controls<a class="anchor" aria-label="anchor" href="#input-controls-1"></a>
+</h3>
+<p>The UI is wrapped in a <code><a href="https://rstudio.github.io/bslib/reference/card.html" class="external-link">bslib::card()</a></code> for consistent
+styling and visual organization:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/card.html" class="external-link">card</a></span><span class="op">(</span></span>
+<span>  <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/card_body.html" class="external-link">card_body</a></span><span class="op">(</span></span>
+<span>    <span class="fu">selectInput</span><span class="op">(</span></span>
+<span>      inputId <span class="op">=</span> <span class="fu">ns</span><span class="op">(</span><span class="st">"ds_input"</span><span class="op">)</span>,</span>
+<span>      label <span class="op">=</span> <span class="st">"Dataset"</span>,</span>
+<span>      choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      selected <span class="op">=</span> <span class="st">""</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu">markdown</span><span class="op">(</span><span class="st">"The table display below is provided by [`reactable`](https://glin.github.io/reactable/):"</span><span class="op">)</span>,</span>
+<span>    <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable-shiny.html" class="external-link">reactableOutput</a></span><span class="op">(</span><span class="fu">ns</span><span class="op">(</span><span class="st">"table"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>This creates a clean, contained interface that includes:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Dataset selector dropdown</strong> for choosing which
+dataset to display</li>
+<li>
+<strong>Informational text</strong> crediting the
+<code>reactable</code> package with a helpful link</li>
+<li>
+<strong>Table output container</strong> for the interactive data
+table</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="dataset-selector-population">Dataset Selector Population<a class="anchor" aria-label="anchor" href="#dataset-selector-population"></a>
+</h3>
+<p>The server begins by populating the dataset selector with available
+datasets:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="fu">req</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">ds_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">updateSelectInput</span><span class="op">(</span></span>
+<span>    inputId <span class="op">=</span> <span class="st">"ds_input"</span>,</span>
+<span>    choices <span class="op">=</span> <span class="va">ds_names</span>, </span>
+<span>    selected <span class="op">=</span> <span class="va">ds_names</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">bindEvent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>This observer:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Waits for data availability</strong> using
+<code>req(data())</code>
+</li>
+<li>
+<strong>Extracts dataset names</strong> from the reactive data</li>
+<li>
+<strong>Updates the select input</strong> with available
+choices</li>
+<li>
+<strong>Selects the first dataset</strong> by default</li>
+<li>
+<strong>Responds only to data changes</strong> via
+<code>bindEvent()</code>
+</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="table-rendering">Table Rendering<a class="anchor" aria-label="anchor" href="#table-rendering"></a>
+</h3>
+<p>The core functionality lies in the table rendering observer:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="fu">req</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">table</span> <span class="op">&lt;-</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable-shiny.html" class="external-link">renderReactable</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="co"># Table generation logic</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">bindEvent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>This pattern ensures the table is re-rendered whenever the underlying
+data changes, but not on every reactive cycle.</p>
+</div>
+<div class="section level3">
+<h3 id="data-processingvalidation">Data Processing/Validation<a class="anchor" aria-label="anchor" href="#data-processingvalidation"></a>
+</h3>
+<p>The table rendering includes several data processing steps:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="fu">req</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span></span>
+<span>      message <span class="op">=</span> <span class="st">"No data available for table rendering"</span>, </span>
+<span>      level <span class="op">=</span> <span class="st">"WARN"</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="va">ds_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">ds_selected</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">ds_input</span><span class="op">)</span></span>
+<span>  <span class="va">display_ds</span> <span class="op">&lt;-</span> <span class="va">ds_list</span><span class="op">[[</span><span class="va">ds_selected</span><span class="op">]</span><span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">is.data.frame</a></span><span class="op">(</span><span class="va">display_ds</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span></span>
+<span>      message <span class="op">=</span> <span class="st">"First dataset is not a data frame"</span>, </span>
+<span>      level <span class="op">=</span> <span class="st">"ERROR"</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="co"># code continues...</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<p>This validation ensures:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Data exists</strong> before processing</li>
+<li>
+<strong>Dataset is properly selected</strong> from the list</li>
+<li><strong>Selected data is a valid data frame</strong></li>
+<li>
+<strong>Appropriate logging</strong> for debugging and
+monitoring</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="performance-optimization">Performance Optimization<a class="anchor" aria-label="anchor" href="#performance-optimization"></a>
+</h3>
+<p>The module includes performance considerations for large
+datasets:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">display_ds</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">display_ds</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span></span>
+<span>    message <span class="op">=</span> <span class="st">"Large dataset detected - limiting to first 1000 rows"</span>, </span>
+<span>    level <span class="op">=</span> <span class="st">"INFO"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">display_ds</span>, <span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="va">display_ds</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>This prevents performance issues by:</p>
+<ul>
+<li>
+<strong>Limiting display to 1000 rows</strong> for large
+datasets<br>
+</li>
+<li>
+<strong>Logging the limitation</strong> for user awareness<br>
+</li>
+<li>
+<strong>Maintaining full functionality</strong> for smaller
+datasets</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="dynamic-subtitle">Dynamic Subtitle<a class="anchor" aria-label="anchor" href="#dynamic-subtitle"></a>
+</h3>
+<p>The module creates informative subtitles based on the data
+context:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">subtitle</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">ds_list</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Showing:"</span>, <span class="va">ds_selected</span>, <span class="st">"("</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">ds_list</span><span class="op">)</span>, <span class="st">"files total )"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"File:"</span>, <span class="va">ds_selected</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>This provides users with context about:</p>
+<ul>
+<li>
+<strong>Which dataset</strong> they’re currently viewing<br>
+</li>
+<li>
+<strong>How many total datasets</strong> are available<br>
+</li>
+<li>
+<strong>Clear file identification</strong> for reference</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="reactable">Reactable<a class="anchor" aria-label="anchor" href="#reactable"></a>
+</h3>
+<p>The module leverages <code>reactable</code>’s extensive features for
+an enhanced user experience:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable</a></span><span class="op">(</span></span>
+<span>  <span class="va">display_ds</span>,</span>
+<span>  searchable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sortable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  pagination <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  defaultPageSize <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  showPageSizeOptions <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  pageSizeOptions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span>,</span>
+<span>  highlight <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bordered <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  striped <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  resizable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  wrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  defaultColDef <span class="op">=</span> <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/colDef.html" class="external-link">colDef</a></span><span class="op">(</span></span>
+<span>    minWidth <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>    headerStyle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>background <span class="op">=</span> <span class="st">"#f7f7f8"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>This configuration provides:</p>
+</div>
+<div class="section level3">
+<h3 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Search functionality</strong> across all columns</li>
+<li>
+<strong>Sortable columns</strong> for data exploration</li>
+<li>
+<strong>Pagination</strong> with customizable page sizes</li>
+<li>
+<strong>Column resizing</strong> for better data viewing</li>
+<li>
+<strong>Row highlighting</strong> for improved readability<br>
+</li>
+<li>
+<strong>Striped rows</strong> for easier scanning</li>
+<li>
+<strong>Bordered cells</strong> for clear data separation</li>
+<li>
+<strong>Custom header styling</strong> with subtle background
+color</li>
+<li>
+<strong>Minimum column width</strong> to prevent cramped
+display</li>
+<li>
+<strong>No text wrapping</strong> to maintain clean layout<br>
+</li>
+<li>
+<strong>Multiple page size options</strong> (5, 10, 20, 50
+rows)<br>
+</li>
+<li>
+<strong>Show page size selector</strong> for user preference<br>
+</li>
+<li>
+<strong>Resizable columns</strong> for custom layouts</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="error-handling">Error Handling<a class="anchor" aria-label="anchor" href="#error-handling"></a>
+</h3>
+<p>The UI includes comprehensive error handling:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="co"># UI creation code</span></span>
+<span><span class="op">}</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span>message <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Error creating table UI:"</span>, <span class="va">e</span><span class="op">$</span><span class="va">message</span><span class="op">)</span>, level <span class="op">=</span> <span class="st">"ERROR"</span><span class="op">)</span></span>
+<span>  <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/card.html" class="external-link">card</a></span><span class="op">(</span></span>
+<span>    <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/card_body.html" class="external-link">card_header</a></span><span class="op">(</span><span class="st">"Table Error"</span><span class="op">)</span>,</span>
+<span>    <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/card_body.html" class="external-link">card_body</a></span><span class="op">(</span></span>
+<span>      <span class="fu">h4</span><span class="op">(</span><span class="st">"Error loading table interface"</span>, class <span class="op">=</span> <span class="st">"text-danger"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<p>If UI creation fails, users see a graceful error message instead of a
+broken interface.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="co"># Table rendering logic</span></span>
+<span><span class="op">}</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span></span>
+<span>    message <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Error rendering table:"</span>, <span class="va">e</span><span class="op">$</span><span class="va">message</span><span class="op">)</span>, </span>
+<span>    level <span class="op">=</span> <span class="st">"ERROR"</span><span class="op">)</span></span>
+<span>  <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Error <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Failed to load data:"</span>, <span class="va">e</span><span class="op">$</span><span class="va">message</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    searchable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    sortable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    pagination <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<p>The server error handling:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Logs errors</strong> for debugging</li>
+<li>
+<strong>Returns a functional table</strong> with error
+information</li>
+<li>
+<strong>Disables interactive features</strong> on error tables</li>
+<li><strong>Provides user-friendly error messages</strong></li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="integration-with-main-application">Integration with Main Application<a class="anchor" aria-label="anchor" href="#integration-with-main-application"></a>
+</h3>
+<p>In the main application, the module is integrated as:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># In app_ui()</span></span>
+<span><span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/nav-items.html" class="external-link">nav_panel</a></span><span class="op">(</span><span class="st">"Table"</span>, <span class="fu"><a href="../reference/mod_table_ui.html">mod_table_ui</a></span><span class="op">(</span><span class="st">"table"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># In app_server()</span></span>
+<span><span class="fu"><a href="../reference/mod_table_server.html">mod_table_server</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"table"</span>, data <span class="op">=</span> <span class="va">selected_data</span><span class="op">)</span></span></code></pre></div>
+<p>The module receives <code>selected_data</code> (a reactive containing
+TidyTuesday datasets) and provides a complete tabular interface within
+the “Table” navigation panel.</p>
+</div>
+<div class="section level3">
+<h3 id="event-driven-updates">Event-Driven Updates<a class="anchor" aria-label="anchor" href="#event-driven-updates"></a>
+</h3>
+<p>The module uses <code>bindEvent()</code> to ensure efficient
+reactivity:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="co"># Logic here</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">bindEvent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>This pattern ensures updates occur only when the underlying data
+changes, not on every reactive cycle.</p>
+</div>
+<div class="section level3">
+<h3 id="requirement-validation">Requirement Validation<a class="anchor" aria-label="anchor" href="#requirement-validation"></a>
+</h3>
+<p>Strategic use of <code>req()</code> prevents processing invalid
+states:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">req</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">req</span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">ds_input</span><span class="op">)</span></span></code></pre></div>
+<p>This ensures code only executes when all necessary inputs are
+available.</p>
+<p>This module demonstrates how to create robust, user-friendly data
+table interfaces in Shiny while maintaining clean code architecture and
+comprehensive error handling. The integration with
+<code>reactable</code> provides powerful data exploration capabilities
+while the modular design ensures easy integration into larger
+applications.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="graphs">Graphs<a class="anchor" aria-label="anchor" href="#graphs"></a>
 </h2>
+<p>The <code>mod_plot</code> module provides interactive data
+visualization capabilities for the <code>#TidyTuesday</code> dataset
+list. This module is designed with a flexible interface for exploring
+different types of plots across multiple datasets.</p>
+<div class="section level3">
+<h3 id="input-controls-2">Input Controls<a class="anchor" aria-label="anchor" href="#input-controls-2"></a>
+</h3>
+<p>The UI creates three main input controls:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">selectInput</span><span class="op">(</span></span>
+<span>  <span class="fu">ns</span><span class="op">(</span><span class="st">"dataset"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"Choose dataset:"</span>,</span>
+<span>  choices <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  selected <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>This dropdown allows users to select which dataset they want to
+visualize. The choices are populated dynamically based on the available
+datasets.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">checkboxGroupInput</span><span class="op">(</span></span>
+<span>  <span class="fu">ns</span><span class="op">(</span><span class="st">"plots"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"Select plot type:"</span>,</span>
+<span>  choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"types"</span>       <span class="op">=</span> <span class="st">"types"</span>,</span>
+<span>    <span class="st">"memory"</span>      <span class="op">=</span> <span class="st">"mem"</span>, </span>
+<span>    <span class="st">"missing"</span>     <span class="op">=</span> <span class="st">"na"</span>,</span>
+<span>    <span class="st">"correlation"</span> <span class="op">=</span> <span class="st">"cor"</span>,</span>
+<span>    <span class="st">"imbalance"</span>   <span class="op">=</span> <span class="st">"imb"</span>,</span>
+<span>    <span class="st">"numeric"</span>     <span class="op">=</span> <span class="st">"num"</span>,</span>
+<span>    <span class="st">"categorical"</span> <span class="op">=</span> <span class="st">"cat"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"types"</span>,<span class="st">"mem"</span>,<span class="st">"na"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>This checkbox group lets users select multiple plot types
+simultaneously. The default selection includes three fundamental
+exploratory plots: column types, memory usage, and missing values
+analysis.</p>
+</div>
+<div class="section level3">
+<h3 id="dynamic-plot-display">Dynamic Plot Display<a class="anchor" aria-label="anchor" href="#dynamic-plot-display"></a>
+</h3>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">uiOutput</span><span class="op">(</span><span class="fu">ns</span><span class="op">(</span><span class="st">"plots_ui"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>This <code>uiOutput</code> creates a dynamic container that will hold
+the actual plot outputs. The content is generated server-side based on
+user selections.</p>
+</div>
+<div class="section level3">
+<h3 id="reactive-data-handling">Reactive Data Handling<a class="anchor" aria-label="anchor" href="#reactive-data-handling"></a>
+</h3>
+<p>The server function begins by handling both reactive and static data
+inputs:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ttd_r</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="fu">is.reactive</span><span class="op">(</span><span class="va">ttd</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"ttd is reactive"</span>, level <span class="op">=</span> <span class="st">"DEBUG"</span><span class="op">)</span></span>
+<span>  <span class="va">ttd</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"ttd is static; wrapping in reactive()"</span>, level <span class="op">=</span> <span class="st">"DEBUG"</span><span class="op">)</span></span>
+<span>  <span class="fu">reactive</span><span class="op">(</span><span class="va">ttd</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>This pattern ensures the module works whether it receives reactive
+data (from another module) or static data (passed directly). This
+flexibility is crucial for modular design.</p>
+</div>
+<div class="section level3">
+<h3 id="dataset-selector-population-1">Dataset Selector Population<a class="anchor" aria-label="anchor" href="#dataset-selector-population-1"></a>
+</h3>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">ds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu">ttd_r</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">ds</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">ds</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">ds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="fu">ttd_r</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"No names in ttd; using indices"</span>, level <span class="op">=</span> <span class="st">"WARN"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="fu">updateSelectInput</span><span class="op">(</span></span>
+<span>      <span class="va">session</span>, <span class="st">"dataset"</span>,</span>
+<span>      choices  <span class="op">=</span> <span class="va">ds</span>,</span>
+<span>      selected <span class="op">=</span> <span class="va">ds</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span>message <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Error populating dataset selector: %s"</span>, <span class="va">err</span><span class="op">$</span><span class="va">message</span><span class="op">)</span>, level <span class="op">=</span> <span class="st">"ERROR"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">bindEvent</span><span class="op">(</span><span class="fu">ttd_r</span><span class="op">(</span><span class="op">)</span>, once <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>This observer: 1. <strong>Extracts dataset names</strong> from the
+reactive data 2. <strong>Provides fallback logic</strong> if names are
+missing (uses indices) 3. <strong>Updates the select input</strong> with
+available choices 4. <strong>Selects the first dataset</strong> by
+default 5. <strong>Handles errors gracefully</strong> with proper
+logging</p>
+<p>The <code>bindEvent(ttd_r(), once = FALSE)</code> ensures this runs
+whenever the data changes, but not on every reactive cycle.</p>
+</div>
+<div class="section level3">
+<h3 id="dynamic-ui-generation">Dynamic UI Generation<a class="anchor" aria-label="anchor" href="#dynamic-ui-generation"></a>
+</h3>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">output</span><span class="op">$</span><span class="va">plots_ui</span> <span class="op">&lt;-</span> <span class="fu">renderUI</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu">req</span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">dataset</span>, <span class="va">input</span><span class="op">$</span><span class="va">plots</span><span class="op">)</span></span>
+<span>    <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">plots</span>, <span class="kw">function</span><span class="op">(</span><span class="va">plt</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">plot_id</span> <span class="op">&lt;-</span> <span class="fu">ns</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"plt_"</span>, <span class="va">plt</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="fu">tagList</span><span class="op">(</span></span>
+<span>        <span class="fu">h4</span><span class="op">(</span><span class="va">plt</span><span class="op">)</span>,</span>
+<span>        <span class="fu">plotOutput</span><span class="op">(</span><span class="va">plot_id</span>, height <span class="op">=</span> <span class="st">"300px"</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">tagList</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span>style <span class="op">=</span> <span class="st">"color:red;"</span>, <span class="st">"Failed to generate plot UI."</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<p>This <code>renderUI</code> creates plot containers dynamically: 1.
+<strong>Validates inputs</strong> using <code>req()</code> 2.
+<strong>Maps over selected plot types</strong> using
+<code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code> 3. <strong>Creates unique plot IDs</strong>
+using the namespace function 4. <strong>Generates plot
+containers</strong> with headers and specified dimensions 5.
+<strong>Provides error handling</strong> with user-friendly messages</p>
+</div>
+<div class="section level3">
+<h3 id="plot-rendering-logic">Plot Rendering Logic<a class="anchor" aria-label="anchor" href="#plot-rendering-logic"></a>
+</h3>
+<p>The most complex part of the module handles the actual plot
+generation:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">ds_list</span> <span class="op">&lt;-</span> <span class="fu">req</span><span class="op">(</span><span class="fu">ttd_r</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">sel_ds</span>  <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">dataset</span></span>
+<span>    <span class="fu">req</span><span class="op">(</span><span class="va">sel_ds</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ds_list</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">ds_list</span><span class="op">[[</span><span class="va">sel_ds</span><span class="op">]</span><span class="op">]</span></span>
+<span>    </span>
+<span>    <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">walk</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">plots</span>, <span class="kw">function</span><span class="op">(</span><span class="va">plt</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">out_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"plt_"</span>, <span class="va">plt</span><span class="op">)</span></span>
+<span>      <span class="va">output</span><span class="op">[[</span><span class="va">out_id</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">renderPlot</span><span class="op">(</span><span class="op">{</span></span>
+<span>        <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>          <span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
+<span>            ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="va">sel_ds</span><span class="op">)</span>,</span>
+<span>            plots <span class="op">=</span> <span class="va">plt</span></span>
+<span>          <span class="op">)</span></span>
+<span>        <span class="op">}</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err2</span><span class="op">)</span> <span class="op">{</span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/r/graphics/frame.html" class="external-link">plot.new</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="st">"Error generating plot"</span>, cex <span class="op">=</span> <span class="fl">1.2</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
+<span>        <span class="op">}</span><span class="op">)</span></span>
+<span>      <span class="op">}</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span>message <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Error in plot observer: %s"</span>, <span class="va">err</span><span class="op">$</span><span class="va">message</span><span class="op">)</span>, level <span class="op">=</span> <span class="st">"ERROR"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">bindEvent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">dataset</span>, <span class="va">input</span><span class="op">$</span><span class="va">plots</span><span class="op">)</span>, ignoreNULL <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>This observer:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Validates the dataset selection</strong> exists in the
+data<br>
+</li>
+<li>
+<strong>Extracts the selected dataset</strong> as a standalone data
+frame<br>
+</li>
+<li>
+<strong>Iterates over each selected plot type</strong> using
+<code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::walk()</a></code><br>
+</li>
+<li>
+<strong>Creates individual plot outputs</strong> with unique
+IDs<br>
+</li>
+<li>
+<strong>Calls the <code><a href="../reference/inspect_plot.html">inspect_plot()</a></code> function</strong> with
+properly formatted data<br>
+</li>
+<li>
+<strong>Provides plot-level error handling</strong> with visual
+feedback<br>
+</li>
+<li>
+<strong>Responds to changes</strong> in either dataset or plot
+selections</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="integration-with-inspect_plot">Integration with <code>inspect_plot()</code><a class="anchor" aria-label="anchor" href="#integration-with-inspect_plot"></a>
+</h3>
+<p>The module interfaces with the <code><a href="../reference/inspect_plot.html">inspect_plot()</a></code> utility
+function, which uses the <code>inspectdf</code> package to generate
+different types of exploratory plots:</p>
+<ul>
+<li>
+<strong>“types”</strong>: Column type distributions</li>
+<li>
+<strong>“mem”</strong>: Memory usage analysis<br>
+</li>
+<li>
+<strong>“na”</strong>: Missing value patterns</li>
+<li>
+<strong>“cor”</strong>: Correlation analysis</li>
+<li>
+<strong>“imb”</strong>: Feature imbalance for categorical data</li>
+<li>
+<strong>“num”</strong>: Numeric column summaries</li>
+<li>
+<strong>“cat”</strong>: Categorical column summaries</li>
+</ul>
+<p>The <code><a href="../reference/inspect_plot.html">inspect_plot()</a></code> function handles the complexity of
+determining appropriate visualizations based on data characteristics and
+the number of datasets.</p>
+</div>
+<div class="section level3">
+<h3 id="error-handling-strategy">Error Handling Strategy<a class="anchor" aria-label="anchor" href="#error-handling-strategy"></a>
+</h3>
+<p>The module implements comprehensive error handling at multiple
+levels:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Input validation</strong> using <code>req()</code> and
+explicit checks</li>
+<li>
+<strong>Graceful degradation</strong> with fallback UI elements</li>
+<li>
+<strong>Detailed logging</strong> at different severity levels</li>
+<li>
+<strong>User-friendly error messages</strong> instead of technical
+errors</li>
+<li>
+<strong>Plot-level error handling</strong> with visual
+placeholders</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="module-communication">Module Communication<a class="anchor" aria-label="anchor" href="#module-communication"></a>
+</h3>
+<p>The module receives data through the <code>ttd</code> parameter,
+which can be:</p>
+<ul>
+<li>A reactive expression from another module<br>
+</li>
+<li>Static data passed directly<br>
+</li>
+<li>Named list of data frames (TidyTuesday format)</li>
+</ul>
+<p>This flexible input handling makes the module highly reusable across
+different contexts.</p>
+</div>
+<div class="section level3">
+<h3 id="performance-considerations">Performance Considerations<a class="anchor" aria-label="anchor" href="#performance-considerations"></a>
+</h3>
+<p>The module uses several techniques to optimize performance:</p>
+<ul>
+<li>
+<strong>Event-driven reactivity</strong> with
+<code>bindEvent()</code> to limit unnecessary updates<br>
+</li>
+<li>
+<strong>Lazy evaluation</strong> with <code>req()</code> to avoid
+processing invalid states<br>
+</li>
+<li>
+<strong>Efficient data handling</strong> by extracting only the
+selected dataset<br>
+</li>
+<li>
+<strong>Modular plot generation</strong> to avoid regenerating
+unchanged plots</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="usage-in-the-main-application">Usage in the Main Application<a class="anchor" aria-label="anchor" href="#usage-in-the-main-application"></a>
+</h3>
+<p>In the main app, the module is integrated as:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># In app_ui()</span></span>
+<span><span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/nav-items.html" class="external-link">nav_panel</a></span><span class="op">(</span><span class="st">"Graphs"</span>, <span class="fu"><a href="../reference/mod_plot_ui.html">mod_plot_ui</a></span><span class="op">(</span><span class="st">"viz"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># In app_server()  </span></span>
+<span><span class="fu"><a href="../reference/mod_plot_server.html">mod_plot_server</a></span><span class="op">(</span><span class="st">"viz"</span>, ttd <span class="op">=</span> <span class="va">selected_data</span><span class="op">)</span></span></code></pre></div>
+<p>The module receives <code>selected_data</code> (a reactive containing
+TidyTuesday datasets) and provides a complete visualization interface
+within the “Graphs” tab.</p>
+</div>
+<div class="section level3">
+<h3 id="key-design-patterns">Key Design Patterns<a class="anchor" aria-label="anchor" href="#key-design-patterns"></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Namespace Management</strong>: Proper use of
+<code>ns()</code> for unique IDs</li>
+<li>
+<strong>Reactive Data Handling</strong>: Flexible input
+processing</li>
+<li>
+<strong>Dynamic UI Generation</strong>: Creating interfaces based on
+data</li>
+<li>
+<strong>Error Resilience</strong>: Multiple layers of error
+handling</li>
+<li>
+<strong>Modular Architecture</strong>: Clean separation of
+concerns</li>
+<li>
+<strong>Event-Driven Updates</strong>: Efficient reactive
+programming</li>
+</ol>
+<p>This module demonstrates sophisticated Shiny development practices
+while providing users with an intuitive interface for exploring their
+data through multiple visualization lenses.</p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
