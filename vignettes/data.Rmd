@@ -34,7 +34,7 @@ The goal of `ttdviewer` is to demonstrate how to use parameterized reports (R Ma
 
 The application uses [TidyTuesday data](https://github.com/rfordatascience/tidytuesday) via the [`tidytuesdayR`](https://github.com/dslc-io/tidytuesdayR) and [`ttmeta`](https://github.com/r4ds/ttmeta) packages. 
 
-### TidyTuesday GitHub URLs
+### GitHub URLs
 
 The `tt_github_urls` data comes from the [.csv file in TidyTuesday repo](https://github.com/rfordatascience/tidytuesday/blob/main/static/tt_data_type.csv):
 
@@ -100,7 +100,7 @@ ttd_nms <- names(ttd)
 ttd_nms
 ```
 
-The `clean_title` can be used to join back to `all_tt_combined` or `all_tt_data`: 
+The `clean_title` attribute can be used to join each dataset back to `all_tt_combined` or `all_tt_data`: 
 
 ```{r}
 #| label: ttd_clean_title
@@ -109,31 +109,18 @@ attr(ttd[["netflix_titles.csv"]], "clean_title")
 
 ### Two datasets 
 
-If `ttd` has two datasets, subset the list with the name position:
+If `ttd` has two datasets, we can subset the list with the name position:
 
 ```{r}
 #| label: ttd2
 ttd2 <- load_tt_data("Space Launches")
-```
-
-```{r}
-#| label: ttd2_nms
+# store names 
 ttd2_nms <- names(ttd2)
-ttd2_nms
-```
-
-```{r}
-#| label: ttd2_clean_title
+# check attr
 purrr::map(.x = ttd2, .f = attr, "clean_title")
-```
-
-```{r}
-ttd2_nms[1]
+# check first dataset 
 dplyr::glimpse(ttd2[[ttd2_nms[1]]])
-```
-
-```{r}
-ttd2_nms[2]
+# check second dataset
 dplyr::glimpse(ttd2[[ttd2_nms[2]]])
 ```
 
@@ -144,34 +131,12 @@ If there are three datasets, we can see the names are assigned to each element i
 ```{r}
 #| label: ttd3
 ttd3 <- load_tt_data("Moore’s Law")
-```
-
-```{r}
-#| label: ttd3_nms
 ttd3_nms <- names(ttd3)
-ttd3_nms
-```
-
-These names can be used to subset the list:
-
-```{r}
-dplyr::glimpse(ttd3[[ttd3_nms[1]]])
-```
-
-
-```{r}
-dplyr::glimpse(ttd3[[ttd3_nms[2]]])
-```
-
-```{r}
-dplyr::glimpse(ttd3[[ttd3_nms[3]]])
-```
-
-The `clean_title` attribute will give us a joining variable:
-
-```{r}
-#| label: ttd3_clean_title
+# attr
 purrr::map(.x = ttd3, .f = attr, "clean_title")
+dplyr::glimpse(ttd3[[ttd3_nms[1]]])
+dplyr::glimpse(ttd3[[ttd3_nms[2]]])
+dplyr::glimpse(ttd3[[ttd3_nms[3]]])
 ```
 
 ### Many datasets
@@ -181,16 +146,8 @@ If there are more than two datasets, the same rules apply.
 ```{r}
 #| label: ttd_many
 ttd_many <- load_tt_data("LEGO database")
-```
-
-```{r}
-#| label: ttd_many_nms
 ttd_many_nms <- names(ttd_many)
-ttd_many_nms
-```
-
-```{r}
-#| label: ttd_many_nms_clean_title
+# check attr
 purrr::map(.x = ttd_many, .f = attr, "clean_title")
 ```
 
@@ -206,7 +163,7 @@ ttd_meta
 ```
 
 ```{r}
-#| eval: false
+#| eval: true
 ttd_meta |>
   dplyr::filter(col_type == "character") |>
   dplyr::count(clean_title, dataset, col_type, name = "chr_cols") |>
@@ -223,14 +180,14 @@ head(ttd2_meta)
 
 ```{r}
 #| label: get_tt_title_meta_ttd3
-#| eval: false
+#| eval: true
 ttd3_meta <- get_tt_title_meta(ttd = ttd3)
 head(ttd3_meta)
 ```
 
 ```{r}
 #| label: get_tt_title_meta_ttd_many
-#| eval: false
+#| eval: true
 ttd_many_meta <- get_tt_title_meta(ttd = ttd_many)
 head(ttd_many_meta)
 ```
@@ -239,7 +196,7 @@ Below is the number of numeric columns per `dataset` and `clean_title`:
 
 ```{r}
 #| label: ttd_many_meta_num_cols
-#| eval: false
+#| eval: true
 ttd_many_meta |>
   dplyr::filter(col_type == "numeric") |>
   dplyr::count(clean_title, dataset, col_type, name = "num_cols") |>

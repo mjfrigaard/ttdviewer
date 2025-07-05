@@ -1,16 +1,14 @@
 ---
 title: "App"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
 vignette: >
   %\VignetteIndexEntry{App}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-```{r, include = FALSE}
-
-```
-
 
 ```{r}
 #| label: setup
@@ -23,6 +21,8 @@ knitr::opts_chunk$set(
 
 ```{r}
 #| label: package
+#| warning: false
+#| message: false
 library(dplyr)
 library(tidyr)
 library(inspectdf)
@@ -35,10 +35,8 @@ library(ttdviewer)
 The application's functions are in the abstract syntax tree below:
 
 ```{r}
-#| eval: true
-#| include: true
-#| echo: false
-#| comment: ""
+#| eval: false
+#| include: false
 ast(
   launch(
     app_ui(
@@ -63,6 +61,25 @@ ast(
 )
 ```
 
+```{verbatim}
+█─launch 
+├─█─app_ui 
+│ ├─█─mod_input_ui 
+│ ├─█─mod_report_input_ui 
+│ ├─█─mod_report_desc_ui 
+│ ├─█─mod_report_download_ui 
+│ ├─█─mod_list_ui 
+│ ├─█─mod_plot_ui 
+│ └─█─mod_table_ui 
+└─█─app_server 
+  ├─█─mod_input_server 
+  ├─█─mod_report_input_server 
+  ├─█─mod_report_desc_server 
+  ├─█─mod_report_download_server 
+  ├─█─mod_list_server 
+  ├─█─mod_plot_server 
+  └─█─mod_table_server
+```
 
 ### Variable inputs 
 
@@ -71,8 +88,7 @@ The variable input (`input$dataset_title`) is collected in the `mod_input_ui()` 
 ```{r}
 #| eval: false
 #| code-fold: false
-tryCatch(
-  {
+tryCatch({
     result <- load_tt_data(input$dataset_title)
     if (length(result) == 0) {
       logr_msg("Empty dataset returned", level = "WARN")
@@ -99,7 +115,6 @@ tryCatch(
 ```
 
 `mod_input_server()` returns the dataset list and title as a reactive.
-
 ```{r}
 #| eval: false
 #| code-fold: false
@@ -125,10 +140,569 @@ dataset_title <- title_input$ds_title
 
 These reactive values are passed to the output modules.
 
-## Lists 
+## List 
+
+`mod_list` is a simple module that collects the list of `#TidyTuesday` datasets from the `mod_input_server()`: 
+
+### Input Controls
+
+```{r}
+#| eval: false
+#| code-fold: false
+# collect data
+mod_list_server(id = "listviewerlite", data = selected_data)
+```
+
+### List Display
+
+The list display comes from the [`listviewerlite` package](https://long39ng.github.io/listviewerlite/). The `mod_list_server()` accepts the `selected_data` as `data()` 
+
+```{r}
+#| eval: false
+#| code-fold: false
+# render data()
+output$list <- renderUI({
+  req(data())
+  listviewerlite::listview(data())
+})
+```
 
 ## Table
 
+The `mod_table` module is a Shiny module that provides interactive data table functionality for `#TidyTuesday` datasets using [the `reactable` package](https://glin.github.io/reactable/). This module provides users with a powerful interface for exploring tabular data with built-in search, sorting, and pagination capabilities.
+
+### Input Controls
+
+The UI is wrapped in a `bslib::card()` for consistent styling and visual organization:
+
+```{r}
+#| eval: false
+#| code-fold: false
+bslib::card(
+  bslib::card_body(
+    selectInput(
+      inputId = ns("ds_input"),
+      label = "Dataset",
+      choices = c(c("", NULL)),
+      selected = ""
+    ),
+    markdown("The table display below is provided by [`reactable`](https://glin.github.io/reactable/):"),
+    reactable::reactableOutput(ns("table"))
+  )
+)
+```
+
+This creates a clean, contained interface that includes:
+
+1. **Dataset selector dropdown** for choosing which dataset to display
+2. **Informational text** crediting the `reactable` package with a helpful link
+3. **Table output container** for the interactive data table
+
+### Dataset Selector Population
+
+The server begins by populating the dataset selector with available datasets:
+
+```{r}
+#| eval: false
+#| code-fold: false
+observe({
+  req(data())
+  ds_names <- names(data())
+  updateSelectInput(
+    inputId = "ds_input",
+    choices = ds_names, 
+    selected = ds_names[1]
+  )
+}) |>
+  bindEvent(data())
+```
+
+This observer:
+
+1. **Waits for data availability** using `req(data())`
+2. **Extracts dataset names** from the reactive data
+3. **Updates the select input** with available choices
+4. **Selects the first dataset** by default
+5. **Responds only to data changes** via `bindEvent()`
+
+### Table Rendering 
+
+The core functionality lies in the table rendering observer:
+
+```{r}
+#| eval: false
+#| code-fold: false
+observe({
+  req(data())
+  output$table <- reactable::renderReactable({
+    # Table generation logic
+  })
+}) |>
+  bindEvent(data())
+```
+
+This pattern ensures the table is re-rendered whenever the underlying data changes, but not on every reactive cycle.
+
+### Data Processing/Validation
+
+The table rendering includes several data processing steps:
+
+```{r}
+#| eval: false
+#| code-fold: false
+tryCatch({
+  req(data())
+  if (length(data()) == 0) {
+    logr_msg(
+      message = "No data available for table rendering", 
+      level = "WARN")
+    return(NULL)
+  }
+  
+  ds_list <- data()
+  ds_selected <- as.character(input$ds_input)
+  display_ds <- ds_list[[ds_selected]]
+  
+  if (!is.data.frame(display_ds)) {
+    logr_msg(
+      message = "First dataset is not a data frame", 
+      level = "ERROR")
+    return(NULL)
+  }
+  # code continues...
+})
+```
+
+This validation ensures:
+
+1. **Data exists** before processing
+2. **Dataset is properly selected** from the list
+3. **Selected data is a valid data frame**
+4. **Appropriate logging** for debugging and monitoring
+
+### Performance Optimization
+
+The module includes performance considerations for large datasets:
+
+```{r}
+#| eval: false
+#| code-fold: false
+display_ds <- if (nrow(display_ds) > 1000) {
+  logr_msg(
+    message = "Large dataset detected - limiting to first 1000 rows", 
+    level = "INFO")
+  head(display_ds, 1000)
+} else {
+  display_ds
+}
+```
+
+This prevents performance issues by:
+
+- **Limiting display to 1000 rows** for large datasets    
+- **Logging the limitation** for user awareness     
+- **Maintaining full functionality** for smaller datasets     
+
+### Dynamic Subtitle 
+
+The module creates informative subtitles based on the data context:
+
+```{r}
+#| eval: false
+#| code-fold: false
+subtitle <- if (length(ds_list) > 1) {
+  paste("Showing:", ds_selected, "(", length(ds_list), "files total )")
+} else {
+  paste("File:", ds_selected)
+}
+```
+
+This provides users with context about:   
+
+- **Which dataset** they're currently viewing     
+- **How many total datasets** are available     
+- **Clear file identification** for reference       
+
+### Reactable 
+
+The module leverages `reactable`'s extensive features for an enhanced user experience:
+
+```{r}
+#| eval: false
+#| code-fold: false
+reactable::reactable(
+  display_ds,
+  searchable = TRUE,
+  sortable = TRUE,
+  pagination = TRUE,
+  defaultPageSize = 10,
+  showPageSizeOptions = TRUE,
+  pageSizeOptions = c(5, 10, 20, 50),
+  highlight = TRUE,
+  bordered = TRUE,
+  striped = TRUE,
+  resizable = TRUE,
+  wrap = FALSE,
+  defaultColDef = reactable::colDef(
+    minWidth = 100,
+    headerStyle = list(background = "#f7f7f8")
+  )
+)
+```
+
+This configuration provides:
+
+### Features 
+
+1. **Search functionality** across all columns
+2. **Sortable columns** for data exploration
+3. **Pagination** with customizable page sizes
+4. **Column resizing** for better data viewing
+5. **Row highlighting** for improved readability  
+6. **Striped rows** for easier scanning
+7. **Bordered cells** for clear data separation
+8. **Custom header styling** with subtle background color
+9. **Minimum column width** to prevent cramped display
+10. **No text wrapping** to maintain clean layout   
+11. **Multiple page size options** (5, 10, 20, 50 rows)   
+12.  **Show page size selector** for user preference    
+13. **Resizable columns** for custom layouts    
+
+### Error Handling
+
+The UI includes comprehensive error handling:
+
+```{r}
+#| eval: false
+#| code-fold: false
+tryCatch({
+  # UI creation code
+}, error = function(e) {
+  logr_msg(message = paste("Error creating table UI:", e$message), level = "ERROR")
+  bslib::card(
+    bslib::card_header("Table Error"),
+    bslib::card_body(
+      h4("Error loading table interface", class = "text-danger")
+    )
+  )
+})
+```
+
+If UI creation fails, users see a graceful error message instead of a broken interface.
+
+```{r}
+#| eval: false
+#| code-fold: false
+tryCatch({
+  # Table rendering logic
+}, error = function(e) {
+  logr_msg(
+    message = paste("Error rendering table:", e$message), 
+    level = "ERROR")
+  reactable::reactable(
+    data.frame(Error = paste("Failed to load data:", e$message)),
+    searchable = FALSE,
+    sortable = FALSE,
+    pagination = FALSE
+  )
+})
+```
+
+The server error handling:
+
+1. **Logs errors** for debugging
+2. **Returns a functional table** with error information
+3. **Disables interactive features** on error tables
+4. **Provides user-friendly error messages**
+
+### Integration with Main Application
+
+In the main application, the module is integrated as:
+
+```{r}
+#| eval: false
+#| code-fold: false
+# In app_ui()
+bslib::nav_panel("Table", mod_table_ui("table"))
+
+# In app_server()
+mod_table_server(id = "table", data = selected_data)
+```
+
+The module receives `selected_data` (a reactive containing TidyTuesday datasets) and provides a complete tabular interface within the "Table" navigation panel.
+
+### Event-Driven Updates
+
+The module uses `bindEvent()` to ensure efficient reactivity:
+
+```{r}
+#| eval: false
+#| code-fold: false
+observe({
+  # Logic here
+}) |>
+  bindEvent(data())
+```
+
+This pattern ensures updates occur only when the underlying data changes, not on every reactive cycle.
+
+### Requirement Validation
+
+Strategic use of `req()` prevents processing invalid states:
+
+```{r}
+#| eval: false
+#| code-fold: false
+req(data())
+req(input$ds_input)
+```
+
+This ensures code only executes when all necessary inputs are available.
+
+This module demonstrates how to create robust, user-friendly data table interfaces in Shiny while maintaining clean code architecture and comprehensive error handling. The integration with `reactable` provides powerful data exploration capabilities while the modular design ensures easy integration into larger applications.
+
 ## Graphs
 
+The `mod_plot` module provides interactive data visualization capabilities for the `#TidyTuesday` dataset list. This module is designed with a flexible interface for exploring different types of plots across multiple datasets.
 
+### Input Controls
+
+The UI creates three main input controls:
+
+```{r}
+#| eval: false
+#| code-fold: false
+selectInput(
+  ns("dataset"),
+  "Choose dataset:",
+  choices = NULL,
+  selected = NULL
+)
+```
+
+This dropdown allows users to select which dataset they want to visualize. The choices are populated dynamically based on the available datasets.
+
+```{r}
+#| eval: false
+#| code-fold: false
+checkboxGroupInput(
+  ns("plots"),
+  "Select plot type:",
+  choices = c(
+    "types"       = "types",
+    "memory"      = "mem", 
+    "missing"     = "na",
+    "correlation" = "cor",
+    "imbalance"   = "imb",
+    "numeric"     = "num",
+    "categorical" = "cat"
+  ),
+  selected = c("types","mem","na")
+)
+```
+
+This checkbox group lets users select multiple plot types simultaneously. The default selection includes three fundamental exploratory plots: column types, memory usage, and missing values analysis.
+
+### Dynamic Plot Display
+
+```{r}
+#| eval: false
+#| code-fold: false
+uiOutput(ns("plots_ui"))
+```
+
+This `uiOutput` creates a dynamic container that will hold the actual plot outputs. The content is generated server-side based on user selections.
+
+### Reactive Data Handling
+
+The server function begins by handling both reactive and static data inputs:
+
+```{r}
+#| eval: false
+#| code-fold: false
+ttd_r <- if (is.reactive(ttd)) {
+  logr_msg(message = "ttd is reactive", level = "DEBUG")
+  ttd
+} else {
+  logr_msg(message = "ttd is static; wrapping in reactive()", level = "DEBUG")
+  reactive(ttd)
+}
+```
+
+This pattern ensures the module works whether it receives reactive data (from another module) or static data (passed directly). This flexibility is crucial for modular design.
+
+### Dataset Selector Population
+
+```{r}
+#| eval: false
+#| code-fold: false
+observe({
+  tryCatch({
+    ds <- names(ttd_r())
+    if (is.null(ds) || length(ds) == 0) {
+      ds <- seq_along(ttd_r()) %>% as.character()
+      logr_msg(message = "No names in ttd; using indices", level = "WARN")
+    }
+    updateSelectInput(
+      session, "dataset",
+      choices  = ds,
+      selected = ds[[1]]
+    )
+  }, error = function(err) {
+    logr_msg(message = sprintf("Error populating dataset selector: %s", err$message), level = "ERROR")
+  })
+}) |>
+  bindEvent(ttd_r(), once = FALSE)
+```
+
+This observer:
+1. **Extracts dataset names** from the reactive data
+2. **Provides fallback logic** if names are missing (uses indices)
+3. **Updates the select input** with available choices
+4. **Selects the first dataset** by default
+5. **Handles errors gracefully** with proper logging
+
+The `bindEvent(ttd_r(), once = FALSE)` ensures this runs whenever the data changes, but not on every reactive cycle.
+
+### Dynamic UI Generation
+
+```{r}
+#| eval: false
+#| code-fold: false
+output$plots_ui <- renderUI({
+  tryCatch({
+    req(input$dataset, input$plots)
+    purrr::map(input$plots, function(plt) {
+      plot_id <- ns(paste0("plt_", plt))
+      tagList(
+        h4(plt),
+        plotOutput(plot_id, height = "300px")
+      )
+    })
+  }, error = function(err) {
+    tagList(p(style = "color:red;", "Failed to generate plot UI."))
+  })
+})
+```
+
+This `renderUI` creates plot containers dynamically:
+1. **Validates inputs** using `req()`
+2. **Maps over selected plot types** using `purrr::map()`
+3. **Creates unique plot IDs** using the namespace function
+4. **Generates plot containers** with headers and specified dimensions
+5. **Provides error handling** with user-friendly messages
+
+### Plot Rendering Logic
+
+The most complex part of the module handles the actual plot generation:
+
+```{r}
+#| eval: false
+#| code-fold: false
+observe({
+  tryCatch({
+    ds_list <- req(ttd_r())
+    sel_ds  <- input$dataset
+    req(sel_ds %in% names(ds_list))
+    df <- ds_list[[sel_ds]]
+    
+    purrr::walk(input$plots, function(plt) {
+      out_id <- paste0("plt_", plt)
+      output[[out_id]] <- renderPlot({
+        tryCatch({
+          inspect_plot(
+            ttd = setNames(list(df), sel_ds),
+            plots = plt
+          )
+        }, error = function(err2) {
+          plot.new()
+          text(0.5, 0.5, "Error generating plot", cex = 1.2, col = "red")
+        })
+      })
+    })
+  }, error = function(err) {
+    logr_msg(message = sprintf("Error in plot observer: %s", err$message), level = "ERROR")
+  })
+}) |>
+  bindEvent(list(input$dataset, input$plots), ignoreNULL = TRUE)
+```
+
+This observer:
+
+1. **Validates the dataset selection** exists in the data   
+2. **Extracts the selected dataset** as a standalone data frame   
+3. **Iterates over each selected plot type** using `purrr::walk()`    
+4. **Creates individual plot outputs** with unique IDs    
+5. **Calls the `inspect_plot()` function** with properly formatted data   
+6. **Provides plot-level error handling** with visual feedback    
+7. **Responds to changes** in either dataset or plot selections   
+
+### Integration with `inspect_plot()`
+
+The module interfaces with the `inspect_plot()` utility function, which uses the `inspectdf` package to generate different types of exploratory plots:
+
+- **"types"**: Column type distributions
+- **"mem"**: Memory usage analysis  
+- **"na"**: Missing value patterns
+- **"cor"**: Correlation analysis
+- **"imb"**: Feature imbalance for categorical data
+- **"num"**: Numeric column summaries
+- **"cat"**: Categorical column summaries
+
+The `inspect_plot()` function handles the complexity of determining appropriate visualizations based on data characteristics and the number of datasets.
+
+### Error Handling Strategy
+
+The module implements comprehensive error handling at multiple levels:
+
+1. **Input validation** using `req()` and explicit checks
+2. **Graceful degradation** with fallback UI elements
+3. **Detailed logging** at different severity levels
+4. **User-friendly error messages** instead of technical errors
+5. **Plot-level error handling** with visual placeholders
+
+### Module Communication
+
+The module receives data through the `ttd` parameter, which can be:   
+
+- A reactive expression from another module   
+- Static data passed directly   
+- Named list of data frames (TidyTuesday format)    
+
+This flexible input handling makes the module highly reusable across different contexts.
+
+### Performance Considerations
+
+The module uses several techniques to optimize performance:
+
+- **Event-driven reactivity** with `bindEvent()` to limit unnecessary updates   
+- **Lazy evaluation** with `req()` to avoid processing invalid states   
+- **Efficient data handling** by extracting only the selected dataset   
+- **Modular plot generation** to avoid regenerating unchanged plots   
+
+### Usage in the Main Application
+
+In the main app, the module is integrated as:
+
+```{r}
+#| eval: false
+#| code-fold: false
+# In app_ui()
+bslib::nav_panel("Graphs", mod_plot_ui("viz"))
+
+# In app_server()  
+mod_plot_server("viz", ttd = selected_data)
+```
+
+The module receives `selected_data` (a reactive containing TidyTuesday datasets) and provides a complete visualization interface within the "Graphs" tab.
+
+### Key Design Patterns
+
+1. **Namespace Management**: Proper use of `ns()` for unique IDs
+2. **Reactive Data Handling**: Flexible input processing
+3. **Dynamic UI Generation**: Creating interfaces based on data
+4. **Error Resilience**: Multiple layers of error handling
+5. **Modular Architecture**: Clean separation of concerns
+6. **Event-Driven Updates**: Efficient reactive programming
+
+This module demonstrates sophisticated Shiny development practices while providing users with an intuitive interface for exploring their data through multiple visualization lenses.

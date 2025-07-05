@@ -31,52 +31,25 @@ Below are examples of the data visualizations using `inspectdf` in the Shiny app
 
 ## Data 
 
-We'll need data to demonstrate how the `inspect_plot()` function works. The `load_tt_data()` function can be used to collect [TidyTuesday](https://github.com/rfordatascience/tidytuesday) datasets, and we'll create four lists of data: 
-
-### One dataset (`ttd`)
+We'll need data to demonstrate how the `inspect_plot()` function works. We'll use the `load_tt_data()` function to collect four lists of data from the [TidyTuesday](https://github.com/rfordatascience/tidytuesday) repo.
 
 `"Netflix Titles"` has a single dataset:
 
 ```{r}
 #| label: ttd_netflix_titles
 #| eval: true
+#| message: false 
+#| warning: false
 ttd <- load_tt_data("Netflix Titles")
 purrr::map(.x = ttd, .f = attr, "clean_title")
-```
-
-### Two datasets (`ttd2`)
-
-For a list with two datasets, we'll use the `"Space Launches"` data:
-
-```{r}
-#| label: ttd2_space_launches
-#| eval: true
+# for a list with two datasets, we'll use the `"Space Launches"` data
 ttd2 <- load_tt_data("Space Launches")
 purrr::map(.x = ttd2, .f = attr, "clean_title")
-```
-
-### Three datasets (`ttd3`)
-
-`"Moore's Law"` contains three datasets: 
-
-```{r}
-#| label: ttd3_moores_law
-#| eval: true
+# "Moore's Law" contains three datasets
 ttd3 <- load_tt_data("Moore’s Law")
-str(ttd3)
-```
-
-```{r}
 purrr::map(.x = ttd3, .f = attr, "clean_title")
-```
-
-### Many datasets (`ttd_many`)
-
-Finally, we'll download the `"LEGO database"` data with 12 datasets into the `ttd_many` list:
-
-```{r}
-#| label: ttd_many_lego_database
-#| eval: true
+# finally, we'll download the "LEGO database" data with 12 datasets into the
+# ttd_many list:
 ttd_many <- load_tt_data("LEGO database")
 purrr::map(.x = ttd_many, .f = attr, "clean_title")
 ```
@@ -85,16 +58,16 @@ purrr::map(.x = ttd_many, .f = attr, "clean_title")
 
 The `inspect_plot()` function has the following utility functions: 
 
-### ttd_length()
+### Check length 
 
-Check the length of the `ttd3` list: 
+Check the length of the `ttd3` list with `ttd_length()`: 
 
 ```{r}
 #| label: ttd_length
 ttd_length(ttd = ttd3)
 ```
 
-### check_ttd_num_cols()
+### Check numeric columns
 
 Check if datasets have numerical columns: 
 
@@ -104,25 +77,25 @@ check_ttd_num_cols(ttd = ttd3)
 ```
   - If so, do they have two or more?
 
-### check_ttd_cat_cols()
+### Check categorical columns
 
-Check if datasets have categorical (character) columns
+Check if datasets have categorical (character) columns:
 
 ```{r}
 #| label: check_ttd_cat_cols
 check_ttd_cat_cols(ttd3)
 ```
 
-### check_ttd_list_cols()
+### Check list columns
 
-Check list columns
+Check list columns:
 
 ```{r}
 #| label: check_ttd_list_cols
 check_ttd_list_cols(ttd3)
 ```
 
-### check_ttd_log_cols()
+### Check logical columns
 
 Check logical columns:
 
@@ -131,7 +104,7 @@ Check logical columns:
 check_ttd_log_cols(ttd3)
 ```
 
-### check_ttd_date_cols()
+### Check date columns
 
 Check date columns:
 
@@ -145,22 +118,34 @@ check_ttd_date_cols(ttd3)
 These are wrapped in the `check_col_types()` function:
 
 ```{r}
-#| label: check_col_types
+#| label: check_col_types_cat
 identical( # check the
-  x = check_col_types(ttd = ttd3, type = "cat"),
-  y = check_ttd_cat_cols(ttd3)
+  x = length(check_col_types(ttd = ttd3, type = "cat")),
+  y = length(check_ttd_cat_cols(ttd3))
 )
+```
+
+```{r}
+#| label: check_col_types_date
 identical(
-  x = check_col_types(ttd = ttd3, type = "date"),
-  y = check_ttd_date_cols(ttd3)
+  x = length(check_col_types(ttd = ttd3, type = "date")),
+  y = length(check_ttd_date_cols(ttd3))
 )
+```
+
+```{r}
+#| label: check_col_types_log
 identical(
-  x = check_col_types(ttd = ttd3, type = "log"),
-  y = check_ttd_log_cols(ttd3)
+  x = length(check_col_types(ttd = ttd3, type = "log")),
+  y = length(check_ttd_log_cols(ttd3))
 )
+```
+
+```{r}
+#| label: check_col_types_num
 identical(
-  x = check_col_types(ttd = ttd3, type = "num"),
-  y = check_ttd_num_cols(ttd3)
+  x = length(check_col_types(ttd = ttd3, type = "num")),
+  y = length(check_ttd_num_cols(ttd3))
 )
 ```
 
@@ -622,19 +607,6 @@ inspectdf::inspect_cat(
   include_int = FALSE
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
-inspectdf::inspect_cat(
-  df1 = ttd_many[[2]],
-  df2 = NULL,
-  include_int = FALSE
-) |>
-  inspectdf::show_plot(text_labels = TRUE)
-inspectdf::inspect_cat(
-  df1 = ttd_many[[3]],
-  df2 = NULL,
-  include_int = FALSE
-) |>
-  inspectdf::show_plot(text_labels = TRUE)
-# ... for all datasets in ttd list
 ```
 
 
@@ -644,6 +616,8 @@ The `inspect_plot()` function will return all the relevant plots for the data co
 
 ```{r}
 #| label: inspect_plot_ttd
+#| message: true
+#| warning: true
 inspect_plot(ttd = ttd)
 ```
 
@@ -651,16 +625,22 @@ It can also return specific graphs:
 
 ```{r}
 #| label: ttd2_num
-inspect_plot(ttd = ttd2, plot = "num")
+#| message: true
+#| warning: true
+inspect_plot(ttd = ttd2, plot = "types")
 ```
 
 ```{r}
 #| label: ttd3_na
+#| message: true
+#| warning: true
 inspect_plot(ttd = ttd3, plot = "na")
 ```
 
 ```{r}
 #| label: ttd_many_types
-inspect_plot(ttd = ttd_many, plot = "types")
+#| message: true
+#| warning: true
+inspect_plot(ttd = ttd_many, plot = "num")
 ```
 
