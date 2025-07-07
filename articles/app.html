@@ -187,8 +187,7 @@ sorting, and pagination capabilities.</p>
 <div class="section level3">
 <h3 id="input-controls-1">Input Controls<a class="anchor" aria-label="anchor" href="#input-controls-1"></a>
 </h3>
-<p>The UI is wrapped in a <code><a href="https://rstudio.github.io/bslib/reference/card.html" class="external-link">bslib::card()</a></code> for consistent
-styling and visual organization:</p>
+<p>The UI function is wrapped in a <code><a href="https://rstudio.github.io/bslib/reference/card.html" class="external-link">bslib::card()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/card.html" class="external-link">card</a></span><span class="op">(</span></span>
 <span>  <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/card_body.html" class="external-link">card_body</a></span><span class="op">(</span></span>
@@ -202,24 +201,8 @@ styling and visual organization:</p>
 <span>    <span class="fu">reactable</span><span class="fu">::</span><span class="fu"><a href="https://glin.github.io/reactable/reference/reactable-shiny.html" class="external-link">reactableOutput</a></span><span class="op">(</span><span class="fu">ns</span><span class="op">(</span><span class="st">"table"</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>This creates a clean, contained interface that includes:</p>
-<ol style="list-style-type: decimal">
-<li>
-<strong>Dataset selector dropdown</strong> for choosing which
-dataset to display</li>
-<li>
-<strong>Informational text</strong> crediting the
-<code>reactable</code> package with a helpful link</li>
-<li>
-<strong>Table output container</strong> for the interactive data
-table</li>
-</ol>
-</div>
-<div class="section level3">
-<h3 id="dataset-selector-population">Dataset Selector Population<a class="anchor" aria-label="anchor" href="#dataset-selector-population"></a>
-</h3>
-<p>The server begins by populating the dataset selector with available
-datasets:</p>
+<p>The server function observes the selected <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code> list
+and populates the selector with available datasets:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fu">req</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -231,29 +214,18 @@ datasets:</p>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">bindEvent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>This observer:</p>
-<ol style="list-style-type: decimal">
-<li>
-<strong>Waits for data availability</strong> using
-<code>req(data())</code>
-</li>
-<li>
-<strong>Extracts dataset names</strong> from the reactive data</li>
-<li>
-<strong>Updates the select input</strong> with available
-choices</li>
-<li>
-<strong>Selects the first dataset</strong> by default</li>
-<li>
-<strong>Responds only to data changes</strong> via
-<code>bindEvent()</code>
-</li>
-</ol>
+<p>This observe waits for data availability with
+<code>req(data())</code>, extracts dataset names from the reactive
+<code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code>, updates the select input with available choices,
+and responds to <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code> changes via
+<code>bindEvent()</code>.</p>
 </div>
 <div class="section level3">
-<h3 id="table-rendering">Table Rendering<a class="anchor" aria-label="anchor" href="#table-rendering"></a>
+<h3 id="table-display">Table Display<a class="anchor" aria-label="anchor" href="#table-display"></a>
 </h3>
-<p>The core functionality lies in the table rendering observer:</p>
+<p>The display functionality lies in the rendering observer. This
+pattern ensures the table is re-rendered whenever the underlying
+<code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code> changes, but not on every reactive cycle.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fu">req</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -262,13 +234,18 @@ choices</li>
 <span>  <span class="op">}</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">bindEvent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>This pattern ensures the table is re-rendered whenever the underlying
-data changes, but not on every reactive cycle.</p>
-</div>
-<div class="section level3">
-<h3 id="data-processingvalidation">Data Processing/Validation<a class="anchor" aria-label="anchor" href="#data-processingvalidation"></a>
-</h3>
-<p>The table rendering includes several data processing steps:</p>
+<p>Before the table is rendered, there are several data processing
+steps:</p>
+<ol style="list-style-type: decimal">
+<li>Confirmation the data exists<br>
+</li>
+<li>The dataset input is properly selected from the <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code>
+list<br>
+</li>
+<li>The selected data is a valid data frame<br>
+</li>
+<li>Appropriate logging for debugging and monitoring</li>
+</ol>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fu">req</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -291,23 +268,11 @@ data changes, but not on every reactive cycle.</p>
 <span>  <span class="op">}</span></span>
 <span>  <span class="co"># code continues...</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<p>This validation ensures:</p>
-<ol style="list-style-type: decimal">
-<li>
-<strong>Data exists</strong> before processing</li>
-<li>
-<strong>Dataset is properly selected</strong> from the list</li>
-<li><strong>Selected data is a valid data frame</strong></li>
-<li>
-<strong>Appropriate logging</strong> for debugging and
-monitoring</li>
-</ol>
 </div>
 <div class="section level3">
-<h3 id="performance-optimization">Performance Optimization<a class="anchor" aria-label="anchor" href="#performance-optimization"></a>
+<h3 id="large-datasets">Large Datasets<a class="anchor" aria-label="anchor" href="#large-datasets"></a>
 </h3>
-<p>The module includes performance considerations for large
-datasets:</p>
+<p>Conditional logic handles large datasets:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">display_ds</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">display_ds</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span></span>
@@ -317,23 +282,8 @@ datasets:</p>
 <span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
 <span>  <span class="va">display_ds</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>This prevents performance issues by:</p>
-<ul>
-<li>
-<strong>Limiting display to 1000 rows</strong> for large
-datasets<br>
-</li>
-<li>
-<strong>Logging the limitation</strong> for user awareness<br>
-</li>
-<li>
-<strong>Maintaining full functionality</strong> for smaller
-datasets</li>
-</ul>
-</div>
-<div class="section level3">
-<h3 id="dynamic-subtitle">Dynamic Subtitle<a class="anchor" aria-label="anchor" href="#dynamic-subtitle"></a>
-</h3>
+<p>This prevents performance issues by limiting display to 1000 rows for
+large datasets and Logging the limitation for user awareness.</p>
 <p>The module creates informative subtitles based on the data
 context:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -342,20 +292,9 @@ context:</p>
 <span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"File:"</span>, <span class="va">ds_selected</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>This provides users with context about:</p>
-<ul>
-<li>
-<strong>Which dataset</strong> they’re currently viewing<br>
-</li>
-<li>
-<strong>How many total datasets</strong> are available<br>
-</li>
-<li>
-<strong>Clear file identification</strong> for reference</li>
-</ul>
 </div>
 <div class="section level3">
-<h3 id="reactable">Reactable<a class="anchor" aria-label="anchor" href="#reactable"></a>
+<h3 id="table-features">Table Features<a class="anchor" aria-label="anchor" href="#table-features"></a>
 </h3>
 <p>The module leverages <code>reactable</code>’s extensive features for
 an enhanced user experience:</p>
@@ -379,44 +318,32 @@ an enhanced user experience:</p>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>This configuration provides:</p>
-</div>
-<div class="section level3">
-<h3 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
-</h3>
 <ol style="list-style-type: decimal">
-<li>
-<strong>Search functionality</strong> across all columns</li>
-<li>
-<strong>Sortable columns</strong> for data exploration</li>
-<li>
-<strong>Pagination</strong> with customizable page sizes</li>
-<li>
-<strong>Column resizing</strong> for better data viewing</li>
-<li>
-<strong>Row highlighting</strong> for improved readability<br>
+<li>Search functionality across all columns<br>
 </li>
-<li>
-<strong>Striped rows</strong> for easier scanning</li>
-<li>
-<strong>Bordered cells</strong> for clear data separation</li>
-<li>
-<strong>Custom header styling</strong> with subtle background
-color</li>
-<li>
-<strong>Minimum column width</strong> to prevent cramped
-display</li>
-<li>
-<strong>No text wrapping</strong> to maintain clean layout<br>
+<li>Sortable columns<br>
 </li>
-<li>
-<strong>Multiple page size options</strong> (5, 10, 20, 50
-rows)<br>
+<li>Pagination (set to 10 by default)<br>
 </li>
-<li>
-<strong>Show page size selector</strong> for user preference<br>
+<li>Column resizing<br>
 </li>
-<li>
-<strong>Resizable columns</strong> for custom layouts</li>
+<li>Row highlighting<br>
+</li>
+<li>Striped rows<br>
+</li>
+<li>Bordered cells<br>
+</li>
+<li>Custom header styling with subtle background color<br>
+</li>
+<li>Minimum column width<br>
+</li>
+<li>No text wrapping to maintain clean layout<br>
+</li>
+<li>Multiple page size options (5, 10, 20, 50 rows)<br>
+</li>
+<li>Show page size selector for user preference<br>
+</li>
+<li>Resizable columns for custom layouts</li>
 </ol>
 </div>
 <div class="section level3">
@@ -462,44 +389,6 @@ information</li>
 <strong>Disables interactive features</strong> on error tables</li>
 <li><strong>Provides user-friendly error messages</strong></li>
 </ol>
-</div>
-<div class="section level3">
-<h3 id="integration-with-main-application">Integration with Main Application<a class="anchor" aria-label="anchor" href="#integration-with-main-application"></a>
-</h3>
-<p>In the main application, the module is integrated as:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># In app_ui()</span></span>
-<span><span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/nav-items.html" class="external-link">nav_panel</a></span><span class="op">(</span><span class="st">"Table"</span>, <span class="fu"><a href="../reference/mod_table_ui.html">mod_table_ui</a></span><span class="op">(</span><span class="st">"table"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># In app_server()</span></span>
-<span><span class="fu"><a href="../reference/mod_table_server.html">mod_table_server</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"table"</span>, data <span class="op">=</span> <span class="va">selected_data</span><span class="op">)</span></span></code></pre></div>
-<p>The module receives <code>selected_data</code> (a reactive containing
-TidyTuesday datasets) and provides a complete tabular interface within
-the “Table” navigation panel.</p>
-</div>
-<div class="section level3">
-<h3 id="event-driven-updates">Event-Driven Updates<a class="anchor" aria-label="anchor" href="#event-driven-updates"></a>
-</h3>
-<p>The module uses <code>bindEvent()</code> to ensure efficient
-reactivity:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
-<span>  <span class="co"># Logic here</span></span>
-<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">bindEvent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>This pattern ensures updates occur only when the underlying data
-changes, not on every reactive cycle.</p>
-</div>
-<div class="section level3">
-<h3 id="requirement-validation">Requirement Validation<a class="anchor" aria-label="anchor" href="#requirement-validation"></a>
-</h3>
-<p>Strategic use of <code>req()</code> prevents processing invalid
-states:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">req</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">req</span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">ds_input</span><span class="op">)</span></span></code></pre></div>
-<p>This ensures code only executes when all necessary inputs are
-available.</p>
 <p>This module demonstrates how to create robust, user-friendly data
 table interfaces in Shiny while maintaining clean code architecture and
 comprehensive error handling. The integration with
@@ -519,7 +408,7 @@ different types of plots across multiple datasets.</p>
 <h3 id="input-controls-2">Input Controls<a class="anchor" aria-label="anchor" href="#input-controls-2"></a>
 </h3>
 <p>The UI creates three main input controls:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">selectInput</span><span class="op">(</span></span>
 <span>  <span class="fu">ns</span><span class="op">(</span><span class="st">"dataset"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"Choose dataset:"</span>,</span>
@@ -529,7 +418,7 @@ different types of plots across multiple datasets.</p>
 <p>This dropdown allows users to select which dataset they want to
 visualize. The choices are populated dynamically based on the available
 datasets.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">checkboxGroupInput</span><span class="op">(</span></span>
 <span>  <span class="fu">ns</span><span class="op">(</span><span class="st">"plots"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"Select plot type:"</span>,</span>
@@ -552,7 +441,7 @@ analysis.</p>
 <div class="section level3">
 <h3 id="dynamic-plot-display">Dynamic Plot Display<a class="anchor" aria-label="anchor" href="#dynamic-plot-display"></a>
 </h3>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">uiOutput</span><span class="op">(</span><span class="fu">ns</span><span class="op">(</span><span class="st">"plots_ui"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>This <code>uiOutput</code> creates a dynamic container that will hold
 the actual plot outputs. The content is generated server-side based on
@@ -563,7 +452,7 @@ user selections.</p>
 </h3>
 <p>The server function begins by handling both reactive and static data
 inputs:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_r</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="fu">is.reactive</span><span class="op">(</span><span class="va">ttd</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"ttd is reactive"</span>, level <span class="op">=</span> <span class="st">"DEBUG"</span><span class="op">)</span></span>
 <span>  <span class="va">ttd</span></span>
@@ -576,9 +465,9 @@ data (from another module) or static data (passed directly). This
 flexibility is crucial for modular design.</p>
 </div>
 <div class="section level3">
-<h3 id="dataset-selector-population-1">Dataset Selector Population<a class="anchor" aria-label="anchor" href="#dataset-selector-population-1"></a>
+<h3 id="dataset-selector-population">Dataset Selector Population<a class="anchor" aria-label="anchor" href="#dataset-selector-population"></a>
 </h3>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="va">ds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu">ttd_r</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -608,7 +497,7 @@ whenever the data changes, but not on every reactive cycle.</p>
 <div class="section level3">
 <h3 id="dynamic-ui-generation">Dynamic UI Generation<a class="anchor" aria-label="anchor" href="#dynamic-ui-generation"></a>
 </h3>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">output</span><span class="op">$</span><span class="va">plots_ui</span> <span class="op">&lt;-</span> <span class="fu">renderUI</span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="fu">req</span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">dataset</span>, <span class="va">input</span><span class="op">$</span><span class="va">plots</span><span class="op">)</span></span>
@@ -636,7 +525,7 @@ containers</strong> with headers and specified dimensions 5.
 </h3>
 <p>The most complex part of the module handles the actual plot
 generation:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="va">ds_list</span> <span class="op">&lt;-</span> <span class="fu">req</span><span class="op">(</span><span class="fu">ttd_r</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -722,7 +611,7 @@ determining appropriate visualizations based on data characteristics and
 the number of datasets.</p>
 </div>
 <div class="section level3">
-<h3 id="error-handling-strategy">Error Handling Strategy<a class="anchor" aria-label="anchor" href="#error-handling-strategy"></a>
+<h3 id="error-handling-1">Error Handling<a class="anchor" aria-label="anchor" href="#error-handling-1"></a>
 </h3>
 <p>The module implements comprehensive error handling at multiple
 levels:</p>
@@ -783,7 +672,7 @@ unchanged plots</li>
 <h3 id="usage-in-the-main-application">Usage in the Main Application<a class="anchor" aria-label="anchor" href="#usage-in-the-main-application"></a>
 </h3>
 <p>In the main app, the module is integrated as:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># In app_ui()</span></span>
 <span><span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/nav-items.html" class="external-link">nav_panel</a></span><span class="op">(</span><span class="st">"Graphs"</span>, <span class="fu"><a href="../reference/mod_plot_ui.html">mod_plot_ui</a></span><span class="op">(</span><span class="st">"viz"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>

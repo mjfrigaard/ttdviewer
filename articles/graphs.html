@@ -82,17 +82,17 @@ repo.</p>
 <p><code>"Netflix Titles"</code> has a single dataset:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Netflix Titles"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:51] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:51] Successfully loaded netflix_titles.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:32] Successfully loaded netflix_titles.csv</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $netflix_titles.csv</span></span>
 <span><span class="co">#&gt; [1] "netflix_titles"</span></span>
 <span><span class="co"># for a list with two datasets, we'll use the `"Space Launches"` data</span></span>
 <span><span class="va">ttd2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Space Launches"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:51] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:51] Successfully loaded agencies.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:51] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:51] Successfully loaded launches.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:32] Successfully loaded agencies.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:32] Successfully loaded launches.csv</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd2</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $agencies.csv</span></span>
 <span><span class="co">#&gt; [1] "space_launches"</span></span>
@@ -101,12 +101,12 @@ repo.</p>
 <span><span class="co">#&gt; [1] "space_launches"</span></span>
 <span><span class="co"># "Moore's Law" contains three datasets</span></span>
 <span><span class="va">ttd3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Moore’s Law"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:51] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:51] Successfully loaded cpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:51] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:51] Successfully loaded gpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:51] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:51] Successfully loaded ram.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:32] Successfully loaded cpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:32] Successfully loaded gpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:32] Successfully loaded ram.csv</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd3</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $cpu.csv</span></span>
 <span><span class="co">#&gt; [1] "moores_law"</span></span>
@@ -119,30 +119,30 @@ repo.</p>
 <span><span class="co"># finally, we'll download the "LEGO database" data with 12 datasets into the</span></span>
 <span><span class="co"># ttd_many list:</span></span>
 <span><span class="va">ttd_many</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"LEGO database"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:51] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:51] Successfully loaded colors.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:51] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:52] Successfully loaded elements.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:52] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:52] Successfully loaded inventories.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:52] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:52] Successfully loaded inventory_minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:52] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:52] Successfully loaded inventory_parts.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:52] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:52] Successfully loaded inventory_sets.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:52] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:52] Successfully loaded minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:52] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:52] Successfully loaded part_categories.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:52] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:52] Successfully loaded part_relationships.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:52] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:52] Successfully loaded parts.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:52] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:53] Successfully loaded sets.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:50:53] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:50:53] Successfully loaded themes.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:32] Successfully loaded colors.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:32] Successfully loaded elements.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:32] Successfully loaded inventories.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:32] Successfully loaded inventory_minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:32] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:33] Successfully loaded inventory_parts.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:33] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:33] Successfully loaded inventory_sets.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:33] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:33] Successfully loaded minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:33] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:33] Successfully loaded part_categories.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:33] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:33] Successfully loaded part_relationships.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:33] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:33] Successfully loaded parts.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:33] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:33] Successfully loaded sets.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:53:33] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:53:33] Successfully loaded themes.csv.gz</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd_many</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $colors.csv.gz</span></span>
 <span><span class="co">#&gt; [1] "lego_database"</span></span>
@@ -905,52 +905,52 @@ following on the dataset with the categorical column
 plots for the data contained the <code>ttd</code> list.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:29] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:29] Beginning plot type 'types'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:10] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:10] Beginning plot type 'types'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/inspect_plot_ttd-1.png" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:29] Completed plot type 'types'</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:29] Beginning plot type 'mem'</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:10] Completed plot type 'types'</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:10] Beginning plot type 'mem'</span></span></code></pre>
 <p><img src="graphs_files/figure-html/inspect_plot_ttd-2.png" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:30] Completed plot type 'mem'</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:30] Beginning plot type 'na'</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:11] Completed plot type 'mem'</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:11] Beginning plot type 'na'</span></span></code></pre>
 <p><img src="graphs_files/figure-html/inspect_plot_ttd-3.png" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:31] Completed plot type 'na'</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:31] Beginning plot type 'cor'</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:31] Completed plot type 'cor'</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:31] Beginning plot type 'imb'</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:11] Completed plot type 'na'</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:11] Beginning plot type 'cor'</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:11] Completed plot type 'cor'</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:11] Beginning plot type 'imb'</span></span></code></pre>
 <p><img src="graphs_files/figure-html/inspect_plot_ttd-4.png" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:31] Completed plot type 'imb'</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:31] Beginning plot type 'num'</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:31] Completed plot type 'num'</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:31] Beginning plot type 'cat'</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:12] Completed plot type 'imb'</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:12] Beginning plot type 'num'</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:12] Completed plot type 'num'</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:12] Beginning plot type 'cat'</span></span></code></pre>
 <p><img src="graphs_files/figure-html/inspect_plot_ttd-5.png" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:33] Completed plot type 'cat'</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:33] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:14] Completed plot type 'cat'</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:14] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <p>It can also return specific graphs:</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd2</span>, plot <span class="op">=</span> <span class="st">"types"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:36] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:36] Beginning plot type 'types'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:17] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:17] Beginning plot type 'types'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/ttd2_num-1.png" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:36] Completed plot type 'types'</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:36] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:17] Completed plot type 'types'</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:17] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd3</span>, plot <span class="op">=</span> <span class="st">"na"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:37] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:37] Beginning plot type 'na'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:18] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:18] Beginning plot type 'na'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/ttd3_na-1.png" width="80%" style="display: block; margin: auto;"><img src="graphs_files/figure-html/ttd3_na-2.png" width="80%" style="display: block; margin: auto;"><img src="graphs_files/figure-html/ttd3_na-3.png" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:38] Completed plot type 'na'</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:38] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:19] Completed plot type 'na'</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:19] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd_many</span>, plot <span class="op">=</span> <span class="st">"num"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:40] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2025-07-05 06:51:40] Beginning plot type 'num'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:21] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2025-07-07 16:54:21] Beginning plot type 'num'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/ttd_many_types-1.png" width="80%" style="display: block; margin: auto;"><img src="graphs_files/figure-html/ttd_many_types-2.png" width="80%" style="display: block; margin: auto;"><img src="graphs_files/figure-html/ttd_many_types-3.png" width="80%" style="display: block; margin: auto;"><img src="graphs_files/figure-html/ttd_many_types-4.png" width="80%" style="display: block; margin: auto;"><img src="graphs_files/figure-html/ttd_many_types-5.png" width="80%" style="display: block; margin: auto;"><img src="graphs_files/figure-html/ttd_many_types-6.png" width="80%" style="display: block; margin: auto;"><img src="graphs_files/figure-html/ttd_many_types-7.png" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:48] Completed plot type 'num'</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-05 06:51:48] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:29] Completed plot type 'num'</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-07 16:54:29] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
