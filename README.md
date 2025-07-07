@@ -1,14 +1,33 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ttdviewer
+# TidyTuesday data viewer
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The goal of `ttdviewer` is to demonstrate various examples of
-downloadable reports from Shiny applications.
+`ttdviewer` is an Shiny app-package[^1] for viewing the data from the
+[`#TidyTuesday`](https://github.com/rfordatascience/tidytuesday)
+project. This package started out as a small application to demonstrate
+various examples of downloadable reports (R Markdown, Quarto, etc.), but
+it’s grown to include additional features:
+
+1.  The data are loaded directly from GitHub (i.e., this package does
+    not use the
+    [`tidytuesdayR`](https://dslc-io.github.io/tidytuesdayR/) or
+    [`ttmeta`](https://r4ds.github.io/ttmeta/) packages).
+2.  The returned object is visible as a list on the first `nav_panel()`
+    via the [`listviewerlite`
+    package](https://long39ng.github.io/listviewerlite/).  
+3.  The data are visible as a table compliments of the [`reactable`
+    package](https://glin.github.io/reactable/) in the second
+    `nav_panel()`.  
+4.  Data visualizations from the [`inspectdf`
+    package](https://alastairrushworth.com/inspectdf/) ‘*summarise
+    missingness, categorical levels, numeric distribution, correlation,
+    column types and memory usage*’ are available on the third
+    `nav_panel()`.
 
 ## Installation
 
@@ -20,9 +39,14 @@ You can install the development version of `ttdviewer` from
 pak::pak("mjfrigaard/ttdviewer")
 ```
 
-## Launch apps
+## Launch app
+
+Launch the application using the standalone app function below:
 
 ``` r
 library(ttdviewer)
 launch()
 ```
+
+[^1]: An R package containing a Shiny application. Read more
+    [here](https://mastering-shiny.org/scaling-packaging.html).

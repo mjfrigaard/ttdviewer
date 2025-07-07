@@ -78,5 +78,3 @@ unlink(qmd_temp)
 
 The download handler (`downloadHandler()`) can be paired with any download UI function (`downloadButton()` or `downloadLink()`).
 
-### Rendering with parameters 
-

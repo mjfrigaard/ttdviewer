@@ -173,7 +173,7 @@ The `mod_table` module is a Shiny module that provides interactive data table fu
 
 ### Input Controls
 
-The UI is wrapped in a `bslib::card()` for consistent styling and visual organization:
+The UI function is wrapped in a `bslib::card()`:
 
 ```{r}
 #| eval: false
@@ -192,15 +192,7 @@ bslib::card(
 )
 ```
 
-This creates a clean, contained interface that includes:
-
-1. **Dataset selector dropdown** for choosing which dataset to display
-2. **Informational text** crediting the `reactable` package with a helpful link
-3. **Table output container** for the interactive data table
-
-### Dataset Selector Population
-
-The server begins by populating the dataset selector with available datasets:
+The server function observes the selected `data()` list and populates the selector with available datasets:
 
 ```{r}
 #| eval: false
@@ -217,17 +209,11 @@ observe({
   bindEvent(data())
 ```
 
-This observer:
+This observe waits for data availability with `req(data())`, extracts dataset names from the reactive `data()`, updates the select input with available choices, and responds to `data()` changes via `bindEvent()`.
 
-1. **Waits for data availability** using `req(data())`
-2. **Extracts dataset names** from the reactive data
-3. **Updates the select input** with available choices
-4. **Selects the first dataset** by default
-5. **Responds only to data changes** via `bindEvent()`
+### Table Display 
 
-### Table Rendering 
-
-The core functionality lies in the table rendering observer:
+The display functionality lies in the rendering observer. This pattern ensures the table is re-rendered whenever the underlying `data()` changes, but not on every reactive cycle.
 
 ```{r}
 #| eval: false
@@ -241,11 +227,12 @@ observe({
   bindEvent(data())
 ```
 
-This pattern ensures the table is re-rendered whenever the underlying data changes, but not on every reactive cycle.
+Before the table is rendered, there are  several data processing steps:
 
-### Data Processing/Validation
-
-The table rendering includes several data processing steps:
+1. Confirmation the data exists   
+2. The dataset input is properly selected from the `data()` list    
+3. The selected data is a valid data frame    
+4. Appropriate logging for debugging and monitoring
 
 ```{r}
 #| eval: false
@@ -273,16 +260,9 @@ tryCatch({
 })
 ```
 
-This validation ensures:
+### Large Datasets
 
-1. **Data exists** before processing
-2. **Dataset is properly selected** from the list
-3. **Selected data is a valid data frame**
-4. **Appropriate logging** for debugging and monitoring
-
-### Performance Optimization
-
-The module includes performance considerations for large datasets:
+Conditional logic handles large datasets:
 
 ```{r}
 #| eval: false
@@ -297,13 +277,7 @@ display_ds <- if (nrow(display_ds) > 1000) {
 }
 ```
 
-This prevents performance issues by:
-
-- **Limiting display to 1000 rows** for large datasets    
-- **Logging the limitation** for user awareness     
-- **Maintaining full functionality** for smaller datasets     
-
-### Dynamic Subtitle 
+This prevents performance issues by limiting display to 1000 rows for large datasets and Logging the limitation for user awareness.    
 
 The module creates informative subtitles based on the data context:
 
@@ -317,13 +291,8 @@ subtitle <- if (length(ds_list) > 1) {
 }
 ```
 
-This provides users with context about:   
 
-- **Which dataset** they're currently viewing     
-- **How many total datasets** are available     
-- **Clear file identification** for reference       
-
-### Reactable 
+### Table Features 
 
 The module leverages `reactable`'s extensive features for an enhanced user experience:
 
@@ -352,21 +321,19 @@ reactable::reactable(
 
 This configuration provides:
 
-### Features 
-
-1. **Search functionality** across all columns
-2. **Sortable columns** for data exploration
-3. **Pagination** with customizable page sizes
-4. **Column resizing** for better data viewing
-5. **Row highlighting** for improved readability  
-6. **Striped rows** for easier scanning
-7. **Bordered cells** for clear data separation
-8. **Custom header styling** with subtle background color
-9. **Minimum column width** to prevent cramped display
-10. **No text wrapping** to maintain clean layout   
-11. **Multiple page size options** (5, 10, 20, 50 rows)   
-12.  **Show page size selector** for user preference    
-13. **Resizable columns** for custom layouts    
+1. Search functionality across all columns    
+2. Sortable columns   
+3. Pagination (set to 10 by default)    
+4. Column resizing    
+5. Row highlighting     
+6. Striped rows     
+7. Bordered cells     
+8. Custom header styling with subtle background color   
+9. Minimum column width   
+10. No text wrapping to maintain clean layout    
+11. Multiple page size options (5, 10, 20, 50 rows)     
+12.  Show page size selector for user preference     
+13. Resizable columns for custom layouts      
 
 ### Error Handling
 
@@ -415,49 +382,6 @@ The server error handling:
 3. **Disables interactive features** on error tables
 4. **Provides user-friendly error messages**
 
-### Integration with Main Application
-
-In the main application, the module is integrated as:
-
-```{r}
-#| eval: false
-#| code-fold: false
-# In app_ui()
-bslib::nav_panel("Table", mod_table_ui("table"))
-
-# In app_server()
-mod_table_server(id = "table", data = selected_data)
-```
-
-The module receives `selected_data` (a reactive containing TidyTuesday datasets) and provides a complete tabular interface within the "Table" navigation panel.
-
-### Event-Driven Updates
-
-The module uses `bindEvent()` to ensure efficient reactivity:
-
-```{r}
-#| eval: false
-#| code-fold: false
-observe({
-  # Logic here
-}) |>
-  bindEvent(data())
-```
-
-This pattern ensures updates occur only when the underlying data changes, not on every reactive cycle.
-
-### Requirement Validation
-
-Strategic use of `req()` prevents processing invalid states:
-
-```{r}
-#| eval: false
-#| code-fold: false
-req(data())
-req(input$ds_input)
-```
-
-This ensures code only executes when all necessary inputs are available.
 
 This module demonstrates how to create robust, user-friendly data table interfaces in Shiny while maintaining clean code architecture and comprehensive error handling. The integration with `reactable` provides powerful data exploration capabilities while the modular design ensures easy integration into larger applications.
 
@@ -651,7 +575,7 @@ The module interfaces with the `inspect_plot()` utility function, which uses the
 
 The `inspect_plot()` function handles the complexity of determining appropriate visualizations based on data characteristics and the number of datasets.
 
-### Error Handling Strategy
+### Error Handling
 
 The module implements comprehensive error handling at multiple levels:
 
