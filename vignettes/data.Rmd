@@ -1,6 +1,9 @@
 ---
 title: "Data"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
 vignette: >
   %\VignetteIndexEntry{Data}
   %\VignetteEngine{knitr::rmarkdown}
@@ -20,28 +23,129 @@ knitr::opts_chunk$set(
 
 ```{r}
 #| label: package
+#| warning: false 
+#| message: false
 library(ttdviewer)
 library(dplyr)
 library(tidyr)
-library(inspectdf)
-library(lobstr)
+library(ttmeta)
 ```
 
 
-The goal of `ttdviewer` is to demonstrate how to use parameterized reports (R Markdown and/or Quarto) in Shiny applications. This document covers the TidyTuesday data used in the application. '*all you need to know to download reports from your Shiny app.*'
+This document covers the `#TidyTuesday` data used in the application.
 
-## TidyTuesday data 
+## TidyTuesday R packages 
 
-The application uses [TidyTuesday data](https://github.com/rfordatascience/tidytuesday) via the [`tidytuesdayR`](https://github.com/dslc-io/tidytuesdayR) and [`ttmeta`](https://github.com/r4ds/ttmeta) packages. 
+### [tidytuesdayR](https://dslc-io.github.io/tidytuesdayR/)
 
-### GitHub URLs
-
-The `tt_github_urls` data comes from the [.csv file in TidyTuesday repo](https://github.com/rfordatascience/tidytuesday/blob/main/static/tt_data_type.csv):
+The [`tidytuesdayR`](https://dslc-io.github.io/tidytuesdayR/) package is designed for, "*providing functions to quickly import data posted to the Tidy Tuesday repository.*"
 
 ```{r}
-#| label: tt_github_urls
+library(tidytuesdayR)
+```
+
+The `tt_load()` function downloads the data using a date input. 
+
+```{r}
+#| label: tt_load
+tt_data <- tt_load("2025-07-08")
+```
+
+The downloaded object is a list, but with a few additional attributes. 
+
+```{r}
+#| label: str-tt_data
+str(tt_data)
+```
+
+### Class
+
+The `tt_data` list has it's own special class (`"tt_data"`).
+
+```{r}
+attr(tt_data, "class")
+```
+The `.tt` attribute prints the available datasets for the `date`.
+
+```{r}
+attr(tt_data, ".tt")
+```
+
+The `.tt` attribute also lists the available datasets, a `.files` dataset with file type and delim, the `.readme` (as html), and the `.date`:
+
+```{r}
+str(attr(tt_data, ".tt"))
+```
+
+#### .files
+
+The `.tt` 
+
+```{r}
+attr(tt_data, ".tt") |> 
+  attr(".files")
+```
+
+#### .readme
+
+```{r}
+attr(tt_data, ".tt") |> 
+  attr(".readme")
+```
+
+#### .date
+
+```{r}
+attr(tt_data, ".tt") |> 
+  attr(".date")
+```
+
+
+
+### [ttmeta](https://r4ds.github.io/ttmeta/)
+
+The [`ttmeta`](https://r4ds.github.io/ttmeta/) package provides, "*a summary of each weekly TidyTuesday post, information about the articles and data sources linked in those posts, and details about the datasets themselves, including variable names and classes.*"
+
+```{r}
+library(ttmeta)
+```
+
+```{r}
+#| label: get_tt_tbl
+tt_meta <- get_tt_tbl(min_year = 2025L, max_year = this_year())
+```
+
+```{r}
+#| label: str-tt_meta
+str(tt_meta)
+```
+
+## GitHub URLs
+
+The [#TidyTuesday repository](https://github.com/rfordatascience/tidytuesday) has [a .csv file](https://github.com/rfordatascience/tidytuesday/blob/main/static/tt_data_type.csv) with the `Week`, `Date`, `year`, `data_files`, `data_type`, and `delim`: 
+
+This file is used to create the `tt_github_urls` data: 
+
+```{r}
+#| label: github_url
+tt_github_urls <- vroom::vroom(
+  file = "https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/static/tt_data_type.csv",
+  delim = ",") |>
+  # create github_url column
+  dplyr::mutate(
+    github_url = glue::glue(
+      "https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/{year}/{Date}/{data_files}"
+    )
+  ) |>
+  # clean names
+  dplyr::rename(
+    week = Week,
+    date = Date
+  ) 
 dplyr::glimpse(tt_github_urls)
 ```
+
+The `tt_github_urls` data comes from the [.csv file in TidyTuesday repo](https://github.com/rfordatascience/tidytuesday/blob/main/static/tt_data_type.csv):
 
 ### All TidyTuesday Data 
 
