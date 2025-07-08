@@ -23,73 +23,22 @@ knitr::opts_chunk$set(
 library(ttdviewer)
 library(listviewerlite)
 library(lobstr)
-library(dplyr)
-library(tidyr)
 ```
 
+This vignette covers viewing list objects in the `ttdviewer` package.
 
-## List objects
+## List object
 
-Below we'll define an `example_list`:
+Below we'll define a list with two `#TidyTuesday` datasets and store it in  `ttd2`:
 
 ```{r}
-#| label: example_list
-#| code-fold: true
-#| code-summary: 'show/hide example_list'
-example_list <- list(
-  list(
-    id = "A",
-    level = 1,
-    vals = c(2.1, 3.3)
-  ),
-  list(
-    id = "B",
-    level = 1,
-    vals = c(1.2, 2.5, 3.1),
-    children =
-      list(
-        list(
-          id = "B1",
-          level = 2,
-          vals = 2.5
-        ),
-        list(
-          id = "B2",
-          level = 2,
-          vals = 0.8,
-          children =
-            list(
-              list(
-                id = "b21",
-                level = 3,
-                vals = 4.0
-              )
-            )
-        )
-      )
-  ),
-  list(
-    id = "C",
-    level = 1,
-    vals = c(4.2, 8.8),
-    children =
-      list(
-        list(
-          id = "C1",
-          level = 2,
-          vals = c(9.1, 4.6)
-        ),
-        list(
-          id = "C2",
-          level = 2,
-          vals = c(1.1, 3.4)
-        )
-      )
-  )
-)
+#| label: ttd2
+ttd2 <- load_tt_data("Space Launches")
 ```
 
 ### custom_tree()
+
+`custom_tree()` is a custom folder tree function made with `lobstr::tree()`:
 
 ```{r}
 #| label: custom_tree
@@ -108,33 +57,23 @@ custom_tree <- function(x = as.list(), depth = 10L, length = 50L) {
 ```
 
 ```{r}
-custom_tree(x = example_list)
+#| label: custom_tree-tdd2
+#| comment: ""
+custom_tree(x = ttd2)
 ```
 
 ### listviewerlite::listview()
 
-```{r}
-listviewerlite::listview(x = example_list)
-```
-
-## TidyTuesday data lists 
-
-### Two datasets
+The `listview()` from `listviewerlite` provides an HTML collapsible object:
 
 ```{r}
-#| label: ttd2
-ttd2 <- load_tt_data("Space Launches")
-```
-
-```{r}
-custom_tree(x = ttd2)
-```
-
-```{r}
-listviewerlite::listview(ttd2)
+#| label: listviewerlite--listview-tdd2
+listviewerlite::listview(x = ttd2)
 ```
 
 ### Three datasets
+
+Below we create a list with three `#TidyTuesday` datasets and store it in  `ttd3`:
 
 ```{r}
 #| label: ttd3
@@ -142,9 +81,12 @@ ttd3 <- load_tt_data("Moore’s Law")
 ```
 
 ```{r}
+#| label: custom_tree-tdd3
+#| comment: ""
 custom_tree(x = ttd3)
 ```
 
 ```{r}
+#| label: listviewerlite-listview-tdd3
 listviewerlite::listview(ttd3)
 ```
