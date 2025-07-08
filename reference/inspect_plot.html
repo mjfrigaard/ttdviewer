@@ -80,79 +80,79 @@ appropriate inspection plots based on data characteristics and number of dataset
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ttd</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Moore’s Law"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:37] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:37] Successfully loaded cpu.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:37] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:37] Successfully loaded gpu.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:37] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:37] Successfully loaded ram.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:56] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:18:56] Successfully loaded cpu.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:56] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:18:56] Successfully loaded gpu.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:56] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:18:56] Successfully loaded ram.csv</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate all plots</span></span></span>
 <span class="r-in"><span><span class="fu">inspect_plot</span><span class="op">(</span><span class="va">ttd</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:37] inspect_plot(): starting analysis</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:37] Beginning plot type 'types'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:56] inspect_plot(): starting analysis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:56] Beginning plot type 'types'</span>
 <span class="r-plt img"><img src="inspect_plot-1.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-2.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-3.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:37] Completed plot type 'types'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:37] Beginning plot type 'mem'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:18:57] Completed plot type 'types'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:57] Beginning plot type 'mem'</span>
 <span class="r-plt img"><img src="inspect_plot-4.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-5.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-6.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:38] Completed plot type 'mem'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:38] Beginning plot type 'na'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:18:57] Completed plot type 'mem'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:57] Beginning plot type 'na'</span>
 <span class="r-plt img"><img src="inspect_plot-7.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-8.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-9.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:38] Completed plot type 'na'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:38] Beginning plot type 'cor'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:18:57] Completed plot type 'na'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:57] Beginning plot type 'cor'</span>
 <span class="r-plt img"><img src="inspect_plot-10.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-11.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-12.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:39] Completed plot type 'cor'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:39] Beginning plot type 'imb'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:18:58] Completed plot type 'cor'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:58] Beginning plot type 'imb'</span>
 <span class="r-plt img"><img src="inspect_plot-13.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-14.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-15.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:39] Completed plot type 'imb'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:39] Beginning plot type 'num'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:18:58] Completed plot type 'imb'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:58] Beginning plot type 'num'</span>
 <span class="r-plt img"><img src="inspect_plot-16.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-17.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-18.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:40] Completed plot type 'num'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:40] Beginning plot type 'cat'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:18:59] Completed plot type 'num'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:18:59] Beginning plot type 'cat'</span>
 <span class="r-plt img"><img src="inspect_plot-19.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-20.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-21.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:41] Completed plot type 'cat'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:41] inspect_plot(): all requested plots finished</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:19:00] Completed plot type 'cat'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:19:00] inspect_plot(): all requested plots finished</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate only specific plots</span></span></span>
 <span class="r-in"><span><span class="fu">inspect_plot</span><span class="op">(</span><span class="va">ttd</span>, plot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"types"</span>, <span class="st">"mem"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:41] inspect_plot(): starting analysis</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:41] Beginning plot type 'types'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:19:00] inspect_plot(): starting analysis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:19:00] Beginning plot type 'types'</span>
 <span class="r-plt img"><img src="inspect_plot-22.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-23.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-24.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:41] Completed plot type 'types'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:41] Beginning plot type 'mem'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:19:01] Completed plot type 'types'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:19:01] Beginning plot type 'mem'</span>
 <span class="r-plt img"><img src="inspect_plot-25.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-26.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-27.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:41] Completed plot type 'mem'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:41] inspect_plot(): all requested plots finished</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:19:01] Completed plot type 'mem'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:19:01] inspect_plot(): all requested plots finished</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate single plot type</span></span></span>
 <span class="r-in"><span><span class="fu">inspect_plot</span><span class="op">(</span><span class="va">ttd</span>, plot <span class="op">=</span> <span class="st">"cor"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:41] inspect_plot(): starting analysis</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 15:20:41] Beginning plot type 'cor'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:19:01] inspect_plot(): starting analysis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-08 17:19:01] Beginning plot type 'cor'</span>
 <span class="r-plt img"><img src="inspect_plot-28.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-29.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="inspect_plot-30.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:42] Completed plot type 'cor'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 15:20:42] inspect_plot(): all requested plots finished</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:19:01] Completed plot type 'cor'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-08 17:19:01] inspect_plot(): all requested plots finished</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
