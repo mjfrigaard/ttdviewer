@@ -72,8 +72,7 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/ttdviewer/">ttdviewer</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ttmeta</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in library(ttmeta): there is no package called 'ttmeta'</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r4ds/ttmeta" class="external-link">ttmeta</a></span><span class="op">)</span></span></code></pre></div>
 <p>This document covers the <code>#TidyTuesday</code> data used in the
 application.</p>
 <div class="section level2">
@@ -87,18 +86,73 @@ application.</p>
 package is designed for, “<em>providing functions to quickly import data
 posted to the Tidy Tuesday repository.</em>”</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dslc-io.github.io/tidytuesdayR/" class="external-link">tidytuesdayR</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in library(tidytuesdayR): there is no package called 'tidytuesdayR'</span></span></code></pre></div>
-<p>The <code>tt_load()</code> function downloads the data using a date
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dslc-io.github.io/tidytuesdayR/" class="external-link">tidytuesdayR</a></span><span class="op">)</span></span></code></pre></div>
+<p>The <code><a href="https://dslc-io.github.io/tidytuesdayR/reference/tt_load.html" class="external-link">tt_load()</a></code> function downloads the data using a date
 input.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tt_data</span> <span class="op">&lt;-</span> <span class="fu">tt_load</span><span class="op">(</span><span class="st">"2025-07-08"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in tt_load("2025-07-08"): could not find function "tt_load"</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tt_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dslc-io.github.io/tidytuesdayR/reference/tt_load.html" class="external-link">tt_load</a></span><span class="op">(</span><span class="st">"2025-07-08"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ---- Compiling #TidyTuesday Information for 2025-07-08 ----</span></span>
+<span><span class="co">#&gt; --- There are 3 files available ---</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Downloading files</span> <span style="color: #00BBBB;">───────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   1 of 3: <span style="color: #0000BB;">"answers.csv"</span></span></span>
+<span><span class="co">#&gt;   2 of 3: <span style="color: #0000BB;">"color_ranks.csv"</span></span></span>
+<span><span class="co">#&gt;   3 of 3: <span style="color: #0000BB;">"users.csv"</span></span></span></code></pre></div>
 <p>The downloaded object is a list, but with a few additional
 attributes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">tt_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'tt_data' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; List of 3</span></span>
+<span><span class="co">#&gt;  $ answers    : spc_tbl_ [1,058,211 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ user_id: num [1:1058211] 1 2 2 2 2 2 2 2 4 4 ...</span></span>
+<span><span class="co">#&gt;   ..$ hex    : chr [1:1058211] "#8240EA" "#4B31EA" "#584601" "#DA239C" ...</span></span>
+<span><span class="co">#&gt;   ..$ rank   : num [1:1058211] 1 3 5 4 1 2 3 3 1 2 ...</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "spec")=</span></span>
+<span><span class="co">#&gt;   .. .. cols(</span></span>
+<span><span class="co">#&gt;   .. ..   user_id = <span style="color: #00BB00;">col_double()</span>,</span></span>
+<span><span class="co">#&gt;   .. ..   hex = <span style="color: #BB0000;">col_character()</span>,</span></span>
+<span><span class="co">#&gt;   .. ..   rank = <span style="color: #00BB00;">col_double()</span></span></span>
+<span><span class="co">#&gt;   .. .. )</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ color_ranks: spc_tbl_ [949 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ color: chr [1:949] "purple" "green" "blue" "pink" ...</span></span>
+<span><span class="co">#&gt;   ..$ rank : num [1:949] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span><span class="co">#&gt;   ..$ hex  : chr [1:949] "#7e1e9c" "#15b01a" "#0343df" "#ff81c0" ...</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "spec")=</span></span>
+<span><span class="co">#&gt;   .. .. cols(</span></span>
+<span><span class="co">#&gt;   .. ..   color = <span style="color: #BB0000;">col_character()</span>,</span></span>
+<span><span class="co">#&gt;   .. ..   rank = <span style="color: #00BB00;">col_double()</span>,</span></span>
+<span><span class="co">#&gt;   .. ..   hex = <span style="color: #BB0000;">col_character()</span></span></span>
+<span><span class="co">#&gt;   .. .. )</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ users      : spc_tbl_ [152,401 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ user_id     : num [1:152401] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span><span class="co">#&gt;   ..$ monitor     : chr [1:152401] "LCD" "LCD" "LCD" "LCD" ...</span></span>
+<span><span class="co">#&gt;   ..$ y_chromosome: num [1:152401] 1 1 1 0 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">#&gt;   ..$ colorblind  : num [1:152401] 0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;   ..$ spam_prob   : num [1:152401] 0.00209 0.07458 0.0164 0.00156 0.00238 ...</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "spec")=</span></span>
+<span><span class="co">#&gt;   .. .. cols(</span></span>
+<span><span class="co">#&gt;   .. ..   user_id = <span style="color: #00BB00;">col_double()</span>,</span></span>
+<span><span class="co">#&gt;   .. ..   monitor = <span style="color: #BB0000;">col_character()</span>,</span></span>
+<span><span class="co">#&gt;   .. ..   y_chromosome = <span style="color: #00BB00;">col_double()</span>,</span></span>
+<span><span class="co">#&gt;   .. ..   colorblind = <span style="color: #00BB00;">col_double()</span>,</span></span>
+<span><span class="co">#&gt;   .. ..   spam_prob = <span style="color: #00BB00;">col_double()</span></span></span>
+<span><span class="co">#&gt;   .. .. )</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  - attr(*, ".tt")= 'tt' chr [1:3] "answers.csv" "color_ranks.csv" "users.csv"</span></span>
+<span><span class="co">#&gt;   ..- attr(*, ".files")='data.frame':    3 obs. of  3 variables:</span></span>
+<span><span class="co">#&gt;   .. ..$ data_files: chr [1:3] "answers.csv" "color_ranks.csv" "users.csv"</span></span>
+<span><span class="co">#&gt;   .. ..$ data_type : chr [1:3] "csv" "csv" "csv"</span></span>
+<span><span class="co">#&gt;   .. ..$ delim     : chr [1:3] "," "," ","</span></span>
+<span><span class="co">#&gt;   ..- attr(*, ".readme")=List of 2</span></span>
+<span><span class="co">#&gt;   .. ..$ node:&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   .. ..$ doc :&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:2] "xml_document" "xml_node"</span></span>
+<span><span class="co">#&gt;   ..- attr(*, ".date")= Date[1:1], format: "2025-07-08"</span></span>
+<span><span class="co">#&gt;  - attr(*, "class")= chr "tt_data"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="class">Class<a class="anchor" aria-label="anchor" href="#class"></a>
@@ -107,18 +161,31 @@ attributes.</p>
 (<code>"tt_data"</code>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">tt_data</span>, <span class="st">"class"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'tt_data' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "tt_data"</span></span></code></pre></div>
 <p>The <code>.tt</code> attribute prints the available datasets for the
 <code>date</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">tt_data</span>, <span class="st">".tt"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'tt_data' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Available datasets in this TidyTuesday:</span></span>
+<span><span class="co">#&gt;  answers.csv </span></span>
+<span><span class="co">#&gt;  color_ranks.csv </span></span>
+<span><span class="co">#&gt;  users.csv </span></span>
+<span><span class="co">#&gt;  </span></span></code></pre></div>
 <p>The <code>.tt</code> attribute also lists the available datasets, a
 <code>.files</code> dataset with file type and delim, the
 <code>.readme</code> (as html), and the <code>.date</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">tt_data</span>, <span class="st">".tt"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'tt_data' not found</span></span></code></pre></div>
+<span><span class="co">#&gt;  'tt' chr [1:3] "answers.csv" "color_ranks.csv" "users.csv"</span></span>
+<span><span class="co">#&gt;  - attr(*, ".files")='data.frame':   3 obs. of  3 variables:</span></span>
+<span><span class="co">#&gt;   ..$ data_files: chr [1:3] "answers.csv" "color_ranks.csv" "users.csv"</span></span>
+<span><span class="co">#&gt;   ..$ data_type : chr [1:3] "csv" "csv" "csv"</span></span>
+<span><span class="co">#&gt;   ..$ delim     : chr [1:3] "," "," ","</span></span>
+<span><span class="co">#&gt;  - attr(*, ".readme")=List of 2</span></span>
+<span><span class="co">#&gt;   ..$ node:&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   ..$ doc :&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   ..- attr(*, "class")= chr [1:2] "xml_document" "xml_node"</span></span>
+<span><span class="co">#&gt;  - attr(*, ".date")= Date[1:1], format: "2025-07-08"</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="files">.files<a class="anchor" aria-label="anchor" href="#files"></a>
 </h4>
@@ -126,7 +193,10 @@ attributes.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">tt_data</span>, <span class="st">".tt"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="st">".files"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'tt_data' not found</span></span></code></pre></div>
+<span><span class="co">#&gt;        data_files data_type delim</span></span>
+<span><span class="co">#&gt; 1     answers.csv       csv     ,</span></span>
+<span><span class="co">#&gt; 2 color_ranks.csv       csv     ,</span></span>
+<span><span class="co">#&gt; 3       users.csv       csv     ,</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="readme">.readme<a class="anchor" aria-label="anchor" href="#readme"></a>
@@ -134,7 +204,9 @@ attributes.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">tt_data</span>, <span class="st">".tt"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="st">".readme"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'tt_data' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; {html_document}</span></span>
+<span><span class="co">#&gt; &lt;html&gt;</span></span>
+<span><span class="co">#&gt; [1] &lt;body&gt;&lt;div id="file" class="md" data-path="data/2025/2025-07-08/readme.md ...</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="date">.date<a class="anchor" aria-label="anchor" href="#date"></a>
@@ -142,7 +214,7 @@ attributes.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">tt_data</span>, <span class="st">".tt"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="st">".date"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'tt_data' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2025-07-08"</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -155,14 +227,74 @@ information about the articles and data sources linked in those posts,
 and details about the datasets themselves, including variable names and
 classes.</em>”</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ttmeta</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in library(ttmeta): there is no package called 'ttmeta'</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r4ds/ttmeta" class="external-link">ttmeta</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tt_meta</span> <span class="op">&lt;-</span> <span class="fu">get_tt_tbl</span><span class="op">(</span>min_year <span class="op">=</span> <span class="fl">2025L</span>, max_year <span class="op">=</span> <span class="fu">this_year</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in get_tt_tbl(min_year = 2025L, max_year = this_year()): could not find function "get_tt_tbl"</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tt_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r4ds.github.io/ttmeta/reference/get_tt_tbl.html" class="external-link">get_tt_tbl</a></span><span class="op">(</span>min_year <span class="op">=</span> <span class="fl">2025L</span>, max_year <span class="op">=</span> <span class="fu"><a href="https://r4ds.github.io/ttmeta/reference/this_year.html" class="external-link">this_year</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">tt_meta</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'tt_meta' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; tt_tbl [27 × 8] (S3: tt_tbl/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ year         : int [1:27] 2025 2025 2025 2025 2025 2025 2025 2025 2025 2025 ...</span></span>
+<span><span class="co">#&gt;  $ week         : int [1:27] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span><span class="co">#&gt;  $ date         : Date[1:27], format: "2025-01-07" "2025-01-14" ...</span></span>
+<span><span class="co">#&gt;  $ title        : chr [1:27] "Bring your own data from 2024!" "posit::conf talks" "The History of Himalayan Mountaineering Expeditions" "Water Insecurity" ...</span></span>
+<span><span class="co">#&gt;  $ source_title : chr [1:27] "NA" "posit::conf attendee portal 2023, posit::conf attendee portal 2024" "The Himalayan Database" "US Census Data from tidycensus" ...</span></span>
+<span><span class="co">#&gt;  $ source_urls  :List of 27</span></span>
+<span><span class="co">#&gt;   ..$ : chr(0) </span></span>
+<span><span class="co">#&gt;   ..$ : chr [1:2] "https://reg.conf.posit.co/flow/posit/positconf23/attendee-portal/page/sessioncatalog" "https://reg.conf.posit.co/flow/posit/positconf24/attendee-portal/page/sessioncatalog"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.himalayandatabase.com/downloads.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://cran.r-project.org/package=tidycensus"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.kaggle.com/datasets/prashant111/the-simpsons-dataset"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://archive.org/details/20250128-cdc-datasets"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.ajog.org/article/S0002-9378(24)00775-0/fulltext"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://data.longbeach.gov/explore/dataset/animal-shelter-intakes-and-outcomes/information/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://erictleung.com/pixarfilms/index.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://github.com/EmilHvitfeldt/palmtrees"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://ir.aboutamazon.com/annual-reports-proxies-and-shareholder-letters/default.aspx"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://github.com/williamorim/pokemon/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://data.cms.gov/provider-data/dataset/apyc-v239"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.r-project.org/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://osf.io/qnrg6/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://user2025.r-project.org/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://grant-watch.us/nsf-data.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.ingv.it/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr [1:2] "https://www.beachwatch.nsw.gov.au/waterMonitoring/waterQualityData" "https://open-meteo.com/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.dndbeyond.com/srd"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://docs.ropensci.org/gutenbergr/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://github.com/ropensci/historydata"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://apis.guru"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://immunizationdata.who.int/global?topic=Provisional-measles-and-rubella-data&amp;location="</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.eia.gov/dnav/pet/xls/PET_PRI_GND_DCUS_NUS_W.xls"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://xkcd.com/color/colorsurvey.tar.gz"</span></span>
+<span><span class="co">#&gt;  $ article_title: chr [1:27] "NA" "posit::conf(2025) in-person registration is now open!" "The Expedition Archives of Elizabeth Hawley" "Mapping water insecurity in R with tidycensus" ...</span></span>
+<span><span class="co">#&gt;  $ article_urls :List of 27</span></span>
+<span><span class="co">#&gt;   ..$ : chr(0) </span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://posit.co/blog/positconf2025-in-person-registration-is-now-open/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.himalayandatabase.com/index.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://waterdata.usgs.gov/blog/acs-maps/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://toddwschneider.com/posts/the-simpsons-by-the-data/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.npr.org/sections/shots-health-news/2025/01/31/nx-s1-5282274/trump-administration-purges-health-websites"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://le.fbi.gov/cjis-division/cjis-link/uniform-crime-reporting-program-still-vital-after-90-years-"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://katcorr.github.io/this-art-is-HARD/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.longbeach.gov/press-releases/long-beach-animal-care-services-hits-highest-adoption-rate-ever-surpas"| __truncated__</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://erictleung.com/pixarfilms/articles/pixar_film_ratings.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.nature.com/articles/s41597-019-0189-0"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://gregoryvdvinne.github.io/Text-Mining-Amazon-Budgets.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://medium.com/@hanahshih46/pokemon-data-visualization-and-analysis-with-r-60970c8e37f4"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.visualcapitalist.com/mapped-emergency-room-visit-times-by-state/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://zenodo.org/records/14902740"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://osf.io/preprints/osf/tzcsy_v1"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://user2025.r-project.org/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.nytimes.com/2025/04/22/science/trump-national-science-foundation-grants.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.ingv.it/somma-vesuvio"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.abc.net.au/news/2025-01-10/pollution-risks-in-sydney-beaches-contaminated-waterways-rain/104790856"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.dndbeyond.com/posts/1949-you-can-now-publish-your-own-creations-using-the"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.gutenberg.org/about/background/50years.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://ropensci.org/blog/2023/02/07/what-does-it-mean-to-maintain-a-package/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://dslc-io.github.io/club-wapir/slides/intro.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://abcnews.go.com/Health/measles-cases-reach-1046-us-infections-confirmed-30/story?id=122108194"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.eia.gov/petroleum/gasdiesel/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://blog.xkcd.com/2010/05/03/color-survey-results/"</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -214,7 +346,7 @@ file in TidyTuesday repo</a>:</p>
 <h3 id="all-tidytuesday-data">All TidyTuesday Data<a class="anchor" aria-label="anchor" href="#all-tidytuesday-data"></a>
 </h3>
 <p>The <code>all_tt_data.rda</code> dataset contains all years (2018 -
-current) from the <code>ttmeta::get_tt_tbl()</code> function. This
+current) from the <code><a href="https://r4ds.github.io/ttmeta/reference/get_tt_tbl.html" class="external-link">ttmeta::get_tt_tbl()</a></code> function. This
 datasets contain the following columns:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">all_tt_data</span><span class="op">)</span></span>
@@ -316,8 +448,8 @@ GitHub repo.</p>
 <code>ttd</code> with a single element:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Netflix Titles"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:49] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:49] Successfully loaded netflix_titles.csv</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:06] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:06] Successfully loaded netflix_titles.csv</span></span></code></pre></div>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd</span><span class="op">)</span></span>
 <span><span class="va">ttd_nms</span></span>
@@ -336,10 +468,10 @@ dataset back to <code>all_tt_combined</code> or
 name position:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Space Launches"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:49] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:50] Successfully loaded agencies.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:50] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:50] Successfully loaded launches.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:06] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:06] Successfully loaded agencies.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:06] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:06] Successfully loaded launches.csv</span></span>
 <span><span class="co"># store names </span></span>
 <span><span class="va">ttd2_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd2</span><span class="op">)</span></span>
 <span><span class="co"># check attr</span></span>
@@ -395,12 +527,12 @@ name position:</p>
 each element in the list:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Moore’s Law"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:50] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:50] Successfully loaded cpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:50] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:50] Successfully loaded gpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:50] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:50] Successfully loaded ram.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:07] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:07] Successfully loaded cpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:07] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:07] Successfully loaded gpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:07] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:07] Successfully loaded ram.csv</span></span>
 <span><span class="va">ttd3_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">)</span></span>
 <span><span class="co"># attr</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd3</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
@@ -452,30 +584,30 @@ each element in the list:</p>
 <p>If there are more than two datasets, the same rules apply.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_many</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"LEGO database"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:50] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:50] Successfully loaded colors.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:50] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:50] Successfully loaded elements.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:50] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:50] Successfully loaded inventories.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:50] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:50] Successfully loaded inventory_minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:50] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:51] Successfully loaded inventory_parts.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:51] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:51] Successfully loaded inventory_sets.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:51] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:51] Successfully loaded minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:51] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:51] Successfully loaded part_categories.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:51] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:51] Successfully loaded part_relationships.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:51] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:51] Successfully loaded parts.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:51] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:51] Successfully loaded sets.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:51] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-07 21:39:51] Successfully loaded themes.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:07] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:07] Successfully loaded colors.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:07] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:07] Successfully loaded elements.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:07] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:07] Successfully loaded inventories.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:07] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:07] Successfully loaded inventory_minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:07] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:08] Successfully loaded inventory_parts.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:08] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:08] Successfully loaded inventory_sets.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:08] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:08] Successfully loaded minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:08] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:08] Successfully loaded part_categories.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:08] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:08] Successfully loaded part_relationships.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:08] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:08] Successfully loaded parts.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:08] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:08] Successfully loaded sets.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:08] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 15:21:09] Successfully loaded themes.csv.gz</span></span>
 <span><span class="va">ttd_many_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd_many</span><span class="op">)</span></span>
 <span><span class="co"># check attr</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd_many</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
@@ -523,8 +655,8 @@ each element in the list:</p>
 columns in each dataset in a <code>ttd</code> list.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:51] Datasets in list: netflix_titles.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:51] Created metadata tibble with 14 rows covering 1 datasets</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:09] Datasets in list: netflix_titles.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:09] Created metadata tibble with 14 rows covering 1 datasets</span></span>
 <span><span class="va">ttd_meta</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 × 4</span></span></span>
 <span><span class="co">#&gt;    clean_title    dataset            col          col_type </span></span>
@@ -554,8 +686,8 @@ columns in each dataset in a <code>ttd</code> list.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> netflix_titles netflix_titles.csv character       11</span></span></code></pre></div>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd2_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:52] Datasets in list: agencies.csv, launches.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:52] Created metadata tibble with 33 rows covering 2 datasets</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:09] Datasets in list: agencies.csv, launches.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:09] Created metadata tibble with 33 rows covering 2 datasets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd2_meta</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   clean_title    dataset      col        col_type </span></span>
@@ -568,8 +700,8 @@ columns in each dataset in a <code>ttd</code> list.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> space_launches agencies.csv type       character</span></span></code></pre></div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd3_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:52] Datasets in list: cpu.csv, gpu.csv, ram.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:52] Created metadata tibble with 30 rows covering 3 datasets</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:09] Datasets in list: cpu.csv, gpu.csv, ram.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:09] Created metadata tibble with 30 rows covering 3 datasets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd3_meta</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   clean_title dataset col                  col_type </span></span>
@@ -582,8 +714,8 @@ columns in each dataset in a <code>ttd</code> list.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> moores_law  cpu.csv processor            character</span></span></code></pre></div>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_many_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd_many</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:52] Datasets in list: colors.csv.gz, elements.csv.gz, inventories.csv.gz, inventory_minifigs.csv.gz, inventory_parts.csv.gz, inventory_sets.csv.gz, minifigs.csv.gz, part_categories.csv.gz, part_relationships.csv.gz, parts.csv.gz, sets.csv.gz, themes.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-07 21:39:52] Created metadata tibble with 67 rows covering 12 datasets</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:09] Datasets in list: colors.csv.gz, elements.csv.gz, inventories.csv.gz, inventory_minifigs.csv.gz, inventory_parts.csv.gz, inventory_sets.csv.gz, minifigs.csv.gz, part_categories.csv.gz, part_relationships.csv.gz, parts.csv.gz, sets.csv.gz, themes.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 15:21:09] Created metadata tibble with 67 rows covering 12 datasets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd_many_meta</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   clean_title   dataset         col        col_type </span></span>
