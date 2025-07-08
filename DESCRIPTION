@@ -8,6 +8,7 @@ Authors@R:
 Description: A Shiny application with modular design that demonstrates
     downloadable data and scientific reports.
 License: MIT + file LICENSE
+URL: https://mjfrigaard.github.io/ttdviewer/
 Depends: 
     R (>= 3.5)
 Imports:
@@ -18,6 +19,7 @@ Imports:
     gt,
     inspectdf,
     knitr,
+    listviewerlite,
     logger,
     purrr,
     quarto,
@@ -33,7 +35,6 @@ Imports:
     yaml
 Suggests: 
     crayon,
-    listviewerlite,
     lobstr,
     testthat (>= 3.0.0),
     tidyr,
@@ -46,4 +47,3 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-URL: https://mjfrigaard.github.io/ttdviewer/

@@ -36,13 +36,13 @@ Below we'll define a list with two `#TidyTuesday` datasets and store it in  `ttd
 ttd2 <- load_tt_data("Space Launches")
 ```
 
-### custom_tree()
+### ctr()
 
-`custom_tree()` is a custom folder tree function made with `lobstr::tree()`:
+`ctr()` is a custom folder tree function made with `lobstr::tree()`:
 
 ```{r}
-#| label: custom_tree
-custom_tree <- function(x = as.list(), depth = 10L, length = 50L) {
+#| label: ctr
+ctr <- function(x = as.list(), depth = 10L, length = 50L) {
   lobstr::tree(x,
     max_depth = depth,
     max_length = length,
@@ -57,9 +57,9 @@ custom_tree <- function(x = as.list(), depth = 10L, length = 50L) {
 ```
 
 ```{r}
-#| label: custom_tree-tdd2
+#| label: ctr-tdd2
 #| comment: ""
-custom_tree(x = ttd2)
+ctr(x = ttd2)
 ```
 
 ### listviewerlite::listview()
@@ -81,9 +81,9 @@ ttd3 <- load_tt_data("Moore’s Law")
 ```
 
 ```{r}
-#| label: custom_tree-tdd3
+#| label: ctr-tdd3
 #| comment: ""
-custom_tree(x = ttd3)
+ctr(x = ttd3)
 ```
 
 ```{r}

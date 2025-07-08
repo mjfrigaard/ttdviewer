@@ -1770,6 +1770,31 @@
       "Maintainer": "Lionel Henry <lionel@posit.co>",
       "Repository": "RSPM"
     },
+    "listviewerlite": {
+      "Package": "listviewerlite",
+      "Version": "0.0.0.9000",
+      "Source": "GitHub",
+      "Title": "View Nested Lists Interactively",
+      "Authors@R": "c( person(\"Long\", \"Nguyen\", , \"long.nguyen@uni-bielefeld.de\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0001-8878-7386\")), person(c(\"Kate\", \"Rose\"), \"Morley\", role = \"aut\", comment = \"CSS custom properties <https://iamkate.com/code/tree-views/>\") )",
+      "Description": "Creates a collapsible tree view of R lists using only HTML and CSS, without the need for JavaScript.",
+      "License": "MIT + file LICENSE",
+      "URL": "https://github.com/long39ng/listviewerlite, https://long39ng.github.io/listviewerlite/",
+      "BugReports": "https://github.com/long39ng/listviewerlite/issues",
+      "Imports": [
+        "htmltools (>= 0.3.4)"
+      ],
+      "Encoding": "UTF-8",
+      "Roxygen": "list(markdown = TRUE)",
+      "RoxygenNote": "7.2.3",
+      "Author": "Long Nguyen [aut, cre] (ORCID: <https://orcid.org/0000-0001-8878-7386>), Kate Rose Morley [aut] (CSS custom properties <https://iamkate.com/code/tree-views/>)",
+      "Maintainer": "Long Nguyen <long.nguyen@uni-bielefeld.de>",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "long39ng",
+      "RemoteRepo": "listviewerlite",
+      "RemoteRef": "main",
+      "RemoteSha": "bcd737c9ae12bac61196324a3d08e1a50cccd0cd"
+    },
     "litedown": {
       "Package": "litedown",
       "Version": "0.7",

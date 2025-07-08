@@ -17,6 +17,7 @@ app_ui <- function() {
       mod_input_ui("input"),
       # br(),
       mod_report_input_ui("rep_form"),
+      br(),
       mod_report_desc_ui("rep_desc"),
       mod_report_download_ui("rep_dwnld"),
       tags$details(

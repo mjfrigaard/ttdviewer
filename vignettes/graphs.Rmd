@@ -24,7 +24,12 @@ knitr::opts_chunk$set(
 
 ```{r}
 #| label: package
+#| message: false 
+#| warning: false
 library(ttdviewer)
+library(inspectdf)
+library(dplyr)
+library(tidyr)
 ```
 
 Below are examples of the data visualizations using `inspectdf` in the Shiny app. 
