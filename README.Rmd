@@ -24,10 +24,11 @@ knitr::opts_chunk$set(
 
 [^1]: An R package containing a Shiny application. Read more [here](https://mastering-shiny.org/scaling-packaging.html).
 
-1. The data are loaded directly from GitHub (i.e., this package does not use the [`tidytuesdayR`](https://dslc-io.github.io/tidytuesdayR/) or [`ttmeta`](https://r4ds.github.io/ttmeta/) packages). 
+1. The data are loaded directly from GitHub (i.e., with help from the  [`tidytuesdayR`](https://dslc-io.github.io/tidytuesdayR/) and [`ttmeta`](https://r4ds.github.io/ttmeta/) packages). 
 2. The returned object is visible as a list on the first `nav_panel()` via the [`listviewerlite` package](https://long39ng.github.io/listviewerlite/).   
 3. The data are visible as a table compliments of the [`reactable` package](https://glin.github.io/reactable/) in the second `nav_panel()`.    
 4. Data visualizations from the [`inspectdf` package](https://alastairrushworth.com/inspectdf/) '*summarise missingness, categorical levels, numeric distribution, correlation, column types and memory usage*' are available on the third `nav_panel()`.    
+
 
 ## Installation
 

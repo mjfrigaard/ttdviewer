@@ -29,7 +29,9 @@ Imports:
     shiny,
     snakecase,
     tibble,
+    tidytuesdayR,
     tools,
+    ttmeta,
     vroom,
     yaml
 Suggests: 

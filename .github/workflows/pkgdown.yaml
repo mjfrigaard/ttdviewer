@@ -43,6 +43,8 @@ jobs:
           packages: |
             deps::.
             github::long39ng/listviewerlite
+            github::dslc-io/tidytuesdayR
+            github::r4ds/ttmeta
           extra-packages: any::sessioninfo, any::pkgdown
           needs: website
 

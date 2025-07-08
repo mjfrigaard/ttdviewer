@@ -13,9 +13,8 @@ project. This package started out as a small application to demonstrate
 various examples of downloadable reports (R Markdown, Quarto, etc.), but
 it’s grown to include additional features:
 
-1.  The data are loaded directly from GitHub (i.e., this package does
-    not use the
-    [`tidytuesdayR`](https://dslc-io.github.io/tidytuesdayR/) or
+1.  The data are loaded directly from GitHub (i.e., with help from the
+    [`tidytuesdayR`](https://dslc-io.github.io/tidytuesdayR/) and
     [`ttmeta`](https://r4ds.github.io/ttmeta/) packages).
 2.  The returned object is visible as a list on the first `nav_panel()`
     via the [`listviewerlite`
