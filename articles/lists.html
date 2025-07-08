@@ -38,7 +38,6 @@
     <li><a class="dropdown-item" href="../articles/graphs.html">Graphs</a></li>
     <li><a class="dropdown-item" href="../articles/lists.html">Lists</a></li>
     <li><a class="dropdown-item" href="../articles/reports.html">Reports</a></li>
-    <li><a class="dropdown-item" href="../articles/structure.html">Structure</a></li>
   </ul>
 </li>
       </ul>
@@ -71,68 +70,25 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/ttdviewer/">ttdviewer</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/long39ng/listviewerlite" class="external-link">listviewerlite</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lobstr.r-lib.org/" class="external-link">lobstr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lobstr.r-lib.org/" class="external-link">lobstr</a></span><span class="op">)</span></span></code></pre></div>
+<p>This vignette covers viewing list objects in the
+<code>ttdviewer</code> package.</p>
 <div class="section level2">
-<h2 id="list-objects">List objects<a class="anchor" aria-label="anchor" href="#list-objects"></a>
+<h2 id="list-object">List object<a class="anchor" aria-label="anchor" href="#list-object"></a>
 </h2>
-<p>Below we’ll define an <code>example_list</code>:</p>
+<p>Below we’ll define a list with two <code>#TidyTuesday</code> datasets
+and store it in <code>ttd2</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    id <span class="op">=</span> <span class="st">"A"</span>,</span>
-<span>    level <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.1</span>, <span class="fl">3.3</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    id <span class="op">=</span> <span class="st">"B"</span>,</span>
-<span>    level <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.2</span>, <span class="fl">2.5</span>, <span class="fl">3.1</span><span class="op">)</span>,</span>
-<span>    children <span class="op">=</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>          id <span class="op">=</span> <span class="st">"B1"</span>,</span>
-<span>          level <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>          vals <span class="op">=</span> <span class="fl">2.5</span></span>
-<span>        <span class="op">)</span>,</span>
-<span>        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>          id <span class="op">=</span> <span class="st">"B2"</span>,</span>
-<span>          level <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>          vals <span class="op">=</span> <span class="fl">0.8</span>,</span>
-<span>          children <span class="op">=</span></span>
-<span>            <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>              <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>                id <span class="op">=</span> <span class="st">"b21"</span>,</span>
-<span>                level <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>                vals <span class="op">=</span> <span class="fl">4.0</span></span>
-<span>              <span class="op">)</span></span>
-<span>            <span class="op">)</span></span>
-<span>        <span class="op">)</span></span>
-<span>      <span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    id <span class="op">=</span> <span class="st">"C"</span>,</span>
-<span>    level <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.2</span>, <span class="fl">8.8</span><span class="op">)</span>,</span>
-<span>    children <span class="op">=</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>          id <span class="op">=</span> <span class="st">"C1"</span>,</span>
-<span>          level <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>          vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9.1</span>, <span class="fl">4.6</span><span class="op">)</span></span>
-<span>        <span class="op">)</span>,</span>
-<span>        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>          id <span class="op">=</span> <span class="st">"C2"</span>,</span>
-<span>          level <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>          vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">3.4</span><span class="op">)</span></span>
-<span>        <span class="op">)</span></span>
-<span>      <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ttd2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Space Launches"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 20:47:14] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 20:47:14] Successfully loaded agencies.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 20:47:14] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 20:47:14] Successfully loaded launches.csv</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="custom_tree">custom_tree()<a class="anchor" aria-label="anchor" href="#custom_tree"></a>
 </h3>
+<p><code>custom_tree()</code> is a custom folder tree function made with
+<code><a href="https://lobstr.r-lib.org/reference/tree.html" class="external-link">lobstr::tree()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">custom_tree</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">depth</span> <span class="op">=</span> <span class="fl">10L</span>, <span class="va">length</span> <span class="op">=</span> <span class="fl">50L</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://lobstr.r-lib.org/reference/tree.html" class="external-link">tree</a></span><span class="op">(</span><span class="va">x</span>,</span>
@@ -146,358 +102,48 @@
 <span>    val_printer <span class="op">=</span> <span class="fu">crayon</span><span class="fu">::</span><span class="va"><a href="http://r-lib.github.io/crayon/reference/crayon.html" class="external-link">green</a></span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">custom_tree</span><span class="op">(</span>x <span class="op">=</span> <span class="va">example_list</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt; ├─<span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt; │ ├─id: <span style="color: #00BB00;">"A"</span></span></span>
-<span><span class="co">#&gt; │ ├─level: <span style="color: #00BB00;">1</span></span></span>
-<span><span class="co">#&gt; │ └─vals&lt;dbl [2]&gt;: <span style="color: #00BB00;">2.1, 3.3</span></span></span>
-<span><span class="co">#&gt; ├─<span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt; │ ├─id: <span style="color: #00BB00;">"B"</span></span></span>
-<span><span class="co">#&gt; │ ├─level: <span style="color: #00BB00;">1</span></span></span>
-<span><span class="co">#&gt; │ ├─vals&lt;dbl [3]&gt;: <span style="color: #00BB00;">1.2, 2.5, 3.1</span></span></span>
-<span><span class="co">#&gt; │ └─children: <span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt; │   ├─<span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt; │   │ ├─id: <span style="color: #00BB00;">"B1"</span></span></span>
-<span><span class="co">#&gt; │   │ ├─level: <span style="color: #00BB00;">2</span></span></span>
-<span><span class="co">#&gt; │   │ └─vals: <span style="color: #00BB00;">2.5</span></span></span>
-<span><span class="co">#&gt; │   └─<span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt; │     ├─id: <span style="color: #00BB00;">"B2"</span></span></span>
-<span><span class="co">#&gt; │     ├─level: <span style="color: #00BB00;">2</span></span></span>
-<span><span class="co">#&gt; │     ├─vals: <span style="color: #00BB00;">0.8</span></span></span>
-<span><span class="co">#&gt; │     └─children: <span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt; │       └─<span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt; │         ├─id: <span style="color: #00BB00;">"b21"</span></span></span>
-<span><span class="co">#&gt; │         ├─level: <span style="color: #00BB00;">3</span></span></span>
-<span><span class="co">#&gt; │         └─vals: <span style="color: #00BB00;">4</span></span></span>
-<span><span class="co">#&gt; └─<span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt;   ├─id: <span style="color: #00BB00;">"C"</span></span></span>
-<span><span class="co">#&gt;   ├─level: <span style="color: #00BB00;">1</span></span></span>
-<span><span class="co">#&gt;   ├─vals&lt;dbl [2]&gt;: <span style="color: #00BB00;">4.2, 8.8</span></span></span>
-<span><span class="co">#&gt;   └─children: <span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt;     ├─<span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt;     │ ├─id: <span style="color: #00BB00;">"C1"</span></span></span>
-<span><span class="co">#&gt;     │ ├─level: <span style="color: #00BB00;">2</span></span></span>
-<span><span class="co">#&gt;     │ └─vals&lt;dbl [2]&gt;: <span style="color: #00BB00;">9.1, 4.6</span></span></span>
-<span><span class="co">#&gt;     └─<span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt;       ├─id: <span style="color: #00BB00;">"C2"</span></span></span>
-<span><span class="co">#&gt;       ├─level: <span style="color: #00BB00;">2</span></span></span>
-<span><span class="co">#&gt;       └─vals&lt;dbl [2]&gt;: <span style="color: #00BB00;">1.1, 3.4</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">custom_tree</span>(<span class="at">x =</span> ttd2)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a> [<span class="dv">34</span>m<span class="sc">&lt;</span>list<span class="sc">&gt;</span> [<span class="dv">39</span>m</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>├─agencies.csv<span class="sc">:</span>  [<span class="dv">34</span>mS3<span class="sc">&lt;</span>spec_tbl_df<span class="sc">/</span>tbl_df<span class="sc">/</span>tbl<span class="sc">/</span>data.frame<span class="sc">&gt;</span> [<span class="dv">39</span>m</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>│ ├─agency<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"RVSN"</span>, <span class="st">"UNKS"</span>, <span class="st">"NASA"</span>, <span class="st">"USAF"</span>, <span class="st">"AE"</span>, <span class="st">"AFSC"</span>, <span class="st">"VKSR"</span>, <span class="st">"CALT"</span>, <span class="st">"FKA"</span>, <span class="st">"SAST"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>│ ├─count<span class="sc">&lt;</span>dbl [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m1528, <span class="dv">904</span>, <span class="dv">469</span>, <span class="dv">388</span>, <span class="dv">258</span>, <span class="dv">247</span>, <span class="dv">200</span>, <span class="dv">181</span>, <span class="dv">128</span>, <span class="dv">105</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>│ ├─ucode<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"RVSN"</span>, <span class="st">"GUKOS"</span>, <span class="st">"NASA"</span>, <span class="st">"USAF"</span>, <span class="st">"AE"</span>, <span class="st">"AFSC"</span>, <span class="st">"GUKOS"</span>, <span class="st">"CALT"</span>, <span class="st">"MOM"</span>, <span class="st">"SBA"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>│ ├─state_code<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"SU"</span>, <span class="st">"SU"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"F"</span>, <span class="st">"US"</span>, <span class="st">"RU"</span>, <span class="st">"CN"</span>, <span class="st">"RU"</span>, <span class="st">"CN"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>│ ├─type<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"O/LA"</span>, <span class="st">"O/LA"</span>, <span class="st">"O/LA/LV/PL/S"</span>, <span class="st">"O/LA/S"</span>, <span class="st">"O/LA"</span>, <span class="st">"LA"</span>, <span class="st">"O/LA"</span>, <span class="st">"LA/LV/PL/E"</span>, <span class="st">"O/LA"</span>, <span class="st">"O/LA/LV/PL"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>│ ├─class<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"D"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"B"</span>, <span class="st">"D"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>, <span class="st">"C"</span>, <span class="st">"B"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>│ ├─tstart<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"1960"</span>, <span class="st">"1986 Apr 24"</span>, <span class="st">"1958 Oct  1"</span>, <span class="st">"1947 Sep 18"</span>, <span class="st">"1980 Mar 26"</span>, <span class="st">"1961 Apr  1"</span>, <span class="st">"1997 Jul"</span>, <span class="st">"1957 Nov 11"</span>, <span class="st">"2004"</span>, <span class="st">"1993"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>│ ├─tstop<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"1991 Dec"</span>, <span class="st">"1991"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"*"</span>, <span class="st">"1992 Jul  1"</span>, <span class="st">"2001 Jun  1"</span>, <span class="st">"-"</span>, <span class="st">"2016 Jan  1"</span>, <span class="st">"-"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>│ ├─short_name<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"RVSN"</span>, <span class="st">"UNKS"</span>, <span class="st">"NASA"</span>, <span class="st">"USAF"</span>, <span class="st">"Arianespace"</span>, <span class="st">"AFSC"</span>, <span class="st">"VKS RVSN"</span>, <span class="st">"CALT"</span>, <span class="st">"Roskosmos"</span>, <span class="st">"SAST"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>│ ├─name<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"Rakentiye Vo..."</span>, <span class="st">"Upravleniye..."</span>, <span class="st">"National Aer..."</span>, <span class="st">"United State..."</span>, <span class="st">"Arianespace,..."</span>, <span class="st">"US Air Force..."</span>, <span class="st">"Voenno-Kosmi..."</span>, <span class="st">"Zhongguo yun..."</span>, <span class="st">"Federal'noe..."</span>, <span class="st">"Shanghai han..."</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>│ ├─location<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"Mosvka?"</span>, <span class="st">"Moskva"</span>, <span class="st">"Washington,..."</span>, <span class="st">"Washington,..."</span>, <span class="st">"Paris-Evry,..."</span>, <span class="st">"El Segundo,..."</span>, <span class="st">"Mosvka-Solne..."</span>, <span class="st">"Beijing-Nanyuan"</span>, <span class="st">"Moskva"</span>, <span class="st">"Shanghai-Min..."</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>│ ├─longitude<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>│ ├─latitude<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>│ ├─error<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>│ ├─parent<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"-"</span>, <span class="st">"MO"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"USAF"</span>, <span class="st">"RVSN"</span>, <span class="st">"CASC"</span>, <span class="st">"-"</span>, <span class="st">"CASC"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>│ ├─short_english_name<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"Arianespace"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"CALT"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>│ ├─english_name<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"Strategic Ro..."</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"Russian Mili..."</span>, <span class="st">"Chinese Acad..."</span>, <span class="st">"Roskosmos"</span>, <span class="st">"Shanghai Aca..."</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>│ ├─unicode_name<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"Ракетные вой..."</span>, <span class="st">"Управление н..."</span>, <span class="st">"National Aer..."</span>, <span class="st">"United State..."</span>, <span class="st">"Arianespace,..."</span>, <span class="st">"US Air Force..."</span>, <span class="st">"Военно-косми..."</span>, <span class="st">"中国运载火箭技术研究院"</span>, <span class="st">"Федеральное..."</span>, <span class="st">"上海航天技术研究院"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>│ └─agency_type<span class="sc">&lt;</span>chr [<span class="dv">74</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"private"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>└─launches.csv<span class="sc">:</span>  [<span class="dv">34</span>mS3<span class="sc">&lt;</span>spec_tbl_df<span class="sc">/</span>tbl_df<span class="sc">/</span>tbl<span class="sc">/</span>data.frame<span class="sc">&gt;</span> [<span class="dv">39</span>m</span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>  ├─tag<span class="sc">&lt;</span>chr [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"1967-065"</span>, <span class="st">"1967-080"</span>, <span class="st">"1967-096"</span>, <span class="st">"1968-042"</span>, <span class="st">"1968-092"</span>, <span class="st">"1969-062"</span>, <span class="st">"1970-012"</span>, <span class="st">"1970-070"</span>, <span class="st">"1971-012"</span>, <span class="st">"1971-054"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>  ├─JD<span class="sc">&lt;</span>dbl [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m2439671<span class="fl">.38</span>, <span class="fl">2439725.7</span>, <span class="fl">2439774.83</span>, <span class="fl">2439999.69</span>, <span class="fl">2440152.69</span>, <span class="fl">2440425.69</span>, <span class="fl">2440628.86</span>, <span class="fl">2440832.86</span>, <span class="fl">2440999.66</span>, <span class="fl">2441111.08</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>  ├─launch_date<span class="sc">&lt;</span>dbl [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m1967<span class="dv">-06-29</span>, <span class="dv">1967-08-23</span>, <span class="dv">1967-10-11</span>, <span class="dv">1968-05-23</span>, <span class="dv">1968-10-23</span>, <span class="dv">1969-07-23</span>, <span class="dv">1970-02-11</span>, <span class="dv">1970-09-03</span>, <span class="dv">1971-02-17</span>, <span class="dv">1971-06-08</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>  ├─launch_year<span class="sc">&lt;</span>dbl [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m1967, <span class="dv">1967</span>, <span class="dv">1967</span>, <span class="dv">1968</span>, <span class="dv">1968</span>, <span class="dv">1969</span>, <span class="dv">1970</span>, <span class="dv">1970</span>, <span class="dv">1971</span>, <span class="dv">1971</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>  ├─type<span class="sc">&lt;</span>chr [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"Thor Burner 2"</span>, <span class="st">"Thor Burner 2"</span>, <span class="st">"Thor Burner 2"</span>, <span class="st">"Thor Burner 2"</span>, <span class="st">"Thor Burner 2"</span>, <span class="st">"Thor Burner 2"</span>, <span class="st">"Thor Burner 2"</span>, <span class="st">"Thor Burner 2"</span>, <span class="st">"Thor Burner 2"</span>, <span class="st">"Thor Burner 2"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>  ├─variant<span class="sc">&lt;</span>chr [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"NA"</span>, <span class="st">"NA"</span>, <span class="st">"NA"</span>, <span class="st">"NA"</span>, <span class="st">"NA"</span>, <span class="st">"NA"</span>, <span class="st">"NA"</span>, <span class="st">"NA"</span>, <span class="st">"NA"</span>, <span class="st">"NA"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>  ├─mission<span class="sc">&lt;</span>chr [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"Secor Type I..."</span>, <span class="st">"DAPP 3419"</span>, <span class="st">"DAPP 4417"</span>, <span class="st">"DAPP 5420"</span>, <span class="st">"DAPP 6422"</span>, <span class="st">"DAPP 7421"</span>, <span class="st">"DAPP Block 5..."</span>, <span class="st">"DAPP Block 5..."</span>, <span class="st">"DAPP Block 5..."</span>, <span class="st">"P70-1"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>  ├─agency<span class="sc">&lt;</span>chr [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>  ├─state_code<span class="sc">&lt;</span>chr [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, <span class="st">"US"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>  ├─category<span class="sc">&lt;</span>chr [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"O"</span>, <span class="st">"O"</span>, <span class="st">"O"</span>, <span class="st">"O"</span>, <span class="st">"O"</span>, <span class="st">"O"</span>, <span class="st">"O"</span>, <span class="st">"O"</span>, <span class="st">"O"</span>, <span class="st">"O"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a>  └─agency_type<span class="sc">&lt;</span>chr [<span class="dv">5</span>,<span class="dv">726</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, <span class="st">"state"</span>, ... [<span class="dv">39</span>m</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="listviewerlitelistview">listviewerlite::listview()<a class="anchor" aria-label="anchor" href="#listviewerlitelistview"></a>
 </h3>
+<p>The <code><a href="https://long39ng.github.io/listviewerlite/reference/listview.html" class="external-link">listview()</a></code> from <code>listviewerlite</code> provides
+an HTML collapsible object:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">listviewerlite</span><span class="fu">::</span><span class="fu"><a href="https://long39ng.github.io/listviewerlite/reference/listview.html" class="external-link">listview</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">example_list</span><span class="op">)</span></span></code></pre></div>
-<ul class="tree">
-<li>
-<details open="true"><summary><span>
-<code class="vec-header">&lt;list [1:3]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<details><summary><span>
-<code class="vec-header">&lt;named list [1:3]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<span>
-id
-<code class="vec-header">&lt;character [1]&gt;</code>
-</span>
-<span class="vec-data">"A"</span>
-</li>
-<li>
-<span>
-level
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">1</span>
-</li>
-<li>
-<span>
-vals
-<code class="vec-header">&lt;double [1:2]&gt;</code>
-</span>
-<span class="vec-data">2.1, 3.3</span>
-</li>
-</ul></details>
-</li>
-<li>
-<details><summary><span>
-<code class="vec-header">&lt;named list [1:4]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<span>
-id
-<code class="vec-header">&lt;character [1]&gt;</code>
-</span>
-<span class="vec-data">"B"</span>
-</li>
-<li>
-<span>
-level
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">1</span>
-</li>
-<li>
-<span>
-vals
-<code class="vec-header">&lt;double [1:3]&gt;</code>
-</span>
-<span class="vec-data">1.2, 2.5, 3.1</span>
-</li>
-<li>
-<details><summary><span>
-children
-<code class="vec-header">&lt;list [1:2]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<details><summary><span>
-<code class="vec-header">&lt;named list [1:3]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<span>
-id
-<code class="vec-header">&lt;character [1]&gt;</code>
-</span>
-<span class="vec-data">"B1"</span>
-</li>
-<li>
-<span>
-level
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">2</span>
-</li>
-<li>
-<span>
-vals
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">2.5</span>
-</li>
-</ul></details>
-</li>
-<li>
-<details><summary><span>
-<code class="vec-header">&lt;named list [1:4]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<span>
-id
-<code class="vec-header">&lt;character [1]&gt;</code>
-</span>
-<span class="vec-data">"B2"</span>
-</li>
-<li>
-<span>
-level
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">2</span>
-</li>
-<li>
-<span>
-vals
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">0.8</span>
-</li>
-<li>
-<details><summary><span>
-children
-<code class="vec-header">&lt;list [1]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<details><summary><span>
-<code class="vec-header">&lt;named list [1:3]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<span>
-id
-<code class="vec-header">&lt;character [1]&gt;</code>
-</span>
-<span class="vec-data">"b21"</span>
-</li>
-<li>
-<span>
-level
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">3</span>
-</li>
-<li>
-<span>
-vals
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">4</span>
-</li>
-</ul></details>
-</li>
-</ul></details>
-</li>
-</ul></details>
-</li>
-</ul></details>
-</li>
-</ul></details>
-</li>
-<li>
-<details><summary><span>
-<code class="vec-header">&lt;named list [1:4]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<span>
-id
-<code class="vec-header">&lt;character [1]&gt;</code>
-</span>
-<span class="vec-data">"C"</span>
-</li>
-<li>
-<span>
-level
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">1</span>
-</li>
-<li>
-<span>
-vals
-<code class="vec-header">&lt;double [1:2]&gt;</code>
-</span>
-<span class="vec-data">4.2, 8.8</span>
-</li>
-<li>
-<details><summary><span>
-children
-<code class="vec-header">&lt;list [1:2]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<details><summary><span>
-<code class="vec-header">&lt;named list [1:3]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<span>
-id
-<code class="vec-header">&lt;character [1]&gt;</code>
-</span>
-<span class="vec-data">"C1"</span>
-</li>
-<li>
-<span>
-level
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">2</span>
-</li>
-<li>
-<span>
-vals
-<code class="vec-header">&lt;double [1:2]&gt;</code>
-</span>
-<span class="vec-data">9.1, 4.6</span>
-</li>
-</ul></details>
-</li>
-<li>
-<details><summary><span>
-<code class="vec-header">&lt;named list [1:3]&gt;</code>
-</span>
-</summary><ul>
-<li>
-<span>
-id
-<code class="vec-header">&lt;character [1]&gt;</code>
-</span>
-<span class="vec-data">"C2"</span>
-</li>
-<li>
-<span>
-level
-<code class="vec-header">&lt;double [1]&gt;</code>
-</span>
-<span class="vec-data">2</span>
-</li>
-<li>
-<span>
-vals
-<code class="vec-header">&lt;double [1:2]&gt;</code>
-</span>
-<span class="vec-data">1.1, 3.4</span>
-</li>
-</ul></details>
-</li>
-</ul></details>
-</li>
-</ul></details>
-</li>
-</ul></details>
-</li>
-</ul>
-</div>
-</div>
-<div class="section level2">
-<h2 id="tidytuesday-data-lists">TidyTuesday data lists<a class="anchor" aria-label="anchor" href="#tidytuesday-data-lists"></a>
-</h2>
-<div class="section level3">
-<h3 id="two-datasets">Two datasets<a class="anchor" aria-label="anchor" href="#two-datasets"></a>
-</h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ttd2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Space Launches"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-08 17:20:43] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-08 17:20:43] Successfully loaded agencies.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-08 17:20:43] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-08 17:20:43] Successfully loaded launches.csv</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">custom_tree</span><span class="op">(</span>x <span class="op">=</span> <span class="va">ttd2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt; ├─agencies.csv: <span style="color: #0000BB;">S3&lt;spec_tbl_df/tbl_df/tbl/data.frame&gt;</span></span></span>
-<span><span class="co">#&gt; │ ├─agency&lt;chr [74]&gt;: <span style="color: #00BB00;">"RVSN", "UNKS", "NASA", "USAF", "AE", "AFSC", "VKSR", "CALT", "FKA", "SAST", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─count&lt;dbl [74]&gt;: <span style="color: #00BB00;">1528, 904, 469, 388, 258, 247, 200, 181, 128, 105, ...</span></span></span>
-<span><span class="co">#&gt; │ ├─ucode&lt;chr [74]&gt;: <span style="color: #00BB00;">"RVSN", "GUKOS", "NASA", "USAF", "AE", "AFSC", "GUKOS", "CALT", "MOM", "SBA", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─state_code&lt;chr [74]&gt;: <span style="color: #00BB00;">"SU", "SU", "US", "US", "F", "US", "RU", "CN", "RU", "CN", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─type&lt;chr [74]&gt;: <span style="color: #00BB00;">"O/LA", "O/LA", "O/LA/LV/PL/S", "O/LA/S", "O/LA", "LA", "O/LA", "LA/LV/PL/E", "O/LA", "O/LA/LV/PL", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─class&lt;chr [74]&gt;: <span style="color: #00BB00;">"D", "D", "C", "D", "B", "D", "D", "C", "C", "B", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─tstart&lt;chr [74]&gt;: <span style="color: #00BB00;">"1960", "1986 Apr 24", "1958 Oct  1", "1947 Sep 18", "1980 Mar 26", "1961 Apr  1", "1997 Jul", "1957 Nov 11", "2004", "1993", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─tstop&lt;chr [74]&gt;: <span style="color: #00BB00;">"1991 Dec", "1991", "-", "-", "*", "1992 Jul  1", "2001 Jun  1", "-", "2016 Jan  1", "-", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─short_name&lt;chr [74]&gt;: <span style="color: #00BB00;">"RVSN", "UNKS", "NASA", "USAF", "Arianespace", "AFSC", "VKS RVSN", "CALT", "Roskosmos", "SAST", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─name&lt;chr [74]&gt;: <span style="color: #00BB00;">"Rakentiye Vo...", "Upravleniye...", "National Aer...", "United State...", "Arianespace,...", "US Air Force...", "Voenno-Kosmi...", "Zhongguo yun...", "Federal'noe...", "Shanghai han...", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─location&lt;chr [74]&gt;: <span style="color: #00BB00;">"Mosvka?", "Moskva", "Washington,...", "Washington,...", "Paris-Evry,...", "El Segundo,...", "Mosvka-Solne...", "Beijing-Nanyuan", "Moskva", "Shanghai-Min...", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─longitude&lt;chr [74]&gt;: <span style="color: #00BB00;">"-", "-", "-", "-", "-", "-", "-", "-", "-", "-", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─latitude&lt;chr [74]&gt;: <span style="color: #00BB00;">"-", "-", "-", "-", "-", "-", "-", "-", "-", "-", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─error&lt;chr [74]&gt;: <span style="color: #00BB00;">"-", "-", "-", "-", "-", "-", "-", "-", "-", "-", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─parent&lt;chr [74]&gt;: <span style="color: #00BB00;">"-", "MO", "-", "-", "-", "USAF", "RVSN", "CASC", "-", "CASC", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─short_english_name&lt;chr [74]&gt;: <span style="color: #00BB00;">"-", "-", "-", "-", "Arianespace", "-", "-", "CALT", "-", "-", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─english_name&lt;chr [74]&gt;: <span style="color: #00BB00;">"Strategic Ro...", "-", "-", "-", "-", "-", "Russian Mili...", "Chinese Acad...", "Roskosmos", "Shanghai Aca...", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─unicode_name&lt;chr [74]&gt;: <span style="color: #00BB00;">"Ракетные вой...", "Управление н...", "National Aer...", "United State...", "Arianespace,...", "US Air Force...", "Военно-косми...", "中国运载火箭技术研究院", "Федеральное...", "上海航天技术研究院", ...</span></span></span>
-<span><span class="co">#&gt; │ └─agency_type&lt;chr [74]&gt;: <span style="color: #00BB00;">"state", "state", "state", "state", "private", "state", "state", "state", "state", "state", ...</span></span></span>
-<span><span class="co">#&gt; └─launches.csv: <span style="color: #0000BB;">S3&lt;spec_tbl_df/tbl_df/tbl/data.frame&gt;</span></span></span>
-<span><span class="co">#&gt;   ├─tag&lt;chr [5,726]&gt;: <span style="color: #00BB00;">"1967-065", "1967-080", "1967-096", "1968-042", "1968-092", "1969-062", "1970-012", "1970-070", "1971-012", "1971-054", ...</span></span></span>
-<span><span class="co">#&gt;   ├─JD&lt;dbl [5,726]&gt;: <span style="color: #00BB00;">2439671.38, 2439725.7, 2439774.83, 2439999.69, 2440152.69, 2440425.69, 2440628.86, 2440832.86, 2440999.66, 2441111.08, ...</span></span></span>
-<span><span class="co">#&gt;   ├─launch_date&lt;dbl [5,726]&gt;: <span style="color: #00BB00;">1967-06-29, 1967-08-23, 1967-10-11, 1968-05-23, 1968-10-23, 1969-07-23, 1970-02-11, 1970-09-03, 1971-02-17, 1971-06-08, ...</span></span></span>
-<span><span class="co">#&gt;   ├─launch_year&lt;dbl [5,726]&gt;: <span style="color: #00BB00;">1967, 1967, 1967, 1968, 1968, 1969, 1970, 1970, 1971, 1971, ...</span></span></span>
-<span><span class="co">#&gt;   ├─type&lt;chr [5,726]&gt;: <span style="color: #00BB00;">"Thor Burner 2", "Thor Burner 2", "Thor Burner 2", "Thor Burner 2", "Thor Burner 2", "Thor Burner 2", "Thor Burner 2", "Thor Burner 2", "Thor Burner 2", "Thor Burner 2", ...</span></span></span>
-<span><span class="co">#&gt;   ├─variant&lt;chr [5,726]&gt;: <span style="color: #00BB00;">"NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", ...</span></span></span>
-<span><span class="co">#&gt;   ├─mission&lt;chr [5,726]&gt;: <span style="color: #00BB00;">"Secor Type I...", "DAPP 3419", "DAPP 4417", "DAPP 5420", "DAPP 6422", "DAPP 7421", "DAPP Block 5...", "DAPP Block 5...", "DAPP Block 5...", "P70-1", ...</span></span></span>
-<span><span class="co">#&gt;   ├─agency&lt;chr [5,726]&gt;: <span style="color: #00BB00;">"US", "US", "US", "US", "US", "US", "US", "US", "US", "US", ...</span></span></span>
-<span><span class="co">#&gt;   ├─state_code&lt;chr [5,726]&gt;: <span style="color: #00BB00;">"US", "US", "US", "US", "US", "US", "US", "US", "US", "US", ...</span></span></span>
-<span><span class="co">#&gt;   ├─category&lt;chr [5,726]&gt;: <span style="color: #00BB00;">"O", "O", "O", "O", "O", "O", "O", "O", "O", "O", ...</span></span></span>
-<span><span class="co">#&gt;   └─agency_type&lt;chr [5,726]&gt;: <span style="color: #00BB00;">"state", "state", "state", "state", "state", "state", "state", "state", "state", "state", ...</span></span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">listviewerlite</span><span class="fu">::</span><span class="fu"><a href="https://long39ng.github.io/listviewerlite/reference/listview.html" class="external-link">listview</a></span><span class="op">(</span><span class="va">ttd2</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">listviewerlite</span><span class="fu">::</span><span class="fu"><a href="https://long39ng.github.io/listviewerlite/reference/listview.html" class="external-link">listview</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">ttd2</span><span class="op">)</span></span></code></pre></div>
 <ul class="tree">
 <li>
 <details open="true"><summary><span>
@@ -737,45 +383,46 @@ agency_type
 <div class="section level3">
 <h3 id="three-datasets">Three datasets<a class="anchor" aria-label="anchor" href="#three-datasets"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>Below we create a list with three <code>#TidyTuesday</code> datasets
+and store it in <code>ttd3</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Moore’s Law"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-08 17:20:43] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-08 17:20:43] Successfully loaded cpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-08 17:20:43] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-08 17:20:43] Successfully loaded gpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-08 17:20:43] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-08 17:20:43] Successfully loaded ram.csv</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">custom_tree</span><span class="op">(</span>x <span class="op">=</span> <span class="va">ttd3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;list&gt;</span></span></span>
-<span><span class="co">#&gt; ├─cpu.csv: <span style="color: #0000BB;">S3&lt;spec_tbl_df/tbl_df/tbl/data.frame&gt;</span></span></span>
-<span><span class="co">#&gt; │ ├─processor&lt;chr [176]&gt;: <span style="color: #00BB00;">"MP944 (20-bi...", "Intel 4004 (...", "Intel 8008 (...", "NEC μCOM-4 (...", "Toshiba TLCS...", "Intel 4040 (...", "Motorola 680...", "Intel 8080 (...", "TMS 1000 (4-...", "MOS Technolo...", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─transistor_count&lt;dbl [176]&gt;: <span style="color: #00BB00;">NA, 2250, 3500, 2500, 2800, 3000, 4100, 6000, 8000, 4528, ...</span></span></span>
-<span><span class="co">#&gt; │ ├─date_of_introduction&lt;dbl [176]&gt;: <span style="color: #00BB00;">1970, 1971, 1972, 1973, 1973, 1974, 1974, 1974, 1974, 1975, ...</span></span></span>
-<span><span class="co">#&gt; │ ├─designer&lt;chr [176]&gt;: <span style="color: #00BB00;">"Garrett AiRe...", "Intel", "Intel", "NEC", "Toshiba", "Intel", "Motorola", "Intel", "Texas Instru...", "MOS Technology", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─process&lt;dbl [176]&gt;: <span style="color: #00BB00;">NA, 10000, 10000, 7500, 6000, 10000, 6000, 6000, 8000, 8000, ...</span></span></span>
-<span><span class="co">#&gt; │ └─area&lt;dbl [176]&gt;: <span style="color: #00BB00;">NA, 12, 14, NA, 32, 12, 16, 20, 11, 21, ...</span></span></span>
-<span><span class="co">#&gt; ├─gpu.csv: <span style="color: #0000BB;">S3&lt;spec_tbl_df/tbl_df/tbl/data.frame&gt;</span></span></span>
-<span><span class="co">#&gt; │ ├─processor&lt;chr [112]&gt;: <span style="color: #00BB00;">"µPD7220 GDC", "ARTC HD63484", "YM7101 VDP", "Tom &amp; Jerry", "VDP1", "Sony GPU", "NV1", "Reality Copr...", "PowerVR", "Voodoo Graphics", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─transistor_count&lt;dbl [112]&gt;: <span style="color: #00BB00;">40000, 60000, 1e+05, 750000, 1e+06, 1e+06, 1e+06, 2600000, 1200000, 1e+06, ...</span></span></span>
-<span><span class="co">#&gt; │ ├─date_of_introduction&lt;dbl [112]&gt;: <span style="color: #00BB00;">1982, 1984, 1988, 1993, 1994, 1994, 1995, 1996, 1996, 1996, ...</span></span></span>
-<span><span class="co">#&gt; │ ├─designer_s&lt;chr [112]&gt;: <span style="color: #00BB00;">"NEC", "Hitachi", "Sega", "Flare", "Sega", "Toshiba", "Nvidia, Sega", "SGI", "VideoLogic", "3dfx", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─manufacturer_s&lt;chr [112]&gt;: <span style="color: #00BB00;">"NEC", "Hitachi", "Yamaha", "IBM", "Hitachi", "LSI", "SGS", "NEC", "NEC", "TSMC", ...</span></span></span>
-<span><span class="co">#&gt; │ ├─process&lt;dbl [112]&gt;: <span style="color: #00BB00;">5000, NA, NA, NA, 500, 500, 500, 350, 350, 500, ...</span></span></span>
-<span><span class="co">#&gt; │ ├─area&lt;dbl [112]&gt;: <span style="color: #00BB00;">NA, NA, NA, NA, NA, NA, 90, 81, NA, NA, ...</span></span></span>
-<span><span class="co">#&gt; │ └─ref&lt;chr [112]&gt;: <span style="color: #00BB00;">"[107]", "[108]", "[109]", "[109]", "[110][111]", "[112][113][114]", "[110]", "[115]", "[116]", "[117][118]", ...</span></span></span>
-<span><span class="co">#&gt; └─ram.csv: <span style="color: #0000BB;">S3&lt;spec_tbl_df/tbl_df/tbl/data.frame&gt;</span></span></span>
-<span><span class="co">#&gt;   ├─chip_name&lt;chr [47]&gt;: <span style="color: #00BB00;">"N/A", "N/A", "?", "SP95", "TMC3162", "?", "?", "?", "?", "1101", ...</span></span></span>
-<span><span class="co">#&gt;   ├─capacity_bits&lt;dbl [47]&gt;: <span style="color: #00BB00;">1, 1, 8, 16, 16, NA, 256, 64, 144, 256, ...</span></span></span>
-<span><span class="co">#&gt;   ├─bit_units&lt;chr [47]&gt;: <span style="color: #00BB00;">"Bits", "Bits", "Bits", "Bits", "Bits", "NA", "Bits", "Bits", "Bits", "Bits", ...</span></span></span>
-<span><span class="co">#&gt;   ├─ram_type&lt;chr [47]&gt;: <span style="color: #00BB00;">"SRAM (cell)", "DRAM (cell)", "SRAM (bipolar)", "SRAM (bipolar)", "SRAM (TTL)", "SRAM (MOS)", "DRAM (IC)", "SRAM (PMOS)", "SRAM (NMOS)", "SRAM (PMOS)", ...</span></span></span>
-<span><span class="co">#&gt;   ├─transistor_count&lt;dbl [47]&gt;: <span style="color: #00BB00;">6, 1, 48, 80, 96, NA, 256, 384, 864, 1536, ...</span></span></span>
-<span><span class="co">#&gt;   ├─date_of_introduction&lt;dbl [47]&gt;: <span style="color: #00BB00;">1963, 1965, 1965, 1965, 1966, 1966, 1968, 1968, 1968, 1969, ...</span></span></span>
-<span><span class="co">#&gt;   ├─manufacturer_s&lt;chr [47]&gt;: <span style="color: #00BB00;">"Fairchild", "Toshiba", "SDS, Signetics", "IBM", "Transitron", "NEC", "Fairchild", "Fairchild", "NEC", "Intel", ...</span></span></span>
-<span><span class="co">#&gt;   ├─process&lt;dbl [47]&gt;: <span style="color: #00BB00;">NA, NA, NA, NA, NA, NA, NA, NA, NA, 12000, ...</span></span></span>
-<span><span class="co">#&gt;   ├─area&lt;dbl [47]&gt;: <span style="color: #00BB00;">NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...</span></span></span>
-<span><span class="co">#&gt;   └─ref&lt;chr [47]&gt;: <span style="color: #00BB00;">"[162]", "[163][164]", "[162]", "[165]", "[160]", "[159]", "[160]", "[159]", "[159]", "[166][167][168]", ...</span></span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; INFO [2025-07-08 20:47:14] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 20:47:14] Successfully loaded cpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 20:47:14] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 20:47:14] Successfully loaded gpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2025-07-08 20:47:14] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2025-07-08 20:47:14] Successfully loaded ram.csv</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">custom_tree</span>(<span class="at">x =</span> ttd3)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a> [<span class="dv">34</span>m<span class="sc">&lt;</span>list<span class="sc">&gt;</span> [<span class="dv">39</span>m</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>├─cpu.csv<span class="sc">:</span>  [<span class="dv">34</span>mS3<span class="sc">&lt;</span>spec_tbl_df<span class="sc">/</span>tbl_df<span class="sc">/</span>tbl<span class="sc">/</span>data.frame<span class="sc">&gt;</span> [<span class="dv">39</span>m</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>│ ├─processor<span class="sc">&lt;</span>chr [<span class="dv">176</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"MP944 (20-bi..."</span>, <span class="st">"Intel 4004 (..."</span>, <span class="st">"Intel 8008 (..."</span>, <span class="st">"NEC μCOM-4 (..."</span>, <span class="st">"Toshiba TLCS..."</span>, <span class="st">"Intel 4040 (..."</span>, <span class="st">"Motorola 680..."</span>, <span class="st">"Intel 8080 (..."</span>, <span class="st">"TMS 1000 (4-..."</span>, <span class="st">"MOS Technolo..."</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>│ ├─transistor_count<span class="sc">&lt;</span>dbl [<span class="dv">176</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>mNA, <span class="dv">2250</span>, <span class="dv">3500</span>, <span class="dv">2500</span>, <span class="dv">2800</span>, <span class="dv">3000</span>, <span class="dv">4100</span>, <span class="dv">6000</span>, <span class="dv">8000</span>, <span class="dv">4528</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>│ ├─date_of_introduction<span class="sc">&lt;</span>dbl [<span class="dv">176</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m1970, <span class="dv">1971</span>, <span class="dv">1972</span>, <span class="dv">1973</span>, <span class="dv">1973</span>, <span class="dv">1974</span>, <span class="dv">1974</span>, <span class="dv">1974</span>, <span class="dv">1974</span>, <span class="dv">1975</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>│ ├─designer<span class="sc">&lt;</span>chr [<span class="dv">176</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"Garrett AiRe..."</span>, <span class="st">"Intel"</span>, <span class="st">"Intel"</span>, <span class="st">"NEC"</span>, <span class="st">"Toshiba"</span>, <span class="st">"Intel"</span>, <span class="st">"Motorola"</span>, <span class="st">"Intel"</span>, <span class="st">"Texas Instru..."</span>, <span class="st">"MOS Technology"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>│ ├─process<span class="sc">&lt;</span>dbl [<span class="dv">176</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>mNA, <span class="dv">10000</span>, <span class="dv">10000</span>, <span class="dv">7500</span>, <span class="dv">6000</span>, <span class="dv">10000</span>, <span class="dv">6000</span>, <span class="dv">6000</span>, <span class="dv">8000</span>, <span class="dv">8000</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>│ └─area<span class="sc">&lt;</span>dbl [<span class="dv">176</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>mNA, <span class="dv">12</span>, <span class="dv">14</span>, <span class="cn">NA</span>, <span class="dv">32</span>, <span class="dv">12</span>, <span class="dv">16</span>, <span class="dv">20</span>, <span class="dv">11</span>, <span class="dv">21</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>├─gpu.csv<span class="sc">:</span>  [<span class="dv">34</span>mS3<span class="sc">&lt;</span>spec_tbl_df<span class="sc">/</span>tbl_df<span class="sc">/</span>tbl<span class="sc">/</span>data.frame<span class="sc">&gt;</span> [<span class="dv">39</span>m</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>│ ├─processor<span class="sc">&lt;</span>chr [<span class="dv">112</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"µPD7220 GDC"</span>, <span class="st">"ARTC HD63484"</span>, <span class="st">"YM7101 VDP"</span>, <span class="st">"Tom &amp; Jerry"</span>, <span class="st">"VDP1"</span>, <span class="st">"Sony GPU"</span>, <span class="st">"NV1"</span>, <span class="st">"Reality Copr..."</span>, <span class="st">"PowerVR"</span>, <span class="st">"Voodoo Graphics"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>│ ├─transistor_count<span class="sc">&lt;</span>dbl [<span class="dv">112</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m40000, <span class="dv">60000</span>, <span class="fl">1e+05</span>, <span class="dv">750000</span>, <span class="fl">1e+06</span>, <span class="fl">1e+06</span>, <span class="fl">1e+06</span>, <span class="dv">2600000</span>, <span class="dv">1200000</span>, <span class="fl">1e+06</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>│ ├─date_of_introduction<span class="sc">&lt;</span>dbl [<span class="dv">112</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m1982, <span class="dv">1984</span>, <span class="dv">1988</span>, <span class="dv">1993</span>, <span class="dv">1994</span>, <span class="dv">1994</span>, <span class="dv">1995</span>, <span class="dv">1996</span>, <span class="dv">1996</span>, <span class="dv">1996</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>│ ├─designer_s<span class="sc">&lt;</span>chr [<span class="dv">112</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"NEC"</span>, <span class="st">"Hitachi"</span>, <span class="st">"Sega"</span>, <span class="st">"Flare"</span>, <span class="st">"Sega"</span>, <span class="st">"Toshiba"</span>, <span class="st">"Nvidia, Sega"</span>, <span class="st">"SGI"</span>, <span class="st">"VideoLogic"</span>, <span class="st">"3dfx"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>│ ├─manufacturer_s<span class="sc">&lt;</span>chr [<span class="dv">112</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"NEC"</span>, <span class="st">"Hitachi"</span>, <span class="st">"Yamaha"</span>, <span class="st">"IBM"</span>, <span class="st">"Hitachi"</span>, <span class="st">"LSI"</span>, <span class="st">"SGS"</span>, <span class="st">"NEC"</span>, <span class="st">"NEC"</span>, <span class="st">"TSMC"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>│ ├─process<span class="sc">&lt;</span>dbl [<span class="dv">112</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m5000, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">500</span>, <span class="dv">500</span>, <span class="dv">500</span>, <span class="dv">350</span>, <span class="dv">350</span>, <span class="dv">500</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>│ ├─area<span class="sc">&lt;</span>dbl [<span class="dv">112</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>mNA, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">90</span>, <span class="dv">81</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>│ └─ref<span class="sc">&lt;</span>chr [<span class="dv">112</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"[107]"</span>, <span class="st">"[108]"</span>, <span class="st">"[109]"</span>, <span class="st">"[109]"</span>, <span class="st">"[110][111]"</span>, <span class="st">"[112][113][114]"</span>, <span class="st">"[110]"</span>, <span class="st">"[115]"</span>, <span class="st">"[116]"</span>, <span class="st">"[117][118]"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>└─ram.csv<span class="sc">:</span>  [<span class="dv">34</span>mS3<span class="sc">&lt;</span>spec_tbl_df<span class="sc">/</span>tbl_df<span class="sc">/</span>tbl<span class="sc">/</span>data.frame<span class="sc">&gt;</span> [<span class="dv">39</span>m</span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>  ├─chip_name<span class="sc">&lt;</span>chr [<span class="dv">47</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"N/A"</span>, <span class="st">"N/A"</span>, <span class="st">"?"</span>, <span class="st">"SP95"</span>, <span class="st">"TMC3162"</span>, <span class="st">"?"</span>, <span class="st">"?"</span>, <span class="st">"?"</span>, <span class="st">"?"</span>, <span class="st">"1101"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>  ├─capacity_bits<span class="sc">&lt;</span>dbl [<span class="dv">47</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m1, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">16</span>, <span class="cn">NA</span>, <span class="dv">256</span>, <span class="dv">64</span>, <span class="dv">144</span>, <span class="dv">256</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>  ├─bit_units<span class="sc">&lt;</span>chr [<span class="dv">47</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"Bits"</span>, <span class="st">"Bits"</span>, <span class="st">"Bits"</span>, <span class="st">"Bits"</span>, <span class="st">"Bits"</span>, <span class="st">"NA"</span>, <span class="st">"Bits"</span>, <span class="st">"Bits"</span>, <span class="st">"Bits"</span>, <span class="st">"Bits"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>  ├─ram_type<span class="sc">&lt;</span>chr [<span class="dv">47</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"SRAM (cell)"</span>, <span class="st">"DRAM (cell)"</span>, <span class="st">"SRAM (bipolar)"</span>, <span class="st">"SRAM (bipolar)"</span>, <span class="st">"SRAM (TTL)"</span>, <span class="st">"SRAM (MOS)"</span>, <span class="st">"DRAM (IC)"</span>, <span class="st">"SRAM (PMOS)"</span>, <span class="st">"SRAM (NMOS)"</span>, <span class="st">"SRAM (PMOS)"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>  ├─transistor_count<span class="sc">&lt;</span>dbl [<span class="dv">47</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m6, <span class="dv">1</span>, <span class="dv">48</span>, <span class="dv">80</span>, <span class="dv">96</span>, <span class="cn">NA</span>, <span class="dv">256</span>, <span class="dv">384</span>, <span class="dv">864</span>, <span class="dv">1536</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>  ├─date_of_introduction<span class="sc">&lt;</span>dbl [<span class="dv">47</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m1963, <span class="dv">1965</span>, <span class="dv">1965</span>, <span class="dv">1965</span>, <span class="dv">1966</span>, <span class="dv">1966</span>, <span class="dv">1968</span>, <span class="dv">1968</span>, <span class="dv">1968</span>, <span class="dv">1969</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>  ├─manufacturer_s<span class="sc">&lt;</span>chr [<span class="dv">47</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"Fairchild"</span>, <span class="st">"Toshiba"</span>, <span class="st">"SDS, Signetics"</span>, <span class="st">"IBM"</span>, <span class="st">"Transitron"</span>, <span class="st">"NEC"</span>, <span class="st">"Fairchild"</span>, <span class="st">"Fairchild"</span>, <span class="st">"NEC"</span>, <span class="st">"Intel"</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>  ├─process<span class="sc">&lt;</span>dbl [<span class="dv">47</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>mNA, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">12000</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>  ├─area<span class="sc">&lt;</span>dbl [<span class="dv">47</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>mNA, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, ... [<span class="dv">39</span>m</span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>  └─ref<span class="sc">&lt;</span>chr [<span class="dv">47</span>]<span class="sc">&gt;</span><span class="er">:</span>  [<span class="dv">32</span>m<span class="st">"[162]"</span>, <span class="st">"[163][164]"</span>, <span class="st">"[162]"</span>, <span class="st">"[165]"</span>, <span class="st">"[160]"</span>, <span class="st">"[159]"</span>, <span class="st">"[160]"</span>, <span class="st">"[159]"</span>, <span class="st">"[159]"</span>, <span class="st">"[166][167][168]"</span>, ... [<span class="dv">39</span>m</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">listviewerlite</span><span class="fu">::</span><span class="fu"><a href="https://long39ng.github.io/listviewerlite/reference/listview.html" class="external-link">listview</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">)</span></span></code></pre></div>
 <ul class="tree">
 <li>
