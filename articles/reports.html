@@ -95,21 +95,21 @@ description and system status<br>
 <strong><code>mod_report_download</code></strong>: Report generation
 and download functionality</li>
 </ol>
-<pre><code> [38;5;214m█ [39m─ [1m [35mlaunch [39m [22m 
-├─ [38;5;214m█ [39m─ [1m [35mapp_ui [39m [22m 
-│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_ui [39m [22m 
-│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_desc_ui [39m [22m 
-│ └─ [38;5;214m█ [39m─ [1m [35mmod_report_download_ui [39m [22m 
-└─ [38;5;214m█ [39m─ [1m [35mapp_server [39m [22m 
-  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_server [39m [22m 
-  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_desc_server [39m [22m 
-  └─ [38;5;214m█ [39m─ [1m [35mmod_report_download_server [39m [22m </code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>█─launch </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>├─█─app_ui </span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>│ ├─█─mod_report_input_ui </span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>│ ├─█─mod_report_desc_ui </span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>│ └─█─mod_report_download_ui </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>└─█─app_server </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  ├─█─mod_report_input_server </span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  ├─█─mod_report_desc_server </span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  └─█─mod_report_download_server </span></code></pre></div>
 <p>These three modules work together with a sophisticated backend
 utility logic that handles multiple rendering formats, quarto system
 detection, and graceful error handling.</p>
 </div>
 <div class="section level2">
-<h2 id="mod_report_input---the-format-selector">mod_report_input - the format selector<a class="anchor" aria-label="anchor" href="#mod_report_input---the-format-selector"></a>
+<h2 id="the-format-selector">The Format Selector<a class="anchor" aria-label="anchor" href="#the-format-selector"></a>
 </h2>
 <p>The <code>mod_report_input</code> handles the format selection input
 from the user.</p>
@@ -153,16 +153,16 @@ with comprehensive logging.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="mod_report_desc---description-generator">mod_report_desc - description generator<a class="anchor" aria-label="anchor" href="#mod_report_desc---description-generator"></a>
+<h2 id="the-description-generator">The Description Generator<a class="anchor" aria-label="anchor" href="#the-description-generator"></a>
 </h2>
-<pre><code> [38;5;214m█ [39m─ [1m [35mlaunch [39m [22m 
-├─ [38;5;214m█ [39m─ [1m [35mapp_ui [39m [22m 
-│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_ui [39m [22m 
-│ └─ [38;5;214m█ [39m─ [1m [35mmod_report_desc_ui [39m [22m 
-└─ [38;5;214m█ [39m─ [1m [35mapp_server [39m [22m 
-  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_server [39m [22m 
-  └─ [38;5;214m█ [39m─ [1m [35mmod_report_desc_server [39m [22m 
-    └─ [38;5;214m█ [39m─ [1m [35mquarto_available [39m [22m </code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>█─launch </span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>├─█─app_ui </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>│ ├─█─mod_report_input_ui </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>│ └─█─mod_report_desc_ui </span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>└─█─app_server </span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  ├─█─mod_report_input_server </span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  └─█─mod_report_desc_server </span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>    └─█─quarto_available</span></code></pre></div>
 <div class="section level3">
 <h3 id="ui-1">UI<a class="anchor" aria-label="anchor" href="#ui-1"></a>
 </h3>
@@ -270,25 +270,25 @@ performance.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="mod_report_download---the-rendering-engine">mod_report_download - the rendering engine<a class="anchor" aria-label="anchor" href="#mod_report_download---the-rendering-engine"></a>
+<h2 id="the-rendering-engine">The Rendering Engine<a class="anchor" aria-label="anchor" href="#the-rendering-engine"></a>
 </h2>
-<pre><code> [38;5;214m█ [39m─ [1m [35mlaunch [39m [22m 
-├─ [38;5;214m█ [39m─ [1m [35mapp_ui [39m [22m 
-│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_ui [39m [22m 
-│ └─ [38;5;214m█ [39m─ [1m [35mmod_report_download_ui [39m [22m 
-└─ [38;5;214m█ [39m─ [1m [35mapp_server [39m [22m 
-  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_server [39m [22m 
-  └─ [38;5;214m█ [39m─ [1m [35mmod_report_download_server [39m [22m 
-    ├─ [38;5;214m█ [39m─ [1m [35mquarto_available [39m [22m 
-    ├─ [38;5;214m█ [39m─ [1m [35minspect_plot [39m [22m 
-    ├─ [38;5;214m█ [39m─ [1m [35mrender_report [39m [22m 
-    │ ├─ [38;5;214m█ [39m─ [1m [35mget_template_path [39m [22m 
-    │ ├─ [38;5;214m█ [39m─ [1m [35mcreate_fallback_template [39m [22m 
-    │ ├─ [38;5;214m█ [39m─ [1m [35mvalidate_and_clean_params [39m [22m 
-    │ ├─ [38;5;214m█ [39m─ [1m [35mrender_rmarkdown_report [39m [22m 
-    │ ├─ [38;5;214m█ [39m─ [1m [35mrender_quarto_report [39m [22m 
-    │ └─ [38;5;214m█ [39m─ [1m [35mcreate_error_report [39m [22m 
-    └─ [38;5;214m█ [39m─ [1m [35mcreate_error_report [39m [22m </code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>█─launch </span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>├─█─app_ui </span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>│ ├─█─mod_report_input_ui </span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>│ └─█─mod_report_download_ui </span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>└─█─app_server </span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  ├─█─mod_report_input_server </span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  └─█─mod_report_download_server </span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>    ├─█─quarto_available </span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>    ├─█─inspect_plot </span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>    ├─█─render_report </span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>    │ ├─█─get_template_path </span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>    │ ├─█─create_fallback_template </span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>    │ ├─█─validate_and_clean_params </span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>    │ ├─█─render_rmarkdown_report </span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>    │ ├─█─render_quarto_report </span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>    │ └─█─create_error_report </span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>    └─█─create_error_report</span></code></pre></div>
 <div class="section level3">
 <h3 id="ui-2">UI<a class="anchor" aria-label="anchor" href="#ui-2"></a>
 </h3>
@@ -424,7 +424,7 @@ generation when all else fails.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="rending-reports">Rending Reports<a class="anchor" aria-label="anchor" href="#rending-reports"></a>
+<h2 id="rendering-reports">Rendering Reports<a class="anchor" aria-label="anchor" href="#rendering-reports"></a>
 </h2>
 <p>The core rendering function coordinates multiple rendering
 strategies:</p>
@@ -707,9 +707,9 @@ functionality</p></li>
 </h2>
 <table style="width:99%;" class="table">
 <colgroup>
-<col width="26%">
-<col width="49%">
-<col width="22%">
+<col width="25%">
+<col width="48%">
+<col width="24%">
 </colgroup>
 <thead><tr class="header">
 <th>Feature</th>
