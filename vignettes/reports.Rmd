@@ -53,7 +53,7 @@ The report generation system consists of three main components:
 #| message: false 
 #| warning: false
 #| echo: false 
-#| eval: true
+#| eval: false
 #| comment: ""
 lobstr::ast(
   launch(
@@ -71,11 +71,23 @@ lobstr::ast(
 )
 ```
 
+```{verbatim}
+█─launch 
+├─█─app_ui 
+│ ├─█─mod_report_input_ui 
+│ ├─█─mod_report_desc_ui 
+│ └─█─mod_report_download_ui 
+└─█─app_server 
+  ├─█─mod_report_input_server 
+  ├─█─mod_report_desc_server 
+  └─█─mod_report_download_server 
+```
+
 These three modules work together with a sophisticated backend utility
 logic that handles multiple rendering formats, quarto system detection, and
 graceful error handling.
 
-## mod_report_input - the format selector
+## The Format Selector
 
 The `mod_report_input` handles the format selection input from the user.
 
@@ -122,14 +134,14 @@ The `input$format` is returned directly via a named list (instead of
 internal state management). Debugging support is provided with
 comprehensive logging.
 
-## mod_report_desc - description generator
+## The Description Generator
 
 ```{r}
 #| label: mod_report_desc-structure
 #| message: false 
 #| warning: false
 #| echo: false 
-#| eval: true
+#| eval: false
 #| comment: ""
 lobstr::ast(
   launch(
@@ -145,6 +157,18 @@ lobstr::ast(
     )
   )
 )
+```
+
+
+```{verbatim}
+█─launch 
+├─█─app_ui 
+│ ├─█─mod_report_input_ui 
+│ └─█─mod_report_desc_ui 
+└─█─app_server 
+  ├─█─mod_report_input_server 
+  └─█─mod_report_desc_server 
+    └─█─quarto_available
 ```
 
 ### UI
@@ -262,14 +286,14 @@ observe({
   bindEvent(format())
 ```
 
-## mod_report_download - the rendering engine
+## The Rendering Engine
 
 ```{r}
 #| label: mod_report_download-structure
 #| message: false 
 #| warning: false
 #| echo: false 
-#| eval: true
+#| eval: false
 #| comment: ""
 lobstr::ast(
   launch(
@@ -295,6 +319,26 @@ lobstr::ast(
     )
   )
 )
+```
+
+```{verbatim}
+█─launch 
+├─█─app_ui 
+│ ├─█─mod_report_input_ui 
+│ └─█─mod_report_download_ui 
+└─█─app_server 
+  ├─█─mod_report_input_server 
+  └─█─mod_report_download_server 
+    ├─█─quarto_available 
+    ├─█─inspect_plot 
+    ├─█─render_report 
+    │ ├─█─get_template_path 
+    │ ├─█─create_fallback_template 
+    │ ├─█─validate_and_clean_params 
+    │ ├─█─render_rmarkdown_report 
+    │ ├─█─render_quarto_report 
+    │ └─█─create_error_report 
+    └─█─create_error_report
 ```
 
 ### UI
@@ -432,7 +476,7 @@ The progress notifications provide real-time user feedback with multi-level
 error handling, graceful recovery, and error report generation when all
 else fails.
 
-## Rending Reports
+## Rendering Reports
 
 The core rendering function coordinates multiple rendering strategies:
 
@@ -598,7 +642,7 @@ quarto_available <- function() {
 
 -   **Graceful failure** with detailed logging
 
-### Error Handling and Report 
+### Error Handling and Report
 
 When all rendering attempts fail, the system generates an informative error
 report:
@@ -716,99 +760,99 @@ mod_report_download_server("rep_dwnld",
 
 ## Features
 
-+-------------------+------------------------------------+----------------+
-| Feature           | Implementation                     | Goal           |
-+===================+====================================+================+
-| **Enhancements**  | -   Basic functionality works in   | Ensures        |
-|                   |     all environments               | universal      |
-|                   |                                    | compatibility  |
-|                   | -   Advanced features available    | while          |
-|                   |     when systems support them      | leveraging     |
-|                   |                                    | advanced       |
-|                   | -   Graceful fallbacks maintain    | capabilities   |
-|                   |     functionality                  | when available |
-+-------------------+------------------------------------+----------------+
-| **Caching**       | -   System detection results are   | Optimizes      |
-|                   |     cached during app sessions     | performance by |
-|                   |                                    | avoiding       |
-|                   | -   Template resolution cached for | redundant      |
-|                   |     performance                    | operations and |
-|                   |                                    | system calls   |
-|                   | -   Parameter validation cached    |                |
-|                   |     for repeated use               |                |
-+-------------------+------------------------------------+----------------+
-| **Logging**       | -   `DEBUG` level for development  | Provide        |
-|                   |     and troubleshooting            | detailed       |
-|                   |                                    | traceability   |
-|                   | -   `INFO` level for normal        | for debugging, |
-|                   |     operation tracking             | monitoring,    |
-|                   |                                    | and user       |
-|                   | -   `WARN` level for recoverable   | feedback       |
-|                   |     issues                         |                |
-|                   |                                    |                |
-|                   | -   `ERROR` level for serious      |                |
-|                   |     problems                       |                |
-|                   |                                    |                |
-|                   | -   `SUCCESS` level for            |                |
-|                   |     confirmation of completion     |                |
-+-------------------+------------------------------------+----------------+
-| **User            | -   Real-time feedback via         | Maintain user  |
-| Experience**      |     notifications                  | engagement and |
-|                   |                                    | provide clear  |
-|                   | -   Clear progress indication      | guidance       |
-|                   |     during generation              | throughout the |
-|                   |                                    | report         |
-|                   | -   Informative error messages     | generation     |
-|                   |     with actionable advice         | workflow       |
-|                   |                                    |                |
-|                   | -   Consistent visual design       |                |
-|                   |     throughout the process         |                |
-+-------------------+------------------------------------+----------------+
-| **Lazy Loading**  | -   System detection only occurs   | Minimize       |
-|                   |     when needed                    | resource usage |
-|                   |                                    | and improve    |
-|                   | -   Template loading deferred      | application    |
-|                   |     until generation               | startup time   |
-|                   |                                    |                |
-|                   | -   Parameter validation cached    |                |
-|                   |     for reuse                      |                |
-+-------------------+------------------------------------+----------------+
-| **Rendering**     | -   Clean environments for         | Prevent memory |
-|                   |     rendering isolation            | leaks and      |
-|                   |                                    | ensure stable  |
-|                   | -   Resource cleanup after         | performance    |
-|                   |     generation                     | across         |
-|                   |                                    | multiple       |
-|                   | -   Memory management for large    | report         |
-|                   |     datasets                       | generations    |
-+-------------------+------------------------------------+----------------+
-| **Timeout         | -   System calls protected with    | Prevent        |
-| Management**      |     timeouts                       | application    |
-|                   |                                    | hanging and    |
-|                   | -   Rendering processes with       | provide        |
-|                   |     reasonable limits              | responsive     |
-|                   |                                    | user           |
-|                   | -   User feedback for long-running | experience     |
-|                   |     operations                     |                |
-+-------------------+------------------------------------+----------------+
-| **Input           | -   Parameter sanitization for all | Ensure         |
-| Validation**      |     user inputs                    | security and   |
-|                   |                                    | prevent        |
-|                   | -   Filename cleaning for safe     | malicious      |
-|                   |     file operations                | input from     |
-|                   |                                    | compromising   |
-|                   | -   Path validation for template   | the system     |
-|                   |     access                         |                |
-+-------------------+------------------------------------+----------------+
-| **Environment     | -   Clean rendering environments   | Maintain       |
-| Isolation**       |     for security                   | security       |
-|                   |                                    | boundaries and |
-|                   | -   Restricted system access       | prevent        |
-|                   |     during generation              | interference   |
-|                   |                                    | between report |
-|                   | -   Temporary file management with | generations    |
-|                   |     cleanup                        |                |
-+-------------------+------------------------------------+----------------+
++------------------+-----------------------------------+-----------------+
+| Feature          | Implementation                    | Goal            |
++==================+===================================+=================+
+| **Enhancements** | -   Basic functionality works in  | Ensures         |
+|                  |     all environments              | universal       |
+|                  |                                   | compatibility   |
+|                  | -   Advanced features available   | while           |
+|                  |     when systems support them     | leveraging      |
+|                  |                                   | advanced        |
+|                  | -   Graceful fallbacks maintain   | capabilities    |
+|                  |     functionality                 | when available  |
++------------------+-----------------------------------+-----------------+
+| **Caching**      | -   System detection results are  | Optimizes       |
+|                  |     cached during app sessions    | performance by  |
+|                  |                                   | avoiding        |
+|                  | -   Template resolution cached    | redundant       |
+|                  |     for performance               | operations and  |
+|                  |                                   | system calls    |
+|                  | -   Parameter validation cached   |                 |
+|                  |     for repeated use              |                 |
++------------------+-----------------------------------+-----------------+
+| **Logging**      | -   `DEBUG` level for development | Provide         |
+|                  |     and troubleshooting           | detailed        |
+|                  |                                   | traceability    |
+|                  | -   `INFO` level for normal       | for debugging,  |
+|                  |     operation tracking            | monitoring, and |
+|                  |                                   | user feedback   |
+|                  | -   `WARN` level for recoverable  |                 |
+|                  |     issues                        |                 |
+|                  |                                   |                 |
+|                  | -   `ERROR` level for serious     |                 |
+|                  |     problems                      |                 |
+|                  |                                   |                 |
+|                  | -   `SUCCESS` level for           |                 |
+|                  |     confirmation of completion    |                 |
++------------------+-----------------------------------+-----------------+
+| **User           | -   Real-time feedback via        | Maintain user   |
+| Experience**     |     notifications                 | engagement and  |
+|                  |                                   | provide clear   |
+|                  | -   Clear progress indication     | guidance        |
+|                  |     during generation             | throughout the  |
+|                  |                                   | report          |
+|                  | -   Informative error messages    | generation      |
+|                  |     with actionable advice        | workflow        |
+|                  |                                   |                 |
+|                  | -   Consistent visual design      |                 |
+|                  |     throughout the process        |                 |
++------------------+-----------------------------------+-----------------+
+| **Lazy Loading** | -   System detection only occurs  | Minimize        |
+|                  |     when needed                   | resource usage  |
+|                  |                                   | and improve     |
+|                  | -   Template loading deferred     | application     |
+|                  |     until generation              | startup time    |
+|                  |                                   |                 |
+|                  | -   Parameter validation cached   |                 |
+|                  |     for reuse                     |                 |
++------------------+-----------------------------------+-----------------+
+| **Rendering**    | -   Clean environments for        | Prevent memory  |
+|                  |     rendering isolation           | leaks and       |
+|                  |                                   | ensure stable   |
+|                  | -   Resource cleanup after        | performance     |
+|                  |     generation                    | across multiple |
+|                  |                                   | report          |
+|                  | -   Memory management for large   | generations     |
+|                  |     datasets                      |                 |
++------------------+-----------------------------------+-----------------+
+| **Timeout        | -   System calls protected with   | Prevent         |
+| Management**     |     timeouts                      | application     |
+|                  |                                   | hanging and     |
+|                  | -   Rendering processes with      | provide         |
+|                  |     reasonable limits             | responsive user |
+|                  |                                   | experience      |
+|                  | -   User feedback for             |                 |
+|                  |     long-running operations       |                 |
++------------------+-----------------------------------+-----------------+
+| **Input          | -   Parameter sanitization for    | Ensure security |
+| Validation**     |     all user inputs               | and prevent     |
+|                  |                                   | malicious input |
+|                  | -   Filename cleaning for safe    | from            |
+|                  |     file operations               | compromising    |
+|                  |                                   | the system      |
+|                  | -   Path validation for template  |                 |
+|                  |     access                        |                 |
++------------------+-----------------------------------+-----------------+
+| **Environment    | -   Clean rendering environments  | Maintain        |
+| Isolation**      |     for security                  | security        |
+|                  |                                   | boundaries and  |
+|                  | -   Restricted system access      | prevent         |
+|                  |     during generation             | interference    |
+|                  |                                   | between report  |
+|                  | -   Temporary file management     | generations     |
+|                  |     with cleanup                  |                 |
++------------------+-----------------------------------+-----------------+
 
 ---------------------------------------------------------------------------
 
