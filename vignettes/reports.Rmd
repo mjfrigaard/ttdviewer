@@ -35,12 +35,12 @@ library(ttdviewer)
 ```
 
 The report generation in the #TidyTuesday data viewer app consists of three
-interconnected modules that work together to provide users with
-customizable, downloadable reports. This method demonstrates patterns for
-format selection, system capability detection, and reliable file generation
-with comprehensive error handling.
+interconnected modules that work together to provide users with 
+downloadable Quarto and R Markdown reports. The modules include options for
+format selection, Quarto system capability detection, and reliable file 
+generation with comprehensive error handling.
 
-## Module Architecture Overview
+## Module Architecture 
 
 The report generation system consists of three main components:
 
@@ -83,9 +83,8 @@ lobstr::ast(
   └─█─mod_report_download_server 
 ```
 
-These three modules work together with a sophisticated backend utility
-logic that handles multiple rendering formats, quarto system detection, and
-graceful error handling.
+These three modules work together to handle multiple rendering formats, 
+detect if quarto is installed on the system, and handle errors gracefully. 
 
 ## The Format Selector
 
@@ -93,7 +92,8 @@ The `mod_report_input` handles the format selection input from the user.
 
 ### UI
 
-The input module provides a `selectInput()` interface for format selection:
+The input module provides a `selectInput()` interface for the two available 
+format selections: `"R Markdown" = "rmarkdown"` and `"Quarto" = "quarto"`.
 
 ```{r}
 #| label: mod_report_input_ui
@@ -109,9 +109,8 @@ selectInput(
 )
 ```
 
-The input includes bold, User-friendly labels to emphasizes the
-functionality. The default selected input (R Markdown) maximizes
-compatibility.
+The input includes bold, user-friendly labels to emphasizes functionality. 
+The default selected input (R Markdown) maximizes compatibility.
 
 ### Server
 
@@ -185,17 +184,13 @@ mod_report_desc_ui <- function(id) {
 }
 ```
 
-This minimal UI delegates all content generation to the server, enabling
-complete dynamic control over presentation.
+The UI function is minimal, which delegates most of the content generation to
+the server. This gives us dynamic control over presentation.
 
 ### Server
 
-The server contains sophisticated logic for system detection and adaptive
-messaging. The reactive expression orchestrates multiple outputs:
-
-1.  Checks the system capability detection through `quarto_available()`\
-2.  Format-specific messaging based on selection\
-3.  Visual styling based on system state
+The server function contains logic for quarto system detection and adaptive
+messaging. 
 
 ```{r}
 #| label: desc_inputs
@@ -211,6 +206,12 @@ desc_inputs <- reactive({
   ))
 })
 ```
+
+The reactive expression orchestrates multiple outputs:
+
+1.  Checks the system capability detection through `quarto_available()`\
+2.  Format-specific messaging based on selection\
+3.  Visual styling based on system state
 
 After `quarto_status` is determined by the `quarto_available()` function,
 the value is stored as `available` with a `message`:
@@ -235,12 +236,13 @@ quarto_status <- if (format()$format == "quarto") {
 ```
 
 The conditional checking behavior identifies when Quarto is selected and
-provides graceful fallback messaging when it's unavailable.
+provides graceful fallback messaging when it's unavailable on the system.
 
 The `description` returns information for `rmarkdown` and `quarto` with
 bootstrap `icon` for visual identification, `title`, informative
 `desc`riptions to guide user choice, and context-aware `note` that reflect
 system state.
+
 
 ```{r}
 #| label: description
@@ -286,7 +288,7 @@ observe({
   bindEvent(format())
 ```
 
-## The Rendering Engine
+## The Report Generator 
 
 ```{r}
 #| label: mod_report_download-structure
@@ -306,14 +308,7 @@ lobstr::ast(
       mod_report_download_server(
         quarto_available(),
         inspect_plot(),
-        render_report(
-          get_template_path(),
-          create_fallback_template(),
-          validate_and_clean_params(),
-          render_rmarkdown_report(),
-          render_quarto_report(),
-          create_error_report()
-        ),
+        render_report(),
         create_error_report()
       )
     )
@@ -332,13 +327,7 @@ lobstr::ast(
     ├─█─quarto_available 
     ├─█─inspect_plot 
     ├─█─render_report 
-    │ ├─█─get_template_path 
-    │ ├─█─create_fallback_template 
-    │ ├─█─validate_and_clean_params 
-    │ ├─█─render_rmarkdown_report 
-    │ ├─█─render_quarto_report 
-    │ └─█─create_error_report 
-    └─█─create_error_report
+    └─█─create_error_report 
 ```
 
 ### UI
@@ -369,6 +358,80 @@ mod_report_download_ui <- function(id) {
 ```
 
 ### Server
+
+The `mod_report_download_server()` function requires the following arguments: 
+
+  - `format`: A reactive expression returning the report format    
+  - `data`: A reactive expression returning the dataset list   
+  - `selected_plot_type`: A reactive expression returning the selected plot 
+  type    
+  - `dataset_title`: A reactive expression returning the dataset title   
+
+The `format` is returned from the `mod_report_input_server()` function, the 
+`data` and `dataset_title` are returned from the `mod_input_server()`, so we 
+just need to make an adjustment to the `mod_plot_server()` so it returns the selected `input$dataset` and `input$plots`: 
+
+```{r}
+#| label: mod_plot_server-return
+    return(
+      reactive({
+        list(
+          "dataset" = input$dataset,
+          "plots" = input$plots
+        )
+      })
+    ) |>
+      bindEvent(
+        list(
+          input$dataset, 
+          input$plots
+          ),
+        ignoreNULL = TRUE)
+```
+
+## The Rendering Engine
+
+```{r}
+#| label: mod_report_download-render_report-structure
+#| message: false 
+#| warning: false
+#| echo: false 
+#| eval: false
+#| comment: ""
+lobstr::ast(
+  launch(
+    app_ui(
+      mod_report_input_ui(),
+      mod_report_download_ui()
+    ),
+    app_server(
+      mod_report_input_server(),
+      mod_report_download_server(
+        quarto_available(),
+        inspect_plot(),
+        render_report(
+          get_template_path(),
+          create_fallback_template(
+            create_fallback_rmd_template(),
+            create_fallback_qmd_template()
+          ),
+          validate_and_clean_params(),
+          render_rmarkdown_report(),
+          render_quarto_report(
+            quarto_available(),
+            validate_quarto_params(),
+            render_quarto_system_call(),
+            render_quarto_alternative(
+              convert_qmd_to_rmd()
+            )
+          )
+        ),
+        create_error_report()
+      )
+    )
+  )
+)
+```
 
 The download handler (`downloadHandler()`) can be paired with any download
 UI function (`downloadButton()` or `downloadLink()`). Every
@@ -476,7 +539,53 @@ The progress notifications provide real-time user feedback with multi-level
 error handling, graceful recovery, and error report generation when all
 else fails.
 
-## Rendering Reports
+### Rendering Reports
+
+The architecture of the `render_report()` and it's supporting utility functions is below:
+
+```{r}
+#| label: render_report-structure
+#| message: false 
+#| warning: false
+#| echo: false 
+#| eval: false
+#| comment: ""
+lobstr::ast(
+  render_report(
+    get_template_path(),
+    create_fallback_template(
+      create_fallback_rmd_template(),
+      create_fallback_qmd_template()
+    ),
+    validate_and_clean_params(),
+    render_rmarkdown_report(),
+    render_quarto_report(
+      quarto_available(),
+      validate_quarto_params(),
+      render_quarto_system_call(),
+      render_quarto_alternative(
+        convert_qmd_to_rmd()
+      )
+    )
+  )
+)
+```
+
+```{verbatim}
+█─render_report 
+├─█─get_template_path 
+├─█─create_fallback_template 
+│ ├─█─create_fallback_rmd_template 
+│ └─█─create_fallback_qmd_template 
+├─█─validate_and_clean_params 
+├─█─render_rmarkdown_report 
+└─█─render_quarto_report 
+  ├─█─quarto_available 
+  ├─█─validate_quarto_params 
+  ├─█─render_quarto_system_call 
+  └─█─render_quarto_alternative 
+    └─█─convert_qmd_to_rmd
+```
 
 The core rendering function coordinates multiple rendering strategies:
 
@@ -515,9 +624,9 @@ render_report <- function(format = c("rmarkdown", "quarto"), output_file, params
 }
 ```
 
-### R Markdown
+#### R Markdown
 
-R Markdown rendering is handled by render_rmarkdown_report`()`, which
+R Markdown rendering is handled by `render_rmarkdown_report()`, which
 creates a clean environment for rendering and adds any required libraries:
 
 ```{r}
@@ -558,7 +667,7 @@ render_rmarkdown_report <- function(template_path, output_file, params) {
 }
 ```
 
-### Quarto
+#### Quarto
 
 Quarto rendering is handled by `render_quarto_report()` and has a second
 method as a fallback strategy (`render_quarto_system_call()`):
@@ -581,71 +690,12 @@ render_quarto_report <- function(template_path, output_file, params) {
 }
 ```
 
-**Multiple Rendering Strategies:**
+`render_quarto_report()` will render the report if the quarto R package is installed, and `render_quarto_system_call()` is called for command-line installations.
 
--   **R package method** for integrated environments
+#### Error Handling and Report
 
--   **System call fallback** for command-line installations
-
--   **Alternative rendering** using R Markdown compatibility
-
--   **Comprehensive error handling** with automatic fallbacks
-
-### Quarto Detection
-
-The `quarto_available()` function implements comprehensive system
-detection:
-
-```{r}
-#| label: quarto_available
-quarto_available <- function() {
-  # 1. Check for quarto R package
-  if (requireNamespace("quarto", quietly = TRUE)) {
-    tryCatch({
-      quarto::quarto_version()
-      return(TRUE)
-    }, error = function(e) {
-      # Package exists but not functional
-    })
-  }
-  
-  # 2. Check system PATH
-  result <- system2("quarto", args = "--version", stdout = TRUE, stderr = TRUE, timeout = 5)
-  if (!is.null(result) && length(result) > 0) {
-    return(TRUE)
-  }
-  
-  # 3. Check common installation paths
-  quarto_paths <- c(
-    "/usr/local/bin/quarto",
-    "/usr/bin/quarto",
-    "C:/Program Files/Quarto/bin/quarto.exe"
-  )
-  
-  for (path in quarto_paths) {
-    if (file.exists(path)) {
-      return(TRUE)
-    }
-  }
-  
-  return(FALSE)
-}
-```
-
-**Multi-Level Detection:**
-
--   **R package detection** for integrated environments
-
--   **System PATH checking** with timeout protection
-
--   **Common path verification** for standard installations
-
--   **Graceful failure** with detailed logging
-
-### Error Handling and Report
-
-When all rendering attempts fail, the system generates an informative error
-report:
+If the rendering functions attempts fail, the system generates an 
+comprehensive error report:
 
 ```{r}
 #| label: create_error_report
@@ -682,17 +732,7 @@ create_error_report <- function(file, error_msg, dataset_title = "Unknown", form
 }
 ```
 
-**User-Friendly Error Handling:**
-
--   **Professional HTML presentation** with Bootstrap styling
-
--   **Clear error information** without technical jargon
-
--   **Actionable troubleshooting tips** for users
-
--   **Consistent visual design** matching the application
-
-### Fallback Templates
+#### Fallback Templates
 
 The system includes automatic template generation when templates are
 missing:
@@ -710,17 +750,10 @@ create_fallback_template <- function(format = c("rmarkdown", "quarto")) {
 }
 ```
 
-**Resilient Template System:**
+The template system provides automatic template generation if the template file
+is missing. 
 
--   **Automatic template generation** when missing
-
--   **Format-specific templates** with appropriate syntax
-
--   **Minimal viable reports** that always work
-
--   **Graceful degradation** from rich to basic functionality
-
-## Main Application Integration
+### Main Application Integration
 
 The modules are integrated in the `app_ui()` and `app_server()` below:
 
@@ -743,22 +776,15 @@ mod_report_desc_server("rep_desc", format = report_format)
 mod_report_download_server("rep_dwnld", 
   format = report_format,
   data = selected_data,
-  selected_plot_type = viz_result,
+  selected_plot_type = selected_plots,
   dataset_title = dataset_title
 )
 ```
 
-**Clean Integration Patterns:**
+The functions are placed to clearly illustrate the reactive data flow between 
+modules. 
 
--   **Sidebar placement** for persistent access
-
--   **Reactive data flow** between modules
-
--   **Logical module ordering** for user workflow
-
--   **Comprehensive parameter passing** for functionality
-
-## Features
+## Module Features
 
 +------------------+-----------------------------------+-----------------+
 | Feature          | Implementation                    | Goal            |
@@ -894,6 +920,47 @@ basename(rmd_temp)
 #| label: qmd_create_fallback_template
 qmd_temp <- create_fallback_template(format = "quarto")
 basename(qmd_temp)
+```
+
+### Quarto Detection
+
+The `quarto_available()` function implements comprehensive system
+detection:
+
+```{r}
+#| label: quarto_available
+quarto_available <- function() {
+  # 1. Check for quarto R package
+  if (requireNamespace("quarto", quietly = TRUE)) {
+    tryCatch({
+      quarto::quarto_version()
+      return(TRUE)
+    }, error = function(e) {
+      # Package exists but not functional
+    })
+  }
+  
+  # 2. Check system PATH
+  result <- system2("quarto", args = "--version", stdout = TRUE, stderr = TRUE, timeout = 5)
+  if (!is.null(result) && length(result) > 0) {
+    return(TRUE)
+  }
+  
+  # 3. Check common installation paths
+  quarto_paths <- c(
+    "/usr/local/bin/quarto",
+    "/usr/bin/quarto",
+    "C:/Program Files/Quarto/bin/quarto.exe"
+  )
+  
+  for (path in quarto_paths) {
+    if (file.exists(path)) {
+      return(TRUE)
+    }
+  }
+  
+  return(FALSE)
+}
 ```
 
 ```{r}

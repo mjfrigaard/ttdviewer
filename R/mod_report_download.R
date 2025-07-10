@@ -3,6 +3,7 @@
 #' @param id Namespace ID
 #'
 #' @return UI elements for report generation with format options
+#'
 #' @export
 mod_report_download_ui <- function(id) {
   ns <- NS(id)
@@ -48,11 +49,13 @@ mod_report_download_ui <- function(id) {
 #' @param id Module ID
 #' @param format A reactive expression returning the report format
 #' @param data A reactive expression returning the dataset list
-#' @param selected_plot_type A reactive expression returning the selected plot type
 #' @param dataset_title A reactive expression returning the dataset title
+#' @param selected_plot_type A reactive expression returning the selected
+#'    plot type
 #'
 #' @export
-mod_report_download_server <- function(id, format, data, selected_plot_type, dataset_title) {
+#'
+mod_report_download_server <- function(id, format, data, dataset_title, selected_plot_type) {
   moduleServer(id, function(input, output, session) {
 
     logr_msg(message = "Initializing report server module", level = "DEBUG")

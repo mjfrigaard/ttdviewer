@@ -157,8 +157,21 @@ mod_plot_server <- function(id, ttd) {
       bindEvent(list(input$dataset, input$plots),
                 ignoreNULL = TRUE)
 
+
     logr_msg(
       message = sprintf("mod_single_plot_server[%s]: setup complete", id),
       level = "SUCCESS")
+
+    return(
+      reactive({
+        list(
+          "dataset" = input$dataset,
+          "plots" = input$plots
+        )
+      })
+    ) |>
+      bindEvent(list(input$dataset, input$plots),
+                ignoreNULL = TRUE)
+
   })
 }

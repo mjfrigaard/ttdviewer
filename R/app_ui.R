@@ -26,7 +26,6 @@ app_ui <- function() {
             code("app_server()"),
               "reactive values:")
             ),
-          br(),
         uiOutput("dev")
       )
     ),

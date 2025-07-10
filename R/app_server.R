@@ -3,7 +3,7 @@
 #' Application server logic
 #'
 #' @note
-#' last edited: 2025-06-14-23.23.36
+#' last edited: 2025-07-10-07.47.57
 #'
 #' @param input Shiny input object
 #' @param output Shiny output object
@@ -12,10 +12,11 @@
 #' @export
 #'
 app_server <- function(input, output, session) {
-  logr_msg("Initializing app server", level = "INFO")
+
+  logr_msg(message = "Initializing app server", level = "INFO")
 
   # add session info logging
-  logr_msg(paste("Session started for user:", session$user),
+  logr_msg(message = paste("Session started for user:", session$user),
     level = "DEBUG"
   )
 
@@ -36,34 +37,44 @@ app_server <- function(input, output, session) {
       logr_msg(
         message = "Report module initialized",
         level = "DEBUG")
-      # mod_report_download_server(id = "rep_dwnld",
-      #   data = selected_data,
-      #   selected_plot_type = viz_result,
-      #   dataset_title = dataset_title)
+
+      # mod_report_download_server(
+      #   id = "rep_dwnld",
+      #   format = ,
+      #   data = ,
+      #   selected_plot_type = ,
+      #   dataset_title =
+      #   )
 
       # reactive values for list
       mod_list_server(id = "listviewerlite", data = selected_data)
+
       logr_msg(
         message = "Table module initialized",
-        level = "DEBUG")
+        level = "DEBUG"
+        )
 
       # reactive values for table
       mod_table_server(id = "table", data = selected_data)
       logr_msg(
         message = "Table module initialized",
-        level = "DEBUG")
+        level = "DEBUG"
+        )
 
       # reactive values for visualization
-      mod_plot_server("viz", ttd = selected_data)
+      selected_plots <- mod_plot_server("viz", ttd = selected_data)
+
       logr_msg(
         message = "Plot module initialized",
-        level = "DEBUG")
+        level = "DEBUG"
+        )
 
       logr_msg(
         message = "All modules successfully initialized",
-        level = "SUCCESS")
+        level = "SUCCESS"
+        )
 
-      # Add session end logging
+      # add session end logging
       session$onSessionEnded(function() {
         logr_msg(
           message = paste("Session ended for user:", session$user),
@@ -89,10 +100,15 @@ app_server <- function(input, output, session) {
 
   # reactive values for app
   output$dev <- renderUI({
-    req(title_input)
-    vals <- reactiveValuesToList(x = input, all.names = TRUE)
+    vals <- list(
+      "data" = selected_data(),
+      "title" = dataset_title(),
+      "dataset" = selected_plots()[['dataset']],
+      "plots" = selected_plots()[['plots']]
+    )
+    # vals <- reactiveValuesToList(x = input, all.names = TRUE)
+    # listviewerlite::listview(selected_plots())
     listviewerlite::listview(vals)
-  }) |>
-    bindEvent(title_input)
+  })
 
 }

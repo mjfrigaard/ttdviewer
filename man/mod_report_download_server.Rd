@@ -4,7 +4,7 @@
 \alias{mod_report_download_server}
 \title{Report Download Server Module with Enhanced Quarto Error Handling}
 \usage{
-mod_report_download_server(id, format, data, selected_plot_type, dataset_title)
+mod_report_download_server(id, format, data, dataset_title, selected_plot_type)
 }
 \arguments{
 \item{id}{Module ID}
@@ -13,9 +13,10 @@ mod_report_download_server(id, format, data, selected_plot_type, dataset_title)
 
 \item{data}{A reactive expression returning the dataset list}
 
-\item{selected_plot_type}{A reactive expression returning the selected plot type}
-
 \item{dataset_title}{A reactive expression returning the dataset title}
+
+\item{selected_plot_type}{A reactive expression returning the selected
+plot type}
 }
 \description{
 Report Download Server Module with Enhanced Quarto Error Handling
