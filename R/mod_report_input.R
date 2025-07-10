@@ -7,11 +7,8 @@
 #' @export
 mod_report_input_ui <- function(id) {
   ns <- NS(id)
-
   logr_msg("Initializing report input UI module", level = "DEBUG")
-
-  tryCatch(
-    {
+  tryCatch({
       tagList( # tagList ----
         # Format selection
         selectInput(
@@ -50,7 +47,6 @@ mod_report_input_ui <- function(id) {
 mod_report_input_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     logr_msg(message = "Initializing report input server module", level = "DEBUG")
-
     return(
       reactive(
         list("format" = input$format)

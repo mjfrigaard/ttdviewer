@@ -9,13 +9,12 @@ mod_report_desc_ui <- function(id) {
   logr_msg(
     message = "Initializing report description UI module",
     level = "DEBUG")
-  tryCatch(
-    {
-      tagList( # tagList ----
+  tryCatch({
+      tagList(
         # description
         uiOutput(outputId = ns("desc"))
       )
-    }, # end tagList ----
+    },
     error = function(e) {
       logr_msg(
         message = paste("Error creating report description UI:", e$message),
@@ -70,7 +69,6 @@ mod_report_desc_server <- function(id, format) {
           message = "Quarto is available and ready to use."
         )
       }
-
       # report format description ----
       # uses quarto_status, from report format input
       description <- switch(format()$format,

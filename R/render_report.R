@@ -29,37 +29,52 @@ render_report <- function(format = c("rmarkdown", "quarto"),
   )
 
   tryCatch({
-      # Get appropriate template
+      #  appropriate template
+      #  get_template_path() ----
       if (is.null(template_path)) {
         template_path <- get_template_path(format)
       }
 
       logr_msg(paste("Using template:", template_path), level = "DEBUG")
 
-      # Validate template exists
+      # check template exists
+      # create_fallback_template() ----
       if (!file.exists(template_path)) {
         logr_msg("Template not found, creating fallback", level = "WARN")
         template_path <- create_fallback_template(format)
       }
 
-      # Validate and clean parameters
+      # validate and clean params
+      # validate_and_clean_params() ----
       params <- validate_and_clean_params(params)
 
-      # Render based on format
+      # render report
       if (format == "rmarkdown") {
+        # render_rmarkdown_report() ----
         render_rmarkdown_report(template_path, output_file, params)
       } else {
+        # render_quarto_report() ----
         render_quarto_report(template_path, output_file, params)
       }
 
-      logr_msg(paste("Successfully rendered", format, "report"), level = "SUCCESS")
+      logr_msg(
+          message = paste("Successfully rendered", format, "report"),
+          level = "SUCCESS"
+        )
       return(output_file)
     },
     error = function(e) {
-      logr_msg(paste("Error rendering", format, "report:", e$message), level = "ERROR")
+      logr_msg(
+        message = paste("Error rendering", format, "report:", e$message),
+        level = "ERROR"
+        )
 
-      # Create error report as fallback
-      create_error_report(output_file, e$message, params$dataset_title %||% "Unknown", format)
+      # create_error_report() ----
+      create_error_report(
+        output_file,
+        e$message,
+        params$dataset_title %||% "Unknown",
+        format)
       return(output_file)
     }
   )
@@ -72,38 +87,40 @@ render_report <- function(format = c("rmarkdown", "quarto"),
 #' @keywords internal
 #'
 quarto_available <- function() {
-  # Method 1: Check for quarto R package
+  # check for quarto R package ----
   if (requireNamespace("quarto", quietly = TRUE)) {
-    tryCatch(
-      {
+    tryCatch({
         quarto::quarto_version()
-        logr_msg("Quarto R package available", level = "DEBUG")
+        logr_msg(message = "Quarto R package available",
+          level = "DEBUG")
         return(TRUE)
       },
       error = function(e) {
-        logr_msg("Quarto R package found but not functional", level = "DEBUG")
-      }
-    )
+        logr_msg(message = "Quarto R package found but not functional",
+          level = "DEBUG")
+      })
   }
 
-  # Method 2: Check for system quarto
-  tryCatch(
-    {
+  # check for system quarto -----
+  tryCatch({
       result <- system2("quarto",
         args = "--version",
         stdout = TRUE, stderr = TRUE, timeout = 5
       )
       if (!is.null(result) && length(result) > 0) {
-        logr_msg(paste("System Quarto version:", result[1]), level = "DEBUG")
+        logr_msg(
+          message = paste("System Quarto version:", result[1]),
+          level = "DEBUG")
         return(TRUE)
-      }
-    },
+      }},
     error = function(e) {
-      logr_msg("System Quarto not available", level = "DEBUG")
+      logr_msg(
+        message = "System Quarto not available",
+        level = "DEBUG")
     }
   )
 
-  # Method 3: Check common installation paths
+  # check common installation paths ----
   quarto_paths <- c(
     "/usr/local/bin/quarto",
     "/usr/bin/quarto",
@@ -113,12 +130,16 @@ quarto_available <- function() {
 
   for (path in quarto_paths) {
     if (file.exists(path)) {
-      logr_msg(paste("Found Quarto at:", path), level = "DEBUG")
+      logr_msg(
+        message = paste("Found Quarto at:", path),
+        level = "DEBUG")
       return(TRUE)
     }
   }
 
-  logr_msg("Quarto not available", level = "DEBUG")
+  logr_msg(
+    message = "Quarto not available",
+    level = "DEBUG")
   return(FALSE)
 }
 
@@ -128,21 +149,23 @@ quarto_available <- function() {
 #' @keywords internal
 #'
 render_quarto_alternative <- function(template_path, output_file, params) {
-  logr_msg("Using alternative Quarto rendering method", level = "INFO")
+  logr_msg(
+    message = "Using alternative Quarto rendering method",
+    level = "INFO")
 
-  # Create a modified template for rmarkdown compatibility
+  # create modified template for rmarkdown compatibility
   temp_rmd <- tempfile(fileext = ".Rmd")
 
-  # Read the Quarto template and convert to R Markdown
+  # Read quarto template and convert to R Markdown
   qmd_content <- readLines(template_path)
 
-  # Convert Quarto-specific syntax to R Markdown
+  # convert quarto-specific syntax to R Markdown
   rmd_content <- convert_qmd_to_rmd(qmd_content)
 
-  # Write modified content
+  # write modified content
   writeLines(rmd_content, temp_rmd)
 
-  # Render with rmarkdown
+  # render with rmarkdown
   rmarkdown::render(
     input = temp_rmd,
     output_file = output_file,
@@ -151,7 +174,7 @@ render_quarto_alternative <- function(template_path, output_file, params) {
     quiet = TRUE
   )
 
-  # Clean up
+  # clean
   unlink(temp_rmd)
 }
 
@@ -164,37 +187,44 @@ render_quarto_alternative <- function(template_path, output_file, params) {
 #' @keywords internal
 #'
 render_quarto_report <- function(template_path, output_file, params) {
-  logr_msg("Rendering Quarto report", level = "DEBUG")
-  logr_msg(paste("Template:", template_path), level = "DEBUG")
-  logr_msg(paste("Output:", output_file), level = "DEBUG")
 
-  # Check if quarto is available
+  logr_msg(
+    message = "Rendering Quarto report",
+    level = "DEBUG")
+  logr_msg(
+    message = paste("Template:", template_path),
+    level = "DEBUG")
+  logr_msg(
+    message = paste("Output:", output_file),
+    level = "DEBUG")
+
+  # check quarto
   if (!quarto_available()) {
     stop("Quarto is not available. Please install Quarto or use R Markdown format.")
   }
 
-  # Validate parameters for Quarto
+  # validate parameters for Quarto
   params <- validate_quarto_params(params)
 
-  tryCatch(
-    {
-      # Method 1: Try using the quarto R package
+  tryCatch({
+
+        # method 1  using quarto R package
       if (requireNamespace("quarto", quietly = TRUE)) {
         logr_msg("Using quarto R package", level = "DEBUG")
 
-        # Create temporary directory for rendering
+        # create temporary directory for rendering
         temp_dir <- tempdir()
         temp_qmd <- file.path(temp_dir, "temp_report.qmd")
 
-        # Copy template to temp location
+        # copy template to temp location
         file.copy(template_path, temp_qmd, overwrite = TRUE)
 
-        # Create params file
+        # create params file
         params_file <- file.path(temp_dir, "params.yml")
         yaml_content <- yaml::as.yaml(list(params = params))
         writeLines(yaml_content, params_file)
 
-        # Render with quarto package
+        # render with quarto package
         quarto::quarto_render(
           input = temp_qmd,
           output_file = basename(output_file),
@@ -203,26 +233,37 @@ render_quarto_report <- function(template_path, output_file, params) {
           quiet = TRUE
         )
 
-        # Clean up
+        # clean
         unlink(c(temp_qmd, params_file))
+
       } else {
-        # Method 2: System call fallback
+        # method 2 system call fallback
         render_quarto_system_call(template_path, output_file, params)
       }
 
-      logr_msg("Quarto rendering completed successfully", level = "SUCCESS")
+      logr_msg(
+        message = "Quarto rendering completed successfully",
+        level = "SUCCESS")
     },
     error = function(e) {
-      logr_msg(paste("Quarto rendering error:", e$message), level = "ERROR")
 
-      # Try fallback method
+      logr_msg(
+        message = paste("Quarto rendering error:", e$message),
+        level = "ERROR")
+
+      # fallback method
       if (grepl("quarto", e$message, ignore.case = TRUE)) {
-        logr_msg("Trying alternative rendering method", level = "INFO")
+        logr_msg(
+          message = "Trying alternative rendering method",
+          level = "INFO")
+
         render_quarto_alternative(template_path, output_file, params)
+
       } else {
+
         stop(e)
-      }
-    }
+
+      }}
   )
 }
 
@@ -235,13 +276,16 @@ render_quarto_report <- function(template_path, output_file, params) {
 #' @keywords internal
 #'
 render_quarto_system_call <- function(template_path, output_file, params) {
-  logr_msg("Using system call for Quarto rendering", level = "DEBUG")
 
-  # Create temporary parameter file
+  logr_msg(
+    message = "Using system call for Quarto rendering",
+    level = "DEBUG")
+
+  # temporary parameter file
   temp_dir <- tempdir()
   param_file <- file.path(temp_dir, "params.yml")
 
-  # Write parameters as YAML
+  # YAML parameters
   param_yaml <- c(
     "params:",
     paste0("  dataset_title: \"", params$dataset_title, "\""),
@@ -251,7 +295,7 @@ render_quarto_system_call <- function(template_path, output_file, params) {
 
   writeLines(param_yaml, param_file)
 
-  # Build quarto command
+  # quarto command
   cmd_args <- c(
     "render",
     template_path,
@@ -259,18 +303,18 @@ render_quarto_system_call <- function(template_path, output_file, params) {
     "--execute-params", param_file
   )
 
-  # Execute system call
+  # system call
   result <- system2("quarto",
     args = cmd_args,
     stdout = TRUE, stderr = TRUE
   )
 
-  # Check for errors
+  # errors
   if (!is.null(attr(result, "status")) && attr(result, "status") != 0) {
     stop(paste("Quarto system call failed:", paste(result, collapse = "\n")))
   }
 
-  # Clean up
+  # clean up
   unlink(param_file)
 }
 
@@ -282,9 +326,12 @@ render_quarto_system_call <- function(template_path, output_file, params) {
 #'
 #' @keywords internal
 validate_quarto_params <- function(params) {
-  logr_msg("Validating Quarto parameters", level = "DEBUG")
 
-  # Ensure all required parameters exist with proper types
+  logr_msg(
+    message = "Validating Quarto parameters",
+    level = "DEBUG")
+
+  # validate all req paramss
   validated_params <- list(
     dataset_title = as.character(params$dataset_title %||% "TidyTuesday Dataset"),
     title = as.character(params$title %||% "TidyTuesday Report"),
@@ -293,12 +340,16 @@ validate_quarto_params <- function(params) {
     plot_type = as.character(params$plot_type %||% "type")
   )
 
-  # Clean dataset title for Quarto
+  # clean title for quarto
   validated_params$dataset_title <- gsub('["\']', "", validated_params$dataset_title)
   validated_params$title <- gsub('["\']', "", validated_params$title)
 
-  logr_msg(paste("Validated dataset_title:", validated_params$dataset_title), level = "DEBUG")
-  logr_msg(paste("Validated data_list length:", length(validated_params$data_list)), level = "DEBUG")
+  logr_msg(
+    message = paste("Validated dataset_title:", validated_params$dataset_title),
+    level = "DEBUG")
+  logr_msg(
+    message = paste("Validated data_list length:", length(validated_params$data_list)),
+    level = "DEBUG")
 
   return(validated_params)
 }
@@ -312,9 +363,12 @@ validate_quarto_params <- function(params) {
 #' @keywords internal
 #'
 validate_and_clean_params <- function(params) {
-  logr_msg("Validating and cleaning report parameters", level = "DEBUG")
 
-  # Ensure required parameters exist
+  logr_msg(
+    message = "Validating and cleaning report parameters",
+    level = "DEBUG")
+
+  # required parameters exist
   default_params <- list(
     dataset_title = "TidyTuesday Dataset",
     title = "TidyTuesday Data Report",
@@ -323,37 +377,52 @@ validate_and_clean_params <- function(params) {
     plot_type = "type"
   )
 
-  # Merge with defaults
+  # merge with defaults
   for (param_name in names(default_params)) {
     if (is.null(params[[param_name]])) {
       params[[param_name]] <- default_params[[param_name]]
-      logr_msg(paste("Using default for parameter:", param_name), level = "DEBUG")
+
+      logr_msg(
+        message = paste("Using default for parameter:", param_name),
+        level = "DEBUG")
     }
   }
-
-  # Validate data_list
+  # validate data_list
   if (!is.list(params$data_list)) {
-    logr_msg("data_list is not a list, converting", level = "WARN")
+    logr_msg(
+      message = "data_list is not a list, converting",
+      level = "WARN")
     params$data_list <- list(params$data_list)
   }
 
-  # Ensure data_list has proper names
+  # ensure data_list has proper names
   if (length(params$data_list) > 0 && is.null(names(params$data_list))) {
-    logr_msg("Adding default names to data_list", level = "DEBUG")
+    logr_msg(
+      message = "Adding default names to data_list",
+      level = "DEBUG")
     names(params$data_list) <- paste0("dataset_", seq_along(params$data_list))
   }
 
-  # Clean dataset title
+  # clean dataset title
   if (is.character(params$dataset_title) && length(params$dataset_title) > 0) {
-    # Remove any problematic characters for the title
+    # remove any problematic characters
     params$dataset_title <- gsub("[\"'`]", "", params$dataset_title)
   }
 
-  # Log final parameters
-  logr_msg(paste("Final dataset_title:", params$dataset_title), level = "DEBUG")
-  logr_msg(paste("Number of datasets:", length(params$data_list)), level = "DEBUG")
+  # log parameters
+  logr_msg(
+    message = paste("Final dataset_title:", params$dataset_title),
+    level = "DEBUG")
+  logr_msg(
+    message = paste("Number of datasets:", length(params$data_list)),
+    level = "DEBUG")
+
   if (length(params$data_list) > 0) {
-    logr_msg(paste("Dataset names:", paste(names(params$data_list), collapse = ", ")), level = "DEBUG")
+
+    logr_msg(
+      message = paste("Dataset names:",
+        paste(names(params$data_list), collapse = ", ")),
+      level = "DEBUG")
   }
 
   return(params)
@@ -369,26 +438,34 @@ validate_and_clean_params <- function(params) {
 #' @keywords internal
 #'
 render_rmarkdown_report <- function(template_path, output_file, params) {
-  logr_msg("Rendering R Markdown report", level = "DEBUG")
-  logr_msg(paste("Output file:", output_file), level = "DEBUG")
+  logr_msg(
+    message = "Rendering R Markdown report",
+    level = "DEBUG")
+  logr_msg(
+    message = paste("Output file:", output_file),
+    level = "DEBUG")
 
-  # Create a clean environment for rendering
+  # clean environment
   render_env <- new.env(parent = globalenv())
 
-  # Add required libraries to environment
+  # add libraries/required
   render_env$library <- library
   render_env$require <- require
 
-  # Log parameter details before rendering
-  logr_msg(paste("Rendering with dataset_title:", params$dataset_title), level = "DEBUG")
-  logr_msg(paste("Rendering with title:", params$title), level = "DEBUG")
+  # log params
+  logr_msg(
+    message = paste("Rendering with dataset_title:", params$dataset_title),
+    level = "DEBUG")
+  logr_msg(
+    message = paste("Rendering with title:", params$title),
+    level = "DEBUG")
 
   rmarkdown::render(
     input = template_path,
     output_file = output_file,
     params = params,
     envir = render_env,
-    quiet = FALSE, # Change to FALSE for debugging
+    quiet = FALSE,
     clean = TRUE
   )
 }

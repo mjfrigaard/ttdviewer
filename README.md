@@ -1,17 +1,18 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# TidyTuesday data viewer
+# The \#TidyTuesday data viewer
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-`ttdviewer` is an Shiny app-package[^1] for viewing the data from the
-[`#TidyTuesday`](https://github.com/rfordatascience/tidytuesday)
-project. This package started out as a small application to demonstrate
-various examples of downloadable reports (R Markdown, Quarto, etc.), but
-it’s grown to include additional features:
+The \#TidyTuesday data viewer (`ttdviewer`) is an Shiny app-package[^1]
+for viewing the data from the [`#TidyTuesday`
+project.](https://github.com/rfordatascience/tidytuesday) This package
+started out as a small application to demonstrate various examples of
+downloadable reports (R Markdown, Quarto, etc.), but it’s grown to
+include additional features:
 
 1.  The data are loaded directly from GitHub (i.e., with help from the
     [`tidytuesdayR`](https://dslc-io.github.io/tidytuesdayR/) and

@@ -6,10 +6,11 @@
 #' @export
 mod_report_download_ui <- function(id) {
   ns <- NS(id)
-  logr_msg("Initializing report download UI module", level = "DEBUG")
-  tryCatch(
-    {
-      tagList( # tagList ----
+  logr_msg(
+    message = "Initializing report download UI module",
+    level = "DEBUG")
+  tryCatch({
+      tagList(
         # Download button
         tags$div(
           class = "d-grid",
@@ -26,9 +27,11 @@ mod_report_download_ui <- function(id) {
           "Report includes: data visualization, summary statistics, data preview, and variable information."
         )
       )
-    }, # end tagList ----
+    },
     error = function(e) {
-      logr_msg(paste("Error creating report UI:", e$message), level = "ERROR")
+      logr_msg(
+        message = paste("Error creating report UI:", e$message),
+        level = "ERROR")
       bslib::card(
         bslib::card_header("Report Error"),
         bslib::card_body(
@@ -51,15 +54,15 @@ mod_report_download_ui <- function(id) {
 #' @export
 mod_report_download_server <- function(id, format, data, selected_plot_type, dataset_title) {
   moduleServer(id, function(input, output, session) {
+
     logr_msg(message = "Initializing report server module", level = "DEBUG")
 
     # downloadHandler() ----
     output$download_report <- downloadHandler(
       ## FILENAME ----
       filename = function() {
-        tryCatch(
-          {
-            # get dataset title from the data
+        tryCatch({
+            # get dataset title ----
             current_data <- data()
 
             actual_title <- if (!is.null(current_data) && length(current_data) > 0) {
@@ -76,7 +79,7 @@ mod_report_download_server <- function(id, format, data, selected_plot_type, dat
               "tidytuesday_dataset"
             }
 
-            # clean title for filename ----
+            ## clean title for filename ----
             clean_title <- gsub("[^A-Za-z0-9_-]", "_", actual_title)
 
             timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
@@ -108,22 +111,24 @@ mod_report_download_server <- function(id, format, data, selected_plot_type, dat
       },
       # CONTENT ----
       content = function(file) {
-        tryCatch(
-          {
-            logr_msg(paste("Starting", input$report_format, "report generation"),
+        tryCatch({
+            logr_msg(
+              message = paste("Starting", input$report_format, "report generation"),
               level = "INFO"
             )
             # validate inputs
             current_data <- data()
             if (is.null(current_data) || length(current_data) == 0) {
-              logr_msg("No data available for report generation",
+              logr_msg(
+                message = "No data available for report generation",
                 level = "ERROR"
               )
               stop("No data available. Please select a dataset first.")
             }
 
-            # Enhanced format checking for Quarto
+            # format checking for quarto
             if (input$report_format == "quarto") {
+              # quarto_available() ----
               if (!quarto_available()) {
                 logr_msg("Quarto not available, falling back to R Markdown",
                   level = "WARN"
@@ -135,7 +140,8 @@ mod_report_download_server <- function(id, format, data, selected_plot_type, dat
                 )
                 actual_format <- "rmarkdown"
               } else {
-                logr_msg("Quarto available, proceeding with Quarto rendering",
+                logr_msg(
+                  message = "Quarto available, proceeding with Quarto rendering",
                   level = "INFO"
                 )
                 actual_format <- "quarto"
@@ -144,7 +150,7 @@ mod_report_download_server <- function(id, format, data, selected_plot_type, dat
               actual_format <- input$report_format
             }
 
-            # progress notification ----
+            # progress notification
             progress_msg <- paste(
               "Generating",
               tools::toTitleCase(actual_format),
@@ -156,15 +162,15 @@ mod_report_download_server <- function(id, format, data, selected_plot_type, dat
               duration = 8,
               id = "report_progress"
             )
-            # Get current parameters with proper dataset title
+            # current parameters with dataset title
             current_plot_type <- selected_plot_type() %||% "type"
 
-            # Extract actual dataset title from data or use fallback
+            # extract actual dataset title from data or use fallback
             actual_dataset_title <- if (!is.null(current_data) && length(current_data) > 0) {
-              # Get first dataset name and clean it
+              # get first dataset name and clean it
               first_name <- names(current_data)[1]
               if (!is.null(first_name) && first_name != "") {
-                # Remove .csv extension and format nicely
+                # remove .csv extension and clean
                 clean_name <- gsub("\\.csv$", "", first_name)
                 tools::toTitleCase(gsub("_", " ", clean_name))
               } else {
@@ -183,10 +189,10 @@ mod_report_download_server <- function(id, format, data, selected_plot_type, dat
               level = "INFO"
             )
 
-            # Generate plots for the report
-            plots <- tryCatch(
-              {
-                ttdviewer::inspect_plot(ttd = current_data, plot = current_plot_type)
+            # generate plots
+            plots <- tryCatch({
+              ## inspect_plot() ----
+                inspect_plot(ttd = current_data, plots = current_plot_type)
               },
               error = function(e) {
                 logr_msg(
@@ -196,8 +202,7 @@ mod_report_download_server <- function(id, format, data, selected_plot_type, dat
                 NULL
               }
             )
-
-            # prepare params ----
+            # params ----
             params <- list(
               dataset_title = actual_dataset_title,
               title = paste("TidyTuesday Report:", actual_dataset_title),
@@ -224,23 +229,21 @@ mod_report_download_server <- function(id, format, data, selected_plot_type, dat
               level = "DEBUG"
             )
 
-            # render report ----
+            ## render_report() ----
             # with enhanced error handling
-            tryCatch(
-              {
+            tryCatch({
                 render_report(
                   format = actual_format,
                   output_file = file,
                   params = params
-                )
-              },
+                )},
               error = function(render_error) {
                 logr_msg(
                   message = paste("Render error:", render_error$message),
                   level = "ERROR"
                 )
-
-                # if quarto fails, try R Markdown as fallback
+                ## render_report() ----
+                # if quarto fails try r markdown
                 if (actual_format == "quarto") {
                   logr_msg(
                     message = "Quarto failed, trying R Markdown fallback",
@@ -284,7 +287,7 @@ mod_report_download_server <- function(id, format, data, selected_plot_type, dat
             # Remove progress notification
             removeNotification("report_progress")
 
-            ### Show error notification ----
+            ### Show error notification
             showNotification(
               paste("Report generation failed:", e$message),
               type = "error",
@@ -297,9 +300,7 @@ mod_report_download_server <- function(id, format, data, selected_plot_type, dat
               actual_dataset_title %||% "Unknown",
               input$report_format
             )
-          }
-        )
-      }
-    )
+          })
+      })
   })
 }
