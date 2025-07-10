@@ -69,60 +69,781 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://alastairrushworth.github.io/inspectdf/" class="external-link">inspectdf</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lobstr.r-lib.org/" class="external-link">lobstr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/ttdviewer/">ttdviewer</a></span><span class="op">)</span></span></code></pre></div>
+<p>The report generation in the #TidyTuesday data viewer app consists of
+three interconnected modules that work together to provide users with
+customizable, downloadable reports. This method demonstrates patterns
+for format selection, system capability detection, and reliable file
+generation with comprehensive error handling.</p>
 <div class="section level2">
-<h2 id="reports">Reports<a class="anchor" aria-label="anchor" href="#reports"></a>
+<h2 id="module-architecture-overview">Module Architecture Overview<a class="anchor" aria-label="anchor" href="#module-architecture-overview"></a>
+</h2>
+<p>The report generation system consists of three main components:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong><code>mod_report_input</code></strong>: Format selection
+interface<br>
+</li>
+<li>
+<strong><code>mod_report_desc</code></strong>: Dynamic format
+description and system status<br>
+</li>
+<li>
+<strong><code>mod_report_download</code></strong>: Report generation
+and download functionality</li>
+</ol>
+<pre><code> [38;5;214m█ [39m─ [1m [35mlaunch [39m [22m 
+├─ [38;5;214m█ [39m─ [1m [35mapp_ui [39m [22m 
+│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_ui [39m [22m 
+│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_desc_ui [39m [22m 
+│ └─ [38;5;214m█ [39m─ [1m [35mmod_report_download_ui [39m [22m 
+└─ [38;5;214m█ [39m─ [1m [35mapp_server [39m [22m 
+  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_server [39m [22m 
+  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_desc_server [39m [22m 
+  └─ [38;5;214m█ [39m─ [1m [35mmod_report_download_server [39m [22m </code></pre>
+<p>These three modules work together with a sophisticated backend
+utility logic that handles multiple rendering formats, quarto system
+detection, and graceful error handling.</p>
+</div>
+<div class="section level2">
+<h2 id="mod_report_input---the-format-selector">mod_report_input - the format selector<a class="anchor" aria-label="anchor" href="#mod_report_input---the-format-selector"></a>
+</h2>
+<p>The <code>mod_report_input</code> handles the format selection input
+from the user.</p>
+<div class="section level3">
+<h3 id="ui">UI<a class="anchor" aria-label="anchor" href="#ui"></a>
+</h3>
+<p>The input module provides a <code>selectInput()</code> interface for
+format selection:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">selectInput</span><span class="op">(</span></span>
+<span>  inputId <span class="op">=</span> <span class="fu">ns</span><span class="op">(</span><span class="st">"format"</span><span class="op">)</span>,</span>
+<span>  label <span class="op">=</span> <span class="fu">strong</span><span class="op">(</span><span class="st">"Download Report:"</span><span class="op">)</span>,</span>
+<span>  choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="st">"R Markdown"</span> <span class="op">=</span> <span class="st">"rmarkdown"</span>,</span>
+<span>    <span class="st">"Quarto"</span> <span class="op">=</span> <span class="st">"quarto"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  selected <span class="op">=</span> <span class="st">"rmarkdown"</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>The input includes bold, User-friendly labels to emphasizes the
+functionality. The default selected input (R Markdown) maximizes
+compatibility.</p>
+</div>
+<div class="section level3">
+<h3 id="server">Server<a class="anchor" aria-label="anchor" href="#server"></a>
+</h3>
+<p>The server demonstrates a simple, clean reactive pattern:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod_report_input_server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">moduleServer</span><span class="op">(</span><span class="va">id</span>, <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span></span>
+<span>      <span class="fu">reactive</span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"format"</span> <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">format</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>The <code>input$format</code> is returned directly via a named list
+(instead of internal state management). Debugging support is provided
+with comprehensive logging.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="mod_report_desc---description-generator">mod_report_desc - description generator<a class="anchor" aria-label="anchor" href="#mod_report_desc---description-generator"></a>
+</h2>
+<pre><code> [38;5;214m█ [39m─ [1m [35mlaunch [39m [22m 
+├─ [38;5;214m█ [39m─ [1m [35mapp_ui [39m [22m 
+│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_ui [39m [22m 
+│ └─ [38;5;214m█ [39m─ [1m [35mmod_report_desc_ui [39m [22m 
+└─ [38;5;214m█ [39m─ [1m [35mapp_server [39m [22m 
+  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_server [39m [22m 
+  └─ [38;5;214m█ [39m─ [1m [35mmod_report_desc_server [39m [22m 
+    └─ [38;5;214m█ [39m─ [1m [35mquarto_available [39m [22m </code></pre>
+<div class="section level3">
+<h3 id="ui-1">UI<a class="anchor" aria-label="anchor" href="#ui-1"></a>
+</h3>
+<p>The description module uses complete dynamic UI generation:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod_report_desc_ui</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">ns</span> <span class="op">&lt;-</span> <span class="fu">NS</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
+<span>  <span class="fu">tagList</span><span class="op">(</span></span>
+<span>    <span class="fu">uiOutput</span><span class="op">(</span>outputId <span class="op">=</span> <span class="fu">ns</span><span class="op">(</span><span class="st">"desc"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>This minimal UI delegates all content generation to the server,
+enabling complete dynamic control over presentation.</p>
+</div>
+<div class="section level3">
+<h3 id="server-1">Server<a class="anchor" aria-label="anchor" href="#server-1"></a>
+</h3>
+<p>The server contains sophisticated logic for system detection and
+adaptive messaging. The reactive expression orchestrates multiple
+outputs:</p>
+<ol style="list-style-type: decimal">
+<li>Checks the system capability detection through
+<code><a href="../reference/quarto_available.html">quarto_available()</a></code><br>
+</li>
+<li>Format-specific messaging based on selection<br>
+</li>
+<li>Visual styling based on system state</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">desc_inputs</span> <span class="op">&lt;-</span> <span class="fu">reactive</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="fu">req</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="co"># System capability detection</span></span>
+<span>  <span class="co"># Format-specific descriptions  </span></span>
+<span>  <span class="co"># Alert styling logic</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="st">"quarto_status"</span> <span class="op">=</span> <span class="va">quarto_status</span>,</span>
+<span>    <span class="st">"description"</span> <span class="op">=</span> <span class="va">description</span>,</span>
+<span>    <span class="st">"alert_class"</span> <span class="op">=</span> <span class="va">alert_class</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<p>After <code>quarto_status</code> is determined by the
+<code><a href="../reference/quarto_available.html">quarto_available()</a></code> function, the value is stored as
+<code>available</code> with a <code>message</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">quarto_status</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">format</span> <span class="op">==</span> <span class="st">"quarto"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="../reference/quarto_available.html">quarto_available</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      available <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>      message <span class="op">=</span> <span class="st">"Quarto is available and ready to use."</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      available <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      message <span class="op">=</span> <span class="st">"Quarto not detected. Will fall back to R Markdown if selected."</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>available <span class="op">=</span> <span class="cn">TRUE</span>, message <span class="op">=</span> <span class="st">"Quarto is available and ready to use."</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>The conditional checking behavior identifies when Quarto is selected
+and provides graceful fallback messaging when it’s unavailable.</p>
+<p>The <code>description</code> returns information for
+<code>rmarkdown</code> and <code>quarto</code> with bootstrap
+<code>icon</code> for visual identification, <code>title</code>,
+informative <code>desc</code>riptions to guide user choice, and
+context-aware <code>note</code> that reflect system state.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">description</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">format</span>,</span>
+<span>  <span class="st">"rmarkdown"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    icon <span class="op">=</span> <span class="st">"bi-file-earmark-code"</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">"R Markdown"</span>,</span>
+<span>    desc <span class="op">=</span> <span class="st">"Traditional R Markdown report. Compatible with all R installations."</span>,</span>
+<span>    note <span class="op">=</span> <span class="st">"Recommended for maximum compatibility."</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="st">"quarto"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    icon <span class="op">=</span> <span class="st">"bi-file-earmark-richtext"</span>, </span>
+<span>    title <span class="op">=</span> <span class="st">"Quarto"</span>,</span>
+<span>    desc <span class="op">=</span> <span class="st">"Modern scientific publishing with enhanced features and interactivity."</span>,</span>
+<span>    note <span class="op">=</span> <span class="va">quarto_status</span><span class="op">$</span><span class="va">message</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>In the UI, the observer creates <code>div()</code>s with Bootstrap
+classes for styling, layout, and typography. The
+<code>bindEvent()</code> provides event-driven updates for optimal
+performance.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">observe</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">desc</span> <span class="op">&lt;-</span> <span class="fu">renderUI</span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">tags</span><span class="op">$</span><span class="fu">div</span><span class="op">(</span></span>
+<span>      class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
+<span>        <span class="st">"alert border-start border-primary border-3 py-2"</span>,</span>
+<span>        <span class="fu">desc_inputs</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">alert_class</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      <span class="va">tags</span><span class="op">$</span><span class="fu">div</span><span class="op">(</span></span>
+<span>        class <span class="op">=</span> <span class="st">"d-flex align-items-center mb-1"</span>,</span>
+<span>        <span class="va">tags</span><span class="op">$</span><span class="fu">i</span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"bi"</span>, <span class="fu">desc_inputs</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">description</span><span class="op">$</span><span class="va">icon</span>, <span class="st">"me-2"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        <span class="va">tags</span><span class="op">$</span><span class="fu">strong</span><span class="op">(</span><span class="fu">desc_inputs</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">description</span><span class="op">$</span><span class="va">title</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      <span class="va">tags</span><span class="op">$</span><span class="fu">p</span><span class="op">(</span><span class="fu">desc_inputs</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">description</span><span class="op">$</span><span class="va">desc</span>, class <span class="op">=</span> <span class="st">"mb-1 small"</span><span class="op">)</span>,</span>
+<span>      <span class="va">tags</span><span class="op">$</span><span class="fu">small</span><span class="op">(</span><span class="fu">desc_inputs</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">description</span><span class="op">$</span><span class="va">note</span>, class <span class="op">=</span> <span class="st">"text-muted"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">bindEvent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="mod_report_download---the-rendering-engine">mod_report_download - the rendering engine<a class="anchor" aria-label="anchor" href="#mod_report_download---the-rendering-engine"></a>
+</h2>
+<pre><code> [38;5;214m█ [39m─ [1m [35mlaunch [39m [22m 
+├─ [38;5;214m█ [39m─ [1m [35mapp_ui [39m [22m 
+│ ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_ui [39m [22m 
+│ └─ [38;5;214m█ [39m─ [1m [35mmod_report_download_ui [39m [22m 
+└─ [38;5;214m█ [39m─ [1m [35mapp_server [39m [22m 
+  ├─ [38;5;214m█ [39m─ [1m [35mmod_report_input_server [39m [22m 
+  └─ [38;5;214m█ [39m─ [1m [35mmod_report_download_server [39m [22m 
+    ├─ [38;5;214m█ [39m─ [1m [35mquarto_available [39m [22m 
+    ├─ [38;5;214m█ [39m─ [1m [35minspect_plot [39m [22m 
+    ├─ [38;5;214m█ [39m─ [1m [35mrender_report [39m [22m 
+    │ ├─ [38;5;214m█ [39m─ [1m [35mget_template_path [39m [22m 
+    │ ├─ [38;5;214m█ [39m─ [1m [35mcreate_fallback_template [39m [22m 
+    │ ├─ [38;5;214m█ [39m─ [1m [35mvalidate_and_clean_params [39m [22m 
+    │ ├─ [38;5;214m█ [39m─ [1m [35mrender_rmarkdown_report [39m [22m 
+    │ ├─ [38;5;214m█ [39m─ [1m [35mrender_quarto_report [39m [22m 
+    │ └─ [38;5;214m█ [39m─ [1m [35mcreate_error_report [39m [22m 
+    └─ [38;5;214m█ [39m─ [1m [35mcreate_error_report [39m [22m </code></pre>
+<div class="section level3">
+<h3 id="ui-2">UI<a class="anchor" aria-label="anchor" href="#ui-2"></a>
+</h3>
+<p>The download module provides an input with
+<code>downloadButton()</code>, some custom <code>div()</code> classes,
+and informative help text describing report contents:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod_report_download_ui</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">ns</span> <span class="op">&lt;-</span> <span class="fu">NS</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
+<span>  <span class="fu">tagList</span><span class="op">(</span></span>
+<span>    <span class="va">tags</span><span class="op">$</span><span class="fu">div</span><span class="op">(</span></span>
+<span>      class <span class="op">=</span> <span class="st">"d-grid"</span>,</span>
+<span>      <span class="fu">downloadButton</span><span class="op">(</span></span>
+<span>        <span class="fu">ns</span><span class="op">(</span><span class="st">"download_report"</span><span class="op">)</span>,</span>
+<span>        <span class="st">"Download Report"</span>,</span>
+<span>        class <span class="op">=</span> <span class="st">"btn btn-primary"</span>,</span>
+<span>        icon <span class="op">=</span> <span class="fu">icon</span><span class="op">(</span><span class="st">"download"</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="va">tags</span><span class="op">$</span><span class="fu">small</span><span class="op">(</span></span>
+<span>      class <span class="op">=</span> <span class="st">"text-muted"</span>,</span>
+<span>      <span class="st">"Report includes: data visualization, summary statistics, data preview, and variable information."</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="server-2">Server<a class="anchor" aria-label="anchor" href="#server-2"></a>
+</h3>
+<p>The download handler (<code>downloadHandler()</code>) can be paired
+with any download UI function (<code>downloadButton()</code> or
+<code>downloadLink()</code>). Every <code>downloadHandler()</code>
+includes <code>filename</code> and <code>content</code> functions.</p>
+<ul>
+<li>The <code>filename</code> portion handles file generation and error
+handling. The <code>filename</code> function generates a data-driven
+file name based on dataset content, timestamp inclusion for version
+control, safe character handling for cross-platform compatibility, and a
+graceful fallback for error conditions.</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">filename</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">current_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">actual_title</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">current_data</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">current_data</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">first_dataset_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">current_data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">first_dataset_name</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">first_dataset_name</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"\\.csv$"</span>, <span class="st">""</span>, <span class="va">first_dataset_name</span><span class="op">)</span></span>
+<span>      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="st">"tidytuesday_dataset"</span></span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>      <span class="st">"tidytuesday_dataset"</span></span>
+<span>    <span class="op">}</span></span>
+<span>    </span>
+<span>    <span class="va">clean_title</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"[^A-Za-z0-9_-]"</span>, <span class="st">"_"</span>, <span class="va">actual_title</span><span class="op">)</span></span>
+<span>    <span class="va">timestamp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%Y%m%d_%H%M%S"</span><span class="op">)</span></span>
+<span>    <span class="va">format_suffix</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">report_format</span>,</span>
+<span>      <span class="st">"rmarkdown"</span> <span class="op">=</span> <span class="st">"rmd"</span>,</span>
+<span>      <span class="st">"quarto"</span> <span class="op">=</span> <span class="st">"qto"</span></span>
+<span>    <span class="op">)</span></span>
+<span>    </span>
+<span>    <span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">clean_title</span>, <span class="st">"_"</span>, <span class="va">format_suffix</span>, <span class="st">"_"</span>, <span class="va">timestamp</span>, <span class="st">".html"</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="st">"tidytuesday_report.html"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<ul>
+<li>The <code>content</code> portion includes data validation before
+processing (with format detection and automatic fallback). The
+structured <code>params</code> list are passed to each template and
+include <code>dataset_title</code>, <code>title</code>,
+<code>data_list</code>, <code>plots</code>, and
+<code>plot_type</code>:</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">content</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">file</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="co"># data validation</span></span>
+<span>    <span class="va">current_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">current_data</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">current_data</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"No data available. Please select a dataset first."</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    </span>
+<span>    <span class="co"># format detection</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">report_format</span> <span class="op">==</span> <span class="st">"quarto"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="../reference/quarto_available.html">quarto_available</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="co"># fallback</span></span>
+<span>        <span class="va">actual_format</span> <span class="op">&lt;-</span> <span class="st">"rmarkdown"</span></span>
+<span>        <span class="fu">showNotification</span><span class="op">(</span><span class="st">"Quarto not available. Generating R Markdown report instead."</span>, </span>
+<span>                        type <span class="op">=</span> <span class="st">"warning"</span>, duration <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="va">actual_format</span> <span class="op">&lt;-</span> <span class="st">"quarto"</span></span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>      <span class="va">actual_format</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">report_format</span></span>
+<span>    <span class="op">}</span></span>
+<span>    </span>
+<span>    <span class="co"># progress notification</span></span>
+<span>    <span class="fu">showNotification</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Generating"</span>, <span class="fu">tools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">toTitleCase</a></span><span class="op">(</span><span class="va">actual_format</span><span class="op">)</span>, <span class="st">"report..."</span><span class="op">)</span>,</span>
+<span>                    type <span class="op">=</span> <span class="st">"message"</span>, duration <span class="op">=</span> <span class="fl">8</span>, id <span class="op">=</span> <span class="st">"report_progress"</span><span class="op">)</span></span>
+<span>    </span>
+<span>    <span class="co"># parameter preparation</span></span>
+<span>    <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      dataset_title <span class="op">=</span> <span class="va">actual_dataset_title</span>,</span>
+<span>      title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"TidyTuesday Report:"</span>, <span class="va">actual_dataset_title</span><span class="op">)</span>,</span>
+<span>      data_list <span class="op">=</span> <span class="va">current_data</span>,</span>
+<span>      plots <span class="op">=</span> <span class="va">plots</span>,</span>
+<span>      plot_type <span class="op">=</span> <span class="va">current_plot_type</span></span>
+<span>    <span class="op">)</span></span>
+<span>    </span>
+<span>    <span class="co"># render </span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>      <span class="fu"><a href="../reference/render_report.html">render_report</a></span><span class="op">(</span>format <span class="op">=</span> <span class="va">actual_format</span>, output_file <span class="op">=</span> <span class="va">file</span>, params <span class="op">=</span> <span class="va">params</span><span class="op">)</span></span>
+<span>    <span class="op">}</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">render_error</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="va">actual_format</span> <span class="op">==</span> <span class="st">"quarto"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="../reference/render_report.html">render_report</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"rmarkdown"</span>, output_file <span class="op">=</span> <span class="va">file</span>, params <span class="op">=</span> <span class="va">params</span><span class="op">)</span></span>
+<span>        <span class="fu">showNotification</span><span class="op">(</span><span class="st">"Quarto failed, generated R Markdown report instead."</span>, </span>
+<span>                        type <span class="op">=</span> <span class="st">"warning"</span>, duration <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="va">render_error</span><span class="op">)</span></span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="co"># fallback</span></span>
+<span>    <span class="fu"><a href="../reference/create_error_report.html">create_error_report</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">e</span><span class="op">$</span><span class="va">message</span>, <span class="va">actual_dataset_title</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html" class="external-link">%||%</a></span> <span class="st">"Unknown"</span>, <span class="va">input</span><span class="op">$</span><span class="va">report_format</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>The progress notifications provide real-time user feedback with
+multi-level error handling, graceful recovery, and error report
+generation when all else fails.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="rending-reports">Rending Reports<a class="anchor" aria-label="anchor" href="#rending-reports"></a>
+</h2>
+<p>The core rendering function coordinates multiple rendering
+strategies:</p>
+<ol style="list-style-type: decimal">
+<li>The <code>template_path</code> is passed to
+<code><a href="../reference/get_template_path.html">get_template_path()</a></code> (either R Markdown or Quarto) and, if a
+file doesn’t exist, the template resolution is handled with
+<code><a href="../reference/create_fallback_template.html">create_fallback_template()</a></code>.<br>
+</li>
+<li>The <code>params</code> are passed to
+<code><a href="../reference/validate_and_clean_params.html">validate_and_clean_params()</a></code> to ensure the correct values
+are passed into the report.<br>
+</li>
+<li>Conditional logic handles the specific <code>format</code> selected
+(either <code><a href="../reference/render_rmarkdown_report.html">render_rmarkdown_report()</a></code> or
+<code><a href="../reference/render_quarto_report.html">render_quarto_report()</a></code>)</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">render_report</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">format</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rmarkdown"</span>, <span class="st">"quarto"</span><span class="op">)</span>, <span class="va">output_file</span>, <span class="va">params</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">template_path</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">format</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.arg.html" class="external-link">match.arg</a></span><span class="op">(</span><span class="va">format</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># resolution</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">template_path</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">template_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_template_path.html">get_template_path</a></span><span class="op">(</span><span class="va">format</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="co"># validation with fallback </span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">template_path</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">template_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_fallback_template.html">create_fallback_template</a></span><span class="op">(</span><span class="va">format</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="co"># params validation and cleaning</span></span>
+<span>  <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/validate_and_clean_params.html">validate_and_clean_params</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># format-specific rendering</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">format</span> <span class="op">==</span> <span class="st">"rmarkdown"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/render_rmarkdown_report.html">render_rmarkdown_report</a></span><span class="op">(</span><span class="va">template_path</span>, <span class="va">output_file</span>, <span class="va">params</span><span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/render_quarto_report.html">render_quarto_report</a></span><span class="op">(</span><span class="va">template_path</span>, <span class="va">output_file</span>, <span class="va">params</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="r-markdown">R Markdown<a class="anchor" aria-label="anchor" href="#r-markdown"></a>
+</h3>
+<p>R Markdown rendering is handled by
+render_rmarkdown_report<code>()</code>, which creates a clean
+environment for rendering and adds any required libraries:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">render_rmarkdown_report</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">template_path</span>, <span class="va">output_file</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span></span>
+<span>    message <span class="op">=</span> <span class="st">"Rendering R Markdown report"</span>, </span>
+<span>    level <span class="op">=</span> <span class="st">"DEBUG"</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span></span>
+<span>    message <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Output file:"</span>, <span class="va">output_file</span><span class="op">)</span>, </span>
+<span>    level <span class="op">=</span> <span class="st">"DEBUG"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># clean environment</span></span>
+<span>  <span class="va">render_env</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">new.env</a></span><span class="op">(</span>parent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">globalenv</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># add libs/reqs</span></span>
+<span>  <span class="va">render_env</span><span class="op">$</span><span class="va">library</span> <span class="op">&lt;-</span> <span class="va">library</span></span>
+<span>  <span class="va">render_env</span><span class="op">$</span><span class="va">require</span> <span class="op">&lt;-</span> <span class="va">require</span></span>
+<span></span>
+<span>  <span class="co"># log parameter details</span></span>
+<span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span></span>
+<span>    message <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Rendering with dataset_title:"</span>, <span class="va">params</span><span class="op">$</span><span class="va">dataset_title</span><span class="op">)</span>, </span>
+<span>    level <span class="op">=</span> <span class="st">"DEBUG"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/logr_msg.html">logr_msg</a></span><span class="op">(</span></span>
+<span>    message <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Rendering with title:"</span>, <span class="va">params</span><span class="op">$</span><span class="va">title</span><span class="op">)</span>, </span>
+<span>    level <span class="op">=</span> <span class="st">"DEBUG"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span></span>
+<span>    input <span class="op">=</span> <span class="va">template_path</span>,</span>
+<span>    output_file <span class="op">=</span> <span class="va">output_file</span>,</span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    envir <span class="op">=</span> <span class="va">render_env</span>,</span>
+<span>    quiet <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>    clean <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="quarto">Quarto<a class="anchor" aria-label="anchor" href="#quarto"></a>
+</h3>
+<p>Quarto rendering is handled by <code><a href="../reference/render_quarto_report.html">render_quarto_report()</a></code>
+and has a second method as a fallback strategy
+(<code><a href="../reference/render_quarto_system_call.html">render_quarto_system_call()</a></code>):</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">render_quarto_report</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">template_path</span>, <span class="va">output_file</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># method 1 using the quarto R package</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"quarto"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">quarto</span><span class="fu">::</span><span class="fu"><a href="https://quarto-dev.github.io/quarto-r/reference/quarto_render.html" class="external-link">quarto_render</a></span><span class="op">(</span></span>
+<span>      input <span class="op">=</span> <span class="va">temp_qmd</span>,</span>
+<span>      output_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">output_file</span><span class="op">)</span>,</span>
+<span>      execute_params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>      quiet <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="co"># method 2 system call fallback</span></span>
+<span>    <span class="fu"><a href="../reference/render_quarto_system_call.html">render_quarto_system_call</a></span><span class="op">(</span><span class="va">template_path</span>, <span class="va">output_file</span>, <span class="va">params</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p><strong>Multiple Rendering Strategies:</strong></p>
+<ul>
+<li><p><strong>R package method</strong> for integrated
+environments</p></li>
+<li><p><strong>System call fallback</strong> for command-line
+installations</p></li>
+<li><p><strong>Alternative rendering</strong> using R Markdown
+compatibility</p></li>
+<li><p><strong>Comprehensive error handling</strong> with automatic
+fallbacks</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="quarto-detection">Quarto Detection<a class="anchor" aria-label="anchor" href="#quarto-detection"></a>
+</h3>
+<p>The <code><a href="../reference/quarto_available.html">quarto_available()</a></code> function implements comprehensive
+system detection:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">quarto_available</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># 1. Check for quarto R package</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"quarto"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>      <span class="fu">quarto</span><span class="fu">::</span><span class="fu"><a href="https://quarto-dev.github.io/quarto-r/reference/quarto_version.html" class="external-link">quarto_version</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="op">}</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="co"># Package exists but not functional</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="co"># 2. Check system PATH</span></span>
+<span>  <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system2.html" class="external-link">system2</a></span><span class="op">(</span><span class="st">"quarto"</span>, args <span class="op">=</span> <span class="st">"--version"</span>, stdout <span class="op">=</span> <span class="cn">TRUE</span>, stderr <span class="op">=</span> <span class="cn">TRUE</span>, timeout <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="co"># 3. Check common installation paths</span></span>
+<span>  <span class="va">quarto_paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"/usr/local/bin/quarto"</span>,</span>
+<span>    <span class="st">"/usr/bin/quarto"</span>,</span>
+<span>    <span class="st">"C:/Program Files/Quarto/bin/quarto.exe"</span></span>
+<span>  <span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">path</span> <span class="kw">in</span> <span class="va">quarto_paths</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p><strong>Multi-Level Detection:</strong></p>
+<ul>
+<li><p><strong>R package detection</strong> for integrated
+environments</p></li>
+<li><p><strong>System PATH checking</strong> with timeout
+protection</p></li>
+<li><p><strong>Common path verification</strong> for standard
+installations</p></li>
+<li><p><strong>Graceful failure</strong> with detailed logging</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="error-handling-and-report">Error Handling and Report<a class="anchor" aria-label="anchor" href="#error-handling-and-report"></a>
+</h3>
+<p>When all rendering attempts fail, the system generates an informative
+error report:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">create_error_report</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">file</span>, <span class="va">error_msg</span>, <span class="va">dataset_title</span> <span class="op">=</span> <span class="st">"Unknown"</span>, <span class="va">format</span> <span class="op">=</span> <span class="st">"rmarkdown"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">error_html</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span>
+<span>    <span class="st">'&lt;!DOCTYPE html&gt;</span></span>
+<span><span class="st">    &lt;html&gt;</span></span>
+<span><span class="st">    &lt;head&gt;</span></span>
+<span><span class="st">      &lt;title&gt;Report Generation Error&lt;/title&gt;</span></span>
+<span><span class="st">      &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"&gt;</span></span>
+<span><span class="st">    &lt;/head&gt;</span></span>
+<span><span class="st">    &lt;body&gt;</span></span>
+<span><span class="st">      &lt;div class="error-container"&gt;</span></span>
+<span><span class="st">        &lt;h1 class="text-danger"&gt;Report Generation Failed&lt;/h1&gt;</span></span>
+<span><span class="st">        &lt;div class="alert alert-danger" role="alert"&gt;</span></span>
+<span><span class="st">          &lt;h4 class="alert-heading"&gt;Error Details&lt;/h4&gt;</span></span>
+<span><span class="st">          &lt;p class="mb-0"&gt;'</span>, <span class="va">error_msg</span>, <span class="st">'&lt;/p&gt;</span></span>
+<span><span class="st">        &lt;/div&gt;</span></span>
+<span><span class="st">        &lt;div class="alert alert-info mt-4" role="alert"&gt;</span></span>
+<span><span class="st">          &lt;h6 class="alert-heading"&gt;Troubleshooting Tips&lt;/h6&gt;</span></span>
+<span><span class="st">          &lt;ul class="mb-0"&gt;</span></span>
+<span><span class="st">            &lt;li&gt;Try selecting a different dataset&lt;/li&gt;</span></span>
+<span><span class="st">            &lt;li&gt;Try a different report format&lt;/li&gt;</span></span>
+<span><span class="st">            &lt;li&gt;Check your internet connection&lt;/li&gt;</span></span>
+<span><span class="st">            &lt;li&gt;Contact support if the problem persists&lt;/li&gt;</span></span>
+<span><span class="st">          &lt;/ul&gt;</span></span>
+<span><span class="st">        &lt;/div&gt;</span></span>
+<span><span class="st">      &lt;/div&gt;</span></span>
+<span><span class="st">    &lt;/body&gt;</span></span>
+<span><span class="st">    &lt;/html&gt;'</span></span>
+<span>  <span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="va">error_html</span>, <span class="va">file</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p><strong>User-Friendly Error Handling:</strong></p>
+<ul>
+<li><p><strong>Professional HTML presentation</strong> with Bootstrap
+styling</p></li>
+<li><p><strong>Clear error information</strong> without technical
+jargon</p></li>
+<li><p><strong>Actionable troubleshooting tips</strong> for
+users</p></li>
+<li><p><strong>Consistent visual design</strong> matching the
+application</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="fallback-templates">Fallback Templates<a class="anchor" aria-label="anchor" href="#fallback-templates"></a>
+</h3>
+<p>The system includes automatic template generation when templates are
+missing:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">create_fallback_template</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">format</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rmarkdown"</span>, <span class="st">"quarto"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">format</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.arg.html" class="external-link">match.arg</a></span><span class="op">(</span><span class="va">format</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">format</span> <span class="op">==</span> <span class="st">"rmarkdown"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="../reference/create_fallback_rmd_template.html">create_fallback_rmd_template</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="../reference/create_fallback_qmd_template.html">create_fallback_qmd_template</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p><strong>Resilient Template System:</strong></p>
+<ul>
+<li><p><strong>Automatic template generation</strong> when
+missing</p></li>
+<li><p><strong>Format-specific templates</strong> with appropriate
+syntax</p></li>
+<li><p><strong>Minimal viable reports</strong> that always work</p></li>
+<li><p><strong>Graceful degradation</strong> from rich to basic
+functionality</p></li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="main-application-integration">Main Application Integration<a class="anchor" aria-label="anchor" href="#main-application-integration"></a>
+</h2>
+<p>The modules are integrated in the <code><a href="../reference/app_ui.html">app_ui()</a></code> and
+<code><a href="../reference/app_server.html">app_server()</a></code> below:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># in app_ui()</span></span>
+<span><span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/sidebar.html" class="external-link">sidebar</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/mod_input_ui.html">mod_input_ui</a></span><span class="op">(</span><span class="st">"input"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/mod_report_input_ui.html">mod_report_input_ui</a></span><span class="op">(</span><span class="st">"rep_form"</span><span class="op">)</span>,</span>
+<span>  <span class="fu">br</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/mod_report_desc_ui.html">mod_report_desc_ui</a></span><span class="op">(</span><span class="st">"rep_desc"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/mod_report_download_ui.html">mod_report_download_ui</a></span><span class="op">(</span><span class="st">"rep_dwnld"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># in app_server()</span></span>
+<span><span class="va">report_format</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mod_report_input_server.html">mod_report_input_server</a></span><span class="op">(</span><span class="st">"rep_form"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/mod_report_desc_server.html">mod_report_desc_server</a></span><span class="op">(</span><span class="st">"rep_desc"</span>, format <span class="op">=</span> <span class="va">report_format</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/mod_report_download_server.html">mod_report_download_server</a></span><span class="op">(</span><span class="st">"rep_dwnld"</span>, </span>
+<span>  format <span class="op">=</span> <span class="va">report_format</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">selected_data</span>,</span>
+<span>  selected_plot_type <span class="op">=</span> <span class="va">viz_result</span>,</span>
+<span>  dataset_title <span class="op">=</span> <span class="va">dataset_title</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><strong>Clean Integration Patterns:</strong></p>
+<ul>
+<li><p><strong>Sidebar placement</strong> for persistent access</p></li>
+<li><p><strong>Reactive data flow</strong> between modules</p></li>
+<li><p><strong>Logical module ordering</strong> for user
+workflow</p></li>
+<li><p><strong>Comprehensive parameter passing</strong> for
+functionality</p></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h2>
+<table style="width:99%;" class="table">
+<colgroup>
+<col width="26%">
+<col width="49%">
+<col width="22%">
+</colgroup>
+<thead><tr class="header">
+<th>Feature</th>
+<th>Implementation</th>
+<th>Goal</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>Enhancements</strong></td>
+<td><ul>
+<li><p>Basic functionality works in all environments</p></li>
+<li><p>Advanced features available when systems support them</p></li>
+<li><p>Graceful fallbacks maintain functionality</p></li>
+</ul></td>
+<td>Ensures universal compatibility while leveraging advanced
+capabilities when available</td>
+</tr>
+<tr class="even">
+<td><strong>Caching</strong></td>
+<td><ul>
+<li><p>System detection results are cached during app sessions</p></li>
+<li><p>Template resolution cached for performance</p></li>
+<li><p>Parameter validation cached for repeated use</p></li>
+</ul></td>
+<td>Optimizes performance by avoiding redundant operations and system
+calls</td>
+</tr>
+<tr class="odd">
+<td><strong>Logging</strong></td>
+<td><ul>
+<li><p><code>DEBUG</code> level for development and
+troubleshooting</p></li>
+<li><p><code>INFO</code> level for normal operation tracking</p></li>
+<li><p><code>WARN</code> level for recoverable issues</p></li>
+<li><p><code>ERROR</code> level for serious problems</p></li>
+<li><p><code>SUCCESS</code> level for confirmation of
+completion</p></li>
+</ul></td>
+<td>Provide detailed traceability for debugging, monitoring, and user
+feedback</td>
+</tr>
+<tr class="even">
+<td><strong>User Experience</strong></td>
+<td><ul>
+<li><p>Real-time feedback via notifications</p></li>
+<li><p>Clear progress indication during generation</p></li>
+<li><p>Informative error messages with actionable advice</p></li>
+<li><p>Consistent visual design throughout the process</p></li>
+</ul></td>
+<td>Maintain user engagement and provide clear guidance throughout the
+report generation workflow</td>
+</tr>
+<tr class="odd">
+<td><strong>Lazy Loading</strong></td>
+<td><ul>
+<li><p>System detection only occurs when needed</p></li>
+<li><p>Template loading deferred until generation</p></li>
+<li><p>Parameter validation cached for reuse</p></li>
+</ul></td>
+<td>Minimize resource usage and improve application startup time</td>
+</tr>
+<tr class="even">
+<td><strong>Rendering</strong></td>
+<td><ul>
+<li><p>Clean environments for rendering isolation</p></li>
+<li><p>Resource cleanup after generation</p></li>
+<li><p>Memory management for large datasets</p></li>
+</ul></td>
+<td>Prevent memory leaks and ensure stable performance across multiple
+report generations</td>
+</tr>
+<tr class="odd">
+<td><strong>Timeout Management</strong></td>
+<td><ul>
+<li><p>System calls protected with timeouts</p></li>
+<li><p>Rendering processes with reasonable limits</p></li>
+<li><p>User feedback for long-running operations</p></li>
+</ul></td>
+<td>Prevent application hanging and provide responsive user
+experience</td>
+</tr>
+<tr class="even">
+<td><strong>Input Validation</strong></td>
+<td><ul>
+<li><p>Parameter sanitization for all user inputs</p></li>
+<li><p>Filename cleaning for safe file operations</p></li>
+<li><p>Path validation for template access</p></li>
+</ul></td>
+<td>Ensure security and prevent malicious input from compromising the
+system</td>
+</tr>
+<tr class="odd">
+<td><strong>Environment Isolation</strong></td>
+<td><ul>
+<li><p>Clean rendering environments for security</p></li>
+<li><p>Restricted system access during generation</p></li>
+<li><p>Temporary file management with cleanup</p></li>
+</ul></td>
+<td>Maintain security boundaries and prevent interference between report
+generations</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="utility-functions">Utility functions<a class="anchor" aria-label="anchor" href="#utility-functions"></a>
 </h2>
 <p>The <code><a href="../reference/get_template_path.html">get_template_path()</a></code> function return the
 specified</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span></span>
 <span>  <span class="co"># response from function</span></span>
-<span>  x <span class="op">=</span> <span class="fu">ttdviewer</span><span class="fu">:::</span><span class="fu"><a href="../reference/get_template_path.html">get_template_path</a></span><span class="op">(</span><span class="st">"rmarkdown"</span><span class="op">)</span>,</span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="../reference/get_template_path.html">get_template_path</a></span><span class="op">(</span><span class="st">"rmarkdown"</span><span class="op">)</span>,</span>
 <span>  <span class="co"># response from system.file()</span></span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"rmarkdown"</span>, <span class="st">"report_template.Rmd"</span>,</span>
 <span>    package <span class="op">=</span> <span class="st">"ttdviewer"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span></span>
 <span>  <span class="co"># response from function</span></span>
-<span>  x <span class="op">=</span> <span class="fu">ttdviewer</span><span class="fu">:::</span><span class="fu"><a href="../reference/get_template_path.html">get_template_path</a></span><span class="op">(</span><span class="st">"quarto"</span><span class="op">)</span>,</span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="../reference/get_template_path.html">get_template_path</a></span><span class="op">(</span><span class="st">"quarto"</span><span class="op">)</span>,</span>
 <span>  <span class="co"># response from system.file()</span></span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"quarto"</span>, <span class="st">"report_template.qmd"</span>,</span>
 <span>    package <span class="op">=</span> <span class="st">"ttdviewer"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rmd_temp</span> <span class="op">&lt;-</span> <span class="fu">ttdviewer</span><span class="fu">:::</span><span class="fu"><a href="../reference/create_fallback_template.html">create_fallback_template</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"rmarkdown"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-08 21:34:04] Creating fallback rmarkdown template</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">rmd_temp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "file32a714e6540.Rmd"</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">qmd_temp</span> <span class="op">&lt;-</span> <span class="fu">ttdviewer</span><span class="fu">:::</span><span class="fu"><a href="../reference/create_fallback_template.html">create_fallback_template</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"quarto"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-08 21:34:04] Creating fallback quarto template</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">qmd_temp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "file32a771580cd3.qmd"</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="the-download-handler">The download handler<a class="anchor" aria-label="anchor" href="#the-download-handler"></a>
-</h3>
-<p>The download handler (<code>downloadHandler()</code>) can be paired
-with any download UI function (<code>downloadButton()</code> or
-<code>downloadLink()</code>).</p>
-</div>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rmd_temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_fallback_template.html">create_fallback_template</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"rmarkdown"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">rmd_temp</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">qmd_temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_fallback_template.html">create_fallback_template</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"quarto"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">qmd_temp</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
