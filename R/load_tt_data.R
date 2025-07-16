@@ -22,8 +22,6 @@
 #' * `"vgz"`, `"zip"`, or `NA` → skipped with error logging
 #'
 #' @param title A character string matching the `title` field in `all_tt_combined`.
-#' @param log_file Optional path to a log file (default: `NULL`). Logs are written
-#'   using `logr_msg()` with level-specific formatting.
 #'
 #' @return A named list of tibbles or data frames (one per file). Failed or skipped
 #' datasets are excluded.
@@ -32,7 +30,7 @@
 #'
 #' @examples
 #' load_tt_data("posit::conf talks")
-load_tt_data <- function(title, log_file = NULL) {
+load_tt_data <- function(title) {
 
   # required packages
   requireNamespace("purrr", quietly = TRUE)
@@ -75,11 +73,15 @@ load_tt_data <- function(title, log_file = NULL) {
       )
 
       if (is.na(effective_type) || effective_type %in% c("vgz", "zip")) {
-        logr_msg(glue::glue("Skipping unsupported file type '{type}' for {file}"), "ERROR", log_file)
+        logr_msg(
+          message = glue::glue("Skipping unsupported file type '{type}' for {file}"),
+          level = "ERROR")
         return(NULL)
       }
 
-      logr_msg(glue::glue("Starting import for {file} from {url}"), "INFO", log_file)
+      logr_msg(
+        message = glue::glue("Starting import for {file} from {url}"),
+        level = "INFO")
 
       result <- purrr::safely(function() {
         switch(effective_type,
@@ -97,11 +99,16 @@ load_tt_data <- function(title, log_file = NULL) {
       })()
 
       if (!is.null(result$result)) {
-        logr_msg(glue::glue("Successfully loaded {file}"), "SUCCESS", log_file)
+        logr_msg(
+          message = glue::glue("Successfully loaded {file}"),
+          level = "SUCCESS"
+          )
         attr(result$result, "clean_title") <- cname
         return(result$result)
       } else {
-        logr_msg(glue::glue("Failed to load {file}: {result$error$message}"), "ERROR", log_file)
+        logr_msg(
+          message = glue::glue("Failed to load {file}: {result$error$message}"),
+          level = "ERROR")
         return(NULL)
       }
     }

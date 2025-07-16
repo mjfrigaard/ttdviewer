@@ -21,7 +21,7 @@ mod_input_ui <- function(id) {
           inputId = ns("ds_title"),
           label = strong("Choose Dataset Title:"),
           choices = choices,
-          selected = "Moore’s Law"
+          selected = "Space Launches"
         ),
         tags$details(
           tags$summary(
@@ -98,7 +98,6 @@ mod_input_server <- function(id) {
         )
       )
     })
-
     # return both data and dataset title
     return(
         list(

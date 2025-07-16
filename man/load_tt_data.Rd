@@ -4,13 +4,10 @@
 \alias{load_tt_data}
 \title{Load TidyTuesday datasets from GitHub by title}
 \usage{
-load_tt_data(title, log_file = NULL)
+load_tt_data(title)
 }
 \arguments{
 \item{title}{A character string matching the \code{title} field in \code{all_tt_combined}.}
-
-\item{log_file}{Optional path to a log file (default: \code{NULL}). Logs are written
-using \code{logr_msg()} with level-specific formatting.}
 }
 \value{
 A named list of tibbles or data frames (one per file). Failed or skipped

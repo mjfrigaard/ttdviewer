@@ -9,10 +9,9 @@
 mod_list_ui <- function(id) {
   ns <- NS(id)
   logr_msg(
-    message = "Initializing list UI module", level = "DEBUG")
-
+    message = "Initializing list UI module", level = "DEBUG"
+    )
   tryCatch({
-
       bslib::card(
         # bslib::card_header(""),
         bslib::card_body(
@@ -24,15 +23,15 @@ mod_list_ui <- function(id) {
     error = function(e) {
       logr_msg(
         message = paste("Error creating list UI:", e$message),
-        level = "ERROR")
+        level = "ERROR"
+        )
       bslib::card(
         bslib::card_header("List Error"),
         bslib::card_body(
           h4("Error loading list interface", class = "text-danger")
         )
       )
-    }
-  )
+    })
 }
 
 #' Table Server Module (listviewerlite)
@@ -44,7 +43,10 @@ mod_list_ui <- function(id) {
 #'
 mod_list_server <- function(id, data) {
   moduleServer(id, function(input, output, session) {
-    logr_msg("Initializing list server module", level = "DEBUG")
+    logr_msg(
+      message = "Initializing list server module",
+      level = "DEBUG"
+      )
     output$list <- renderUI({
       req(data())
       listviewerlite::listview(data())

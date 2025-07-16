@@ -1,6 +1,9 @@
 ---
 title: "Graphs"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true 
+    toc_depth: 4
 vignette: >
   %\VignetteIndexEntry{Graphs}
   %\VignetteEngine{knitr::rmarkdown}
@@ -179,40 +182,43 @@ Using the functions above, write the custom `inspect_plot()` function and have i
 If one dataset in `ttd`: 
 
 ```{r}
-inspectdf::inspect_cat(
+inspectdf::inspect_types(
   df1 = ttd2[[1]],
-  df2 = NULL,
-  include_int = TRUE
+  df2 = NULL
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
 ```
+
+```{r}
+inspect_plot(ttd = 
+    list("agencies.csv" = ttd2[[1]]), 
+  plots = "types")
+```
+
 
 #### `if (length(ttd) == 2)`
 
 If two datasets in `ttd`: 
 
   - check for intersecting columns  
-  
-```{r}
-length(intersect(
-  x = names(ttd2[[1]]),
-  y = names(ttd2[[2]])
-)) > 0
-```
 
   - if columns intersect, store column names as `intersecting_columns`
 
 ```{r}
-intersecting_columns <- intersect(x = names(ttd2[[1]]), y = names(ttd2[[2]]))
+if (length(intersect(names(ttd2[[1]]), names(ttd2[[2]]))) > 0) {
+  intersecting_columns <- intersect(
+  x = names(ttd2[[1]]), 
+  y = names(ttd2[[2]])
+  )
+}
 ```
 
   - Then use `intersecting_columns` to subset `ttd` for the `inspect_cat()` function: 
 
 ```{r}
-inspectdf::inspect_cat(
+inspectdf::inspect_types(
   df1 = ttd2[[1]][intersecting_columns],
-  df2 = ttd2[[1]][intersecting_columns],
-  include_int = TRUE
+  df2 = ttd2[[2]][intersecting_columns],
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
 ```
@@ -222,26 +228,52 @@ inspectdf::inspect_cat(
 If more than two datasets in `ttd`: 
 
 ```{r}
-inspectdf::inspect_cat(
+inspectdf::inspect_types(
   df1 = ttd3[[1]],
-  df2 = NULL,
-  include_int = TRUE
+  df2 = NULL
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
-inspectdf::inspect_cat(
-  df1 = ttd3[[2]],
-  df2 = NULL,
-  include_int = TRUE
-) |>
-  inspectdf::show_plot(text_labels = TRUE)
-inspectdf::inspect_cat(
-  df1 = ttd3[[3]],
-  df2 = NULL,
-  include_int = TRUE
-) |>
-  inspectdf::show_plot(text_labels = TRUE)
-# ... for all datasets in ttd list
 ```
+
+```{r}
+inspect_plot(
+  ttd = list("cpu.csv" = ttd3[[1]]),
+  plots = "types"
+  )
+```
+
+
+```{r}
+inspectdf::inspect_types(
+  df1 = ttd3[[2]],
+  df2 = NULL
+) |>
+  inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
+inspect_plot(
+  ttd = list("gpu.csv" = ttd3[[2]]), 
+  plots = "types"
+  )
+```
+
+
+```{r}
+inspectdf::inspect_types(
+  df1 = ttd3[[3]],
+  df2 = NULL
+) |>
+  inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
+inspect_plot(
+  ttd = list("ram.csv" = ttd3[[3]]), 
+  plots = "types"
+  )
+```
+
 
 ### inspect_mem()
 
@@ -250,18 +282,40 @@ inspectdf::inspect_cat(
 If one dataset in `ttd`:
 
 ```{r}
-inspectdf::inspect_mem(df1 = ttd[[1]], df2 = NULL) |>
+inspectdf::inspect_mem(
+  df1 = ttd[[1]],
+  df2 = NULL) |>
   inspectdf::show_plot(text_labels = TRUE)
 ```
+
+```{r}
+inspect_plot(
+  ttd = list("netflix_titles.csv" = ttd[[1]]), 
+  plots = "mem"
+  )
+```
+
 
 #### `if (length(ttd) == 2)`
 
 If two datasets in `ttd`:
 
 ```{r}
-inspectdf::inspect_mem(df1 = ttd2[[1]], df2 = ttd2[[2]]) |>
+inspectdf::inspect_mem(
+  df1 = ttd2[[1]], 
+  df2 = ttd2[[2]]) |>
   inspectdf::show_plot(text_labels = TRUE)
 ```
+
+```{r}
+inspect_plot(
+  ttd = list(
+    "agencies.csv" = ttd2[[1]],
+    "launches.csv" = ttd2[[2]]
+    ), 
+  plots = "mem")
+```
+
 
 #### `if (length(ttd) >= 3)`
 
@@ -273,17 +327,46 @@ inspectdf::inspect_mem(
   df2 = NULL
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+
+```{r}
+inspect_plot(
+  ttd = list("cpu.csv" = ttd3[[1]]), 
+  plots = "mem"
+  )
+```
+
+
+```{r}
 inspectdf::inspect_mem(
   df1 = ttd3[[2]],
   df2 = NULL
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
+inspect_plot(
+  ttd = list("gpu.csv" = ttd3[[2]]), 
+  plots = "mem"
+  )
+```
+
+```{r}
 inspectdf::inspect_mem(
   df1 = ttd3[[3]],
   df2 = NULL
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
 # ... for all datasets in ttd list
+```
+
+```{r}
+inspect_plot(
+  ttd = list("ram.csv" = ttd3[[3]]), 
+  plots = "mem"
+  )
 ```
 
 ### inspect_cor()
@@ -325,6 +408,16 @@ if (ttd_length(ttd2) == 2) { # check for two datasets
 }
 ```
 
+```{r}
+inspect_plot(
+  ttd = list(
+    "launches.csv" = ttd2[[2]]
+    ), 
+  plots = "cor"
+  )
+```
+
+
 #### `if (length(ttd) == 2)`
 
 If two datasets in `ttd`:
@@ -340,17 +433,6 @@ check_col_types(ttd3, type = "num")
 ```
 
   - Run `inspectdf::inspect_cor()`if at least one numerical column is in each dataset: 
-  
-```{r}
-inspectdf::inspect_cor(
-  df1 = ttd2[[1]],
-  df2 = ttd2[[2]],
-  method = "pearson",
-  with_col = NULL,
-  alpha = 0.05
-) |>
-  inspectdf::show_plot(text_labels = TRUE)
-```
 
 ```{r}
 inspectdf::inspect_cor(
@@ -362,6 +444,17 @@ inspectdf::inspect_cor(
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
 ```
+
+```{r}
+inspect_plot(
+  ttd = list(
+    "cpu.csv" = ttd3[[1]],
+    "gpu.csv" = ttd3[[2]]
+  ), 
+  plots = "cor"
+  )
+```
+
 
 #### `if (length(ttd) >= 3)`
 
@@ -384,6 +477,17 @@ inspectdf::inspect_cor(
   alpha = 0.05
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+
+```{r}
+inspect_plot(
+  ttd = list("cpu.csv" = ttd3[[1]]), 
+  plots = "cor")
+```
+
+
+```{r}
 inspectdf::inspect_cor(
   df1 = ttd3[[2]],
   df2 = NULL,
@@ -392,6 +496,15 @@ inspectdf::inspect_cor(
   alpha = 0.05
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
+inspect_plot(
+  ttd = list("gpu.csv" = ttd3[[2]]), 
+  plots = "cor")
+```
+
+```{r}
 inspectdf::inspect_cor(
   df1 = ttd3[[3]],
   df2 = NULL,
@@ -400,7 +513,13 @@ inspectdf::inspect_cor(
   alpha = 0.05
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
-# ... for all datasets in ttd list
+```
+
+```{r}
+inspect_plot(
+  ttd = list("ram.csv" = ttd3[[3]]), 
+  plots = "cor")
+# for all other dataset in the list
 ```
 
 ### inspect_imb()
@@ -418,6 +537,13 @@ inspectdf::inspect_imb(
   inspectdf::show_plot(text_labels = TRUE)
 ```
 
+```{r}
+inspect_plot(
+  ttd = list("netflix_titles.csv" = ttd[[1]]), 
+  plots = "imb")
+```
+
+
 #### `if (length(ttd) == 2)`
 
 If two datasets in `ttd`:
@@ -431,6 +557,16 @@ inspectdf::inspect_imb(
   inspectdf::show_plot(text_labels = TRUE)
 ```
 
+```{r}
+inspect_plot(
+  ttd = list(
+    "agencies.csv" = ttd2[[1]],
+    "launches.csv" = ttd2[[2]]
+    ), 
+  plots = "imb")
+```
+
+
 #### `if (length(ttd) >= 3)`
 
 If more than two datasets in `ttd`:
@@ -442,20 +578,47 @@ inspectdf::inspect_imb(
   include_na = FALSE
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
+inspect_plot(
+  ttd = list("cpu.csv" = ttd3[[1]]), 
+  plots = "imb")
+```
+
+
+```{r}
 inspectdf::inspect_imb(
   df1 = ttd3[[2]],
   df2 = NULL,
   include_na = FALSE
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
+inspect_plot(
+  ttd = list("gpu.csv" = ttd3[[2]]), 
+  plots = "imb")
+```
+
+```{r}
 inspectdf::inspect_imb(
   df1 = ttd3[[3]],
   df2 = NULL,
   include_na = FALSE
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+
+```
+
+```{r}
+inspect_plot(
+  ttd = list("ram.csv" = ttd3[[3]]), 
+  plots = "imb")
 # ... for all datasets in ttd list
 ```
+
 
 ### inspect_num()
 
@@ -465,20 +628,27 @@ If one dataset in `ttd`:
 
   - check if there is at least 1 numeric column in the dataset in the `ttd` list	
 ```{r}
-check_ttd_num_cols(ttd)
+check_ttd_num_cols(ttd2)
 ```
   
     - if so, run: 
 
 ```{r}
 inspectdf::inspect_num(
-  df1 = ttd[[1]],
+  df1 = ttd2[[2]],
   df2 = NULL,
   breaks = 20,
   include_int = TRUE
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
 ```
+
+```{r}
+inspect_plot(
+  ttd = list("launches.csv" = ttd2[[2]]), 
+  plots = "num")
+```
+
 
 #### `if (length(ttd) == 2)`
 
@@ -497,6 +667,15 @@ inspectdf::inspect_num(
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
 ```
+
+```{r}
+inspect_plot(
+  ttd = list(
+  "agencies.csv" = ttd2[[1]],
+  "launches.csv" = ttd2[[2]]),
+  plots = "num")
+```
+
 
   - if there is only one numeric column, run the following on the dataset with the numeric column:
 
@@ -522,6 +701,9 @@ inspectdf::inspect_num(
   include_int = TRUE
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
 inspectdf::inspect_num(
   df1 = ttd3[[2]],
   df2 = NULL,
@@ -529,6 +711,9 @@ inspectdf::inspect_num(
   include_int = TRUE
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
 inspectdf::inspect_num(
   df1 = ttd3[[3]],
   df2 = NULL,
@@ -613,39 +798,3 @@ inspectdf::inspect_cat(
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
 ```
-
-
-## Inspect plot
-
-The `inspect_plot()` function will return all the relevant plots for the data contained the `ttd` list.
-
-```{r}
-#| label: inspect_plot_ttd
-#| message: true
-#| warning: true
-inspect_plot(ttd = ttd)
-```
-
-It can also return specific graphs: 
-
-```{r}
-#| label: ttd2_num
-#| message: true
-#| warning: true
-inspect_plot(ttd = ttd2, plot = "types")
-```
-
-```{r}
-#| label: ttd3_na
-#| message: true
-#| warning: true
-inspect_plot(ttd = ttd3, plot = "na")
-```
-
-```{r}
-#| label: ttd_many_types
-#| message: true
-#| warning: true
-inspect_plot(ttd = ttd_many, plot = "num")
-```
-
