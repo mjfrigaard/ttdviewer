@@ -120,7 +120,7 @@ logging and integrates JSON logging using the <code>jsonlite</code> package.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># log a simple informational message to the console</span></span></span>
 <span class="r-in"><span><span class="fu">logr_msg</span><span class="op">(</span><span class="st">"Application started."</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-10 19:18:58] Application started.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-16 05:49:19] Application started.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># log an error message to the console and a file in plain text format</span></span></span>
 <span class="r-in"><span><span class="fu">logr_msg</span><span class="op">(</span></span></span>
@@ -128,7 +128,7 @@ logging and integrates JSON logging using the <code>jsonlite</code> package.</p>
 <span class="r-in"><span>  level <span class="op">=</span> <span class="st">"ERROR"</span>,</span></span>
 <span class="r-in"><span>  log_file <span class="op">=</span> <span class="st">"error_log.txt"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ERROR [2025-07-10 19:18:58] Failed to connect to the database.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ERROR [2025-07-16 05:49:19] Failed to connect to the database.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># log a success message in JSON format</span></span></span>
 <span class="r-in"><span><span class="fu">logr_msg</span><span class="op">(</span></span></span>
@@ -137,14 +137,14 @@ logging and integrates JSON logging using the <code>jsonlite</code> package.</p>
 <span class="r-in"><span>  log_file <span class="op">=</span> <span class="st">"app_log.json"</span>,</span></span>
 <span class="r-in"><span>  json <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-10 19:18:58] User login successful.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-16 05:49:19] User login successful.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># log a warning message to the console only</span></span></span>
 <span class="r-in"><span><span class="fu">logr_msg</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  message <span class="op">=</span> <span class="st">"Low memory warning."</span>,</span></span>
 <span class="r-in"><span>  level <span class="op">=</span> <span class="st">"WARN"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> {"time":"2025-07-10 19:18:58","level":"WARN","ns":"ttdviewer","ans":"global","topenv":"ttdviewer","fn":"logr_msg","node":"pkrvmfkh1xnbeme","arch":"x86_64","os_name":"Linux","os_release":"6.11.0-1015-azure","os_version":"#15~24.04.1-Ubuntu SMP Thu May  1 02:52:08 UTC 2025","pid":8114,"user":"runner","msg":"Low memory warning."}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {"time":"2025-07-16 05:49:19","level":"WARN","ns":"ttdviewer","ans":"global","topenv":"ttdviewer","fn":"logr_msg","node":"pkrvmq0rgcvqdmg","arch":"x86_64","os_name":"Linux","os_release":"6.11.0-1018-azure","os_version":"#18~24.04.1-Ubuntu SMP Sat Jun 28 04:46:03 UTC 2025","pid":7770,"user":"runner","msg":"Low memory warning."}</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
