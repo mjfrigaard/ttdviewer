@@ -629,13 +629,12 @@ If one dataset in `ttd`:
   - check if there is at least 1 numeric column in the dataset in the `ttd` list	
 ```{r}
 check_ttd_num_cols(ttd2)
-```
-  
-    - if so, run: 
+```   
+  - if so, run: 
 
 ```{r}
 inspectdf::inspect_num(
-  df1 = ttd2[[2]],
+  df1 = ttd2[[1]],
   df2 = NULL,
   breaks = 20,
   include_int = TRUE
@@ -643,12 +642,21 @@ inspectdf::inspect_num(
   inspectdf::show_plot(text_labels = TRUE)
 ```
 
+**BUG**: `inspect_plot()` doesn't seem to identify when a list has a dataset with single numerical column.
+
+```{r}
+inspect_plot(
+  ttd = list("agencies.csv" = ttd2[[1]]), 
+  plots = "num")
+```
+
+If will work if the list has two numeric columns: 
+
 ```{r}
 inspect_plot(
   ttd = list("launches.csv" = ttd2[[2]]), 
   plots = "num")
 ```
-
 
 #### `if (length(ttd) == 2)`
 
@@ -676,18 +684,7 @@ inspect_plot(
   plots = "num")
 ```
 
-
-  - if there is only one numeric column, run the following on the dataset with the numeric column:
-
-```{r}
-inspectdf::inspect_num(
-  df1 = ttd[[1]],
-  df2 = NULL,
-  breaks = 20,
-  include_int = TRUE
-) |>
-  inspectdf::show_plot(text_labels = TRUE)
-```
+  - if there is only one numeric column, run the code above on the dataset with the numeric column.
 
 #### `if (length(ttd) >= 3)`
 
@@ -704,6 +701,13 @@ inspectdf::inspect_num(
 ```
 
 ```{r}
+inspect_plot(
+  ttd = list("cpu.csv" = ttd3[[1]]), 
+  plots = "num")
+```
+
+
+```{r}
 inspectdf::inspect_num(
   df1 = ttd3[[2]],
   df2 = NULL,
@@ -711,6 +715,12 @@ inspectdf::inspect_num(
   include_int = TRUE
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
+inspect_plot(
+  ttd = list("gpu.csv" = ttd3[[2]]), 
+  plots = "num")
 ```
 
 ```{r}
@@ -724,14 +734,19 @@ inspectdf::inspect_num(
 # ... for all datasets in ttd list
 ```
 
+```{r}
+inspect_plot(
+  ttd = list("ram.csv" = ttd3[[3]]), 
+  plots = "num")
+```
+
 ### inspect_cat()
 
 #### `if (length(ttd) == 1)`
 
 If one dataset in `ttd`:
 
-  - check if there is at least 1 categorical column in the dataset in the `ttd` list	
-
+  - check if there is at least 1 categorical column in the dataset in the `ttd` list	  
     - if so, run: 
 
 ```{r}
@@ -742,6 +757,13 @@ inspectdf::inspect_cat(
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
 ```
+
+```{r}
+inspect_plot(
+  ttd = list("netflix_titles.csv" = ttd[[1]]), 
+  plots = "cat")
+```
+
 
 #### `if (length(ttd) == 2)`
 
@@ -775,6 +797,15 @@ inspectdf::inspect_cat(
   inspectdf::show_plot(text_labels = TRUE)
 ```
 
+```{r}
+inspect_plot(
+  ttd = list(
+    "agencies.csv" = ttd2[[1]][intersecting_columns],
+    "launches.csv" = ttd2[[2]][intersecting_columns]
+    ), 
+  plots = "cat")
+```
+
   - if there aren't any intersecting categorical columns, run the following on the dataset with the categorical column `ttd[[?]]`:
 
 ```{r}
@@ -784,6 +815,12 @@ inspectdf::inspect_cat(
   include_int = FALSE
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
+inspect_plot(
+  ttd = list("netflix_titles.csv" = ttd[[1]]), 
+  plots = "cat")
 ```
 
 #### `if (length(ttd) >= 3)`
@@ -797,4 +834,10 @@ inspectdf::inspect_cat(
   include_int = FALSE
 ) |>
   inspectdf::show_plot(text_labels = TRUE)
+```
+
+```{r}
+inspect_plot(
+  ttd = list("colors.csv.gz" = ttd_many[[1]]), 
+  plots = "cat")
 ```
