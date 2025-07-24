@@ -91,33 +91,6 @@ mod_plot_server <- function(id, ttd) {
     }) |>
       bindEvent(ttd_r(), once = FALSE)
 
-    # 2. Dynamically generate UI for selected plot types
-    output$plots_ui <- renderUI({
-      tryCatch({
-        req(input$dataset, input$plots)
-        logr_msg(message =
-            sprintf("Rendering UI for dataset '%s' and plots: %s",
-                     input$dataset,
-                     paste(input$plots, collapse = ", ")),
-                 level = "DEBUG")
-
-        purrr::map(input$plots, function(plt) {
-          plot_id <- ns(paste0("plt_", plt))
-          tagList(
-            h4(plt),
-            plotOutput(plot_id, height = "300px")
-          )
-        })
-      }, error = function(err) {
-        logr_msg(
-          message = sprintf("Error in plots_ui renderUI: %s", err$message),
-          level = "ERROR")
-        tagList(
-          p(style = "color:red;", "Failed to generate plot UI.")
-        )
-      })
-    })
-
     # render each selected plot type for chosen dataset
     observe({
         tryCatch({
@@ -157,9 +130,36 @@ mod_plot_server <- function(id, ttd) {
       bindEvent(list(input$dataset, input$plots),
                 ignoreNULL = TRUE)
 
+    # dynamically generate UI for selected plot types
+    output$plots_ui <- renderUI({
+      tryCatch({
+        req(input$dataset, input$plots)
+        logr_msg(message =
+            sprintf("Rendering UI for dataset '%s' and plots: %s",
+                     input$dataset,
+                     paste(input$plots, collapse = ", ")),
+                 level = "DEBUG")
+
+        purrr::map(input$plots, function(plt) {
+          plot_id <- ns(paste0("plt_", plt))
+          tagList(
+            h4(plt),
+            plotOutput(plot_id, height = "300px")
+          )
+        })
+      }, error = function(err) {
+        logr_msg(
+          message = sprintf("Error in plots_ui renderUI: %s", err$message),
+          level = "ERROR")
+        tagList(
+          p(style = "color:red;", "Failed to generate plot UI.")
+        )
+      })
+    })
+
 
     logr_msg(
-      message = sprintf("mod_single_plot_server[%s]: setup complete", id),
+      message = sprintf("mod_plot_server[%s]: setup complete", id),
       level = "SUCCESS")
 
     return(

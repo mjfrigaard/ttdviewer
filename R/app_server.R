@@ -34,45 +34,49 @@ app_server <- function(input, output, session) {
       # initialize report modules
       report_format <- mod_report_input_server("rep_form")
       mod_report_desc_server("rep_desc", format = report_format)
+
       logr_msg(
-        message = "Report module initialized",
+        message = "Report description module initialized",
         level = "DEBUG")
 
-      # mod_report_download_server(
-      #   id = "rep_dwnld",
-      #   format = ,
-      #   data = ,
-      #   selected_plot_type = ,
-      #   dataset_title =
-      #   )
+
 
       # reactive values for list
       mod_list_server(id = "listviewerlite", data = selected_data)
 
       logr_msg(
-        message = "Table module initialized",
-        level = "DEBUG"
-        )
+        message = "List module initialized",
+        level = "DEBUG")
 
       # reactive values for table
       mod_table_server(id = "table", data = selected_data)
+
       logr_msg(
         message = "Table module initialized",
-        level = "DEBUG"
-        )
+        level = "DEBUG")
 
       # reactive values for visualization
       selected_plots <- mod_plot_server("viz", ttd = selected_data)
 
       logr_msg(
         message = "Plot module initialized",
-        level = "DEBUG"
-        )
+        level = "DEBUG")
+
+       mod_report_download_server(
+         id = "rep_dwnld",
+         format = report_format,
+         data = selected_data,
+         selected_plot_type = selected_plots,
+         dataset_title = dataset_title
+       )
+
+      logr_msg(
+        message = "Report description module initialized",
+        level = "DEBUG")
 
       logr_msg(
         message = "All modules successfully initialized",
-        level = "SUCCESS"
-        )
+        level = "SUCCESS")
 
       # add session end logging
       session$onSessionEnded(function() {
@@ -89,7 +93,7 @@ app_server <- function(input, output, session) {
         level = "FATAL"
       )
 
-      # Show user-friendly error
+      # user-friendly error
       showNotification(
         "Application failed to initialize. Please refresh the page.",
         type = "error",

@@ -17,7 +17,7 @@ launch <- function(..., log_file = NULL, json = FALSE) {
   # initialize logging
   if (!is.null(log_file)) {
     logr_msg("Application starting with file logging enabled",
-      level = "INFO", log_file = log_file, json = json
+      level = "INFO", log_file = log_file
     )
   } else {
     logr_msg("Application starting", level = "INFO")
@@ -45,10 +45,10 @@ launch <- function(..., log_file = NULL, json = FALSE) {
       return(app)
     },
     error = function(e) {
-      logr_msg(paste("Failed to launch application:", e$message),
-        level = "FATAL", log_file = log_file, json = json
+      logr_msg(
+        message = paste("Failed to launch application:", e$message),
+        level = "FATAL"
       )
-
       stop("Application failed to launch: ", e$message)
     }
   )
