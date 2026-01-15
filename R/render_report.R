@@ -515,7 +515,7 @@ create_error_report <- function(file, error_msg, dataset_title = "Unknown", form
               <dd class="col-sm-9">', dataset_title, '</dd>
 
               <dt class="col-sm-3">Format:</dt>
-              <dd class="col-sm-9">', tools::toTitleCase(format), '</dd>
+              <dd class="col-sm-9">', if (is.null(format) || length(format) == 0) "Unknown" else tools::toTitleCase(format), '</dd>
 
               <dt class="col-sm-3">Timestamp:</dt>
               <dd class="col-sm-9">', Sys.time(), '</dd>

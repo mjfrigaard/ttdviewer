@@ -5,6 +5,7 @@
 #' @return UI elements for report generation with format options
 #'
 #' @export
+#' 
 mod_report_download_ui <- function(id) {
   ns <- NS(id)
   logr_msg(
@@ -58,7 +59,9 @@ mod_report_download_ui <- function(id) {
 mod_report_download_server <- function(id, format, data, dataset_title, selected_plot_type) {
   moduleServer(id, function(input, output, session) {
 
-    logr_msg(message = "Initializing report server module", level = "DEBUG")
+    logr_msg(
+      message = "Initializing report server module", 
+      level = "DEBUG")
 
     # downloadHandler() ----
     output$download_report <- downloadHandler(
@@ -85,7 +88,7 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
             ## clean title for filename ----
             clean_title <- gsub("[^A-Za-z0-9_-]", "_", actual_title)
 
-            timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
+            timestamp <- gsub("[^0-9]", "", as.character(Sys.time()))
 
             format_suffix <- switch(input$report_format,
               "rmarkdown" = "rmd",
@@ -102,7 +105,7 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
             )
 
             return(filename)
-          },
+        },
           error = function(e) {
             logr_msg(
               message = paste("Error generating filename:", e$message),
@@ -119,8 +122,31 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
               message = paste("Starting", input$report_format, "report generation"),
               level = "INFO"
             )
-            # validate inputs
             current_data <- data()
+            # extract actual dataset title from data or use fallback
+            actual_dataset_title <- tryCatch({
+              if (!is.null(current_data) && length(current_data) > 0) {
+                first_name <- names(current_data)[1]
+                if (!is.null(first_name) && length(first_name) == 1 && nzchar(first_name)) {
+                  clean_name <- gsub("\\.csv$", "", first_name)
+                  clean_name <- gsub("_", " ", clean_name)
+                  # Double check before toTitleCase
+                  if (length(clean_name) == 1 && nzchar(clean_name)) {
+                    tools::toTitleCase(clean_name)
+                  } else {
+                    "TidyTuesday Dataset"
+                  }
+                } else {
+                  "TidyTuesday Dataset"
+                }
+              } else {
+                "TidyTuesday Dataset"
+              }
+            }, error = function(e) {
+              logr_msg(message = paste("Error extracting dataset title:", e$message), level = "WARN")
+              "TidyTuesday Dataset"
+            })
+            # validate inputs
             if (is.null(current_data) || length(current_data) == 0) {
               logr_msg(
                 message = "No data available for report generation",
@@ -152,7 +178,7 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
             } else {
               actual_format <- input$report_format
             }
-
+          
             # progress notification
             progress_msg <- paste(
               "Generating",
@@ -168,21 +194,6 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
             # current parameters with dataset title
             current_plot_type <- selected_plot_type() %||% "type"
 
-            # extract actual dataset title from data or use fallback
-            actual_dataset_title <- if (!is.null(current_data) && length(current_data) > 0) {
-              # get first dataset name and clean it
-              first_name <- names(current_data)[1]
-              if (!is.null(first_name) && first_name != "") {
-                # remove .csv extension and clean
-                clean_name <- gsub("\\.csv$", "", first_name)
-                tools::toTitleCase(gsub("_", " ", clean_name))
-              } else {
-                "TidyTuesday Dataset"
-              }
-            } else {
-              "TidyTuesday Dataset"
-            }
-
             logr_msg(
               message = paste(
                 "Report parameters - Dataset:",
@@ -195,7 +206,9 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
             # generate plots
             plots <- tryCatch({
               ## inspect_plot() ----
-                inspect_plot(ttd = current_data, plots = current_plot_type)
+                inspect_plot(
+                  ttd = current_data, 
+                  plots = current_plot_type)
               },
               error = function(e) {
                 logr_msg(
@@ -282,10 +295,12 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
               type = "message",
               duration = 3
             )
-          },
+        },
           error = function(e) {
             error_msg <- paste("Failed to generate report:", e$message)
-            logr_msg(error_msg, level = "ERROR")
+            logr_msg(
+              message = error_msg, 
+              level = "ERROR")
 
             # Remove progress notification
             removeNotification("report_progress")
@@ -300,7 +315,7 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
             ## create error report ----
             create_error_report(
               file, error_msg,
-              actual_dataset_title %||% "Unknown",
+              "Unknown Dataset",
               input$report_format
             )
           })

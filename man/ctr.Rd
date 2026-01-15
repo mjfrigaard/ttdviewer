@@ -22,10 +22,10 @@ function is its side effect of printing the tree.
 }
 \description{
 This function displays a compact, colored tree of the structure of \code{x}
-using \code{\link[lobstr:tree]{lobstr::tree()}} with sensible defaults. Environments and attributes
-are hidden, scalar types are collapsed, class names are printed in blue,
-and values are printed in green. Newlines in values are removed to keep
-the output concise.
+using \href{https://lobstr.r-lib.org/reference/ast.html}{lobstr::ast()} with
+sensible defaults. Environments and attributes are hidden, scalar types
+are collapsed, class names are printed in blue, and values are printed
+in green. Newlines in values are removed to keep the output concise.
 }
 \examples{
 # Basic usage on a nested list

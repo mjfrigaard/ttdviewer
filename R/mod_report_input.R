@@ -24,7 +24,9 @@ mod_report_input_ui <- function(id) {
       )
     }, # end tagList ----
     error = function(e) {
-      logr_msg(paste("Error creating report input UI:", e$message), level = "ERROR")
+      logr_msg(
+        message = paste("Error creating report input UI:", e$message), 
+        level = "ERROR")
       bslib::card(
         bslib::card_header("Report Error"),
         bslib::card_body(
@@ -46,7 +48,9 @@ mod_report_input_ui <- function(id) {
 #'
 mod_report_input_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    logr_msg(message = "Initializing report input server module", level = "DEBUG")
+    logr_msg(
+      message = "Initializing report input server module", 
+      level = "DEBUG")
     return(
       reactive(
         list("format" = input$format)
