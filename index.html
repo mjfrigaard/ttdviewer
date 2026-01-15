@@ -72,7 +72,8 @@
 <h2 id="architecture">Architecture<a class="anchor" aria-label="anchor" href="#architecture"></a>
 </h2>
 <p>The app is packaged as a Shiny application with a single entry point that wires UI and server logic together. The server loads the selected dataset, routes it through module servers, and then exposes the reactive outputs to the UI panels.</p>
-<pre class="mermaid"><code>flowchart TD
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', "fontSize":"18px"}}}%%
+flowchart TD
   Launch["launch()"] --&gt; UI["app_ui()"]
   Launch --&gt; Server["app_server()"]
   Server --&gt; Input["mod_input_server()"]
@@ -89,7 +90,8 @@
   Data --&gt; Table
   Data --&gt; Plot</code></pre>
 <p>The UI arranges module outputs into panels while the sidebar hosts the dataset selector and report generation options.</p>
-<pre class="mermaid"><code>flowchart LR
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', "fontSize":"18px"}}}%%
+flowchart LR
   Sidebar["Sidebar inputs"] --&gt; InputUI["mod_input_ui()"]
   Sidebar --&gt; ReportUI["mod_report_input_ui()"]
   Sidebar --&gt; ReportDescUI["mod_report_desc_ui()"]
@@ -98,7 +100,8 @@
   Tabs --&gt; TableUI["mod_table_ui()"]
   Tabs --&gt; PlotUI["mod_plot_ui()"]</code></pre>
 <p>Supporting utilities and tests wrap the core modules. Logging, data helpers, and report builders are kept in standalone R files, while <code>tests/testthat</code> validates module behavior and data helpers.</p>
-<pre class="mermaid"><code>flowchart TB
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', "fontSize":"18px"}}}%%
+flowchart TB
   subgraph Utilities
     Log["logr_msg()"]
     Ctr["ctr()"]

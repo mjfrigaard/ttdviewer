@@ -84,17 +84,17 @@ repo.</p>
 <p><code>"Netflix Titles"</code> has a single dataset:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Netflix Titles"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:53] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:53] Successfully loaded netflix_titles.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:57] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:57] Successfully loaded netflix_titles.csv</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $netflix_titles.csv</span></span>
 <span><span class="co">#&gt; [1] "netflix_titles"</span></span>
 <span><span class="co"># for a list with two datasets, we'll use the `"Space Launches"` data</span></span>
 <span><span class="va">ttd2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Space Launches"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:53] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:53] Successfully loaded agencies.csv</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:53] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:53] Successfully loaded launches.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:57] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:57] Successfully loaded agencies.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:57] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded launches.csv</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd2</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $agencies.csv</span></span>
 <span><span class="co">#&gt; [1] "space_launches"</span></span>
@@ -103,12 +103,12 @@ repo.</p>
 <span><span class="co">#&gt; [1] "space_launches"</span></span>
 <span><span class="co"># "Moore's Law" contains three datasets</span></span>
 <span><span class="va">ttd3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Moore’s Law"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:53] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:53] Successfully loaded cpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:53] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:53] Successfully loaded gpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:53] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:53] Successfully loaded ram.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded cpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded gpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded ram.csv</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd3</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $cpu.csv</span></span>
 <span><span class="co">#&gt; [1] "moores_law"</span></span>
@@ -121,30 +121,30 @@ repo.</p>
 <span><span class="co"># finally, we'll download the "LEGO database" data with 12 datasets into the</span></span>
 <span><span class="co"># ttd_many list:</span></span>
 <span><span class="va">ttd_many</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"LEGO database"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:53] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:53] Successfully loaded colors.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:53] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:53] Successfully loaded elements.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:53] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:54] Successfully loaded inventories.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:54] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:54] Successfully loaded inventory_minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:54] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:54] Successfully loaded inventory_parts.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:54] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:54] Successfully loaded inventory_sets.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:54] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:54] Successfully loaded minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:54] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:54] Successfully loaded part_categories.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:54] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:54] Successfully loaded part_relationships.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:54] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:55] Successfully loaded parts.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:55] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:55] Successfully loaded sets.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:55] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:55] Successfully loaded themes.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded colors.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded elements.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded inventories.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded inventory_minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded inventory_parts.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded inventory_sets.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:58] Successfully loaded minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:58] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:59] Successfully loaded part_categories.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:59] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:59] Successfully loaded part_relationships.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:59] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:59] Successfully loaded parts.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:59] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:59] Successfully loaded sets.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:44:59] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:44:59] Successfully loaded themes.csv.gz</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd_many</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $colors.csv.gz</span></span>
 <span><span class="co">#&gt; [1] "lego_database"</span></span>
@@ -367,11 +367,11 @@ rules:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span>ttd <span class="op">=</span> </span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"agencies.csv"</span> <span class="op">=</span> <span class="va">ttd2</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"types"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:56] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:40:56] Beginning plot type 'types'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:00] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:00] Beginning plot type 'types'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:57] Completed plot type 'types'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:40:57] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:00] Completed plot type 'types'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:00] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 <div class="section level4">
@@ -428,11 +428,11 @@ rules:</p>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"cpu.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  plots <span class="op">=</span> <span class="st">"types"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:00] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:00] Beginning plot type 'types'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:04] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:04] Beginning plot type 'types'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:00] Completed plot type 'types'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:00] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:04] Completed plot type 'types'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:04] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inspectdf</span><span class="fu">::</span><span class="fu"><a href="https://alastairrushworth.github.io/inspectdf/reference/inspect_types.html" class="external-link">inspect_types</a></span><span class="op">(</span></span>
@@ -446,11 +446,11 @@ rules:</p>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"gpu.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"types"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:03] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:03] Beginning plot type 'types'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:06] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:06] Beginning plot type 'types'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:03] Completed plot type 'types'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:03] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:06] Completed plot type 'types'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:06] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inspectdf</span><span class="fu">::</span><span class="fu"><a href="https://alastairrushworth.github.io/inspectdf/reference/inspect_types.html" class="external-link">inspect_types</a></span><span class="op">(</span></span>
@@ -464,11 +464,11 @@ rules:</p>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"ram.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"types"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:05] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:05] Beginning plot type 'types'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:08] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:08] Beginning plot type 'types'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:05] Completed plot type 'types'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:05] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:08] Completed plot type 'types'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:08] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 </div>
@@ -491,11 +491,11 @@ rules:</p>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"netflix_titles.csv"</span> <span class="op">=</span> <span class="va">ttd</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"mem"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:07] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:07] Beginning plot type 'mem'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:10] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:10] Beginning plot type 'mem'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:08] Completed plot type 'mem'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:08] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:10] Completed plot type 'mem'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:10] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 <div class="section level4">
@@ -516,11 +516,11 @@ rules:</p>
 <span>    <span class="st">"launches.csv"</span> <span class="op">=</span> <span class="va">ttd2</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
 <span>    <span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"mem"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:10] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:10] Beginning plot type 'mem'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:12] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:12] Beginning plot type 'mem'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:11] Completed plot type 'mem'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:11] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:13] Completed plot type 'mem'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:13] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 <div class="section level4">
@@ -540,11 +540,11 @@ rules:</p>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"cpu.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"mem"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:12] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:12] Beginning plot type 'mem'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:15] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:15] Beginning plot type 'mem'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:13] Completed plot type 'mem'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:13] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:15] Completed plot type 'mem'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:15] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inspectdf</span><span class="fu">::</span><span class="fu"><a href="https://alastairrushworth.github.io/inspectdf/reference/inspect_mem.html" class="external-link">inspect_mem</a></span><span class="op">(</span></span>
@@ -558,11 +558,11 @@ rules:</p>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"gpu.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"mem"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:14] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:14] Beginning plot type 'mem'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:16] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:16] Beginning plot type 'mem'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:14] Completed plot type 'mem'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:14] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:16] Completed plot type 'mem'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:16] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inspectdf</span><span class="fu">::</span><span class="fu"><a href="https://alastairrushworth.github.io/inspectdf/reference/inspect_mem.html" class="external-link">inspect_mem</a></span><span class="op">(</span></span>
@@ -578,11 +578,11 @@ rules:</p>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"ram.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"mem"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:16] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:16] Beginning plot type 'mem'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:18] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:18] Beginning plot type 'mem'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:16] Completed plot type 'mem'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:16] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:18] Completed plot type 'mem'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:18] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 </div>
@@ -638,11 +638,11 @@ rules:</p>
 <span>    <span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"cor"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:18] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:18] Beginning plot type 'cor'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:20] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:20] Beginning plot type 'cor'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:18] Completed plot type 'cor'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:18] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:20] Completed plot type 'cor'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:20] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 <div class="section level4">
@@ -696,11 +696,11 @@ column is in each dataset:</li>
 <span>  <span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"cor"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:20] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:20] Beginning plot type 'cor'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:22] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:22] Beginning plot type 'cor'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:20] Completed plot type 'cor'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:20] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:22] Completed plot type 'cor'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:22] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 <div class="section level4">
@@ -743,11 +743,11 @@ columns.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"cpu.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"cor"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:22] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:22] Beginning plot type 'cor'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:23] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:23] Beginning plot type 'cor'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-29-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:22] Completed plot type 'cor'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:22] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:24] Completed plot type 'cor'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:24] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inspectdf</span><span class="fu">::</span><span class="fu"><a href="https://alastairrushworth.github.io/inspectdf/reference/inspect_cor.html" class="external-link">inspect_cor</a></span><span class="op">(</span></span>
@@ -763,11 +763,11 @@ columns.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"gpu.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"cor"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:24] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:24] Beginning plot type 'cor'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:25] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:25] Beginning plot type 'cor'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-31-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:24] Completed plot type 'cor'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:24] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:25] Completed plot type 'cor'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:25] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inspectdf</span><span class="fu">::</span><span class="fu"><a href="https://alastairrushworth.github.io/inspectdf/reference/inspect_cor.html" class="external-link">inspect_cor</a></span><span class="op">(</span></span>
@@ -783,11 +783,11 @@ columns.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"ram.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"cor"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:26] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:26] Beginning plot type 'cor'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:27] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:27] Beginning plot type 'cor'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-33-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:26] Completed plot type 'cor'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:26] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:27] Completed plot type 'cor'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:27] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span>
 <span><span class="co"># for all other dataset in the list</span></span></code></pre>
 </div>
@@ -812,11 +812,11 @@ columns.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"netflix_titles.csv"</span> <span class="op">=</span> <span class="va">ttd</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"imb"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:28] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:28] Beginning plot type 'imb'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:29] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:29] Beginning plot type 'imb'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-35-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:28] Completed plot type 'imb'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:28] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:29] Completed plot type 'imb'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:29] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 <div class="section level4">
@@ -839,11 +839,11 @@ columns.</li>
 <span>    <span class="st">"launches.csv"</span> <span class="op">=</span> <span class="va">ttd2</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
 <span>    <span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"imb"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:30] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:30] Beginning plot type 'imb'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:31] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:31] Beginning plot type 'imb'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-37-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:31] Completed plot type 'imb'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:31] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:31] Completed plot type 'imb'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:31] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 <div class="section level4">
@@ -863,11 +863,11 @@ columns.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"cpu.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"imb"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:32] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:32] Beginning plot type 'imb'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:33] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:33] Beginning plot type 'imb'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-39-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:33] Completed plot type 'imb'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:33] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:33] Completed plot type 'imb'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:33] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inspectdf</span><span class="fu">::</span><span class="fu"><a href="https://alastairrushworth.github.io/inspectdf/reference/inspect_imb.html" class="external-link">inspect_imb</a></span><span class="op">(</span></span>
@@ -881,11 +881,11 @@ columns.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"gpu.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"imb"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:34] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:34] Beginning plot type 'imb'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:35] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:35] Beginning plot type 'imb'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-41-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:34] Completed plot type 'imb'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:34] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:35] Completed plot type 'imb'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:35] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inspectdf</span><span class="fu">::</span><span class="fu"><a href="https://alastairrushworth.github.io/inspectdf/reference/inspect_imb.html" class="external-link">inspect_imb</a></span><span class="op">(</span></span>
@@ -899,11 +899,11 @@ columns.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"ram.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"imb"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:36] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:36] Beginning plot type 'imb'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:36] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:36] Beginning plot type 'imb'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-43-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:36] Completed plot type 'imb'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:36] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:36] Completed plot type 'imb'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:36] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span>
 <span><span class="co"># ... for all datasets in ttd list</span></span></code></pre>
 </div>
@@ -945,21 +945,21 @@ identify when a list has a dataset with single numerical column.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"agencies.csv"</span> <span class="op">=</span> <span class="va">ttd2</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"num"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:38] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:38] Beginning plot type 'num'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:38] Completed plot type 'num'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:38] inspect_plot(): all requested plots finished</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:38] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:38] Beginning plot type 'num'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:38] Completed plot type 'num'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:38] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
 <p>If will work if the list has two numeric columns:</p>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"launches.csv"</span> <span class="op">=</span> <span class="va">ttd2</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"num"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:38] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:38] Beginning plot type 'num'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:38] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:38] Beginning plot type 'num'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-47-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:38] Completed plot type 'num'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:38] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:38] Completed plot type 'num'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:38] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 <div class="section level4">
@@ -991,11 +991,11 @@ datasets in the <code>ttd</code> list</p>
 <span>  <span class="st">"agencies.csv"</span> <span class="op">=</span> <span class="va">ttd2</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  <span class="st">"launches.csv"</span> <span class="op">=</span> <span class="va">ttd2</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  plots <span class="op">=</span> <span class="st">"num"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:40] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:40] Beginning plot type 'num'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:40] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:40] Beginning plot type 'num'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-49-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:41] Completed plot type 'num'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:41] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:41] Completed plot type 'num'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:41] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <ul>
 <li>if there is only one numeric column, run the code above on the
@@ -1020,11 +1020,11 @@ dataset with the numeric column.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"cpu.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"num"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:43] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:43] Beginning plot type 'num'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:43] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:43] Beginning plot type 'num'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-51-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:43] Completed plot type 'num'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:43] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:43] Completed plot type 'num'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:43] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inspectdf</span><span class="fu">::</span><span class="fu"><a href="https://alastairrushworth.github.io/inspectdf/reference/inspect_num.html" class="external-link">inspect_num</a></span><span class="op">(</span></span>
@@ -1039,11 +1039,11 @@ dataset with the numeric column.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"gpu.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"num"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:45] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:45] Beginning plot type 'num'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:45] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:45] Beginning plot type 'num'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-53-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:46] Completed plot type 'num'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:46] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:45] Completed plot type 'num'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:45] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inspectdf</span><span class="fu">::</span><span class="fu"><a href="https://alastairrushworth.github.io/inspectdf/reference/inspect_num.html" class="external-link">inspect_num</a></span><span class="op">(</span></span>
@@ -1060,11 +1060,11 @@ dataset with the numeric column.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"ram.csv"</span> <span class="op">=</span> <span class="va">ttd3</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"num"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:48] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:48] Beginning plot type 'num'</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:47] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:47] Beginning plot type 'num'</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-55-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:48] Completed plot type 'num'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:48] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:48] Completed plot type 'num'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:48] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 </div>
@@ -1098,13 +1098,13 @@ the <code>ttd</code> list
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"netflix_titles.csv"</span> <span class="op">=</span> <span class="va">ttd</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"cat"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:52] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:52] Beginning plot type 'cat'</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:51] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:51] Beginning plot type 'cat'</span></span>
 <span><span class="co">#&gt; Warning in geom_bar(stat = "identity", position = "stack", colour = "black", :</span></span>
 <span><span class="co">#&gt; Ignoring unknown parameters: `size`</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-57-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:54] Completed plot type 'cat'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:54] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:53] Completed plot type 'cat'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:53] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 <div class="section level4">
@@ -1151,13 +1151,13 @@ the <code>ttd</code> list
 <span>    <span class="st">"launches.csv"</span> <span class="op">=</span> <span class="va">ttd2</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">intersecting_columns</span><span class="op">]</span></span>
 <span>    <span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"cat"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:56] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:41:56] Beginning plot type 'cat'</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:55] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:55] Beginning plot type 'cat'</span></span>
 <span><span class="co">#&gt; Warning in geom_bar(stat = "identity", position = "stack", colour = "black", :</span></span>
 <span><span class="co">#&gt; Ignoring unknown parameters: `size`</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-61-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:57] Completed plot type 'cat'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:41:57] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:56] Completed plot type 'cat'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:45:56] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 <ul>
 <li>if there aren’t any intersecting categorical columns, run the
@@ -1178,13 +1178,13 @@ following on the dataset with the categorical column
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"netflix_titles.csv"</span> <span class="op">=</span> <span class="va">ttd</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"cat"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:42:00] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:42:00] Beginning plot type 'cat'</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:59] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:45:59] Beginning plot type 'cat'</span></span>
 <span><span class="co">#&gt; Warning in geom_bar(stat = "identity", position = "stack", colour = "black", :</span></span>
 <span><span class="co">#&gt; Ignoring unknown parameters: `size`</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-63-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:42:02] Completed plot type 'cat'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:42:02] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:46:01] Completed plot type 'cat'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:46:01] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 <div class="section level4">
@@ -1206,13 +1206,13 @@ following on the dataset with the categorical column
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inspect_plot.html">inspect_plot</a></span><span class="op">(</span></span>
 <span>  ttd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"colors.csv.gz"</span> <span class="op">=</span> <span class="va">ttd_many</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
 <span>  plots <span class="op">=</span> <span class="st">"cat"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:42:04] inspect_plot(): starting analysis</span></span>
-<span><span class="co">#&gt; INFO [2026-01-15 19:42:04] Beginning plot type 'cat'</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:46:03] inspect_plot(): starting analysis</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:46:03] Beginning plot type 'cat'</span></span>
 <span><span class="co">#&gt; Warning in geom_bar(stat = "identity", position = "stack", colour = "black", :</span></span>
 <span><span class="co">#&gt; Ignoring unknown parameters: `size`</span></span></code></pre></div>
 <p><img src="graphs_files/figure-html/unnamed-chunk-65-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:42:04] Completed plot type 'cat'</span></span>
-<span><span class="co">#&gt; SUCCESS [2026-01-15 19:42:04] inspect_plot(): all requested plots finished</span></span>
+<pre><code><span><span class="co">#&gt; SUCCESS [2026-01-15 19:46:03] Completed plot type 'cat'</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:46:03] inspect_plot(): all requested plots finished</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
 </div>
 </div>

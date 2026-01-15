@@ -30,6 +30,7 @@ dataset, routes it through module servers, and then exposes the reactive
 outputs to the UI panels.
 
 ``` mermaid
+%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', "fontSize":"18px"}}}%%
 flowchart TD
   Launch["launch()"] --> UI["app_ui()"]
   Launch --> Server["app_server()"]
@@ -52,6 +53,7 @@ The UI arranges module outputs into panels while the sidebar hosts the
 dataset selector and report generation options.
 
 ``` mermaid
+%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', "fontSize":"18px"}}}%%
 flowchart LR
   Sidebar["Sidebar inputs"] --> InputUI["mod_input_ui()"]
   Sidebar --> ReportUI["mod_report_input_ui()"]
@@ -67,6 +69,7 @@ helpers, and report builders are kept in standalone R files, while
 `tests/testthat` validates module behavior and data helpers.
 
 ``` mermaid
+%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', "fontSize":"18px"}}}%%
 flowchart TB
   subgraph Utilities
     Log["logr_msg()"]
