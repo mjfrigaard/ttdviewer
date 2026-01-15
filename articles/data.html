@@ -192,10 +192,10 @@ attributes.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">tt_data</span>, <span class="st">".tt"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="st">".files"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        data_files data_type delim</span></span>
-<span><span class="co">#&gt; 4     answers.csv       csv     ,</span></span>
-<span><span class="co">#&gt; 5 color_ranks.csv       csv     ,</span></span>
-<span><span class="co">#&gt; 6       users.csv       csv     ,</span></span></code></pre></div>
+<span><span class="co">#&gt;         data_files data_type delim</span></span>
+<span><span class="co">#&gt; 43     answers.csv       csv     ,</span></span>
+<span><span class="co">#&gt; 44 color_ranks.csv       csv     ,</span></span>
+<span><span class="co">#&gt; 45       users.csv       csv     ,</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="readme">.readme<a class="anchor" aria-label="anchor" href="#readme"></a>
@@ -231,13 +231,13 @@ classes.</em>”</p>
 <code class="sourceCode R"><span><span class="va">tt_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r4ds.github.io/ttmeta/reference/get_tt_tbl.html" class="external-link">get_tt_tbl</a></span><span class="op">(</span>min_year <span class="op">=</span> <span class="fl">2025L</span>, max_year <span class="op">=</span> <span class="fu"><a href="https://r4ds.github.io/ttmeta/reference/this_year.html" class="external-link">this_year</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">tt_meta</span><span class="op">)</span></span>
-<span><span class="co">#&gt; tt_tbl [29 × 8] (S3: tt_tbl/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;  $ year         : int [1:29] 2025 2025 2025 2025 2025 2025 2025 2025 2025 2025 ...</span></span>
-<span><span class="co">#&gt;  $ week         : int [1:29] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
-<span><span class="co">#&gt;  $ date         : Date[1:29], format: "2025-01-07" "2025-01-14" ...</span></span>
-<span><span class="co">#&gt;  $ title        : chr [1:29] "Bring your own data from 2024!" "posit::conf talks" "The History of Himalayan Mountaineering Expeditions" "Water Insecurity" ...</span></span>
-<span><span class="co">#&gt;  $ source_title : chr [1:29] "NA" "posit::conf attendee portal 2023, posit::conf attendee portal 2024" "The Himalayan Database" "US Census Data from tidycensus" ...</span></span>
-<span><span class="co">#&gt;  $ source_urls  :List of 29</span></span>
+<span><span class="co">#&gt; tt_tbl [55 × 8] (S3: tt_tbl/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ year         : int [1:55] 2025 2025 2025 2025 2025 2025 2025 2025 2025 2025 ...</span></span>
+<span><span class="co">#&gt;  $ week         : int [1:55] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span><span class="co">#&gt;  $ date         : Date[1:55], format: "2025-01-07" "2025-01-14" ...</span></span>
+<span><span class="co">#&gt;  $ title        : chr [1:55] "Bring your own data from 2024!" "posit::conf talks" "The History of Himalayan Mountaineering Expeditions" "Water Insecurity" ...</span></span>
+<span><span class="co">#&gt;  $ source_title : chr [1:55] "NA" "posit::conf attendee portal 2023, posit::conf attendee portal 2024" "The Himalayan Database" "US Census Data from tidycensus" ...</span></span>
+<span><span class="co">#&gt;  $ source_urls  :List of 55</span></span>
 <span><span class="co">#&gt;   ..$ : chr(0) </span></span>
 <span><span class="co">#&gt;   ..$ : chr [1:2] "https://reg.conf.posit.co/flow/posit/positconf23/attendee-portal/page/sessioncatalog" "https://reg.conf.posit.co/flow/posit/positconf24/attendee-portal/page/sessioncatalog"</span></span>
 <span><span class="co">#&gt;   ..$ : chr "https://www.himalayandatabase.com/downloads.html"</span></span>
@@ -267,8 +267,34 @@ classes.</em>”</p>
 <span><span class="co">#&gt;   ..$ : chr "https://xkcd.com/color/colorsurvey.tar.gz"</span></span>
 <span><span class="co">#&gt;   ..$ : chr "https://docs.google.com/spreadsheets/d/1uxjiuWYZrALF2mthmiYbUPieu1dEdEwv9GB8dEAizso/edit?gid=0#gid=0"</span></span>
 <span><span class="co">#&gt;   ..$ : chr "https://data.ny.gov/Transportation/MTA-Permanent-Art-Catalog-Beginning-1980/4y8j-9pkd/about_data"</span></span>
-<span><span class="co">#&gt;  $ article_title: chr [1:29] "NA" "posit::conf(2025) in-person registration is now open!" "The Expedition Archives of Elizabeth Hawley" "Mapping water insecurity in R with tidycensus" ...</span></span>
-<span><span class="co">#&gt;  $ article_urls :List of 29</span></span>
+<span><span class="co">#&gt;   ..$ : chr [1:4] "https://assets.ctfassets.net/4cd45et68cgf/inuAnzotdsAEgbInGLzH5/1be323ba419b2af3a96bffa29acc31a3/What_We_Watche"| __truncated__ "https://assets.ctfassets.net/4cd45et68cgf/2PoZlfdc46dH2gQvI8eUzI/9db5840720c47acfcf7b89ffe2402860/What_We_Watch"| __truncated__ "https://assets.ctfassets.net/4cd45et68cgf/6XSmoEjBjVMPRtYybT9d1E/8c0b0b2645b8712d5597b0bdbe0d64e2/What_We_Watch"| __truncated__ "https://assets.ctfassets.net/4cd45et68cgf/mplcXj5ulHDfbCPCr0f0I/5dbb6ec09f03df89706476e380e9b8bd/What_We_Watche"| __truncated__</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://ourworldindata.org"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://carbonbrief.org"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.hills-database.co.uk/downloads.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://docs.google.com/spreadsheets/d/1j1AUgtMnjpFTz54UdXgCKZ1i4bNxFjf01ImJ-BqBEt0/edit?gid=1974823090#gid=1974823090"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.frogid.net.au/explore"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://api.henleypassportindex.com/api/v3/countries"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://cran.r-project.org/package=tastyR"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://ratings.fide.com/download_lists.phtml"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.hornborga.com/naturen/transtatistik/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://github.com/natanast/EuroleagueBasketball"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.fao.org/faostat/en/#data/FS"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.data.gov.uk/dataset/17ba3bbe-0e98-4a8c-9937-bd1d50fdc3c5/historic-monthly-meteorological-station-data"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://data.post45.org/posts/british-literary-prizes/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://onlinelibrary.wiley.com/doi/pdf/10.1111/test.12187?casa_token=av3lP7OmqS0AAAAA:QAF3yU5kGzsUkqi1VlXkMlIN"| __truncated__</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://github.com/seabbs/getTBinR/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://github.com/EmilHvitfeldt/sherlock"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://datacatalog.worldbank.org/search/dataset/0037996/Statistical-Performance-Indicators"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://github.com/philshem/Sechselaeuten-data"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://profmusgrave.github.io/qatarcars/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://github.com/EmilHvitfeldt/roundabouts"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://github.com/glottolog/glottolog-cldf/tree/master/cldf"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.gutenberg.org/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr(0) </span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://en.wikipedia.org/wiki/Languages_of_Africa"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://api.nasa.gov/"</span></span>
+<span><span class="co">#&gt;  $ article_title: chr [1:55] "NA" "posit::conf(2025) in-person registration is now open!" "The Expedition Archives of Elizabeth Hawley" "Mapping water insecurity in R with tidycensus" ...</span></span>
+<span><span class="co">#&gt;  $ article_urls :List of 55</span></span>
 <span><span class="co">#&gt;   ..$ : chr(0) </span></span>
 <span><span class="co">#&gt;   ..$ : chr "https://posit.co/blog/positconf2025-in-person-registration-is-now-open/"</span></span>
 <span><span class="co">#&gt;   ..$ : chr "https://www.himalayandatabase.com/index.html"</span></span>
@@ -297,7 +323,33 @@ classes.</em>”</p>
 <span><span class="co">#&gt;   ..$ : chr "https://www.eia.gov/petroleum/gasdiesel/"</span></span>
 <span><span class="co">#&gt;   ..$ : chr "https://blog.xkcd.com/2010/05/03/color-survey-results/"</span></span>
 <span><span class="co">#&gt;   ..$ : chr "https://anjackson.net/2024/11/29/british-library-funding-breakdown-trends/#income-streams"</span></span>
-<span><span class="co">#&gt;   ..$ : chr "https://www.mta.info/agency/arts-design/permanent-art"</span></span></code></pre></div>
+<span><span class="co">#&gt;   ..$ : chr "https://www.mta.info/agency/arts-design/permanent-art"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://about.netflix.com/en/news/what-we-watched-the-first-half-of-2025"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://ourworldindata.org/income-inequality-before-and-after-taxes"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://interactive.carbonbrief.org/attribution-studies/index.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.hills-database.co.uk/TMS_heighting_accuracy.pdf"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://substack.com/home/post/p-170266824"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://australian.museum/blog/amri-news/frogid-dataset-6/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://edition.cnn.com/2025/07/22/travel/world-most-powerful-passports-july-2025"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.brians.works/i-scraped-14k-recipes-so-you-wont-have-to/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.fide.com/fide-september-2025-rating-list-vincent-keymer-debuts-in-top-10-open/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.datawrapper.de/blog/the-dancing-cranes-of-lake-hornborga"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://en.wikipedia.org/wiki/EuroLeague"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://en.wikipedia.org/wiki/World_Food_Day"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://theconversation.com/why-we-still-need-a-womens-prize-for-fiction-257494"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://academic.oup.com/jrssig/article/14/2/16/7029247"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://samabbott.co.uk/getTBinR/index.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://sherlock-holm.es/ascii/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://worldbank.github.io/SPI/measuring-the-statistical-performance-of-countries-an-overview-of-the-statistic"| __truncated__</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.meteoswiss.admin.ch/weather/weather-and-climate-from-a-to-z/boeoegg-prediction.html"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://musgrave.substack.com/p/introducing-the-qatar-cars-dataset"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://www.kittelson.com/ideas/how-many-roundabouts-are-in-the-united-states/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://glottolog.org/"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://github.com/ropensci/gutenbergr/issues/95"</span></span>
+<span><span class="co">#&gt;   ..$ : chr(0) </span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://en.wikipedia.org/wiki/Languages_of_Africa"</span></span>
+<span><span class="co">#&gt;   ..$ : chr "https://apod.nasa.gov/apod/astropix.html"</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -310,7 +362,7 @@ repository</a> has <a href="https://github.com/rfordatascience/tidytuesday/blob/
 <code>delim</code>:</p>
 <p>This file is used to create the <code>tt_github_urls</code> data:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tt_github_urls</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html" class="external-link">vroom</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">tt_github_urls</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.tidyverse.org/reference/vroom.html" class="external-link">vroom</a></span><span class="op">(</span></span>
 <span>  file <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/static/tt_data_type.csv"</span>,</span>
 <span>  delim <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># create github_url column</span></span>
@@ -324,7 +376,7 @@ repository</a> has <a href="https://github.com/rfordatascience/tidytuesday/blob/
 <span>    week <span class="op">=</span> <span class="va">Week</span>,</span>
 <span>    date <span class="op">=</span> <span class="va">Date</span></span>
 <span>  <span class="op">)</span> </span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">771</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">6</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">810</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">6</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">chr</span>  (3): data_files, data_type, delim</span></span>
@@ -334,12 +386,12 @@ repository</a> has <a href="https://github.com/rfordatascience/tidytuesday/blob/
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">tt_github_urls</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 771</span></span>
+<span><span class="co">#&gt; Rows: 810</span></span>
 <span><span class="co">#&gt; Columns: 7</span></span>
-<span><span class="co">#&gt; $ week       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 29<span style="color: #949494;">, </span>29<span style="color: #949494;">, </span>28<span style="color: #949494;">, </span>27<span style="color: #949494;">, </span>27<span style="color: #949494;">, </span>27<span style="color: #949494;">, </span>26<span style="color: #949494;">, </span>25<span style="color: #949494;">, </span>25<span style="color: #949494;">, </span>24<span style="color: #949494;">, </span>24<span style="color: #949494;">, </span>24<span style="color: #949494;">, </span>24<span style="color: #949494;">, </span>24<span style="color: #949494;">, </span>23<span style="color: #949494;">,</span>…</span></span>
-<span><span class="co">#&gt; $ date       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2025-07-22<span style="color: #949494;">, </span>2025-07-22<span style="color: #949494;">, </span>2025-07-15<span style="color: #949494;">, </span>2025-07-08<span style="color: #949494;">, </span>2025-07-08…</span></span>
-<span><span class="co">#&gt; $ year       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">,</span>…</span></span>
-<span><span class="co">#&gt; $ data_files <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mta_art.csv"<span style="color: #949494;">, </span>"station_lines.csv"<span style="color: #949494;">, </span>"bl_funding.csv"<span style="color: #949494;">, </span>"answ…</span></span>
+<span><span class="co">#&gt; $ week       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3<span style="color: #949494;">, </span>2<span style="color: #949494;">, </span>52<span style="color: #949494;">, </span>52<span style="color: #949494;">, </span>52<span style="color: #949494;">, </span>51<span style="color: #949494;">, </span>51<span style="color: #949494;">, </span>51<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>49<span style="color: #949494;">, </span>48<span style="color: #949494;">, </span>47<span style="color: #949494;">, </span>46<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>44<span style="color: #949494;">, </span>4…</span></span>
+<span><span class="co">#&gt; $ date       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2026-01-20<span style="color: #949494;">, </span>2026-01-13<span style="color: #949494;">, </span>2025-12-30<span style="color: #949494;">, </span>2025-12-30<span style="color: #949494;">, </span>2025-12-30…</span></span>
+<span><span class="co">#&gt; $ year       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2026<span style="color: #949494;">, </span>2026<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ data_files <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "apod.csv"<span style="color: #949494;">, </span>"africa.csv"<span style="color: #949494;">, </span>"christmas_novel_authors.csv"<span style="color: #949494;">, </span>"c…</span></span>
 <span><span class="co">#&gt; $ data_type  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "csv"<span style="color: #949494;">, </span>"csv"<span style="color: #949494;">, </span>"csv"<span style="color: #949494;">, </span>"csv"<span style="color: #949494;">, </span>"csv"<span style="color: #949494;">, </span>"csv"<span style="color: #949494;">, </span>"csv"<span style="color: #949494;">, </span>"csv"<span style="color: #949494;">, </span>"cs…</span></span>
 <span><span class="co">#&gt; $ delim      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> ","<span style="color: #949494;">, </span>","<span style="color: #949494;">, </span>","<span style="color: #949494;">, </span>","<span style="color: #949494;">, </span>","<span style="color: #949494;">, </span>","<span style="color: #949494;">, </span>","<span style="color: #949494;">, </span>","<span style="color: #949494;">, </span>","<span style="color: #949494;">, </span>","<span style="color: #949494;">, </span>","<span style="color: #949494;">, </span>","<span style="color: #949494;">,</span>…</span></span>
 <span><span class="co">#&gt; $ github_url <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span> "https://raw.githubusercontent.com/rfordatascience/tidytue…</span></span></code></pre></div>
@@ -451,8 +503,8 @@ GitHub repo.</p>
 <code>ttd</code> with a single element:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Netflix Titles"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:37] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:37] Successfully loaded netflix_titles.csv</span></span></code></pre></div>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:41] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:41] Successfully loaded netflix_titles.csv</span></span></code></pre></div>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd</span><span class="op">)</span></span>
 <span><span class="va">ttd_nms</span></span>
@@ -471,10 +523,10 @@ dataset back to <code>all_tt_combined</code> or
 name position:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Space Launches"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:38] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:38] Successfully loaded agencies.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:38] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:38] Successfully loaded launches.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:42] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:42] Successfully loaded agencies.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:42] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:42] Successfully loaded launches.csv</span></span>
 <span><span class="co"># store names </span></span>
 <span><span class="va">ttd2_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd2</span><span class="op">)</span></span>
 <span><span class="co"># check attr</span></span>
@@ -530,12 +582,12 @@ name position:</p>
 each element in the list:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Moore’s Law"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:38] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:38] Successfully loaded cpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:38] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:38] Successfully loaded gpu.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:38] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:38] Successfully loaded ram.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:42] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:42] Successfully loaded cpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:42] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:42] Successfully loaded gpu.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:42] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:42] Successfully loaded ram.csv</span></span>
 <span><span class="va">ttd3_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd3</span><span class="op">)</span></span>
 <span><span class="co"># attr</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd3</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
@@ -587,30 +639,30 @@ each element in the list:</p>
 <p>If there are more than two datasets, the same rules apply.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_many</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"LEGO database"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:38] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:39] Successfully loaded colors.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:39] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:39] Successfully loaded elements.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:39] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:39] Successfully loaded inventories.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:39] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:39] Successfully loaded inventory_minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:39] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:40] Successfully loaded inventory_parts.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:40] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:40] Successfully loaded inventory_sets.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:40] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:40] Successfully loaded minifigs.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:40] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:40] Successfully loaded part_categories.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:40] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:41] Successfully loaded part_relationships.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:41] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:41] Successfully loaded parts.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:41] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:41] Successfully loaded sets.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:41] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz</span></span>
-<span><span class="co">#&gt; SUCCESS [2025-07-24 06:20:41] Successfully loaded themes.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:42] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:43] Successfully loaded colors.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:43] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:43] Successfully loaded elements.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:43] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:43] Successfully loaded inventories.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:43] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:43] Successfully loaded inventory_minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:43] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:44] Successfully loaded inventory_parts.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:44] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:44] Successfully loaded inventory_sets.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:44] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:44] Successfully loaded minifigs.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:44] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:44] Successfully loaded part_categories.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:44] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:44] Successfully loaded part_relationships.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:44] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:45] Successfully loaded parts.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:45] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:45] Successfully loaded sets.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:45] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz</span></span>
+<span><span class="co">#&gt; SUCCESS [2026-01-15 19:33:45] Successfully loaded themes.csv.gz</span></span>
 <span><span class="va">ttd_many_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ttd_many</span><span class="op">)</span></span>
 <span><span class="co"># check attr</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">ttd_many</span>, .f <span class="op">=</span> <span class="va">attr</span>, <span class="st">"clean_title"</span><span class="op">)</span></span>
@@ -658,8 +710,8 @@ each element in the list:</p>
 columns in each dataset in a <code>ttd</code> list.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:41] Datasets in list: netflix_titles.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:41] Created metadata tibble with 14 rows covering 1 datasets</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:45] Datasets in list: netflix_titles.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:45] Created metadata tibble with 14 rows covering 1 datasets</span></span>
 <span><span class="va">ttd_meta</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 × 4</span></span></span>
 <span><span class="co">#&gt;    clean_title    dataset            col          col_type </span></span>
@@ -689,8 +741,8 @@ columns in each dataset in a <code>ttd</code> list.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> netflix_titles netflix_titles.csv character       11</span></span></code></pre></div>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd2_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:41] Datasets in list: agencies.csv, launches.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:41] Created metadata tibble with 33 rows covering 2 datasets</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:45] Datasets in list: agencies.csv, launches.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:45] Created metadata tibble with 33 rows covering 2 datasets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd2_meta</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   clean_title    dataset      col        col_type </span></span>
@@ -703,8 +755,8 @@ columns in each dataset in a <code>ttd</code> list.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> space_launches agencies.csv type       character</span></span></code></pre></div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd3_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:42] Datasets in list: cpu.csv, gpu.csv, ram.csv</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:42] Created metadata tibble with 30 rows covering 3 datasets</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:45] Datasets in list: cpu.csv, gpu.csv, ram.csv</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:45] Created metadata tibble with 30 rows covering 3 datasets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd3_meta</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   clean_title dataset col                  col_type </span></span>
@@ -717,8 +769,8 @@ columns in each dataset in a <code>ttd</code> list.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> moores_law  cpu.csv processor            character</span></span></code></pre></div>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd_many_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tt_title_meta.html">get_tt_title_meta</a></span><span class="op">(</span>ttd <span class="op">=</span> <span class="va">ttd_many</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:42] Datasets in list: colors.csv.gz, elements.csv.gz, inventories.csv.gz, inventory_minifigs.csv.gz, inventory_parts.csv.gz, inventory_sets.csv.gz, minifigs.csv.gz, part_categories.csv.gz, part_relationships.csv.gz, parts.csv.gz, sets.csv.gz, themes.csv.gz</span></span>
-<span><span class="co">#&gt; INFO [2025-07-24 06:20:42] Created metadata tibble with 67 rows covering 12 datasets</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:45] Datasets in list: colors.csv.gz, elements.csv.gz, inventories.csv.gz, inventory_minifigs.csv.gz, inventory_parts.csv.gz, inventory_sets.csv.gz, minifigs.csv.gz, part_categories.csv.gz, part_relationships.csv.gz, parts.csv.gz, sets.csv.gz, themes.csv.gz</span></span>
+<span><span class="co">#&gt; INFO [2026-01-15 19:33:45] Created metadata tibble with 67 rows covering 12 datasets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ttd_many_meta</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   clean_title   dataset         col        col_type </span></span>
@@ -763,7 +815,7 @@ columns in each dataset in a <code>ttd</code> list.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

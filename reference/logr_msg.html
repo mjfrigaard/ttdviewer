@@ -120,7 +120,7 @@ logging and integrates JSON logging using the <code>jsonlite</code> package.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># log a simple informational message to the console</span></span></span>
 <span class="r-in"><span><span class="fu">logr_msg</span><span class="op">(</span><span class="st">"Application started."</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2025-07-24 06:20:15] Application started.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2026-01-15 19:33:18] Application started.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># log an error message to the console and a file in plain text format</span></span></span>
 <span class="r-in"><span><span class="fu">logr_msg</span><span class="op">(</span></span></span>
@@ -128,7 +128,7 @@ logging and integrates JSON logging using the <code>jsonlite</code> package.</p>
 <span class="r-in"><span>  level <span class="op">=</span> <span class="st">"ERROR"</span>,</span></span>
 <span class="r-in"><span>  log_file <span class="op">=</span> <span class="st">"error_log.txt"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ERROR [2025-07-24 06:20:15] Failed to connect to the database.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ERROR [2026-01-15 19:33:18] Failed to connect to the database.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># log a success message in JSON format</span></span></span>
 <span class="r-in"><span><span class="fu">logr_msg</span><span class="op">(</span></span></span>
@@ -137,14 +137,14 @@ logging and integrates JSON logging using the <code>jsonlite</code> package.</p>
 <span class="r-in"><span>  log_file <span class="op">=</span> <span class="st">"app_log.json"</span>,</span></span>
 <span class="r-in"><span>  json <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2025-07-24 06:20:15] User login successful.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2026-01-15 19:33:18] User login successful.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># log a warning message to the console only</span></span></span>
 <span class="r-in"><span><span class="fu">logr_msg</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  message <span class="op">=</span> <span class="st">"Low memory warning."</span>,</span></span>
 <span class="r-in"><span>  level <span class="op">=</span> <span class="st">"WARN"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> {"time":"2025-07-24 06:20:15","level":"WARN","ns":"ttdviewer","ans":"global","topenv":"ttdviewer","fn":"logr_msg","node":"pkrvmpptgkbjq6m","arch":"x86_64","os_name":"Linux","os_release":"6.11.0-1018-azure","os_version":"#18~24.04.1-Ubuntu SMP Sat Jun 28 04:46:03 UTC 2025","pid":8263,"user":"runner","msg":"Low memory warning."}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {"time":"2026-01-15 19:33:18","level":"WARN","ns":"ttdviewer","ans":"global","topenv":"ttdviewer","fn":"logr_msg","node":"runnervmmtnos","arch":"x86_64","os_name":"Linux","os_release":"6.11.0-1018-azure","os_version":"#18~24.04.1-Ubuntu SMP Sat Jun 28 04:46:03 UTC 2025","pid":7764,"user":"runner","msg":"Low memory warning."}</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -157,7 +157,7 @@ logging and integrates JSON logging using the <code>jsonlite</code> package.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

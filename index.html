@@ -69,10 +69,64 @@
 <li>Data visualizations from the <a href="https://alastairrushworth.com/inspectdf/" class="external-link"><code>inspectdf</code> package</a> ‘<em>summarise missingness, categorical levels, numeric distribution, correlation, column types and memory usage</em>’ are available on the third <code>nav_panel()</code>.</li>
 </ol>
 <div class="section level2">
+<h2 id="architecture">Architecture<a class="anchor" aria-label="anchor" href="#architecture"></a>
+</h2>
+<p>The app is packaged as a Shiny application with a single entry point that wires UI and server logic together. The server loads the selected dataset, routes it through module servers, and then exposes the reactive outputs to the UI panels.</p>
+<pre class="mermaid"><code>flowchart TD
+  Launch["launch()"] --&gt; UI["app_ui()"]
+  Launch --&gt; Server["app_server()"]
+  Server --&gt; Input["mod_input_server()"]
+  Input --&gt; Data["load_tt_data()"]
+  Server --&gt; ReportInput["mod_report_input_server()"]
+  ReportInput --&gt; ReportDesc["mod_report_desc_server()"]
+  ReportInput --&gt; ReportDownload["mod_report_download_server()"]
+  ReportDownload --&gt; RenderReport["render_report()"]
+  Server --&gt; List["mod_list_server()"]
+  Server --&gt; Table["mod_table_server()"]
+  Server --&gt; Plot["mod_plot_server()"]
+  Plot --&gt; InspectPlot["inspect_plot()"]
+  Data --&gt; List
+  Data --&gt; Table
+  Data --&gt; Plot</code></pre>
+<p>The UI arranges module outputs into panels while the sidebar hosts the dataset selector and report generation options.</p>
+<pre class="mermaid"><code>flowchart LR
+  Sidebar["Sidebar inputs"] --&gt; InputUI["mod_input_ui()"]
+  Sidebar --&gt; ReportUI["mod_report_input_ui()"]
+  Sidebar --&gt; ReportDescUI["mod_report_desc_ui()"]
+  Sidebar --&gt; ReportDownloadUI["mod_report_download_ui()"]
+  Tabs["Tab panels"] --&gt; ListUI["mod_list_ui()"]
+  Tabs --&gt; TableUI["mod_table_ui()"]
+  Tabs --&gt; PlotUI["mod_plot_ui()"]</code></pre>
+<p>Supporting utilities and tests wrap the core modules. Logging, data helpers, and report builders are kept in standalone R files, while <code>tests/testthat</code> validates module behavior and data helpers.</p>
+<pre class="mermaid"><code>flowchart TB
+  subgraph Utilities
+    Log["logr_msg()"]
+    Ctr["ctr()"]
+    Load["load_tt_data()"]
+    Inspect["inspect_plot()"]
+    Render["render_report()"]
+  end
+  subgraph Modules
+    ModInput["mod_input_*"]
+    ModList["mod_list_*"]
+    ModTable["mod_table_*"]
+    ModPlot["mod_plot_*"]
+    ModReport["mod_report_*"]
+  end
+  subgraph Tests
+    TestApp["test-app_*"]
+    TestModules["test-mod_*"]
+    TestUtils["test-load_tt_data / test-inspect_plot / test-render_report / test-logr_msg"]
+  end
+  Utilities --&gt; Modules
+  Modules --&gt; Tests
+  Utilities --&gt; Tests</code></pre>
+</div>
+<div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of <code>ttdviewer</code> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"mjfrigaard/ttdviewer"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -80,7 +134,7 @@
 <h2 id="launch-app">Launch app<a class="anchor" aria-label="anchor" href="#launch-app"></a>
 </h2>
 <p>Launch the application using the standalone app function below:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/ttdviewer/">ttdviewer</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/launch.html">launch</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -122,7 +176,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
