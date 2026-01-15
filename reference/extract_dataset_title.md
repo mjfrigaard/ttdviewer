@@ -53,20 +53,20 @@ for the underlying `snake_case` conversion
 
 ``` r
 extract_dataset_title("Bring your own data from 2024!")
-#> SUCCESS [2026-01-15 19:33:05] Dataset title found in metadata! Bring your own data from 2024!
+#> SUCCESS [2026-01-15 19:40:10] Dataset title found in metadata! Bring your own data from 2024!
 #> [1] "bring_your_own_data_from_2024"
 # Returns: "bring_your_own_data_from_2024"
 
 extract_dataset_title("Donuts, Data, and D'oh - A Deep Dive into The Simpsons")
-#> SUCCESS [2026-01-15 19:33:05] Dataset title found in metadata! Donuts, Data, and D'oh - A Deep Dive into The Simpsons
+#> SUCCESS [2026-01-15 19:40:10] Dataset title found in metadata! Donuts, Data, and D'oh - A Deep Dive into The Simpsons
 #> [1] "donuts_data_and_doh_a_deep_dive_into_the_simpsons"
 # Returns: "donuts_data_and_doh_a_deep_dive_into_the_simpsons"
 
 extract_dataset_title("Moore's Law")
-#> SUCCESS [2026-01-15 19:33:05] Dataset title found in metadata! Moore's Law
+#> SUCCESS [2026-01-15 19:40:10] Dataset title found in metadata! Moore's Law
 #> [1] "moores_law"
 
 extract_dataset_title("U.S. Wind Turbines (2018-2022)")
-#> SUCCESS [2026-01-15 19:33:05] Dataset title found in metadata! U.S. Wind Turbines (2018-2022)
+#> SUCCESS [2026-01-15 19:40:10] Dataset title found in metadata! U.S. Wind Turbines (2018-2022)
 #> [1] "u_s_wind_turbines_2018_2022"
 ```

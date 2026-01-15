@@ -1,11 +1,10 @@
 # Print a colorized tree representation of an R object
 
 This function displays a compact, colored tree of the structure of `x`
-using [`lobstr::tree()`](https://lobstr.r-lib.org/reference/tree.html)
-with sensible defaults. Environments and attributes are hidden, scalar
-types are collapsed, class names are printed in blue, and values are
-printed in green. Newlines in values are removed to keep the output
-concise.
+using [lobstr::ast()](https://lobstr.r-lib.org/reference/ast.html) with
+sensible defaults. Environments and attributes are hidden, scalar types
+are collapsed, class names are printed in blue, and values are printed
+in green. Newlines in values are removed to keep the output concise.
 
 ## Usage
 

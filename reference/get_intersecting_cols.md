@@ -26,12 +26,12 @@ intersections or if not exactly 2 datasets
 
 ``` r
 ttd <- load_tt_data("Moore’s Law")
-#> INFO [2026-01-15 19:33:06] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
-#> SUCCESS [2026-01-15 19:33:06] Successfully loaded cpu.csv
-#> INFO [2026-01-15 19:33:06] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
-#> SUCCESS [2026-01-15 19:33:06] Successfully loaded gpu.csv
-#> INFO [2026-01-15 19:33:06] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
-#> SUCCESS [2026-01-15 19:33:06] Successfully loaded ram.csv
+#> INFO [2026-01-15 19:40:11] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
+#> SUCCESS [2026-01-15 19:40:11] Successfully loaded cpu.csv
+#> INFO [2026-01-15 19:40:11] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
+#> SUCCESS [2026-01-15 19:40:11] Successfully loaded gpu.csv
+#> INFO [2026-01-15 19:40:11] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
+#> SUCCESS [2026-01-15 19:40:11] Successfully loaded ram.csv
 get_intersecting_cols(ttd)
 #> character(0)
 ```

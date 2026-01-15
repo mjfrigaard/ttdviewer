@@ -16,7 +16,7 @@ character string of date/time.
 
 ``` r
 tstmp()
-#> [1] "2026-01-15-19.33.21"
+#> [1] "2026-01-15-19.40.26"
 cat(paste("Last updated:", tstmp()))
-#> Last updated: 2026-01-15-19.33.21
+#> Last updated: 2026-01-15-19.40.26
 ```
