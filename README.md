@@ -36,9 +36,9 @@ that wires UI and server logic together. The server loads the selected
 dataset, routes it through module servers, and then exposes the
 reactive outputs to the UI panels.
 
-``` mermaid
-%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', "fontSize":"18px"}}}%%
-flowchart TD
+```mermaid
+%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'11px'}}}%%
+flowchart LR
   Launch["launch()"] --> UI["app_ui()"]
   Launch --> Server["app_server()"]
   Server --> Input["mod_input_server()"]
@@ -60,7 +60,7 @@ The UI arranges module outputs into panels while the sidebar hosts the
 dataset selector and report generation options.
 
 ``` mermaid
-%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', "fontSize":"18px"}}}%%
+%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'13px'}}}%%
 flowchart LR
   Sidebar["Sidebar inputs"] --> InputUI["mod_input_ui()"]
   Sidebar --> ReportUI["mod_report_input_ui()"]
@@ -76,7 +76,7 @@ helpers, and report builders are kept in standalone R files, while
 `tests/testthat` validates module behavior and data helpers.
 
 ``` mermaid
-%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', "fontSize":"18px"}}}%%
+%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
 flowchart TB
   subgraph Utilities
     Log["logr_msg()"]
