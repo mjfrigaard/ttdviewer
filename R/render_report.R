@@ -143,41 +143,6 @@ quarto_available <- function() {
   return(FALSE)
 }
 
-
-#' Alternative Quarto Rendering using rmarkdown
-#'
-#' @keywords internal
-#'
-render_quarto_alternative <- function(template_path, output_file, params) {
-  logr_msg(
-    message = "Using alternative Quarto rendering method",
-    level = "INFO")
-
-  # create modified template for rmarkdown compatibility
-  temp_rmd <- tempfile(fileext = ".Rmd")
-
-  # Read quarto template and convert to R Markdown
-  qmd_content <- readLines(template_path)
-
-  # convert quarto-specific syntax to R Markdown
-  rmd_content <- convert_qmd_to_rmd(qmd_content)
-
-  # write modified content
-  writeLines(rmd_content, temp_rmd)
-
-  # render with rmarkdown
-  rmarkdown::render(
-    input = temp_rmd,
-    output_file = output_file,
-    params = params,
-    envir = new.env(),
-    quiet = TRUE
-  )
-
-  # clean
-  unlink(temp_rmd)
-}
-
 #' Render Quarto Report with Enhanced Error Handling
 #'
 #' @param template_path Path to qmd template
@@ -267,6 +232,39 @@ render_quarto_report <- function(template_path, output_file, params) {
   )
 }
 
+#' Alternative Quarto Rendering using rmarkdown
+#'
+#' @keywords internal
+#'
+render_quarto_alternative <- function(template_path, output_file, params) {
+  logr_msg(
+    message = "Using alternative Quarto rendering method",
+    level = "INFO")
+
+  # create modified template for rmarkdown compatibility
+  temp_rmd <- tempfile(fileext = ".Rmd")
+
+  # Read quarto template and convert to R Markdown
+  qmd_content <- readLines(template_path)
+
+  # convert quarto-specific syntax to R Markdown
+  rmd_content <- convert_qmd_to_rmd(qmd_content)
+
+  # write modified content
+  writeLines(rmd_content, temp_rmd)
+
+  # render with rmarkdown
+  rmarkdown::render(
+    input = temp_rmd,
+    output_file = output_file,
+    params = params,
+    envir = new.env(),
+    quiet = TRUE
+  )
+
+  # clean
+  unlink(temp_rmd)
+}
 
 #' System call method for Quarto rendering
 #'

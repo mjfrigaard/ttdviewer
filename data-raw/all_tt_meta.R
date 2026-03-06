@@ -3,7 +3,10 @@
 library(ttmeta)
 library(tidyr)
 # load the all_tt_data from get_tt_tbl()
-tt_data_25 <- ttmeta::get_tt_tbl(min_year = 2025L, max_year = this_year())
+tt_data_26 <- ttmeta::get_tt_tbl(min_year = 2026L, max_year = this_year())
+tt_meta_26 <- ttmeta::get_tt_datasets_metadata(tt_data_26)
+
+tt_data_25 <- ttmeta::get_tt_tbl(min_year = 2025L, max_year = 2025L)
 tt_meta_25 <- ttmeta::get_tt_datasets_metadata(tt_data_25)
 
 tt_data_24 <- ttmeta::get_tt_tbl(min_year = 2024L, max_year = 2024L)
@@ -28,6 +31,7 @@ tt_data_18 <- ttmeta::get_tt_tbl(min_year = 2018L, max_year = 2018L)
 tt_meta_18 <- ttmeta::get_tt_datasets_metadata(tt_data_18)
 
 all_tt_meta <- dplyr::bind_rows(
+  tt_meta_26,
   tt_meta_25,
   tt_meta_24,
   tt_meta_23,

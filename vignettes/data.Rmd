@@ -34,7 +34,9 @@ library(ttmeta)
 
 This document covers the `#TidyTuesday` data used in the application.
 
-## TidyTuesday R packages 
+## Other #TidyTuesday R packages 
+
+Below is an overview of other R packages that access #TidyTuesday data. 
 
 ### [tidytuesdayR](https://dslc-io.github.io/tidytuesdayR/)
 
@@ -61,10 +63,10 @@ str(tt_data)
 ### Class
 
 The `tt_data` list has it's own special class (`"tt_data"`).
-
 ```{r}
 attr(tt_data, "class")
 ```
+
 The `.tt` attribute prints the available datasets for the `date`.
 
 ```{r}
@@ -77,9 +79,9 @@ The `.tt` attribute also lists the available datasets, a `.files` dataset with f
 str(attr(tt_data, ".tt"))
 ```
 
-#### .files
+The `.tt` attribute also has `.files`, `.readme`, and `.date` attributes.
 
-The `.tt` 
+#### .files
 
 ```{r}
 attr(tt_data, ".tt") |> 
@@ -101,7 +103,6 @@ attr(tt_data, ".tt") |>
 ```
 
 
-
 ### [ttmeta](https://r4ds.github.io/ttmeta/)
 
 The [`ttmeta`](https://r4ds.github.io/ttmeta/) package provides, "*a summary of each weekly TidyTuesday post, information about the articles and data sources linked in those posts, and details about the datasets themselves, including variable names and classes.*"
@@ -110,6 +111,7 @@ The [`ttmeta`](https://r4ds.github.io/ttmeta/) package provides, "*a summary of 
 library(ttmeta)
 ```
 
+The `get_tt_tbl()` function allows users to download a "*`tibble` of information about TidyTuesday weeks in the requested timeframe*" 
 ```{r}
 #| label: get_tt_tbl
 tt_meta <- get_tt_tbl(min_year = 2025L, max_year = this_year())
@@ -117,7 +119,7 @@ tt_meta <- get_tt_tbl(min_year = 2025L, max_year = this_year())
 
 ```{r}
 #| label: str-tt_meta
-str(tt_meta)
+dplyr::glimpse(tt_meta)
 ```
 
 ## GitHub URLs
