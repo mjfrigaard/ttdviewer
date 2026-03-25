@@ -6,39 +6,31 @@
 #' associated data files using appropriate methods depending on `data_type`.
 #' Supports functional error handling and logging.
 #'
-#' @section Features:
-#' * Automatically selects the correct reader (`csv`, `tsv`, `xlsx`, `rds`)
-#' * Logs messages using `logr_msg()`
-#' * Adds a `clean_title` attribute to each dataset
-#' * Skips unsupported formats (`vgz`, `zip`, `NA`)
-#'
 #' @section Supported file types:
-#' * `"csv"` / `"csv.gz"` → `vroom::vroom()`
-#' * `"tsv"`              → `vroom::vroom()`
-#' * `"xlsx"`             → `readxl::read_excel()`
-#' * `"rds"`              → `readRDS()` from a URL connection
+#' * `"csv"` / `"csv.gz"` - `vroom::vroom()`
+#' * `"tsv"` - `vroom::vroom()`
+#' * `"xlsx"` - `readxl::read_excel()`
+#' * `"rds"` - `readRDS()` from a URL connection
 #'
 #' @section Unsupported:
-#' * `"vgz"`, `"zip"`, or `NA` → skipped with error logging
+#' * `"vgz"`, `"zip"`, or `NA` - skipped with error logging
 #'
 #' @param title A character string matching the `title` field in `all_tt_combined`.
 #'
-#' @return A named list of tibbles or data frames (one per file). Failed or skipped
-#' datasets are excluded.
+#' @return A named list of tibbles or data frames (one per file). Failed or
+#'   skipped datasets are excluded.
 #'
 #' @export
 #'
 #' @examples
 #' load_tt_data("posit::conf talks")
+#'
 load_tt_data <- function(title) {
 
-  # required packages
-  requireNamespace("purrr", quietly = TRUE)
-  requireNamespace("vroom", quietly = TRUE)
+  requireNamespace("purrr",  quietly = TRUE)
+  requireNamespace("vroom",  quietly = TRUE)
   requireNamespace("readxl", quietly = TRUE)
-  requireNamespace("logger", quietly = TRUE)
 
-  # load metadata
   if (!exists("all_tt_combined", envir = .GlobalEnv)) {
     stop("Internal dataset `all_tt_combined` not found in global environment.")
   }
@@ -62,13 +54,12 @@ load_tt_data <- function(title) {
       cname = files$clean_title
     ),
     function(file, type, url, cname) {
-      # determine true file type using extension
       effective_type <- dplyr::case_when(
         grepl("\\.csv\\.gz$", file, ignore.case = TRUE) ~ "csv.gz",
-        grepl("\\.csv$", file, ignore.case = TRUE) ~ "csv",
-        grepl("\\.tsv$", file, ignore.case = TRUE) ~ "tsv",
-        grepl("\\.xlsx$", file, ignore.case = TRUE) ~ "xlsx",
-        grepl("\\.rds$", file, ignore.case = TRUE) ~ "rds",
+        grepl("\\.csv$",      file, ignore.case = TRUE) ~ "csv",
+        grepl("\\.tsv$",      file, ignore.case = TRUE) ~ "tsv",
+        grepl("\\.xlsx$",     file, ignore.case = TRUE) ~ "xlsx",
+        grepl("\\.rds$",      file, ignore.case = TRUE) ~ "rds",
         TRUE ~ tolower(type)
       )
 
@@ -85,11 +76,11 @@ load_tt_data <- function(title) {
 
       result <- purrr::safely(function() {
         switch(effective_type,
-          "csv" = vroom::vroom(url, delim = ",", show_col_types = FALSE),
-          "csv.gz" = vroom::vroom(url, delim = ",", show_col_types = FALSE),
-          "tsv" = vroom::vroom(url, delim = "\t", show_col_types = FALSE),
-          "xlsx" = readxl::read_excel(url),
-          "rds" = {
+          "csv"    = vroom::vroom(url, delim = ",",  show_col_types = FALSE),
+          "csv.gz" = vroom::vroom(url, delim = ",",  show_col_types = FALSE),
+          "tsv"    = vroom::vroom(url, delim = "\t", show_col_types = FALSE),
+          "xlsx"   = readxl::read_excel(url),
+          "rds"    = {
             con <- url(url)
             on.exit(close(con), add = TRUE)
             readRDS(con)
@@ -101,8 +92,7 @@ load_tt_data <- function(title) {
       if (!is.null(result$result)) {
         logr_msg(
           message = glue::glue("Successfully loaded {file}"),
-          level = "SUCCESS"
-          )
+          level = "SUCCESS")
         attr(result$result, "clean_title") <- cname
         return(result$result)
       } else {

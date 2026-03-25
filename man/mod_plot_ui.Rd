@@ -13,5 +13,5 @@ mod_plot_ui(id)
 Shiny UI
 }
 \description{
-Let the user pick plots and see one panel per dataset × plot
+Let the user pick plots and see one panel per dataset x plot
 }

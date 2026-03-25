@@ -12,5 +12,5 @@ mod_plot_server(id, ttd)
 \item{ttd}{Reactive or a static named list of data.frames}
 }
 \description{
-Renders one plot per (dataset × plot-type)
+Renders one plot per (dataset x plot-type)
 }

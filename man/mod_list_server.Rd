@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_list.R
 \name{mod_list_server}
 \alias{mod_list_server}
-\title{Table Server Module (listviewerlite)}
+\title{List Server Module (listviewerlite)}
 \usage{
 mod_list_server(id, data)
 }
@@ -12,5 +12,5 @@ mod_list_server(id, data)
 \item{data}{A reactive expression returning the dataset list}
 }
 \description{
-Table Server Module (listviewerlite)
+List Server Module (listviewerlite)
 }

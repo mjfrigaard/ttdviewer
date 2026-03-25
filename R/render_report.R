@@ -3,7 +3,7 @@
 #' A utility function that renders either R Markdown or Quarto reports
 #' based on the specified format.
 #'
-#' @param format Character string: "rmarkdown" or "quarto"
+#' @param format Character string: `"rmarkdown"` or `"quarto"`
 #' @param output_file Path to the output file
 #' @param params List of parameters to pass to the report
 #' @param template_path Optional custom template path

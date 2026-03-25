@@ -15,8 +15,7 @@ mod_report_download_server(id, format, data, dataset_title, selected_plot_type)
 
 \item{dataset_title}{A reactive expression returning the dataset title}
 
-\item{selected_plot_type}{A reactive expression returning the selected
-plot type}
+\item{selected_plot_type}{A reactive expression returning the selected plot type}
 }
 \description{
 Report Download Server Module with Enhanced Quarto Error Handling

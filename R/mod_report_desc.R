@@ -3,6 +3,7 @@
 #' @param id Namespace ID
 #'
 #' @return UI elements for report format descriptions
+#'
 #' @export
 mod_report_desc_ui <- function(id) {
   ns <- NS(id)
@@ -11,7 +12,6 @@ mod_report_desc_ui <- function(id) {
     level = "DEBUG")
   tryCatch({
       tagList(
-        # description
         uiOutput(outputId = ns("desc"))
       )
     },
@@ -23,9 +23,7 @@ mod_report_desc_ui <- function(id) {
       bslib::card(
         bslib::card_header("Report Description Error"),
         bslib::card_body(
-          h4("Error loading report description interface",
-            class = "text-danger"
-          ),
+          h4("Error loading report description interface", class = "text-danger"),
           p("Please refresh the page.")
         )
       )
@@ -49,61 +47,45 @@ mod_report_desc_server <- function(id, format) {
 
     desc_inputs <- reactive({
       req(format())
-      # check quarto availability ----
-      # return the quarto_status
       quarto_status <- if (format()$format == "quarto") {
         if (quarto_available()) {
-          list(
-            available = TRUE,
-            message = "Quarto is available and ready to use."
-          )
+          list(available = TRUE,  message = "Quarto is available and ready to use.")
         } else {
-          list(
-            available = FALSE,
-            message = "Quarto not detected. Will fall back to R Markdown if selected."
-          )
+          list(available = FALSE, message = "Quarto not detected. Will fall back to R Markdown if selected.")
         }
       } else {
-        list(
-          available = TRUE,
-          message = "Quarto is available and ready to use."
-        )
+        list(available = TRUE, message = "Quarto is available and ready to use.")
       }
-      # report format description ----
-      # uses quarto_status, from report format input
+
       description <- switch(format()$format,
         "rmarkdown" = list(
-          icon = "bi-file-earmark-code",
+          icon  = "bi-file-earmark-code",
           title = "R Markdown",
-          desc = "Traditional R Markdown report. Compatible with all R installations.",
-          note = "Recommended for maximum compatibility."
+          desc  = "Traditional R Markdown report. Compatible with all R installations.",
+          note  = "Recommended for maximum compatibility."
         ),
-        ## includes quarto_status$note ----
         "quarto" = list(
-          icon = "bi-file-earmark-richtext",
+          icon  = "bi-file-earmark-richtext",
           title = "Quarto",
-          desc = "Modern scientific publishing with enhanced features and interactivity.",
-          note = quarto_status$message
+          desc  = "Modern scientific publishing with enhanced features and interactivity.",
+          note  = quarto_status$message
         )
       )
 
-      # alert_class ----
       alert_class <- if (format()$format == "quarto" && !quarto_status$available) {
         "alert-warning"
       } else {
         "alert-light"
       }
-      return(
-        list(
-          "quarto_status" = quarto_status,
-          "description" = description,
-          "alert_class" = alert_class
-        )
-      )
+
+      return(list(
+        "quarto_status" = quarto_status,
+        "description"   = description,
+        "alert_class"   = alert_class
+      ))
     })
 
-    observe({ # observer browser() ----
-      # format description reactive ----
+    observe({
       output$desc <- renderUI({
         ## UI output ----
         tags$div(
@@ -120,7 +102,7 @@ mod_report_desc_server <- function(id, format) {
           tags$small(desc_inputs()$description$note, class = "text-muted")
         )
       })
-    }) |> # observer browser() ----
+    }) |>
       bindEvent(format())
   })
 }

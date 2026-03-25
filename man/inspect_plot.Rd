@@ -9,7 +9,7 @@ inspect_plot(ttd, plots = "all")
 \arguments{
 \item{ttd}{A list of data frames from \code{\link[=load_tt_data]{load_tt_data()}}}
 
-\item{plot}{Character vector specifying which plots to generate. Options include:
+\item{plots}{Character vector specifying which plots to generate. Options:
 \itemize{
 \item \code{"types"} - Column type distributions
 \item \code{"mem"} - Memory usage analysis
@@ -22,22 +22,17 @@ inspect_plot(ttd, plots = "all")
 }}
 }
 \value{
-Plots are displayed; function is called for side effects
+Invisibly returns \code{NULL}. Called for side effects (plots are displayed).
 }
 \description{
-A comprehensive function that analyzes TidyTuesday datasets and generates
-appropriate inspection plots based on data characteristics and number of datasets.
+Analyzes TidyTuesday datasets and generates inspection plots based on
+data characteristics and number of datasets.
 }
 \examples{
 ttd <- load_tt_data("Moore’s Law")
 
-# Generate all plots
 inspect_plot(ttd)
-
-# Generate only specific plots
-inspect_plot(ttd, plot = c("types", "mem"))
-
-# Generate single plot type
-inspect_plot(ttd, plot = "cor")
+inspect_plot(ttd, plots = c("types", "mem"))
+inspect_plot(ttd, plots = "cor")
 
 }

@@ -12,7 +12,7 @@ render_report(
 )
 }
 \arguments{
-\item{format}{Character string: "rmarkdown" or "quarto"}
+\item{format}{Character string: \code{"rmarkdown"} or \code{"quarto"}}
 
 \item{output_file}{Path to the output file}
 

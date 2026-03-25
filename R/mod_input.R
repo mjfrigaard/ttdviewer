@@ -33,7 +33,6 @@ mod_input_ui <- function(id) {
     },
     error = function(e) {
       logr_msg(paste("Error creating variable input UI:", e$message), level = "ERROR")
-      # return minimal UI with error message
       tagList(
         h4("Error loading dataset choices", class = "text-danger"),
         p("Please check the data availability.")
@@ -60,7 +59,6 @@ mod_input_server <- function(id) {
         message = paste("User selected dataset:", input$ds_title),
         level = "INFO")
       tryCatch({
-          # load data ----
           result <- load_tt_data(input$ds_title)
           if (length(result) == 0) {
             logr_msg(
@@ -88,7 +86,6 @@ mod_input_server <- function(id) {
     }) |>
       bindEvent(input$ds_title)
 
-    # print names of datasets from title
     output$vals <- renderPrint({
       req(data())
       ds_names <- names(data())
@@ -98,12 +95,11 @@ mod_input_server <- function(id) {
         )
       )
     })
-    # return both data and dataset title
     return(
-        list(
-          data = data,
-          'ds_title' = reactive(input$ds_title)
-        )
+      list(
+        data = data,
+        'ds_title' = reactive(input$ds_title)
       )
+    )
   })
 }

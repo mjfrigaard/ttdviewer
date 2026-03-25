@@ -9,6 +9,9 @@ mod_report_input_server(id)
 \arguments{
 \item{id}{Module ID}
 }
+\value{
+A reactive list with the selected format string
+}
 \description{
 Report Input Server Module
 }

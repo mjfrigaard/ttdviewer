@@ -1,6 +1,6 @@
 #' Inspect Plot Module UI
 #'
-#' Let the user pick plots and see one panel per dataset × plot
+#' Let the user pick plots and see one panel per dataset x plot
 #'
 #' @param id Module id
 #'
@@ -37,7 +37,7 @@ mod_plot_ui <- function(id) {
 
 #' Inspect Plot Module Server
 #'
-#' Renders one plot per (dataset × plot-type)
+#' Renders one plot per (dataset x plot-type)
 #'
 #' @param id Module id
 #' @param ttd Reactive or a static named list of data.frames
@@ -53,14 +53,10 @@ mod_plot_server <- function(id, ttd) {
 
     # wrap static into reactive if needed
     ttd_r <- if (is.reactive(ttd)) {
-      logr_msg(
-        message = "ttd is reactive",
-        level = "DEBUG")
+      logr_msg(message = "ttd is reactive", level = "DEBUG")
       ttd
     } else {
-      logr_msg(
-        message = "ttd is static; wrapping in reactive()",
-        level = "DEBUG")
+      logr_msg(message = "ttd is static; wrapping in reactive()", level = "DEBUG")
       reactive(ttd)
     }
 
@@ -70,9 +66,7 @@ mod_plot_server <- function(id, ttd) {
         ds <- names(ttd_r())
         if (is.null(ds) || length(ds) == 0) {
           ds <- seq_along(ttd_r()) %>% as.character()
-          logr_msg(
-            message = "No names in ttd; using indices",
-            level = "WARN")
+          logr_msg(message = "No names in ttd; using indices", level = "WARN")
         }
         updateSelectInput(
           session, "dataset",
@@ -96,7 +90,7 @@ mod_plot_server <- function(id, ttd) {
         tryCatch({
           ds_list <- req(ttd_r())
           sel_ds  <- input$dataset
-          req(sel_ds %in% names(ds_list))  # ensure dataset exists
+          req(sel_ds %in% names(ds_list))
           df <- ds_list[[sel_ds]]
           logr_msg(
             message = sprintf("Rendering plots for dataset '%s'", sel_ds),
@@ -115,7 +109,6 @@ mod_plot_server <- function(id, ttd) {
                   message = sprintf("Error plotting %s:%s — %s",
                     sel_ds, plt, err2$message),
                   level = "ERROR")
-                # display placeholder
                 plot.new()
                 text(0.5, 0.5, "Error generating plot", cex = 1.2, col = "red")
               })
@@ -127,18 +120,16 @@ mod_plot_server <- function(id, ttd) {
             level = "ERROR")
         })
       }) |>
-      bindEvent(list(input$dataset, input$plots),
-                ignoreNULL = TRUE)
+      bindEvent(list(input$dataset, input$plots), ignoreNULL = TRUE)
 
     # dynamically generate UI for selected plot types
     output$plots_ui <- renderUI({
       tryCatch({
         req(input$dataset, input$plots)
-        logr_msg(message =
-            sprintf("Rendering UI for dataset '%s' and plots: %s",
-                     input$dataset,
-                     paste(input$plots, collapse = ", ")),
-                 level = "DEBUG")
+        logr_msg(
+          message = sprintf("Rendering UI for dataset '%s' and plots: %s",
+            input$dataset, paste(input$plots, collapse = ", ")),
+          level = "DEBUG")
 
         purrr::map(input$plots, function(plt) {
           plot_id <- ns(paste0("plt_", plt))
@@ -151,12 +142,9 @@ mod_plot_server <- function(id, ttd) {
         logr_msg(
           message = sprintf("Error in plots_ui renderUI: %s", err$message),
           level = "ERROR")
-        tagList(
-          p(style = "color:red;", "Failed to generate plot UI.")
-        )
+        tagList(p(style = "color:red;", "Failed to generate plot UI."))
       })
     })
-
 
     logr_msg(
       message = sprintf("mod_plot_server[%s]: setup complete", id),
@@ -170,8 +158,6 @@ mod_plot_server <- function(id, ttd) {
         )
       })
     ) |>
-      bindEvent(list(input$dataset, input$plots),
-                ignoreNULL = TRUE)
-
+      bindEvent(list(input$dataset, input$plots), ignoreNULL = TRUE)
   })
 }

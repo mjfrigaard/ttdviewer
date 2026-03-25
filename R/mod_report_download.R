@@ -5,7 +5,7 @@
 #' @return UI elements for report generation with format options
 #'
 #' @export
-#' 
+#'
 mod_report_download_ui <- function(id) {
   ns <- NS(id)
   logr_msg(
@@ -13,7 +13,6 @@ mod_report_download_ui <- function(id) {
     level = "DEBUG")
   tryCatch({
       tagList(
-        # Download button
         tags$div(
           class = "d-grid",
           downloadButton(
@@ -23,7 +22,6 @@ mod_report_download_ui <- function(id) {
             icon = icon("download")
           )
         ),
-        # Help text
         tags$small(
           class = "text-muted",
           "Report includes: data visualization, summary statistics, data preview, and variable information."
@@ -51,274 +49,157 @@ mod_report_download_ui <- function(id) {
 #' @param format A reactive expression returning the report format
 #' @param data A reactive expression returning the dataset list
 #' @param dataset_title A reactive expression returning the dataset title
-#' @param selected_plot_type A reactive expression returning the selected
-#'    plot type
+#' @param selected_plot_type A reactive expression returning the selected plot type
 #'
 #' @export
 #'
 mod_report_download_server <- function(id, format, data, dataset_title, selected_plot_type) {
   moduleServer(id, function(input, output, session) {
 
-    logr_msg(
-      message = "Initializing report server module", 
-      level = "DEBUG")
+    logr_msg(message = "Initializing report server module", level = "DEBUG")
 
-    # downloadHandler() ----
     output$download_report <- downloadHandler(
-      ## FILENAME ----
       filename = function() {
         tryCatch({
-            # get dataset title ----
             current_data <- data()
-
             actual_title <- if (!is.null(current_data) && length(current_data) > 0) {
-              # try to get title from variable input module
-              # or use first dataset name
               first_dataset_name <- names(current_data)[1]
-
               if (!is.null(first_dataset_name) && first_dataset_name != "") {
-                gsub("\\.csv$", "", first_dataset_name) # Remove .csv extension
+                gsub("\\.csv$", "", first_dataset_name)
               } else {
                 "tidytuesday_dataset"
               }
             } else {
               "tidytuesday_dataset"
             }
-
-            ## clean title for filename ----
-            clean_title <- gsub("[^A-Za-z0-9_-]", "_", actual_title)
-
-            timestamp <- gsub("[^0-9]", "", as.character(Sys.time()))
-
+            clean_title   <- gsub("[^A-Za-z0-9_-]", "_", actual_title)
+            timestamp     <- gsub("[^0-9]", "", as.character(Sys.time()))
             format_suffix <- switch(input$report_format,
               "rmarkdown" = "rmd",
-              "quarto" = "qto"
+              "quarto"    = "qto"
             )
-
-            filename <- paste0(
-              clean_title, "_", format_suffix, "_", timestamp, ".html"
-            )
-
-            logr_msg(
-              message = paste("Generated report filename:", filename),
-              level = "DEBUG"
-            )
-
+            filename <- paste0(clean_title, "_", format_suffix, "_", timestamp, ".html")
+            logr_msg(message = paste("Generated report filename:", filename), level = "DEBUG")
             return(filename)
-        },
+          },
           error = function(e) {
-            logr_msg(
-              message = paste("Error generating filename:", e$message),
-              level = "ERROR"
-            )
+            logr_msg(message = paste("Error generating filename:", e$message), level = "ERROR")
             return("tidytuesday_report.html")
           }
         )
       },
-      # CONTENT ----
       content = function(file) {
         tryCatch({
             logr_msg(
               message = paste("Starting", input$report_format, "report generation"),
-              level = "INFO"
-            )
+              level = "INFO")
             current_data <- data()
-            # extract actual dataset title from data or use fallback
+
             actual_dataset_title <- tryCatch({
               if (!is.null(current_data) && length(current_data) > 0) {
                 first_name <- names(current_data)[1]
                 if (!is.null(first_name) && length(first_name) == 1 && nzchar(first_name)) {
                   clean_name <- gsub("\\.csv$", "", first_name)
                   clean_name <- gsub("_", " ", clean_name)
-                  # Double check before toTitleCase
                   if (length(clean_name) == 1 && nzchar(clean_name)) {
                     tools::toTitleCase(clean_name)
-                  } else {
-                    "TidyTuesday Dataset"
-                  }
-                } else {
-                  "TidyTuesday Dataset"
-                }
-              } else {
-                "TidyTuesday Dataset"
-              }
+                  } else { "TidyTuesday Dataset" }
+                } else { "TidyTuesday Dataset" }
+              } else { "TidyTuesday Dataset" }
             }, error = function(e) {
-              logr_msg(message = paste("Error extracting dataset title:", e$message), level = "WARN")
+              logr_msg(
+                message = paste("Error extracting dataset title:", e$message),
+                level = "WARN")
               "TidyTuesday Dataset"
             })
-            # validate inputs
+
             if (is.null(current_data) || length(current_data) == 0) {
-              logr_msg(
-                message = "No data available for report generation",
-                level = "ERROR"
-              )
+              logr_msg(message = "No data available for report generation", level = "ERROR")
               stop("No data available. Please select a dataset first.")
             }
 
-            # format checking for quarto
             if (input$report_format == "quarto") {
-              # quarto_available() ----
               if (!quarto_available()) {
-                logr_msg("Quarto not available, falling back to R Markdown",
-                  level = "WARN"
-                )
+                logr_msg("Quarto not available, falling back to R Markdown", level = "WARN")
                 showNotification(
                   "Quarto not available. Generating R Markdown report instead.",
-                  type = "warning",
-                  duration = 5
-                )
+                  type = "warning", duration = 5)
                 actual_format <- "rmarkdown"
               } else {
                 logr_msg(
                   message = "Quarto available, proceeding with Quarto rendering",
-                  level = "INFO"
-                )
+                  level = "INFO")
                 actual_format <- "quarto"
               }
             } else {
               actual_format <- input$report_format
             }
-          
-            # progress notification
-            progress_msg <- paste(
-              "Generating",
-              tools::toTitleCase(actual_format),
-              "report..."
-            )
-            showNotification(
-              progress_msg,
-              type = "message",
-              duration = 8,
-              id = "report_progress"
-            )
-            # current parameters with dataset title
-            current_plot_type <- selected_plot_type() %||% "type"
 
+            showNotification(
+              paste("Generating", tools::toTitleCase(actual_format), "report..."),
+              type = "message", duration = 8, id = "report_progress")
+
+            current_plot_type <- selected_plot_type() %||% "type"
             logr_msg(
               message = paste(
-                "Report parameters - Dataset:",
-                actual_dataset_title, "Plot type:", current_plot_type,
-                "Format:", actual_format
-              ),
-              level = "INFO"
-            )
+                "Report parameters - Dataset:", actual_dataset_title,
+                "Plot type:", current_plot_type, "Format:", actual_format),
+              level = "INFO")
 
-            # generate plots
             plots <- tryCatch({
-              ## inspect_plot() ----
-                inspect_plot(
-                  ttd = current_data, 
-                  plots = current_plot_type)
-              },
-              error = function(e) {
-                logr_msg(
-                  message = paste("Error generating plots for report:", e$message),
-                  level = "WARN"
-                )
-                NULL
-              }
-            )
-            # params ----
+              inspect_plot(ttd = current_data, plots = current_plot_type)
+            }, error = function(e) {
+              logr_msg(
+                message = paste("Error generating plots for report:", e$message),
+                level = "WARN")
+              NULL
+            })
+
             params <- list(
               dataset_title = actual_dataset_title,
-              title = paste("TidyTuesday Report:", actual_dataset_title),
-              data_list = current_data,
-              plots = plots,
-              plot_type = current_plot_type
+              title         = paste("TidyTuesday Report:", actual_dataset_title),
+              data_list     = current_data,
+              plots         = plots,
+              plot_type     = current_plot_type
             )
 
-            # log parameter summary
-            logr_msg(
-              message = "Parameters prepared:",
-              level = "DEBUG"
-            )
-            logr_msg(
-              message = paste("  - dataset_title:", params$dataset_title),
-              level = "DEBUG"
-            )
-            logr_msg(
-              message = paste("  - data_list length:", length(params$data_list)),
-              level = "DEBUG"
-            )
-            logr_msg(
-              message = paste("  - plots class:", class(params$plots)),
-              level = "DEBUG"
-            )
-
-            ## render_report() ----
-            # with enhanced error handling
             tryCatch({
-                render_report(
-                  format = actual_format,
-                  output_file = file,
-                  params = params
-                )},
+                render_report(format = actual_format, output_file = file, params = params)
+              },
               error = function(render_error) {
                 logr_msg(
                   message = paste("Render error:", render_error$message),
-                  level = "ERROR"
-                )
-                ## render_report() ----
-                # if quarto fails try r markdown
+                  level = "ERROR")
                 if (actual_format == "quarto") {
                   logr_msg(
                     message = "Quarto failed, trying R Markdown fallback",
-                    level = "WARN"
-                  )
-                  render_report(
-                    format = "rmarkdown",
-                    output_file = file,
-                    params = params
-                  )
+                    level = "WARN")
+                  render_report(format = "rmarkdown", output_file = file, params = params)
                   showNotification(
                     "Quarto failed, generated R Markdown report instead.",
-                    type = "warning",
-                    duration = 5
-                  )
+                    type = "warning", duration = 5)
                 } else {
                   stop(render_error)
                 }
               }
             )
 
-            logr_msg(
-              message = "Report generation completed successfully",
-              level = "SUCCESS"
-            )
-            # remove progress notification/show success
+            logr_msg(message = "Report generation completed successfully", level = "SUCCESS")
             removeNotification("report_progress")
             showNotification(
-              paste(
-                tools::toTitleCase(actual_format),
-                "report generated successfully!"
-              ),
-              type = "message",
-              duration = 3
-            )
-        },
+              paste(tools::toTitleCase(actual_format), "report generated successfully!"),
+              type = "message", duration = 3)
+          },
           error = function(e) {
             error_msg <- paste("Failed to generate report:", e$message)
-            logr_msg(
-              message = error_msg, 
-              level = "ERROR")
-
-            # Remove progress notification
+            logr_msg(message = error_msg, level = "ERROR")
             removeNotification("report_progress")
-
-            ### Show error notification
             showNotification(
               paste("Report generation failed:", e$message),
-              type = "error",
-              duration = 10
-            )
-
-            ## create error report ----
-            create_error_report(
-              file, error_msg,
-              "Unknown Dataset",
-              input$report_format
-            )
+              type = "error", duration = 10)
+            create_error_report(file, error_msg, "Unknown Dataset", input$report_format)
           })
       })
   })
 }
+
