@@ -12,6 +12,7 @@ output:
     self_contained: true
 params:
   dataset_title: "Dataset"
+  tt_title: "TidyTuesday Dataset"
   title: "TidyTuesday Report"
   data_list: NULL
   plots: NULL
@@ -39,7 +40,7 @@ library(htmltools)
 
 ## Executive Summary
 
-This report provides an overview of the **`r params$dataset_title`** dataset from TidyTuesday. The analysis includes data exploration visualizations and a preview of the dataset structure.
+This report provides an overview of the **`r params$tt_title`** dataset from TidyTuesday. The analysis includes data exploration visualizations and a preview of the dataset structure.
 
 **Report Generated:** `r Sys.time()`
 
@@ -184,57 +185,62 @@ if (!is.null(params$data_list) && length(params$data_list) > 0) {
 
 ```{r variable-info}
 if (!is.null(params$data_list) && length(params$data_list) > 0) {
-  first_df <- params$data_list[[1]]
-  
-  # Create variable information table
-  var_info <- data.frame(
-    Variable = names(first_df),
-    Type = sapply(first_df, function(x) class(x)[1]),
-    Missing = sapply(first_df, function(x) sum(is.na(x))),
-    Missing_Percent = round(sapply(first_df, function(x) sum(is.na(x))/length(x) * 100), 2),
-    Unique_Values = sapply(first_df, function(x) length(unique(x))),
-    stringsAsFactors = FALSE
-  )
-  
-  var_table <- var_info |>
-    gt() |>
-    gt::tab_header(
-      title = "Variable Information",
-      subtitle = names(params$data_list)[1]
-    ) |>
-    gt::cols_label(
-      Variable = "Variable Name",
-      Type = "Data Type",
-      Missing = "Missing Count",
-      Missing_Percent = "Missing %",
-      Unique_Values = "Unique Values"
-    ) |>
-    gt::fmt_number(
-      columns = Missing_Percent,
-      decimals = 1
-    ) |>
-    gt::tab_style(
-      style = gt::cell_fill(color = "#fff3cd"),
-      locations = gt::cells_body(
-        columns = Missing_Percent,
-        rows = Missing_Percent > 10
-      )
-    ) |>
-    gt::tab_style(
-      style = gt::cell_fill(color = "#f8d7da"),
-      locations = gt::cells_body(
-        columns = Missing_Percent,
-        rows = Missing_Percent > 50
-      )
-    ) |>
-    gt::tab_options(
-      table.width = "80%",
-      table.font.size = "13px"
+
+  for (i in seq_along(params$data_list)) {
+    df           <- params$data_list[[i]]
+    dataset_name <- names(params$data_list)[i]
+
+    # Create variable information table
+    var_info <- data.frame(
+      Variable = names(df),
+      Type = sapply(df, function(x) class(x)[1]),
+      Missing = sapply(df, function(x) sum(is.na(x))),
+      Missing_Percent = round(sapply(df, function(x) sum(is.na(x))/length(x) * 100), 2),
+      Unique_Values = sapply(df, function(x) length(unique(x))),
+      stringsAsFactors = FALSE
     )
-  
-  # Render gt table as HTML and print
-  table_html <- gt::as_raw_html(var_table)
-  cat(table_html)
+
+    var_table <- var_info |>
+      gt() |>
+      gt::tab_header(
+        title = "Variable Information",
+        subtitle = dataset_name
+      ) |>
+      gt::cols_label(
+        Variable = "Variable Name",
+        Type = "Data Type",
+        Missing = "Missing Count",
+        Missing_Percent = "Missing %",
+        Unique_Values = "Unique Values"
+      ) |>
+      gt::fmt_number(
+        columns = Missing_Percent,
+        decimals = 1
+      ) |>
+      gt::tab_style(
+        style = gt::cell_fill(color = "#fff3cd"),
+        locations = gt::cells_body(
+          columns = Missing_Percent,
+          rows = Missing_Percent > 10
+        )
+      ) |>
+      gt::tab_style(
+        style = gt::cell_fill(color = "#f8d7da"),
+        locations = gt::cells_body(
+          columns = Missing_Percent,
+          rows = Missing_Percent > 50
+        )
+      ) |>
+      gt::tab_options(
+        table.width = "80%",
+        table.font.size = "13px"
+      )
+
+    # Render gt table as HTML and print
+    table_html <- gt::as_raw_html(var_table)
+    cat(table_html)
+    cat("\n\n")
+  }
 }
 ```
 
@@ -242,7 +248,7 @@ if (!is.null(params$data_list) && length(params$data_list) > 0) {
 
 **R Version:** `r R.version.string`  
 **Report Generated:** `r Sys.time()`  
-**TidyTuesday Dataset:** `r params$dataset_title`  
+**TidyTuesday Dataset:** `r params$tt_title`  
 
 ---
 

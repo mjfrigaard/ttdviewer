@@ -156,7 +156,8 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
 
             params <- list(
               dataset_title = actual_dataset_title,
-              title         = paste("TidyTuesday Report:", actual_dataset_title),
+              tt_title      = dataset_title(),
+              title         = paste("TidyTuesday Report:", dataset_title()),
               data_list     = current_data,
               plot_type     = current_plot_type
             )

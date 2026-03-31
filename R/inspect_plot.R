@@ -62,7 +62,20 @@ inspect_plot <- function(ttd, plots = "all") {
 
       tryCatch({
         if (n_datasets == 2) {
-          p <- fn(df1 = ttd[[1]], df2 = ttd[[2]])
+          df1_name <- tools::file_path_sans_ext(names(ttd)[1])
+          df2_name <- tools::file_path_sans_ext(names(ttd)[2])
+          # Build an env whose parent is the inspectdf namespace so that:
+          #   1. inspectdf functions are found by eval()
+          #   2. substitute() in get_df_names() captures the correct names
+          call_env <- new.env(parent = asNamespace("inspectdf"))
+          assign(df1_name, ttd[[1]], envir = call_env)
+          assign(df2_name, ttd[[2]], envir = call_env)
+          inspect_call <- call(
+            paste0("inspect_", plt),
+            df1 = as.name(df1_name),
+            df2 = as.name(df2_name)
+          )
+          p <- eval(inspect_call, envir = call_env)
           print(p |> inspectdf::show_plot(text_labels = TRUE))
         } else {
           purrr::imap(ttd, function(df, nm) {

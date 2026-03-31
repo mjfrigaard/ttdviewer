@@ -120,7 +120,7 @@ mod_plot_server <- function(id, ttd) {
             level = "ERROR")
         })
       }) |>
-      bindEvent(list(input$dataset, input$plots), ignoreNULL = TRUE)
+      bindEvent(list(input$dataset, input$plots), ignoreNULL = TRUE, ignoreInit = TRUE)
 
     # dynamically generate UI for selected plot types
     output$plots_ui <- renderUI({
