@@ -15,7 +15,7 @@ params:
   title: "TidyTuesday Report"
   data_list: NULL
   plots: NULL
-  plot_type: "type"
+  plot_type: "types"
 ---
 
 ```{r setup, include=FALSE}
@@ -43,7 +43,7 @@ This report provides an overview of the **`r params$dataset_title`** dataset fro
 
 **Report Generated:** `r Sys.time()`
 
-```{r data-info, results='markup'}
+```{r data-info, results='asis'}
 # Get basic info about the data
 if (!is.null(params$data_list) && length(params$data_list) > 0) {
   first_df <- params$data_list[[1]]
@@ -57,23 +57,26 @@ if (!is.null(params$data_list) && length(params$data_list) > 0) {
 
 ## Data Visualization
 
-The following visualization shows the **`r switch(params$plot_type, "type" = "variable types", "na" = "missing data patterns", "cor" = "correlation matrix", "num" = "numeric variable distributions", "cat" = "categorical variable frequencies")`** for the selected dataset(s).
+The following visualization shows the **`r { plot_labels <- c(types = "variable types", mem = "memory usage", na = "missing data patterns", cor = "correlation matrix", imb = "feature imbalance", num = "numeric distributions", cat = "categorical frequencies"); chosen <- intersect(params$plot_type, names(plot_labels)); if (length(chosen) == 0) "data overview" else paste(plot_labels[chosen], collapse = ", ") }`** for the selected dataset(s).
 
-```{r plots, fig.cap=paste("Data visualization:", params$plot_type)}
-if (!is.null(params$plots)) {
-  if (inherits(params$plots, "gg")) {
-    # Single plot
-    print(params$plots)
-  } else if (is.list(params$plots)) {
-    # Multiple plots
-    for (i in seq_along(params$plots)) {
-      if (inherits(params$plots[[i]], "gg")) {
-        print(params$plots[[i]])
-      }
-    }
+```{r plots}
+if (!is.null(params$data_list) && length(params$data_list) > 0) {
+  valid_plots <- c("types", "mem", "na", "cor", "imb", "num", "cat")
+  plot_types  <- if (!is.null(params$plot_type)) {
+    intersect(params$plot_type, valid_plots)
+  } else {
+    c("types", "mem", "na")
+  }
+  if (length(plot_types) == 0) plot_types <- c("types", "mem", "na")
+
+  for (pt in plot_types) {
+    tryCatch(
+      ttdviewer::inspect_plot(params$data_list, plots = pt),
+      error = function(e) message("Could not render plot '", pt, "': ", e$message)
+    )
   }
 } else {
-  cat("No visualization available for the current selection.")
+  cat("No data available for visualization.")
 }
 ```
 

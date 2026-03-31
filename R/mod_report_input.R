@@ -41,7 +41,8 @@ mod_report_input_ui <- function(id) {
 #'
 #' @param id Module ID
 #'
-#' @return A reactive list with the selected format string
+#' @return A reactive returning the selected format string (`"rmarkdown"` or
+#'   `"quarto"`).
 #'
 #' @export
 #'
@@ -50,8 +51,6 @@ mod_report_input_server <- function(id) {
     logr_msg(
       message = "Initializing report input server module",
       level = "DEBUG")
-    return(
-      reactive(list("format" = input$format))
-    )
+    reactive(input$format)
   })
 }

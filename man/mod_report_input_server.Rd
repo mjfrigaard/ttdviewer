@@ -10,7 +10,8 @@ mod_report_input_server(id)
 \item{id}{Module ID}
 }
 \value{
-A reactive list with the selected format string
+A reactive returning the selected format string (\code{"rmarkdown"} or
+\code{"quarto"}).
 }
 \description{
 Report Input Server Module

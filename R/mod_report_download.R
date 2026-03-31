@@ -74,7 +74,7 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
             }
             clean_title   <- gsub("[^A-Za-z0-9_-]", "_", actual_title)
             timestamp     <- gsub("[^0-9]", "", as.character(Sys.time()))
-            format_suffix <- switch(input$report_format,
+            format_suffix <- switch(format(),
               "rmarkdown" = "rmd",
               "quarto"    = "qto"
             )
@@ -91,7 +91,7 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
       content = function(file) {
         tryCatch({
             logr_msg(
-              message = paste("Starting", input$report_format, "report generation"),
+              message = paste("Starting", format(), "report generation"),
               level = "INFO")
             current_data <- data()
 
@@ -118,7 +118,7 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
               stop("No data available. Please select a dataset first.")
             }
 
-            if (input$report_format == "quarto") {
+            if (format() == "quarto") {
               if (!quarto_available()) {
                 logr_msg("Quarto not available, falling back to R Markdown", level = "WARN")
                 showNotification(
@@ -132,34 +132,32 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
                 actual_format <- "quarto"
               }
             } else {
-              actual_format <- input$report_format
+              actual_format <- format()
             }
 
             showNotification(
               paste("Generating", tools::toTitleCase(actual_format), "report..."),
               type = "message", duration = 8, id = "report_progress")
 
-            current_plot_type <- selected_plot_type() %||% "type"
+            current_plot_type <- selected_plot_type() %||% list()
+            current_plot_type <- current_plot_type$plots %||% c("types", "mem", "na")
+
+            # guard: drop any values that are not valid plot types
+            valid_plots <- c("types", "mem", "na", "cor", "imb", "num", "cat")
+            current_plot_type <- intersect(current_plot_type, valid_plots)
+            if (length(current_plot_type) == 0L) {
+              current_plot_type <- c("types", "mem", "na")
+            }
             logr_msg(
               message = paste(
                 "Report parameters - Dataset:", actual_dataset_title,
                 "Plot type:", current_plot_type, "Format:", actual_format),
               level = "INFO")
 
-            plots <- tryCatch({
-              inspect_plot(ttd = current_data, plots = current_plot_type)
-            }, error = function(e) {
-              logr_msg(
-                message = paste("Error generating plots for report:", e$message),
-                level = "WARN")
-              NULL
-            })
-
             params <- list(
               dataset_title = actual_dataset_title,
               title         = paste("TidyTuesday Report:", actual_dataset_title),
               data_list     = current_data,
-              plots         = plots,
               plot_type     = current_plot_type
             )
 
@@ -197,7 +195,7 @@ mod_report_download_server <- function(id, format, data, dataset_title, selected
             showNotification(
               paste("Report generation failed:", e$message),
               type = "error", duration = 10)
-            create_error_report(file, error_msg, "Unknown Dataset", input$report_format)
+            create_error_report(file, error_msg, "Unknown Dataset", format())
           })
       })
   })

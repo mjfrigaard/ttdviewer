@@ -1,3 +1,9 @@
+# Functions previously defined here have been moved to their own files:
+#
+#   tstmp()              -> R/tstmp.R
+#   test_logger()        -> R/test_logger.R
+#   test_title_cleaning() -> R/test_title_cleaning.R
+
 #' Timestamp
 #'
 #' @returns character string of date/time.

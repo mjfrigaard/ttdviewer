@@ -2,36 +2,36 @@
 % Please edit documentation in R/load_tt_data.R
 \name{load_tt_data}
 \alias{load_tt_data}
-\title{Load TidyTuesday datasets from GitHub by title}
+\title{Load TidyTuesday Datasets from GitHub by Title}
 \usage{
 load_tt_data(title)
 }
 \arguments{
-\item{title}{A character string matching the \code{title} field in \code{all_tt_combined}.}
+\item{title}{A character string matching the \code{title} field in
+\code{all_tt_combined}.}
 }
 \value{
 A named list of tibbles or data frames (one per file). Failed or
 skipped datasets are excluded.
 }
 \description{
-Filters an internal dataset \code{all_tt_combined} by \code{title}, and loads
-associated data files using appropriate methods depending on \code{data_type}.
-Supports functional error handling and logging.
+Filters the internal dataset \code{all_tt_combined} by \code{title} and loads the
+associated data files using a method appropriate for each \code{data_type}.
 }
 \section{Supported file types}{
 
 \itemize{
-\item \code{"csv"} / \code{"csv.gz"} - \code{vroom::vroom()}
-\item \code{"tsv"} - \code{vroom::vroom()}
-\item \code{"xlsx"} - \code{readxl::read_excel()}
-\item \code{"rds"} - \code{readRDS()} from a URL connection
+\item \code{"csv"} / \code{"csv.gz"} - \code{\link[vroom:vroom]{vroom::vroom()}}
+\item \code{"tsv"} - \code{\link[vroom:vroom]{vroom::vroom()}}
+\item \code{"xlsx"} - \code{\link[readxl:read_excel]{readxl::read_excel()}}
+\item \code{"rds"} - \code{\link[=readRDS]{readRDS()}} via a URL connection
 }
 }
 
 \section{Unsupported}{
 
 \itemize{
-\item \code{"vgz"}, \code{"zip"}, or \code{NA} - skipped with error logging
+\item \code{"vgz"}, \code{"zip"}, or \code{NA} — skipped with error logging
 }
 }
 

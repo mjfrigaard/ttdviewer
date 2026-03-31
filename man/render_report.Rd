@@ -12,19 +12,28 @@ render_report(
 )
 }
 \arguments{
-\item{format}{Character string: \code{"rmarkdown"} or \code{"quarto"}}
+\item{format}{Character string: \code{"rmarkdown"} or \code{"quarto"}.}
 
-\item{output_file}{Path to the output file}
+\item{output_file}{Path to the output file.}
 
-\item{params}{List of parameters to pass to the report}
+\item{params}{Named list of parameters to pass to the report template.}
 
-\item{template_path}{Optional custom template path}
+\item{template_path}{Optional custom template path. When \code{NULL}
+(default), the bundled template for \code{format} is used.}
 }
 \value{
-Path to the rendered file
+The path to the rendered (or error-fallback) file, invisibly.
 }
 \description{
-A utility function that renders either R Markdown or Quarto reports
-based on the specified format.
+A utility function that renders either R Markdown or Quarto reports based
+on the specified format. Validates and cleans parameters, resolves the
+template path (creating a fallback if needed), delegates to the
+appropriate renderer, and writes a self-contained HTML error page if
+rendering fails.
+}
+\seealso{
+\code{\link[=render_rmarkdown_report]{render_rmarkdown_report()}}, \code{\link[=render_quarto_report]{render_quarto_report()}},
+\code{\link[=validate_and_clean_params]{validate_and_clean_params()}}, \code{\link[=get_template_path]{get_template_path()}},
+\code{\link[=create_fallback_template]{create_fallback_template()}}, \code{\link[=create_error_report]{create_error_report()}}
 }
 \keyword{internal}

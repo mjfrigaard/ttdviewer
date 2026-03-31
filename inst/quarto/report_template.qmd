@@ -76,20 +76,27 @@ if (!is.null(params$data_list) && length(params$data_list) > 0) {
 ```{r determine-plot-desc}
 #| include: false
 
-plot_description <- switch(params$plot_type,
-  "type" = "variable types",
-  "na" = "missing data patterns",
-  "cor" = "correlation matrix",
-  "num" = "numeric variable distributions",
-  "cat" = "categorical variable frequencies",
-  "data visualization"
+plot_labels <- c(
+  types = "variable types",
+  mem   = "memory usage",
+  na    = "missing data patterns",
+  cor   = "correlation matrix",
+  imb   = "feature imbalance",
+  num   = "numeric distributions",
+  cat   = "categorical frequencies"
 )
+chosen <- intersect(params$plot_type, names(plot_labels))
+plot_description <- if (length(chosen) == 0) {
+  "data overview"
+} else {
+  paste(plot_labels[chosen], collapse = ", ")
+}
 ```
 
 The following visualization shows the **`r plot_description`** for the selected dataset(s).
 
 ```{r plots}
-#| fig-cap: !expr paste("Data visualization:", params$plot_type)
+#| fig-cap: !expr paste("Data visualization:", paste(params$plot_type, collapse = ", "))
 
 if (!is.null(params$plots)) {
   if (inherits(params$plots, "gg")) {

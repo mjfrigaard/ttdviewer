@@ -47,7 +47,7 @@ mod_report_desc_server <- function(id, format) {
 
     desc_inputs <- reactive({
       req(format())
-      quarto_status <- if (format()$format == "quarto") {
+      quarto_status <- if (format() == "quarto") {
         if (quarto_available()) {
           list(available = TRUE,  message = "Quarto is available and ready to use.")
         } else {
@@ -57,7 +57,7 @@ mod_report_desc_server <- function(id, format) {
         list(available = TRUE, message = "Quarto is available and ready to use.")
       }
 
-      description <- switch(format()$format,
+      description <- switch(format(),
         "rmarkdown" = list(
           icon  = "bi-file-earmark-code",
           title = "R Markdown",
@@ -72,7 +72,7 @@ mod_report_desc_server <- function(id, format) {
         )
       )
 
-      alert_class <- if (format()$format == "quarto" && !quarto_status$available) {
+      alert_class <- if (format() == "quarto" && !quarto_status$available) {
         "alert-warning"
       } else {
         "alert-light"

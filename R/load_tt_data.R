@@ -1,21 +1,21 @@
 ### \--- LOAD TIDY TUESDAY DATA --\ ----
 
-#' Load TidyTuesday datasets from GitHub by title
+#' Load TidyTuesday Datasets from GitHub by Title
 #'
-#' Filters an internal dataset `all_tt_combined` by `title`, and loads
-#' associated data files using appropriate methods depending on `data_type`.
-#' Supports functional error handling and logging.
+#' Filters the internal dataset `all_tt_combined` by `title` and loads the
+#' associated data files using a method appropriate for each `data_type`.
 #'
 #' @section Supported file types:
-#' * `"csv"` / `"csv.gz"` - `vroom::vroom()`
-#' * `"tsv"` - `vroom::vroom()`
-#' * `"xlsx"` - `readxl::read_excel()`
-#' * `"rds"` - `readRDS()` from a URL connection
+#' * `"csv"` / `"csv.gz"` - [vroom::vroom()]
+#' * `"tsv"` - [vroom::vroom()]
+#' * `"xlsx"` - [readxl::read_excel()]
+#' * `"rds"` - [readRDS()] via a URL connection
 #'
 #' @section Unsupported:
-#' * `"vgz"`, `"zip"`, or `NA` - skipped with error logging
+#' * `"vgz"`, `"zip"`, or `NA` — skipped with error logging
 #'
-#' @param title A character string matching the `title` field in `all_tt_combined`.
+#' @param title A character string matching the `title` field in
+#'   `all_tt_combined`.
 #'
 #' @return A named list of tibbles or data frames (one per file). Failed or
 #'   skipped datasets are excluded.
