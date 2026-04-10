@@ -1,10 +1,14 @@
 # Render R Markdown Report
 
-Render R Markdown Report
+Renders an R Markdown (`.Rmd`) template to the specified output file
+using
+[`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html).
 
 ## Usage
 
 ``` r
+render_rmarkdown_report(template_path, output_file, params)
+
 render_rmarkdown_report(template_path, output_file, params)
 ```
 
@@ -12,12 +16,16 @@ render_rmarkdown_report(template_path, output_file, params)
 
 - template_path:
 
-  Path to Rmd template
+  Path to the `.Rmd` template file.
 
 - output_file:
 
-  Output file path
+  Output file path.
 
 - params:
 
-  Report parameters
+  Named list of report parameters.
+
+## Value
+
+Called for its side-effect of writing `output_file`.

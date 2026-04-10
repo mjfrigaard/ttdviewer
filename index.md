@@ -85,12 +85,17 @@ flowchart TB
     ModPlot["mod_plot_*"]
     ModReport["mod_report_*"]
   end
+  Utilities --> Modules
+```
+
+``` mermaid
+%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
+flowchart TB
   subgraph Tests
     TestApp["test-app_*"]
     TestModules["test-mod_*"]
     TestUtils["test-load_tt_data / test-inspect_plot / test-render_report / test-logr_msg"]
   end
-  Utilities --> Modules
   Modules --> Tests
   Utilities --> Tests
 ```

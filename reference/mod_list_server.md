@@ -1,6 +1,6 @@
-# Table Server Module (listviewerlite)
+# List Server Module (listviewerlite)
 
-Table Server Module (listviewerlite)
+List Server Module (listviewerlite)
 
 ## Usage
 

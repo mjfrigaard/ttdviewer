@@ -25,7 +25,7 @@
 - [`extract_dataset_title()`](https://mjfrigaard.github.io/ttdviewer/reference/extract_dataset_title.md)
   : Extract and Clean Dataset Title
 - [`extract_file_names()`](https://mjfrigaard.github.io/ttdviewer/reference/extract_file_names.md)
-  : Extract file names from TidyTuesday data object
+  : Extract File Names from TidyTuesday Data Object
 - [`get_intersecting_cols()`](https://mjfrigaard.github.io/ttdviewer/reference/get_intersecting_cols.md)
   : Get Intersecting Column Names Between Two Datasets
 - [`get_tt_title_meta()`](https://mjfrigaard.github.io/ttdviewer/reference/get_tt_title_meta.md)
@@ -37,7 +37,7 @@
 - [`launch()`](https://mjfrigaard.github.io/ttdviewer/reference/launch.md)
   : Launch the Tidy Tuesday Explorer App
 - [`load_tt_data()`](https://mjfrigaard.github.io/ttdviewer/reference/load_tt_data.md)
-  : Load TidyTuesday datasets from GitHub by title
+  : Load TidyTuesday Datasets from GitHub by Title
 - [`logr_msg()`](https://mjfrigaard.github.io/ttdviewer/reference/logr_msg.md)
   : Log Messages to Console and File with Optional JSON Format
 - [`mod_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_server.md)
@@ -45,7 +45,7 @@
 - [`mod_input_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_ui.md)
   : Variable Input UI Module
 - [`mod_list_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_list_server.md)
-  : Table Server Module (listviewerlite)
+  : List Server Module (listviewerlite)
 - [`mod_list_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_list_ui.md)
   : List UI Module (listviewerlite)
 - [`mod_plot_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_plot_server.md)

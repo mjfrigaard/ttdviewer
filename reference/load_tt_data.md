@@ -1,8 +1,7 @@
-# Load TidyTuesday datasets from GitHub by title
+# Load TidyTuesday Datasets from GitHub by Title
 
-Filters an internal dataset `all_tt_combined` by `title`, and loads
-associated data files using appropriate methods depending on
-`data_type`. Supports functional error handling and logging.
+Filters the internal dataset `all_tt_combined` by `title` and loads the
+associated data files using a method appropriate for each `data_type`.
 
 ## Usage
 
@@ -21,43 +20,32 @@ load_tt_data(title)
 A named list of tibbles or data frames (one per file). Failed or skipped
 datasets are excluded.
 
-## Features
-
-- Automatically selects the correct reader (`csv`, `tsv`, `xlsx`, `rds`)
-
-- Logs messages using
-  [`logr_msg()`](https://mjfrigaard.github.io/ttdviewer/reference/logr_msg.md)
-
-- Adds a `clean_title` attribute to each dataset
-
-- Skips unsupported formats (`vgz`, `zip`, `NA`)
-
 ## Supported file types
 
-- `"csv"` / `"csv.gz"` →
+- `"csv"` / `"csv.gz"` -
   [`vroom::vroom()`](https://vroom.tidyverse.org/reference/vroom.html)
 
-- `"tsv"` →
+- `"tsv"` -
   [`vroom::vroom()`](https://vroom.tidyverse.org/reference/vroom.html)
 
-- `"xlsx"` →
+- `"xlsx"` -
   [`readxl::read_excel()`](https://readxl.tidyverse.org/reference/read_excel.html)
 
-- `"rds"` → [`readRDS()`](https://rdrr.io/r/base/readRDS.html) from a
-  URL connection
+- `"rds"` - [`readRDS()`](https://rdrr.io/r/base/readRDS.html) via a URL
+  connection
 
 ## Unsupported
 
-- `"vgz"`, `"zip"`, or `NA` → skipped with error logging
+- `"vgz"`, `"zip"`, or `NA` — skipped with error logging
 
 ## Examples
 
 ``` r
 load_tt_data("posit::conf talks")
-#> INFO [2026-02-03 21:19:50] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv
-#> SUCCESS [2026-02-03 21:19:50] Successfully loaded conf2023.csv
-#> INFO [2026-02-03 21:19:50] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv
-#> SUCCESS [2026-02-03 21:19:51] Successfully loaded conf2024.csv
+#> INFO [2026-04-10 16:29:41] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv
+#> SUCCESS [2026-04-10 16:29:41] Successfully loaded conf2023.csv
+#> INFO [2026-04-10 16:29:41] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv
+#> SUCCESS [2026-04-10 16:29:41] Successfully loaded conf2024.csv
 #> $conf2023.csv
 #> # A tibble: 116 × 9
 #>    speaker_name speaker_affiliation session_type session_title block_track_title

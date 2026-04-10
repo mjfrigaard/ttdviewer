@@ -1,6 +1,6 @@
 # Inspect Plot Module Server
 
-Renders one plot per (dataset × plot-type)
+Renders one plot per (dataset x plot-type)
 
 ## Usage
 

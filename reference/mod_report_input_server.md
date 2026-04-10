@@ -13,3 +13,8 @@ mod_report_input_server(id)
 - id:
 
   Module ID
+
+## Value
+
+A reactive returning the selected format string (`"rmarkdown"` or
+`"quarto"`).

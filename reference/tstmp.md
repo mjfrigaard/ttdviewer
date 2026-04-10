@@ -1,10 +1,12 @@
 # Timestamp
 
-Timestamp
+Returns the current system time formatted as `"YYYY-MM-DD-HH.MM.SS"`.
 
 ## Usage
 
 ``` r
+tstmp()
+
 tstmp()
 ```
 
@@ -12,11 +14,17 @@ tstmp()
 
 character string of date/time.
 
+A character string of the current date and time.
+
 ## Examples
 
 ``` r
 tstmp()
-#> [1] "2026-02-03-21.19.55"
+#> [1] "2026-04-10-16.29.45"
 cat(paste("Last updated:", tstmp()))
-#> Last updated: 2026-02-03-21.19.55
+#> Last updated: 2026-04-10-16.29.45
+tstmp()
+#> [1] "2026-04-10-16.29.45"
+cat(paste("Last updated:", tstmp()))
+#> Last updated: 2026-04-10-16.29.45
 ```

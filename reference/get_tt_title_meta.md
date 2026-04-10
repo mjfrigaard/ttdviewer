@@ -3,9 +3,14 @@
 Analyzes the column types across all datasets in a TidyTuesday data list
 and returns a `tibble` with column type information.
 
+Analyzes the column types across all datasets in a TidyTuesday data list
+and returns a `tibble` with column type information.
+
 ## Usage
 
 ``` r
+get_tt_title_meta(ttd)
+
 get_tt_title_meta(ttd)
 ```
 
@@ -22,6 +27,16 @@ A tibble with four columns:
 
 - `clean_title`: Clean title of data
 
+- `dataset`: Name of the dataset
+
+- `col`: Column name (`NA` if no columns of that type exist)
+
+- `col_type`: Type of column (numeric, logical, character, list)
+
+A tibble with four columns:
+
+- `clean_title`: Clean title of data
+
 - `col_type`: Type of column (numeric, logical, character, list)
 
 - `dataset`: Name of the dataset
@@ -32,19 +47,26 @@ A tibble with four columns:
 
 [`load_tt_data()`](https://mjfrigaard.github.io/ttdviewer/reference/load_tt_data.md)
 
+[`load_tt_data()`](https://mjfrigaard.github.io/ttdviewer/reference/load_tt_data.md)
+
 ## Examples
 
 ``` r
-ttd <- load_tt_data("Moore’s Law")
-#> INFO [2026-02-03 21:19:40] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
-#> SUCCESS [2026-02-03 21:19:40] Successfully loaded cpu.csv
-#> INFO [2026-02-03 21:19:40] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
-#> SUCCESS [2026-02-03 21:19:40] Successfully loaded gpu.csv
-#> INFO [2026-02-03 21:19:40] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
-#> SUCCESS [2026-02-03 21:19:40] Successfully loaded ram.csv
+ttd <- load_tt_data("Moore's Law")
+#> Error in load_tt_data("Moore's Law"): No entries found for title: 'Moore's Law'
 meta <- get_tt_title_meta(ttd)
-#> INFO [2026-02-03 21:19:40] Datasets in list: cpu.csv, gpu.csv, ram.csv
-#> INFO [2026-02-03 21:19:40] Created metadata tibble with 30 rows covering 3 datasets
+#> Error: object 'ttd' not found
+
+ttd <- load_tt_data("Moore’s Law")
+#> INFO [2026-04-10 16:29:32] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
+#> SUCCESS [2026-04-10 16:29:32] Successfully loaded cpu.csv
+#> INFO [2026-04-10 16:29:32] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
+#> SUCCESS [2026-04-10 16:29:32] Successfully loaded gpu.csv
+#> INFO [2026-04-10 16:29:32] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
+#> SUCCESS [2026-04-10 16:29:32] Successfully loaded ram.csv
+meta <- get_tt_title_meta(ttd)
+#> INFO [2026-04-10 16:29:32] Datasets in list: cpu.csv, gpu.csv, ram.csv
+#> INFO [2026-04-10 16:29:32] Created metadata tibble with 30 rows covering 3 datasets
 print(meta)
 #> # A tibble: 30 × 4
 #>    clean_title dataset col                  col_type 
