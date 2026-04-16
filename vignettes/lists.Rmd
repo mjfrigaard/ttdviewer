@@ -22,7 +22,6 @@ knitr::opts_chunk$set(
 #| warning: false
 library(ttdviewer)
 library(listviewerlite)
-library(lobstr)
 ```
 
 This vignette covers viewing list objects in the `ttdviewer` package.
@@ -42,6 +41,7 @@ ttd2 <- load_tt_data("Space Launches")
 
 ```{r}
 #| label: ctr
+#| eval: false
 ctr <- function(x = as.list(), depth = 10L, length = 50L) {
   lobstr::tree(x,
     max_depth = depth,

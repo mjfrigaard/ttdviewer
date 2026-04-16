@@ -33,7 +33,8 @@ rendering fails.
 }
 \seealso{
 \code{\link[=render_rmarkdown_report]{render_rmarkdown_report()}}, \code{\link[=render_quarto_report]{render_quarto_report()}},
-\code{\link[=validate_and_clean_params]{validate_and_clean_params()}}, \code{\link[=get_template_path]{get_template_path()}},
-\code{\link[=create_fallback_template]{create_fallback_template()}}, \code{\link[=create_error_report]{create_error_report()}}
+\code{\link[=validate_and_clean_params]{validate_and_clean_params()}}, \code{\link[=validate_quarto_params]{validate_quarto_params()}},
+\code{\link[=get_template_path]{get_template_path()}}, \code{\link[=create_fallback_template]{create_fallback_template()}},
+\code{\link[=create_error_report]{create_error_report()}}
 }
 \keyword{internal}

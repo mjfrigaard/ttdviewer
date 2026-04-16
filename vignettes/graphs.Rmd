@@ -750,6 +750,7 @@ If one dataset in `ttd`:
     - if so, run: 
 
 ```{r}
+#| eval: false
 inspectdf::inspect_cat(
   df1 = ttd[[1]],
   df2 = NULL,
@@ -760,7 +761,7 @@ inspectdf::inspect_cat(
 
 ```{r}
 inspect_plot(
-  ttd = list("netflix_titles.csv" = ttd[[1]]), 
+  ttd = list("netflix_titles.csv" = ttd[[1]]),
   plots = "cat")
 ```
 
@@ -789,6 +790,7 @@ intersecting_columns <- intersect(x = names(ttd2[[1]]), y = names(ttd2[[2]]))
   - Use `intersecting_columns` to subset each dataset in `ttd` list.
 
 ```{r}
+#| eval: false
 inspectdf::inspect_cat(
   df1 = ttd2[[1]][intersecting_columns],
   df2 = ttd2[[2]][intersecting_columns],
@@ -809,6 +811,7 @@ inspect_plot(
   - if there aren't any intersecting categorical columns, run the following on the dataset with the categorical column `ttd[[?]]`:
 
 ```{r}
+#| eval: false
 inspectdf::inspect_cat(
   df1 = ttd[[1]],
   df2 = NULL,
@@ -828,6 +831,7 @@ inspect_plot(
 If more than two datasets in `ttd`:
 
 ```{r}
+#| eval: false
 inspectdf::inspect_cat(
   df1 = ttd_many[[1]],
   df2 = NULL,

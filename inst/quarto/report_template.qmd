@@ -19,6 +19,7 @@ params:
   dataset_title: "Dataset"
   title: "TidyTuesday Report"
   data_list: !r list()
+  data_list_path: ""
   plots: !r NULL
   plot_type: "type"
 execute:
@@ -43,6 +44,16 @@ if (!is.null(params$dataset_title) && params$dataset_title != "") {
 } else {
   title_text <- "TidyTuesday Dataset"
 }
+
+# Load data_list from RDS path (Quarto) or directly from params (rmarkdown)
+data_list <- if (!is.null(params$data_list_path) && nzchar(params$data_list_path) &&
+                   file.exists(params$data_list_path)) {
+  readRDS(params$data_list_path)
+} else if (!is.null(params$data_list) && length(params$data_list) > 0) {
+  params$data_list
+} else {
+  list()
+}
 ```
 
 # `r title_text` {.unnumbered}
@@ -59,11 +70,11 @@ This report provides an overview of the **`r title_text`** dataset from TidyTues
 #| output: asis
 
 # Get basic info about the data
-if (!is.null(params$data_list) && length(params$data_list) > 0) {
-  first_df <- params$data_list[[1]]
-  dataset_names <- names(params$data_list)
+if (!is.null(data_list) && length(data_list) > 0) {
+  first_df <- data_list[[1]]
+  dataset_names <- names(data_list)
 
-  cat("**Number of datasets:**", length(params$data_list), "\n\n")
+  cat("**Number of datasets:**", length(data_list), "\n\n")
   cat("**Dataset names:**", paste(dataset_names, collapse = ", "), "\n\n")
   cat("**Main dataset dimensions:**", nrow(first_df), "rows ×", ncol(first_df), "columns\n\n")
 } else {
@@ -123,10 +134,10 @@ if (!is.null(params$plots)) {
 ```{r data-summary}
 #| output: asis
 
-if (!is.null(params$data_list) && length(params$data_list) > 0) {
-  for (i in seq_along(params$data_list)) {
-    dataset_name <- names(params$data_list)[i]
-    df <- params$data_list[[i]]
+if (!is.null(data_list) && length(data_list) > 0) {
+  for (i in seq_along(data_list)) {
+    dataset_name <- names(data_list)[i]
+    df <- data_list[[i]]
 
     cat("#### Dataset:", dataset_name, "\n\n")
 
@@ -188,10 +199,10 @@ if (!is.null(params$data_list) && length(params$data_list) > 0) {
 ```{r data-preview}
 #| output: asis
 
-if (!is.null(params$data_list) && length(params$data_list) > 0) {
-  for (i in seq_along(params$data_list)) {
-    dataset_name <- names(params$data_list)[i]
-    df <- params$data_list[[i]]
+if (!is.null(data_list) && length(data_list) > 0) {
+  for (i in seq_along(data_list)) {
+    dataset_name <- names(data_list)[i]
+    df <- data_list[[i]]
 
     cat("#### Sample Data:", dataset_name, "\n\n")
 
@@ -253,8 +264,8 @@ if (!is.null(params$data_list) && length(params$data_list) > 0) {
 ```{r variable-info}
 #| output: asis
 
-if (!is.null(params$data_list) && length(params$data_list) > 0) {
-  first_df <- params$data_list[[1]]
+if (!is.null(data_list) && length(data_list) > 0) {
+  first_df <- data_list[[1]]
 
   tryCatch(
     {
@@ -272,7 +283,7 @@ if (!is.null(params$data_list) && length(params$data_list) > 0) {
         gt() |>
         gt::tab_header(
           title = "Variable Information",
-          subtitle = names(params$data_list)[1]
+          subtitle = names(data_list)[1]
         ) |>
         gt::cols_label(
           Variable = "Variable Name",

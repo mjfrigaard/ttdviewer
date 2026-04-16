@@ -675,12 +675,24 @@ method as a fallback strategy (`render_quarto_system_call()`):
 ```{r}
 #| label: render_quarto_report
 render_quarto_report <- function(template_path, output_file, params) {
+  # data_list is written to a temp RDS file and replaced with data_list_path
+  # because quarto::quarto_render() calls check_params_for_na() on all
+  # execute_params, which rejects data frames containing NA values
+  data_list_path <- ""
+  if (!is.null(params$data_list) && length(params$data_list) > 0) {
+    data_list_path <- file.path(tempdir(), "data_list.rds")
+    saveRDS(params$data_list, data_list_path)
+  }
+  quarto_params <- params
+  quarto_params$data_list <- NULL
+  quarto_params$data_list_path <- data_list_path
+
   # method 1 using the quarto R package
   if (requireNamespace("quarto", quietly = TRUE)) {
     quarto::quarto_render(
       input = temp_qmd,
       output_file = basename(output_file),
-      execute_params = params,
+      execute_params = quarto_params,
       quiet = TRUE
     )
   } else {
@@ -690,7 +702,7 @@ render_quarto_report <- function(template_path, output_file, params) {
 }
 ```
 
-`render_quarto_report()` will render the report if the quarto R package is installed, and `render_quarto_system_call()` is called for command-line installations.
+`render_quarto_report()` will render the report if the quarto R package is installed, and `render_quarto_system_call()` is called for command-line installations. The `data_list` is always passed via an RDS file rather than directly through `execute_params` to avoid the `check_params_for_na()` validation that rejects data frames with `NA` values.
 
 #### Error Handling and Report
 
