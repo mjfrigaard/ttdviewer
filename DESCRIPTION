@@ -41,6 +41,7 @@ Suggests:
     tidytuesdayR,
     ttmeta
 Remotes:
+    alastairrushworth/inspectdf,
     long39ng/listviewerlite,
     r4ds/ttmeta
 VignetteBuilder:
