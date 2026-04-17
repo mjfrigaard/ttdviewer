@@ -37,14 +37,28 @@ jobs:
         with:
           version: 'release'
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          packages: |
-            deps::.
-            github::long39ng/listviewerlite
-            github::r4ds/ttmeta
-          extra-packages: any::sessioninfo, any::pkgdown
-          needs: website
+      - name: Install pak
+        run: Rscript -e "install.packages('pak', repos = sprintf('https://r-lib.github.io/p/pak/%s/%s/%s/%s', 'stable', .Platform\$pkgType, R.Version()\$os, R.Version()\$arch)); cat('pak', as.character(packageVersion('pak')), '\n')"
+        shell: bash
+
+      - name: Install R dependencies
+        run: |
+          Rscript -e "
+          Sys.setenv(PKGCACHE_HTTP_VERSION = '2')
+          cat('Creating lockfile...\n')
+          pak::lockfile_create(
+            c('deps::.', 'github::long39ng/listviewerlite', 'github::r4ds/ttmeta',
+              'any::sessioninfo', 'any::pkgdown'),
+            lockfile = '.github/pkg.lock',
+            upgrade = FALSE,
+            dependencies = c('Config/Needs/website', 'all'),
+            lib = NULL
+          )
+          cat('Installing from lockfile...\n')
+          pak::lockfile_install('.github/pkg.lock')
+          cat('Done!\n')
+          "
+        shell: bash
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = TRUE)
