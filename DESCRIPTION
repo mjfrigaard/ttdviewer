@@ -33,13 +33,16 @@ Imports:
     tools,
     vroom,
     yaml
-Suggests: 
+Suggests:
     crayon,
     lobstr,
     testthat (>= 3.0.0),
     tidyr,
     tidytuesdayR,
     ttmeta
+Remotes:
+    long39ng/listviewerlite,
+    r4ds/ttmeta
 VignetteBuilder:
     knitr
 Config/Needs/website: pkgdown

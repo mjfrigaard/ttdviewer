@@ -30,46 +30,21 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v2
         with:
-          use-public-rspm: false
+          use-public-rspm: true
 
       - name: Install Quarto CLI
         uses: quarto-dev/quarto-actions/setup@v2
         with:
           version: 'release'
-          # version: 1.4.515
 
-      - name: Install pak
-        run: |
-          Rscript -e "
-          cat('Platform pkgType:', .Platform\$pkgType, '\n')
-          cat('R.Version os:', R.Version()\$os, '\n')
-          cat('R.Version arch:', R.Version()\$arch, '\n')
-          pak_repo <- sprintf(
-            'https://r-lib.github.io/p/pak/%s/%s/%s/%s',
-            'stable', .Platform\$pkgType, R.Version()\$os, R.Version()\$arch
-          )
-          cat('Installing pak from:', pak_repo, '\n')
-          install.packages('pak', repos = pak_repo, quiet = FALSE)
-          cat('pak installed:', as.character(packageVersion('pak')), '\n')
-          "
-        shell: bash
-
-      - name: Install R dependencies
-        run: |
-          Rscript -e "
-          Sys.setenv(PKGCACHE_HTTP_VERSION = '2')
-          cat('pak version:', as.character(packageVersion('pak')), '\n')
-          pak::pak(
-            c('deps::.',
-              'github::long39ng/listviewerlite',
-              'github::r4ds/ttmeta',
-              'any::sessioninfo',
-              'any::pkgdown'),
-            upgrade = FALSE
-          )
-          sessioninfo::session_info(pkgs = 'installed', include_base = TRUE)
-          "
-        shell: bash
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            deps::.
+            github::long39ng/listviewerlite
+            github::r4ds/ttmeta
+          extra-packages: any::sessioninfo, any::pkgdown
+          needs: website
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = TRUE)
