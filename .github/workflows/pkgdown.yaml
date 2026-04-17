@@ -38,29 +38,39 @@ jobs:
           version: 'release'
           # version: 1.4.515
 
-      - name: Debug R environment
+      - name: Install pak
         run: |
-          R --version
-          Rscript -e "cat('R_LIBS_USER:', Sys.getenv('R_LIBS_USER'), '\n')"
-          Rscript -e "cat('R_LIBS_SITE:', Sys.getenv('R_LIBS_SITE'), '\n')"
-          Rscript -e "cat('R_LIB_FOR_PAK:', Sys.getenv('R_LIB_FOR_PAK'), '\n')"
-          Rscript -e "cat('RENV_PROJECT:', Sys.getenv('RENV_PROJECT'), '\n')"
-          Rscript -e "cat('.libPaths():', paste(.libPaths(), collapse='; '), '\n')"
-          Rscript -e "cat('.Platform$pkgType:', .Platform\$pkgType, '\n')"
-          Rscript -e "cat('R.Version()$os:', R.Version()\$os, '\n')"
-          Rscript -e "cat('R.Version()$arch:', R.Version()\$arch, '\n')"
-          ls -la renv/ || echo "no renv dir"
+          Rscript -e "
+          cat('Platform pkgType:', .Platform\$pkgType, '\n')
+          cat('R.Version os:', R.Version()\$os, '\n')
+          cat('R.Version arch:', R.Version()\$arch, '\n')
+          pak_repo <- sprintf(
+            'https://r-lib.github.io/p/pak/%s/%s/%s/%s',
+            'stable', .Platform\$pkgType, R.Version()\$os, R.Version()\$arch
+          )
+          cat('Installing pak from:', pak_repo, '\n')
+          install.packages('pak', repos = pak_repo, quiet = FALSE)
+          cat('pak installed:', as.character(packageVersion('pak')), '\n')
+          "
         shell: bash
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          pak-version: repo
-          packages: |
-            deps::.
-            github::long39ng/listviewerlite
-            github::r4ds/ttmeta
-          extra-packages: any::sessioninfo, any::pkgdown
-          needs: website
+      - name: Install R dependencies
+        run: |
+          Rscript -e "
+          Sys.setenv(PKGCACHE_HTTP_VERSION = '2')
+          cat('Installing R dependencies...\n')
+          pak::pak(
+            c('deps::.',
+              'github::long39ng/listviewerlite',
+              'github::r4ds/ttmeta',
+              'any::sessioninfo',
+              'any::pkgdown'),
+            upgrade = FALSE
+          )
+          cat('Dependencies installed.\n')
+          sessioninfo::session_info(pkgs = 'installed', include_base = TRUE)
+          "
+        shell: bash
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = TRUE)
