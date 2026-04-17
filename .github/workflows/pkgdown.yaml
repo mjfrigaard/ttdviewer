@@ -40,6 +40,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          pak-version: repo
           packages: |
             deps::.
             github::long39ng/listviewerlite
