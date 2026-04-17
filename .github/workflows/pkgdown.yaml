@@ -37,57 +37,10 @@ jobs:
         with:
           version: 'release'
 
-      - name: Install pak
-        run: Rscript -e "install.packages('pak', repos = sprintf('https://r-lib.github.io/p/pak/%s/%s/%s/%s', 'stable', .Platform\$pkgType, R.Version()\$os, R.Version()\$arch)); cat('pak', as.character(packageVersion('pak')), '\n')"
-        shell: bash
-
-      - name: Install R dependencies
-        id: rdeps
-        continue-on-error: true
-        run: |
-          Rscript -e "
-          Sys.setenv(PKGCACHE_HTTP_VERSION = '2')
-          cat('pak version:', as.character(packageVersion('pak')), '\n')
-          cat('R repos:\n')
-          print(getOption('repos'))
-          cat('Bioconductor option:', getOption('pkg.use_bioconductor'), '\n')
-          options(pkg.use_bioconductor = FALSE)
-          cat('Creating lockfile...\n')
-          result <- tryCatch(
-            pak::lockfile_create(
-              c('deps::.', 'github::long39ng/listviewerlite', 'github::r4ds/ttmeta',
-                'any::sessioninfo', 'any::pkgdown'),
-              lockfile = '.github/pkg.lock',
-              upgrade = FALSE,
-              dependencies = c('Config/Needs/website', 'all'),
-              lib = NULL
-            ),
-            error = function(e) {
-              msg <- paste('LOCKFILE_ERROR:', conditionMessage(e))
-              cat(msg, '\n')
-              cat(msg, file = Sys.getenv('GITHUB_OUTPUT'), append = TRUE, sep = '\n')
-              cat('rdeps_error=', gsub('\n', ' ', conditionMessage(e)),
-                  file = Sys.getenv('GITHUB_OUTPUT'), sep = '')
-              cat('\n', file = Sys.getenv('GITHUB_OUTPUT'), append = TRUE)
-              NULL
-            }
-          )
-          if (!is.null(result)) {
-            cat('Lockfile created, installing...\n')
-            pak::lockfile_install('.github/pkg.lock')
-            cat('Done!\n')
-          } else {
-            quit(status = 1)
-          }
-          "
-        shell: bash
-
-      - name: Show error if deps failed
-        if: steps.rdeps.outcome == 'failure'
-        run: |
-          echo "rdeps_error output: ${{ steps.rdeps.outputs.rdeps_error }}"
-          exit 1
-        shell: bash
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::sessioninfo, any::pkgdown
+          needs: website
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = TRUE)
