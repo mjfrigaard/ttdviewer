@@ -8,8 +8,6 @@ that could cause rendering issues.
 
 ``` r
 validate_and_clean_params(params)
-
-validate_and_clean_params(params)
 ```
 
 ## Arguments
@@ -19,7 +17,5 @@ validate_and_clean_params(params)
   Named list of report parameters.
 
 ## Value
-
-Cleaned and validated parameter list
 
 A cleaned and validated named list of parameters.

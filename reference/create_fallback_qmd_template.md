@@ -7,8 +7,6 @@ path. Used when the package-bundled template cannot be found.
 
 ``` r
 create_fallback_qmd_template()
-
-create_fallback_qmd_template()
 ```
 
 ## Value

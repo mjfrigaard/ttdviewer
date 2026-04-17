@@ -45,6 +45,7 @@ The path to the rendered (or error-fallback) file, invisibly.
 [`render_rmarkdown_report()`](https://mjfrigaard.github.io/ttdviewer/reference/render_rmarkdown_report.md),
 [`render_quarto_report()`](https://mjfrigaard.github.io/ttdviewer/reference/render_quarto_report.md),
 [`validate_and_clean_params()`](https://mjfrigaard.github.io/ttdviewer/reference/validate_and_clean_params.md),
+[`validate_quarto_params()`](https://mjfrigaard.github.io/ttdviewer/reference/validate_quarto_params.md),
 [`get_template_path()`](https://mjfrigaard.github.io/ttdviewer/reference/get_template_path.md),
 [`create_fallback_template()`](https://mjfrigaard.github.io/ttdviewer/reference/create_fallback_template.md),
 [`create_error_report()`](https://mjfrigaard.github.io/ttdviewer/reference/create_error_report.md)

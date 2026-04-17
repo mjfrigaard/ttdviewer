@@ -7,12 +7,8 @@ common installation locations.
 
 ``` r
 quarto_available()
-
-quarto_available()
 ```
 
 ## Value
 
 Logical `TRUE` if Quarto is available, `FALSE` otherwise.
-
-Logical indicating if Quarto is available

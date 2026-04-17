@@ -8,8 +8,6 @@ removes characters that would break YAML parsing.
 
 ``` r
 validate_quarto_params(params)
-
-validate_quarto_params(params)
 ```
 
 ## Arguments
@@ -19,7 +17,5 @@ validate_quarto_params(params)
   Named list of report parameters.
 
 ## Value
-
-Validated parameter list
 
 A validated named list of parameters.

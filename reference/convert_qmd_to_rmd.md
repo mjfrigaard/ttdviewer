@@ -8,8 +8,6 @@ divs, and the YAML header.
 
 ``` r
 convert_qmd_to_rmd(qmd_lines)
-
-convert_qmd_to_rmd(qmd_lines)
 ```
 
 ## Arguments

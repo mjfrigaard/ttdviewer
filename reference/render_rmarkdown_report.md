@@ -8,8 +8,6 @@ using
 
 ``` r
 render_rmarkdown_report(template_path, output_file, params)
-
-render_rmarkdown_report(template_path, output_file, params)
 ```
 
 ## Arguments

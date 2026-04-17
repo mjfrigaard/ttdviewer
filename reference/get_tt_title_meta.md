@@ -58,15 +58,15 @@ meta <- get_tt_title_meta(ttd)
 #> Error: object 'ttd' not found
 
 ttd <- load_tt_data("Moore’s Law")
-#> INFO [2026-04-10 16:29:32] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
-#> SUCCESS [2026-04-10 16:29:32] Successfully loaded cpu.csv
-#> INFO [2026-04-10 16:29:32] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
-#> SUCCESS [2026-04-10 16:29:32] Successfully loaded gpu.csv
-#> INFO [2026-04-10 16:29:32] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
-#> SUCCESS [2026-04-10 16:29:32] Successfully loaded ram.csv
+#> INFO [2026-04-17 18:57:41] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
+#> SUCCESS [2026-04-17 18:57:41] Successfully loaded cpu.csv
+#> INFO [2026-04-17 18:57:41] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
+#> SUCCESS [2026-04-17 18:57:41] Successfully loaded gpu.csv
+#> INFO [2026-04-17 18:57:41] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
+#> SUCCESS [2026-04-17 18:57:41] Successfully loaded ram.csv
 meta <- get_tt_title_meta(ttd)
-#> INFO [2026-04-10 16:29:32] Datasets in list: cpu.csv, gpu.csv, ram.csv
-#> INFO [2026-04-10 16:29:32] Created metadata tibble with 30 rows covering 3 datasets
+#> INFO [2026-04-17 18:57:41] Datasets in list: cpu.csv, gpu.csv, ram.csv
+#> INFO [2026-04-17 18:57:41] Created metadata tibble with 30 rows covering 3 datasets
 print(meta)
 #> # A tibble: 30 × 4
 #>    clean_title dataset col                  col_type 

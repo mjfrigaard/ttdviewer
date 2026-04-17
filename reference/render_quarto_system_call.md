@@ -8,19 +8,17 @@ template. Used when the `quarto` R package is not available.
 
 ``` r
 render_quarto_system_call(template_path, output_file, params)
-
-render_quarto_system_call(template_path, output_file, params)
 ```
 
 ## Arguments
 
 - template_path:
 
-  path to template
+  Path to the `.qmd` template file.
 
 - output_file:
 
-  report output
+  Output file path.
 
 - params:
 

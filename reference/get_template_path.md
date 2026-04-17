@@ -7,19 +7,15 @@ using [`system.file()`](https://rdrr.io/r/base/system.file.html).
 
 ``` r
 get_template_path(format)
-
-get_template_path(format)
 ```
 
 ## Arguments
 
 - format:
 
-  Report format ("rmarkdown" or "quarto")
+  Report format: `"rmarkdown"` or `"quarto"`.
 
 ## Value
 
 Character string path to the template file (empty string `""` if not
 found).
-
-Path to template file

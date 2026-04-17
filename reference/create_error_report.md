@@ -13,32 +13,26 @@ create_error_report(
   dataset_title = "Unknown",
   format = "rmarkdown"
 )
-
-create_error_report(
-  file,
-  error_msg,
-  dataset_title = "Unknown",
-  format = "rmarkdown"
-)
 ```
 
 ## Arguments
 
 - file:
 
-  Output file path
+  Output file path (`.html`).
 
 - error_msg:
 
-  Error message
+  Character string containing the error message.
 
 - dataset_title:
 
-  Dataset title
+  Dataset title shown in the error page. Defaults to `"Unknown"`.
 
 - format:
 
-  Report format
+  Report format (`"rmarkdown"` or `"quarto"`). Defaults to
+  `"rmarkdown"`.
 
 ## Value
 

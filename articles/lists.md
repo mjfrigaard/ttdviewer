@@ -3,7 +3,6 @@
 ``` r
 library(ttdviewer)
 library(listviewerlite)
-library(lobstr)
 ```
 
 This vignette covers viewing list objects in the `ttdviewer` package.
@@ -15,10 +14,10 @@ in `ttd2`:
 
 ``` r
 ttd2 <- load_tt_data("Space Launches")
-#> INFO [2026-04-10 16:31:02] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv
-#> SUCCESS [2026-04-10 16:31:02] Successfully loaded agencies.csv
-#> INFO [2026-04-10 16:31:02] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv
-#> SUCCESS [2026-04-10 16:31:02] Successfully loaded launches.csv
+#> INFO [2026-04-17 18:59:21] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv
+#> SUCCESS [2026-04-17 18:59:21] Successfully loaded agencies.csv
+#> INFO [2026-04-17 18:59:21] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv
+#> SUCCESS [2026-04-17 18:59:21] Successfully loaded launches.csv
 ```
 
 ### ctr()
@@ -171,12 +170,12 @@ in `ttd3`:
 
 ``` r
 ttd3 <- load_tt_data("Moore’s Law")
-#> INFO [2026-04-10 16:31:02] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
-#> SUCCESS [2026-04-10 16:31:02] Successfully loaded cpu.csv
-#> INFO [2026-04-10 16:31:02] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
-#> SUCCESS [2026-04-10 16:31:02] Successfully loaded gpu.csv
-#> INFO [2026-04-10 16:31:02] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
-#> SUCCESS [2026-04-10 16:31:02] Successfully loaded ram.csv
+#> INFO [2026-04-17 18:59:22] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
+#> SUCCESS [2026-04-17 18:59:22] Successfully loaded cpu.csv
+#> INFO [2026-04-17 18:59:22] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
+#> SUCCESS [2026-04-17 18:59:22] Successfully loaded gpu.csv
+#> INFO [2026-04-17 18:59:22] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
+#> SUCCESS [2026-04-17 18:59:22] Successfully loaded ram.csv
 ```
 
 ``` r
