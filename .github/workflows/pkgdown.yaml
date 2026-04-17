@@ -38,6 +38,20 @@ jobs:
           version: 'release'
           # version: 1.4.515
 
+      - name: Debug R environment
+        run: |
+          R --version
+          Rscript -e "cat('R_LIBS_USER:', Sys.getenv('R_LIBS_USER'), '\n')"
+          Rscript -e "cat('R_LIBS_SITE:', Sys.getenv('R_LIBS_SITE'), '\n')"
+          Rscript -e "cat('R_LIB_FOR_PAK:', Sys.getenv('R_LIB_FOR_PAK'), '\n')"
+          Rscript -e "cat('RENV_PROJECT:', Sys.getenv('RENV_PROJECT'), '\n')"
+          Rscript -e "cat('.libPaths():', paste(.libPaths(), collapse='; '), '\n')"
+          Rscript -e "cat('.Platform$pkgType:', .Platform\$pkgType, '\n')"
+          Rscript -e "cat('R.Version()$os:', R.Version()\$os, '\n')"
+          Rscript -e "cat('R.Version()$arch:', R.Version()\$arch, '\n')"
+          ls -la renv/ || echo "no renv dir"
+        shell: bash
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           pak-version: repo
