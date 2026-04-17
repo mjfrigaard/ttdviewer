@@ -54,40 +54,20 @@ jobs:
           "
         shell: bash
 
-      - name: Check pak and GITHUB_PAT
+      - name: Install R dependencies
         run: |
           Rscript -e "
+          Sys.setenv(PKGCACHE_HTTP_VERSION = '2')
           cat('pak version:', as.character(packageVersion('pak')), '\n')
-          cat('GITHUB_PAT set:', nzchar(Sys.getenv('GITHUB_PAT')), '\n')
-          cat('GITHUB_TOKEN set:', nzchar(Sys.getenv('GITHUB_TOKEN')), '\n')
-          cat('Repo status:\n')
-          tryCatch(pak::repo_status(), error = function(e) cat('repo_status error:', e\$message, '\n'))
-          "
-        shell: bash
-
-      - name: Install GitHub packages
-        run: |
-          Rscript -e "
-          Sys.setenv(PKGCACHE_HTTP_VERSION = '2')
-          cat('Installing github packages...\n')
-          tryCatch(
-            pak::pak(c('github::long39ng/listviewerlite', 'github::r4ds/ttmeta')),
-            error = function(e) { cat('ERROR:', e\$message, '\n'); quit(status = 1) }
+          pak::pak(
+            c('deps::.',
+              'github::long39ng/listviewerlite',
+              'github::r4ds/ttmeta',
+              'any::sessioninfo',
+              'any::pkgdown'),
+            upgrade = FALSE
           )
-          cat('GitHub packages done.\n')
-          "
-        shell: bash
-
-      - name: Install CRAN/local packages
-        run: |
-          Rscript -e "
-          Sys.setenv(PKGCACHE_HTTP_VERSION = '2')
-          cat('Installing CRAN/local packages...\n')
-          tryCatch(
-            pak::pak(c('deps::.', 'any::sessioninfo', 'any::pkgdown'), upgrade = FALSE),
-            error = function(e) { cat('ERROR:', e\$message, '\n'); quit(status = 1) }
-          )
-          cat('CRAN/local packages done.\n')
+          sessioninfo::session_info(pkgs = 'installed', include_base = TRUE)
           "
         shell: bash
 
