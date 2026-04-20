@@ -1,3 +1,21 @@
+### \--- INTERNAL FILE LOADERS --\ ----
+
+# Internal helpers exist as named functions in the ttdviewer namespace so that
+# tests can stub them with local_mocked_bindings().
+
+.load_xlsx <- function(url) {
+  tmp <- tempfile(fileext = ".xlsx")
+  on.exit(unlink(tmp), add = TRUE)
+  download.file(url, tmp, quiet = TRUE, mode = "wb")
+  readxl::read_excel(tmp)
+}
+
+.load_rds <- function(url) {
+  con <- url(url)
+  on.exit(close(con), add = TRUE)
+  readRDS(con)
+}
+
 ### \--- LOAD TIDY TUESDAY DATA --\ ----
 
 #' Load TidyTuesday Datasets from GitHub by Title
@@ -79,17 +97,8 @@ load_tt_data <- function(title) {
           "csv"    = vroom::vroom(url, delim = ",",  show_col_types = FALSE),
           "csv.gz" = vroom::vroom(url, delim = ",",  show_col_types = FALSE),
           "tsv"    = vroom::vroom(url, delim = "\t", show_col_types = FALSE),
-          "xlsx"   = {
-            tmp <- tempfile(fileext = ".xlsx")
-            on.exit(unlink(tmp), add = TRUE)
-            download.file(url, tmp, quiet = TRUE, mode = "wb")
-            readxl::read_excel(tmp)
-          },
-          "rds"    = {
-            con <- url(url)
-            on.exit(close(con), add = TRUE)
-            readRDS(con)
-          },
+          "xlsx"   = .load_xlsx(url),
+          "rds"    = .load_rds(url),
           stop(glue::glue("Unknown or unsupported file type: {effective_type}"))
         )
       })()
