@@ -79,7 +79,12 @@ load_tt_data <- function(title) {
           "csv"    = vroom::vroom(url, delim = ",",  show_col_types = FALSE),
           "csv.gz" = vroom::vroom(url, delim = ",",  show_col_types = FALSE),
           "tsv"    = vroom::vroom(url, delim = "\t", show_col_types = FALSE),
-          "xlsx"   = readxl::read_excel(url),
+          "xlsx"   = {
+            tmp <- tempfile(fileext = ".xlsx")
+            on.exit(unlink(tmp), add = TRUE)
+            download.file(url, tmp, quiet = TRUE, mode = "wb")
+            readxl::read_excel(tmp)
+          },
           "rds"    = {
             con <- url(url)
             on.exit(close(con), add = TRUE)

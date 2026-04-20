@@ -65,7 +65,7 @@ mod_plot_server <- function(id, ttd) {
       tryCatch({
         ds <- names(ttd_r())
         if (is.null(ds) || length(ds) == 0) {
-          ds <- seq_along(ttd_r()) %>% as.character()
+          ds <- as.character(seq_along(ttd_r()))
           logr_msg(message = "No names in ttd; using indices", level = "WARN")
         }
         updateSelectInput(
