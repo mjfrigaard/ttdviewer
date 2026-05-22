@@ -89,7 +89,7 @@ logging and integrates JSON logging using the `jsonlite` package.
 ``` r
 # log a simple informational message to the console
 logr_msg("Application started.")
-#> INFO [2026-04-17 18:57:51] Application started.
+#> INFO [2026-05-22 17:53:22] Application started.
 
 # log an error message to the console and a file in plain text format
 logr_msg(
@@ -97,7 +97,7 @@ logr_msg(
   level = "ERROR",
   log_file = "error_log.txt"
 )
-#> ERROR [2026-04-17 18:57:51] Failed to connect to the database.
+#> ERROR [2026-05-22 17:53:22] Failed to connect to the database.
 
 # log a success message in JSON format
 logr_msg(
@@ -106,12 +106,12 @@ logr_msg(
   log_file = "app_log.json",
   json = TRUE
 )
-#> SUCCESS [2026-04-17 18:57:51] User login successful.
+#> SUCCESS [2026-05-22 17:53:22] User login successful.
 
 # log a warning message to the console only
 logr_msg(
   message = "Low memory warning.",
   level = "WARN"
 )
-#> {"time":"2026-04-17 18:57:51","level":"WARN","ns":"ttdviewer","ans":"global","topenv":"ttdviewer","fn":"logr_msg","node":"runnervmrc6n4","arch":"x86_64","os_name":"Linux","os_release":"6.8.0-1044-azure","os_version":"#50~22.04.1-Ubuntu SMP Wed Dec  3 15:13:22 UTC 2025","pid":6708,"user":"runner","msg":"Low memory warning."}
+#> {"time":"2026-05-22 17:53:22","level":"WARN","ns":"ttdviewer","ans":"global","topenv":"ttdviewer","fn":"logr_msg","node":"runnervmyxb0g","arch":"x86_64","os_name":"Linux","os_release":"6.8.0-1052-azure","os_version":"#58~22.04.1-Ubuntu SMP Thu Mar 26 05:02:21 UTC 2026","pid":6595,"user":"runner","msg":"Low memory warning."}
 ```

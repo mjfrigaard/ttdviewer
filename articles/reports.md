@@ -1,6 +1,7 @@
 # Reports
 
 ``` r
+
 library(dplyr)
 library(tidyr)
 library(inspectdf)
@@ -50,6 +51,7 @@ available format selections: `"R Markdown" = "rmarkdown"` and
 `"Quarto" = "quarto"`.
 
 ``` r
+
 selectInput(
   inputId = ns("format"),
   label = strong("Download Report:"),
@@ -71,6 +73,7 @@ compatibility.
 The server demonstrates a simple, clean reactive pattern:
 
 ``` r
+
 mod_report_input_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     return(
@@ -104,6 +107,7 @@ comprehensive logging.
 The description module uses complete dynamic UI generation:
 
 ``` r
+
 mod_report_desc_ui <- function(id) {
   ns <- NS(id)
   tagList(
@@ -122,6 +126,7 @@ The server function contains logic for quarto system detection and
 adaptive messaging.
 
 ``` r
+
 desc_inputs <- reactive({
   req(format())
   # System capability detection
@@ -147,6 +152,7 @@ After `quarto_status` is determined by the
 function, the value is stored as `available` with a `message`:
 
 ``` r
+
 quarto_status <- if (format()$format == "quarto") {
   if (quarto_available()) {
     list(
@@ -174,6 +180,7 @@ bootstrap `icon` for visual identification, `title`, informative
 reflect system state.
 
 ``` r
+
 description <- switch(format()$format,
   "rmarkdown" = list(
     icon = "bi-file-earmark-code",
@@ -195,6 +202,7 @@ styling, layout, and typography. The `bindEvent()` provides event-driven
 updates for optimal performance.
 
 ``` r
+
 observe({
   output$desc <- renderUI({
     tags$div(
@@ -238,6 +246,7 @@ custom `div()` classes, and informative help text describing report
 contents:
 
 ``` r
+
 mod_report_download_ui <- function(id) {
   ns <- NS(id)
   tagList(
@@ -279,6 +288,7 @@ so we just need to make an adjustment to the
 so it returns the selected `input$dataset` and `input$plots`:
 
 ``` r
+
     return(
       reactive({
         list(
@@ -308,6 +318,7 @@ download UI function (`downloadButton()` or `downloadLink()`). Every
   error conditions.
 
 ``` r
+
 filename = function() {
   tryCatch({
     current_data <- data()
@@ -343,6 +354,7 @@ filename = function() {
   `data_list`, `plots`, and `plot_type`:
 
 ``` r
+
 content = function(file) {
   tryCatch({
     # data validation
@@ -439,6 +451,7 @@ The core rendering function coordinates multiple rendering strategies:
     [`render_quarto_report()`](https://mjfrigaard.github.io/ttdviewer/reference/render_quarto_report.md))
 
 ``` r
+
 render_report <- function(format = c("rmarkdown", "quarto"), output_file, params = list(), template_path = NULL) {
   format <- match.arg(format)
   
@@ -472,6 +485,7 @@ which creates a clean environment for rendering and adds any required
 libraries:
 
 ``` r
+
 render_rmarkdown_report <- function(template_path, output_file, params) {
   
   logr_msg(
@@ -516,6 +530,7 @@ and has a second method as a fallback strategy
 ([`render_quarto_system_call()`](https://mjfrigaard.github.io/ttdviewer/reference/render_quarto_system_call.md)):
 
 ``` r
+
 render_quarto_report <- function(template_path, output_file, params) {
   # data_list is written to a temp RDS file and replaced with data_list_path
   # because quarto::quarto_render() calls check_params_for_na() on all
@@ -558,6 +573,7 @@ If the rendering functions attempts fail, the system generates an
 comprehensive error report:
 
 ``` r
+
 create_error_report <- function(file, error_msg, dataset_title = "Unknown", format = "rmarkdown") {
   error_html <- paste0(
     '<!DOCTYPE html>
@@ -597,6 +613,7 @@ The system includes automatic template generation when templates are
 missing:
 
 ``` r
+
 create_fallback_template <- function(format = c("rmarkdown", "quarto")) {
   format <- match.arg(format)
   
@@ -620,6 +637,7 @@ and
 below:
 
 ``` r
+
 # in app_ui()
 bslib::sidebar(
   mod_input_ui("input"),
@@ -658,6 +676,7 @@ The
 function return the specified
 
 ``` r
+
 identical(
   # response from function
   x = get_template_path("rmarkdown"),
@@ -669,6 +688,7 @@ identical(
 ```
 
 ``` r
+
 identical(
   # response from function
   x = get_template_path("quarto"),
@@ -680,11 +700,13 @@ identical(
 ```
 
 ``` r
+
 rmd_temp <- create_fallback_template(format = "rmarkdown")
 basename(rmd_temp)
 ```
 
 ``` r
+
 qmd_temp <- create_fallback_template(format = "quarto")
 basename(qmd_temp)
 ```
@@ -696,6 +718,7 @@ The
 function implements comprehensive system detection:
 
 ``` r
+
 quarto_available <- function() {
   # 1. Check for quarto R package
   if (requireNamespace("quarto", quietly = TRUE)) {

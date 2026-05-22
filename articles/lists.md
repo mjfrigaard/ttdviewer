@@ -1,6 +1,7 @@
 # Lists
 
 ``` r
+
 library(ttdviewer)
 library(listviewerlite)
 ```
@@ -13,11 +14,12 @@ Below we’ll define a list with two `#TidyTuesday` datasets and store it
 in `ttd2`:
 
 ``` r
+
 ttd2 <- load_tt_data("Space Launches")
-#> INFO [2026-04-17 18:59:21] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv
-#> SUCCESS [2026-04-17 18:59:21] Successfully loaded agencies.csv
-#> INFO [2026-04-17 18:59:21] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv
-#> SUCCESS [2026-04-17 18:59:21] Successfully loaded launches.csv
+#> INFO [2026-05-22 17:54:50] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv
+#> SUCCESS [2026-05-22 17:54:50] Successfully loaded agencies.csv
+#> INFO [2026-05-22 17:54:50] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv
+#> SUCCESS [2026-05-22 17:54:50] Successfully loaded launches.csv
 ```
 
 ### ctr()
@@ -27,6 +29,7 @@ custom folder tree function made with
 [`lobstr::tree()`](https://lobstr.r-lib.org/reference/tree.html):
 
 ``` r
+
 ctr <- function(x = as.list(), depth = 10L, length = 50L) {
   lobstr::tree(x,
     max_depth = depth,
@@ -42,6 +45,7 @@ ctr <- function(x = as.list(), depth = 10L, length = 50L) {
 ```
 
 ``` r
+
 ctr(x = ttd2)
 ```
 
@@ -88,6 +92,7 @@ The
 from `listviewerlite` provides an HTML collapsible object:
 
 ``` r
+
 listviewerlite::listview(x = ttd2)
 ```
 
@@ -169,16 +174,18 @@ Below we create a list with three `#TidyTuesday` datasets and store it
 in `ttd3`:
 
 ``` r
+
 ttd3 <- load_tt_data("Moore’s Law")
-#> INFO [2026-04-17 18:59:22] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
-#> SUCCESS [2026-04-17 18:59:22] Successfully loaded cpu.csv
-#> INFO [2026-04-17 18:59:22] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
-#> SUCCESS [2026-04-17 18:59:22] Successfully loaded gpu.csv
-#> INFO [2026-04-17 18:59:22] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
-#> SUCCESS [2026-04-17 18:59:22] Successfully loaded ram.csv
+#> INFO [2026-05-22 17:54:50] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
+#> SUCCESS [2026-05-22 17:54:50] Successfully loaded cpu.csv
+#> INFO [2026-05-22 17:54:50] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
+#> SUCCESS [2026-05-22 17:54:50] Successfully loaded gpu.csv
+#> INFO [2026-05-22 17:54:50] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
+#> SUCCESS [2026-05-22 17:54:51] Successfully loaded ram.csv
 ```
 
 ``` r
+
 ctr(x = ttd3)
 ```
 
@@ -214,6 +221,7 @@ ctr(x = ttd3)
 ```
 
 ``` r
+
 listviewerlite::listview(ttd3)
 ```
 

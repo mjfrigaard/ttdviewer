@@ -1,6 +1,7 @@
 # Graphs
 
 ``` r
+
 library(ttdviewer)
 library(inspectdf)
 library(dplyr)
@@ -22,18 +23,19 @@ function to collect four lists of data from the
 `"Netflix Titles"` has a single dataset:
 
 ``` r
+
 ttd <- load_tt_data("Netflix Titles")
-#> INFO [2026-04-17 18:58:22] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv
-#> SUCCESS [2026-04-17 18:58:22] Successfully loaded netflix_titles.csv
+#> INFO [2026-05-22 17:53:49] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv
+#> SUCCESS [2026-05-22 17:53:50] Successfully loaded netflix_titles.csv
 purrr::map(.x = ttd, .f = attr, "clean_title")
 #> $netflix_titles.csv
 #> [1] "netflix_titles"
 # for a list with two datasets, we'll use the `"Space Launches"` data
 ttd2 <- load_tt_data("Space Launches")
-#> INFO [2026-04-17 18:58:22] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv
-#> SUCCESS [2026-04-17 18:58:22] Successfully loaded agencies.csv
-#> INFO [2026-04-17 18:58:22] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv
-#> SUCCESS [2026-04-17 18:58:22] Successfully loaded launches.csv
+#> INFO [2026-05-22 17:53:50] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv
+#> SUCCESS [2026-05-22 17:53:50] Successfully loaded agencies.csv
+#> INFO [2026-05-22 17:53:50] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv
+#> SUCCESS [2026-05-22 17:53:50] Successfully loaded launches.csv
 purrr::map(.x = ttd2, .f = attr, "clean_title")
 #> $agencies.csv
 #> [1] "space_launches"
@@ -42,12 +44,12 @@ purrr::map(.x = ttd2, .f = attr, "clean_title")
 #> [1] "space_launches"
 # "Moore's Law" contains three datasets
 ttd3 <- load_tt_data("Moore’s Law")
-#> INFO [2026-04-17 18:58:22] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
-#> SUCCESS [2026-04-17 18:58:22] Successfully loaded cpu.csv
-#> INFO [2026-04-17 18:58:22] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
-#> SUCCESS [2026-04-17 18:58:22] Successfully loaded gpu.csv
-#> INFO [2026-04-17 18:58:22] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
-#> SUCCESS [2026-04-17 18:58:22] Successfully loaded ram.csv
+#> INFO [2026-05-22 17:53:50] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
+#> SUCCESS [2026-05-22 17:53:50] Successfully loaded cpu.csv
+#> INFO [2026-05-22 17:53:50] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
+#> SUCCESS [2026-05-22 17:53:50] Successfully loaded gpu.csv
+#> INFO [2026-05-22 17:53:50] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
+#> SUCCESS [2026-05-22 17:53:50] Successfully loaded ram.csv
 purrr::map(.x = ttd3, .f = attr, "clean_title")
 #> $cpu.csv
 #> [1] "moores_law"
@@ -60,30 +62,30 @@ purrr::map(.x = ttd3, .f = attr, "clean_title")
 # finally, we'll download the "LEGO database" data with 12 datasets into the
 # ttd_many list:
 ttd_many <- load_tt_data("LEGO database")
-#> INFO [2026-04-17 18:58:22] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz
-#> SUCCESS [2026-04-17 18:58:22] Successfully loaded colors.csv.gz
-#> INFO [2026-04-17 18:58:22] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz
-#> SUCCESS [2026-04-17 18:58:22] Successfully loaded elements.csv.gz
-#> INFO [2026-04-17 18:58:22] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz
-#> SUCCESS [2026-04-17 18:58:22] Successfully loaded inventories.csv.gz
-#> INFO [2026-04-17 18:58:22] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz
-#> SUCCESS [2026-04-17 18:58:22] Successfully loaded inventory_minifigs.csv.gz
-#> INFO [2026-04-17 18:58:22] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz
-#> SUCCESS [2026-04-17 18:58:23] Successfully loaded inventory_parts.csv.gz
-#> INFO [2026-04-17 18:58:23] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz
-#> SUCCESS [2026-04-17 18:58:23] Successfully loaded inventory_sets.csv.gz
-#> INFO [2026-04-17 18:58:23] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz
-#> SUCCESS [2026-04-17 18:58:23] Successfully loaded minifigs.csv.gz
-#> INFO [2026-04-17 18:58:23] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz
-#> SUCCESS [2026-04-17 18:58:23] Successfully loaded part_categories.csv.gz
-#> INFO [2026-04-17 18:58:23] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz
-#> SUCCESS [2026-04-17 18:58:23] Successfully loaded part_relationships.csv.gz
-#> INFO [2026-04-17 18:58:23] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz
-#> SUCCESS [2026-04-17 18:58:23] Successfully loaded parts.csv.gz
-#> INFO [2026-04-17 18:58:23] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz
-#> SUCCESS [2026-04-17 18:58:23] Successfully loaded sets.csv.gz
-#> INFO [2026-04-17 18:58:23] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz
-#> SUCCESS [2026-04-17 18:58:23] Successfully loaded themes.csv.gz
+#> INFO [2026-05-22 17:53:50] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz
+#> SUCCESS [2026-05-22 17:53:50] Successfully loaded colors.csv.gz
+#> INFO [2026-05-22 17:53:50] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz
+#> SUCCESS [2026-05-22 17:53:50] Successfully loaded elements.csv.gz
+#> INFO [2026-05-22 17:53:50] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz
+#> SUCCESS [2026-05-22 17:53:50] Successfully loaded inventories.csv.gz
+#> INFO [2026-05-22 17:53:50] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz
+#> SUCCESS [2026-05-22 17:53:50] Successfully loaded inventory_minifigs.csv.gz
+#> INFO [2026-05-22 17:53:50] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz
+#> SUCCESS [2026-05-22 17:53:51] Successfully loaded inventory_parts.csv.gz
+#> INFO [2026-05-22 17:53:51] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz
+#> SUCCESS [2026-05-22 17:53:51] Successfully loaded inventory_sets.csv.gz
+#> INFO [2026-05-22 17:53:51] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz
+#> SUCCESS [2026-05-22 17:53:51] Successfully loaded minifigs.csv.gz
+#> INFO [2026-05-22 17:53:51] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz
+#> SUCCESS [2026-05-22 17:53:51] Successfully loaded part_categories.csv.gz
+#> INFO [2026-05-22 17:53:51] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz
+#> SUCCESS [2026-05-22 17:53:51] Successfully loaded part_relationships.csv.gz
+#> INFO [2026-05-22 17:53:51] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz
+#> SUCCESS [2026-05-22 17:53:51] Successfully loaded parts.csv.gz
+#> INFO [2026-05-22 17:53:51] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz
+#> SUCCESS [2026-05-22 17:53:51] Successfully loaded sets.csv.gz
+#> INFO [2026-05-22 17:53:51] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz
+#> SUCCESS [2026-05-22 17:53:51] Successfully loaded themes.csv.gz
 purrr::map(.x = ttd_many, .f = attr, "clean_title")
 #> $colors.csv.gz
 #> [1] "lego_database"
@@ -134,6 +136,7 @@ Check the length of the `ttd3` list with
 [`ttd_length()`](https://mjfrigaard.github.io/ttdviewer/reference/ttd_length.md):
 
 ``` r
+
 ttd_length(ttd = ttd3)
 #> [1] 3
 ```
@@ -143,6 +146,7 @@ ttd_length(ttd = ttd3)
 Check if datasets have numerical columns:
 
 ``` r
+
 check_ttd_num_cols(ttd = ttd3)
 #> $cpu.csv
 #> [1] "transistor_count"     "date_of_introduction" "process"             
@@ -164,6 +168,7 @@ check_ttd_num_cols(ttd = ttd3)
 Check if datasets have categorical (character) columns:
 
 ``` r
+
 check_ttd_cat_cols(ttd3)
 #> $cpu.csv
 #> [1] "processor" "designer" 
@@ -181,6 +186,7 @@ check_ttd_cat_cols(ttd3)
 Check list columns:
 
 ``` r
+
 check_ttd_list_cols(ttd3)
 #> $cpu.csv
 #> [1] 0
@@ -197,6 +203,7 @@ check_ttd_list_cols(ttd3)
 Check logical columns:
 
 ``` r
+
 check_ttd_log_cols(ttd3)
 #> $cpu.csv
 #> [1] 0
@@ -213,6 +220,7 @@ check_ttd_log_cols(ttd3)
 Check date columns:
 
 ``` r
+
 check_ttd_date_cols(ttd3)
 #> $cpu.csv
 #> [1] 0
@@ -231,6 +239,7 @@ These are wrapped in the
 function:
 
 ``` r
+
 identical( # check the
   x = length(check_col_types(ttd = ttd3, type = "cat")),
   y = length(check_ttd_cat_cols(ttd3))
@@ -239,6 +248,7 @@ identical( # check the
 ```
 
 ``` r
+
 identical(
   x = length(check_col_types(ttd = ttd3, type = "date")),
   y = length(check_ttd_date_cols(ttd3))
@@ -247,6 +257,7 @@ identical(
 ```
 
 ``` r
+
 identical(
   x = length(check_col_types(ttd = ttd3, type = "log")),
   y = length(check_ttd_log_cols(ttd3))
@@ -255,6 +266,7 @@ identical(
 ```
 
 ``` r
+
 identical(
   x = length(check_col_types(ttd = ttd3, type = "num")),
   y = length(check_ttd_num_cols(ttd3))
@@ -298,6 +310,7 @@ function and have it adhere to the following rules:
 If one dataset in `ttd`:
 
 ``` r
+
 inspectdf::inspect_types(
   df1 = ttd2[[1]],
   df2 = NULL
@@ -308,17 +321,18 @@ inspectdf::inspect_types(
 ![](graphs_files/figure-html/unnamed-chunk-1-1.png)
 
 ``` r
+
 inspect_plot(ttd = 
     list("agencies.csv" = ttd2[[1]]), 
   plots = "types")
-#> INFO [2026-04-17 18:58:24] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:24] Beginning plot type 'types'
+#> INFO [2026-05-22 17:53:53] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:53:53] Beginning plot type 'types'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-2-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:25] Completed plot type 'types'
-    #> SUCCESS [2026-04-17 18:58:25] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:53:53] Completed plot type 'types'
+    #> SUCCESS [2026-05-22 17:53:53] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -330,6 +344,7 @@ If two datasets in `ttd`:
 - if columns intersect, store column names as `intersecting_columns`
 
 ``` r
+
 if (length(intersect(names(ttd2[[1]]), names(ttd2[[2]]))) > 0) {
   intersecting_columns <- intersect(
   x = names(ttd2[[1]]), 
@@ -343,6 +358,7 @@ if (length(intersect(names(ttd2[[1]]), names(ttd2[[2]]))) > 0) {
   function:
 
 ``` r
+
 inspectdf::inspect_types(
   df1 = ttd2[[1]][intersecting_columns],
   df2 = ttd2[[2]][intersecting_columns],
@@ -365,6 +381,7 @@ inspectdf::inspect_types(
 If more than two datasets in `ttd`:
 
 ``` r
+
 inspectdf::inspect_types(
   df1 = ttd3[[1]],
   df2 = NULL
@@ -375,21 +392,23 @@ inspectdf::inspect_types(
 ![](graphs_files/figure-html/unnamed-chunk-5-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("cpu.csv" = ttd3[[1]]),
   plots = "types"
   )
-#> INFO [2026-04-17 18:58:28] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:28] Beginning plot type 'types'
+#> INFO [2026-05-22 17:53:56] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:53:56] Beginning plot type 'types'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-6-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:28] Completed plot type 'types'
-    #> SUCCESS [2026-04-17 18:58:28] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:53:57] Completed plot type 'types'
+    #> SUCCESS [2026-05-22 17:53:57] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
+
 inspectdf::inspect_types(
   df1 = ttd3[[2]],
   df2 = NULL
@@ -400,21 +419,23 @@ inspectdf::inspect_types(
 ![](graphs_files/figure-html/unnamed-chunk-7-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("gpu.csv" = ttd3[[2]]), 
   plots = "types"
   )
-#> INFO [2026-04-17 18:58:31] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:31] Beginning plot type 'types'
+#> INFO [2026-05-22 17:53:59] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:53:59] Beginning plot type 'types'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-8-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:31] Completed plot type 'types'
-    #> SUCCESS [2026-04-17 18:58:31] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:53:59] Completed plot type 'types'
+    #> SUCCESS [2026-05-22 17:53:59] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
+
 inspectdf::inspect_types(
   df1 = ttd3[[3]],
   df2 = NULL
@@ -425,18 +446,19 @@ inspectdf::inspect_types(
 ![](graphs_files/figure-html/unnamed-chunk-9-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("ram.csv" = ttd3[[3]]), 
   plots = "types"
   )
-#> INFO [2026-04-17 18:58:33] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:33] Beginning plot type 'types'
+#> INFO [2026-05-22 17:54:01] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:01] Beginning plot type 'types'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-10-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:33] Completed plot type 'types'
-    #> SUCCESS [2026-04-17 18:58:33] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:01] Completed plot type 'types'
+    #> SUCCESS [2026-05-22 17:54:01] inspect_plot(): all requested plots finished
     #> NULL
 
 ### inspect_mem()
@@ -446,6 +468,7 @@ inspect_plot(
 If one dataset in `ttd`:
 
 ``` r
+
 inspectdf::inspect_mem(
   df1 = ttd[[1]],
   df2 = NULL) |>
@@ -455,18 +478,19 @@ inspectdf::inspect_mem(
 ![](graphs_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("netflix_titles.csv" = ttd[[1]]), 
   plots = "mem"
   )
-#> INFO [2026-04-17 18:58:35] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:35] Beginning plot type 'mem'
+#> INFO [2026-05-22 17:54:03] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:03] Beginning plot type 'mem'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-12-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:35] Completed plot type 'mem'
-    #> SUCCESS [2026-04-17 18:58:35] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:04] Completed plot type 'mem'
+    #> SUCCESS [2026-05-22 17:54:04] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -474,6 +498,7 @@ inspect_plot(
 If two datasets in `ttd`:
 
 ``` r
+
 inspectdf::inspect_mem(
   df1 = ttd2[[1]], 
   df2 = ttd2[[2]]) |>
@@ -483,20 +508,21 @@ inspectdf::inspect_mem(
 ![](graphs_files/figure-html/unnamed-chunk-13-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list(
     "agencies.csv" = ttd2[[1]],
     "launches.csv" = ttd2[[2]]
     ), 
   plots = "mem")
-#> INFO [2026-04-17 18:58:38] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:38] Beginning plot type 'mem'
+#> INFO [2026-05-22 17:54:06] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:06] Beginning plot type 'mem'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-14-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:38] Completed plot type 'mem'
-    #> SUCCESS [2026-04-17 18:58:38] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:06] Completed plot type 'mem'
+    #> SUCCESS [2026-05-22 17:54:06] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) >= 3)`
@@ -504,6 +530,7 @@ inspect_plot(
 If more than two datasets in `ttd`:
 
 ``` r
+
 inspectdf::inspect_mem(
   df1 = ttd3[[1]],
   df2 = NULL
@@ -514,21 +541,23 @@ inspectdf::inspect_mem(
 ![](graphs_files/figure-html/unnamed-chunk-15-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("cpu.csv" = ttd3[[1]]), 
   plots = "mem"
   )
-#> INFO [2026-04-17 18:58:40] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:40] Beginning plot type 'mem'
+#> INFO [2026-05-22 17:54:08] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:08] Beginning plot type 'mem'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-16-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:40] Completed plot type 'mem'
-    #> SUCCESS [2026-04-17 18:58:40] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:08] Completed plot type 'mem'
+    #> SUCCESS [2026-05-22 17:54:08] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
+
 inspectdf::inspect_mem(
   df1 = ttd3[[2]],
   df2 = NULL
@@ -539,21 +568,23 @@ inspectdf::inspect_mem(
 ![](graphs_files/figure-html/unnamed-chunk-17-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("gpu.csv" = ttd3[[2]]), 
   plots = "mem"
   )
-#> INFO [2026-04-17 18:58:42] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:42] Beginning plot type 'mem'
+#> INFO [2026-05-22 17:54:10] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:10] Beginning plot type 'mem'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-18-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:42] Completed plot type 'mem'
-    #> SUCCESS [2026-04-17 18:58:42] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:10] Completed plot type 'mem'
+    #> SUCCESS [2026-05-22 17:54:10] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
+
 inspectdf::inspect_mem(
   df1 = ttd3[[3]],
   df2 = NULL
@@ -564,22 +595,24 @@ inspectdf::inspect_mem(
 ![](graphs_files/figure-html/unnamed-chunk-19-1.png)
 
 ``` r
+
 # ... for all datasets in ttd list
 ```
 
 ``` r
+
 inspect_plot(
   ttd = list("ram.csv" = ttd3[[3]]), 
   plots = "mem"
   )
-#> INFO [2026-04-17 18:58:44] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:44] Beginning plot type 'mem'
+#> INFO [2026-05-22 17:54:12] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:12] Beginning plot type 'mem'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-20-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:44] Completed plot type 'mem'
-    #> SUCCESS [2026-04-17 18:58:44] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:12] Completed plot type 'mem'
+    #> SUCCESS [2026-05-22 17:54:12] inspect_plot(): all requested plots finished
     #> NULL
 
 ### inspect_cor()
@@ -593,6 +626,7 @@ If one dataset in `ttd`:
   - Plot the dataset with at least two numeric columns
 
 ``` r
+
 if (ttd_length(ttd2) == 2) { # check for two datasets
   # check for two numerical columns in ttd[[1]]
   if (length(check_ttd_num_cols(ttd = ttd2)[[1]]) == 2) {
@@ -625,20 +659,21 @@ if (ttd_length(ttd2) == 2) { # check for two datasets
 ![](graphs_files/figure-html/unnamed-chunk-21-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list(
     "launches.csv" = ttd2[[2]]
     ), 
   plots = "cor"
   )
-#> INFO [2026-04-17 18:58:46] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:46] Beginning plot type 'cor'
+#> INFO [2026-05-22 17:54:14] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:14] Beginning plot type 'cor'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-22-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:46] Completed plot type 'cor'
-    #> SUCCESS [2026-04-17 18:58:46] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:14] Completed plot type 'cor'
+    #> SUCCESS [2026-05-22 17:54:14] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -649,6 +684,7 @@ If two datasets in `ttd`:
   `ttd` list
 
 ``` r
+
 check_col_types(ttd2, type = "num")
 #> $agencies.csv
 #> [1] "count"
@@ -658,6 +694,7 @@ check_col_types(ttd2, type = "num")
 ```
 
 ``` r
+
 check_col_types(ttd3, type = "num")
 #> $cpu.csv
 #> [1] "transistor_count"     "date_of_introduction" "process"             
@@ -677,6 +714,7 @@ check_col_types(ttd3, type = "num")
   at least one numerical column is in each dataset:
 
 ``` r
+
 inspectdf::inspect_cor(
   df1 = ttd3[[1]],
   df2 = ttd3[[2]],
@@ -690,6 +728,7 @@ inspectdf::inspect_cor(
 ![](graphs_files/figure-html/unnamed-chunk-25-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list(
     "cpu.csv" = ttd3[[1]],
@@ -697,14 +736,14 @@ inspect_plot(
   ), 
   plots = "cor"
   )
-#> INFO [2026-04-17 18:58:48] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:48] Beginning plot type 'cor'
+#> INFO [2026-05-22 17:54:16] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:16] Beginning plot type 'cor'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-26-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:48] Completed plot type 'cor'
-    #> SUCCESS [2026-04-17 18:58:48] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:16] Completed plot type 'cor'
+    #> SUCCESS [2026-05-22 17:54:16] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) >= 3)`
@@ -715,6 +754,7 @@ If more than two datasets in `ttd`:
   from the `ttd` list:
 
 ``` r
+
 check_col_types(ttd3, type = "num")
 #> $cpu.csv
 #> [1] "transistor_count"     "date_of_introduction" "process"             
@@ -732,6 +772,7 @@ check_col_types(ttd3, type = "num")
 - Run the following on all datasets with at least two numerical columns.
 
 ``` r
+
 inspectdf::inspect_cor(
   df1 = ttd3[[1]],
   df2 = NULL,
@@ -745,20 +786,22 @@ inspectdf::inspect_cor(
 ![](graphs_files/figure-html/unnamed-chunk-28-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("cpu.csv" = ttd3[[1]]), 
   plots = "cor")
-#> INFO [2026-04-17 18:58:50] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:50] Beginning plot type 'cor'
+#> INFO [2026-05-22 17:54:18] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:18] Beginning plot type 'cor'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-29-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:50] Completed plot type 'cor'
-    #> SUCCESS [2026-04-17 18:58:50] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:18] Completed plot type 'cor'
+    #> SUCCESS [2026-05-22 17:54:18] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
+
 inspectdf::inspect_cor(
   df1 = ttd3[[2]],
   df2 = NULL,
@@ -772,20 +815,22 @@ inspectdf::inspect_cor(
 ![](graphs_files/figure-html/unnamed-chunk-30-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("gpu.csv" = ttd3[[2]]), 
   plots = "cor")
-#> INFO [2026-04-17 18:58:52] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:52] Beginning plot type 'cor'
+#> INFO [2026-05-22 17:54:20] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:20] Beginning plot type 'cor'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-31-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:52] Completed plot type 'cor'
-    #> SUCCESS [2026-04-17 18:58:52] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:20] Completed plot type 'cor'
+    #> SUCCESS [2026-05-22 17:54:20] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
+
 inspectdf::inspect_cor(
   df1 = ttd3[[3]],
   df2 = NULL,
@@ -799,17 +844,18 @@ inspectdf::inspect_cor(
 ![](graphs_files/figure-html/unnamed-chunk-32-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("ram.csv" = ttd3[[3]]), 
   plots = "cor")
-#> INFO [2026-04-17 18:58:53] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:53] Beginning plot type 'cor'
+#> INFO [2026-05-22 17:54:22] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:22] Beginning plot type 'cor'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-33-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:53] Completed plot type 'cor'
-    #> SUCCESS [2026-04-17 18:58:53] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:22] Completed plot type 'cor'
+    #> SUCCESS [2026-05-22 17:54:22] inspect_plot(): all requested plots finished
     #> NULL
     # for all other dataset in the list
 
@@ -820,6 +866,7 @@ inspect_plot(
 If one dataset in `ttd`:
 
 ``` r
+
 inspectdf::inspect_imb(
   df1 = ttd[[1]],
   df2 = NULL,
@@ -831,17 +878,18 @@ inspectdf::inspect_imb(
 ![](graphs_files/figure-html/unnamed-chunk-34-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("netflix_titles.csv" = ttd[[1]]), 
   plots = "imb")
-#> INFO [2026-04-17 18:58:55] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:55] Beginning plot type 'imb'
+#> INFO [2026-05-22 17:54:24] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:24] Beginning plot type 'imb'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-35-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:56] Completed plot type 'imb'
-    #> SUCCESS [2026-04-17 18:58:56] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:24] Completed plot type 'imb'
+    #> SUCCESS [2026-05-22 17:54:24] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -849,6 +897,7 @@ inspect_plot(
 If two datasets in `ttd`:
 
 ``` r
+
 inspectdf::inspect_imb(
   df1 = ttd2[[1]],
   df2 = ttd2[[2]],
@@ -860,20 +909,21 @@ inspectdf::inspect_imb(
 ![](graphs_files/figure-html/unnamed-chunk-36-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list(
     "agencies.csv" = ttd2[[1]],
     "launches.csv" = ttd2[[2]]
     ), 
   plots = "imb")
-#> INFO [2026-04-17 18:58:58] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:58:58] Beginning plot type 'imb'
+#> INFO [2026-05-22 17:54:26] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:26] Beginning plot type 'imb'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-37-1.png)
 
-    #> SUCCESS [2026-04-17 18:58:58] Completed plot type 'imb'
-    #> SUCCESS [2026-04-17 18:58:58] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:26] Completed plot type 'imb'
+    #> SUCCESS [2026-05-22 17:54:26] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) >= 3)`
@@ -881,6 +931,7 @@ inspect_plot(
 If more than two datasets in `ttd`:
 
 ``` r
+
 inspectdf::inspect_imb(
   df1 = ttd3[[1]],
   df2 = NULL,
@@ -892,20 +943,22 @@ inspectdf::inspect_imb(
 ![](graphs_files/figure-html/unnamed-chunk-38-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("cpu.csv" = ttd3[[1]]), 
   plots = "imb")
-#> INFO [2026-04-17 18:59:00] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:00] Beginning plot type 'imb'
+#> INFO [2026-05-22 17:54:28] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:28] Beginning plot type 'imb'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-39-1.png)
 
-    #> SUCCESS [2026-04-17 18:59:00] Completed plot type 'imb'
-    #> SUCCESS [2026-04-17 18:59:00] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:28] Completed plot type 'imb'
+    #> SUCCESS [2026-05-22 17:54:28] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
+
 inspectdf::inspect_imb(
   df1 = ttd3[[2]],
   df2 = NULL,
@@ -917,20 +970,22 @@ inspectdf::inspect_imb(
 ![](graphs_files/figure-html/unnamed-chunk-40-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("gpu.csv" = ttd3[[2]]), 
   plots = "imb")
-#> INFO [2026-04-17 18:59:01] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:01] Beginning plot type 'imb'
+#> INFO [2026-05-22 17:54:30] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:30] Beginning plot type 'imb'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-41-1.png)
 
-    #> SUCCESS [2026-04-17 18:59:02] Completed plot type 'imb'
-    #> SUCCESS [2026-04-17 18:59:02] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:30] Completed plot type 'imb'
+    #> SUCCESS [2026-05-22 17:54:30] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
+
 inspectdf::inspect_imb(
   df1 = ttd3[[3]],
   df2 = NULL,
@@ -942,17 +997,18 @@ inspectdf::inspect_imb(
 ![](graphs_files/figure-html/unnamed-chunk-42-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("ram.csv" = ttd3[[3]]), 
   plots = "imb")
-#> INFO [2026-04-17 18:59:03] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:03] Beginning plot type 'imb'
+#> INFO [2026-05-22 17:54:32] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:32] Beginning plot type 'imb'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-43-1.png)
 
-    #> SUCCESS [2026-04-17 18:59:03] Completed plot type 'imb'
-    #> SUCCESS [2026-04-17 18:59:03] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:32] Completed plot type 'imb'
+    #> SUCCESS [2026-05-22 17:54:32] inspect_plot(): all requested plots finished
     #> NULL
     # ... for all datasets in ttd list
 
@@ -966,6 +1022,7 @@ If one dataset in `ttd`:
   `ttd` list
 
 ``` r
+
 check_ttd_num_cols(ttd2)
 #> $agencies.csv
 #> [1] "count"
@@ -977,6 +1034,7 @@ check_ttd_num_cols(ttd2)
 - if so, run:
 
 ``` r
+
 inspectdf::inspect_num(
   df1 = ttd2[[1]],
   df2 = NULL,
@@ -994,30 +1052,32 @@ doesn’t seem to identify when a list has a dataset with single numerical
 column.
 
 ``` r
+
 inspect_plot(
   ttd = list("agencies.csv" = ttd2[[1]]), 
   plots = "num")
-#> INFO [2026-04-17 18:59:05] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:05] Beginning plot type 'num'
-#> SUCCESS [2026-04-17 18:59:05] Completed plot type 'num'
-#> SUCCESS [2026-04-17 18:59:05] inspect_plot(): all requested plots finished
+#> INFO [2026-05-22 17:54:33] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:33] Beginning plot type 'num'
+#> SUCCESS [2026-05-22 17:54:33] Completed plot type 'num'
+#> SUCCESS [2026-05-22 17:54:33] inspect_plot(): all requested plots finished
 #> NULL
 ```
 
 If will work if the list has two numeric columns:
 
 ``` r
+
 inspect_plot(
   ttd = list("launches.csv" = ttd2[[2]]), 
   plots = "num")
-#> INFO [2026-04-17 18:59:05] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:05] Beginning plot type 'num'
+#> INFO [2026-05-22 17:54:33] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:33] Beginning plot type 'num'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-47-1.png)
 
-    #> SUCCESS [2026-04-17 18:59:05] Completed plot type 'num'
-    #> SUCCESS [2026-04-17 18:59:05] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:34] Completed plot type 'num'
+    #> SUCCESS [2026-05-22 17:54:34] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -1030,6 +1090,7 @@ If two datasets in `ttd`:
   - if so, run:
 
 ``` r
+
 inspectdf::inspect_num(
   df1 = ttd2[[1]],
   df2 = ttd2[[2]],
@@ -1042,19 +1103,20 @@ inspectdf::inspect_num(
 ![](graphs_files/figure-html/unnamed-chunk-48-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list(
   "agencies.csv" = ttd2[[1]],
   "launches.csv" = ttd2[[2]]),
   plots = "num")
-#> INFO [2026-04-17 18:59:07] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:07] Beginning plot type 'num'
+#> INFO [2026-05-22 17:54:36] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:36] Beginning plot type 'num'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-49-1.png)
 
-    #> SUCCESS [2026-04-17 18:59:08] Completed plot type 'num'
-    #> SUCCESS [2026-04-17 18:59:08] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:36] Completed plot type 'num'
+    #> SUCCESS [2026-05-22 17:54:36] inspect_plot(): all requested plots finished
     #> NULL
 
 - if there is only one numeric column, run the code above on the dataset
@@ -1065,6 +1127,7 @@ inspect_plot(
 If more than two datasets in `ttd`:
 
 ``` r
+
 inspectdf::inspect_num(
   df1 = ttd3[[1]],
   df2 = NULL,
@@ -1077,20 +1140,22 @@ inspectdf::inspect_num(
 ![](graphs_files/figure-html/unnamed-chunk-50-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("cpu.csv" = ttd3[[1]]), 
   plots = "num")
-#> INFO [2026-04-17 18:59:10] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:10] Beginning plot type 'num'
+#> INFO [2026-05-22 17:54:38] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:38] Beginning plot type 'num'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-51-1.png)
 
-    #> SUCCESS [2026-04-17 18:59:11] Completed plot type 'num'
-    #> SUCCESS [2026-04-17 18:59:11] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:39] Completed plot type 'num'
+    #> SUCCESS [2026-05-22 17:54:39] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
+
 inspectdf::inspect_num(
   df1 = ttd3[[2]],
   df2 = NULL,
@@ -1103,20 +1168,22 @@ inspectdf::inspect_num(
 ![](graphs_files/figure-html/unnamed-chunk-52-1.png)
 
 ``` r
+
 inspect_plot(
   ttd = list("gpu.csv" = ttd3[[2]]), 
   plots = "num")
-#> INFO [2026-04-17 18:59:12] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:12] Beginning plot type 'num'
+#> INFO [2026-05-22 17:54:41] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:41] Beginning plot type 'num'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-53-1.png)
 
-    #> SUCCESS [2026-04-17 18:59:13] Completed plot type 'num'
-    #> SUCCESS [2026-04-17 18:59:13] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:41] Completed plot type 'num'
+    #> SUCCESS [2026-05-22 17:54:41] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
+
 inspectdf::inspect_num(
   df1 = ttd3[[3]],
   df2 = NULL,
@@ -1129,21 +1196,23 @@ inspectdf::inspect_num(
 ![](graphs_files/figure-html/unnamed-chunk-54-1.png)
 
 ``` r
+
 # ... for all datasets in ttd list
 ```
 
 ``` r
+
 inspect_plot(
   ttd = list("ram.csv" = ttd3[[3]]), 
   plots = "num")
-#> INFO [2026-04-17 18:59:15] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:15] Beginning plot type 'num'
+#> INFO [2026-05-22 17:54:43] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:43] Beginning plot type 'num'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-55-1.png)
 
-    #> SUCCESS [2026-04-17 18:59:15] Completed plot type 'num'
-    #> SUCCESS [2026-04-17 18:59:15] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:43] Completed plot type 'num'
+    #> SUCCESS [2026-05-22 17:54:43] inspect_plot(): all requested plots finished
     #> NULL
 
 ### inspect_cat()
@@ -1157,6 +1226,7 @@ If one dataset in `ttd`:
   - if so, run:
 
 ``` r
+
 inspectdf::inspect_cat(
   df1 = ttd[[1]],
   df2 = NULL,
@@ -1166,13 +1236,14 @@ inspectdf::inspect_cat(
 ```
 
 ``` r
+
 inspect_plot(
   ttd = list("netflix_titles.csv" = ttd[[1]]),
   plots = "cat")
-#> INFO [2026-04-17 18:59:16] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:16] Beginning plot type 'cat'
-#> ERROR [2026-04-17 18:59:16] Error in plot type 'cat': In index: 1.
-#> SUCCESS [2026-04-17 18:59:16] inspect_plot(): all requested plots finished
+#> INFO [2026-05-22 17:54:44] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:44] Beginning plot type 'cat'
+#> ERROR [2026-05-22 17:54:44] Error in plot type 'cat': In index: 1.
+#> SUCCESS [2026-05-22 17:54:44] inspect_plot(): all requested plots finished
 #> NULL
 ```
 
@@ -1183,6 +1254,7 @@ If two datasets in `ttd`:
 - check for intersecting columns in the two datasets in the `ttd` list
 
 ``` r
+
 length(
   intersect(
     x = check_ttd_cat_cols(ttd2)[[1]],
@@ -1195,12 +1267,14 @@ length(
 - If `TRUE`, store `intersecting_columns`
 
 ``` r
+
 intersecting_columns <- intersect(x = names(ttd2[[1]]), y = names(ttd2[[2]]))
 ```
 
 - Use `intersecting_columns` to subset each dataset in `ttd` list.
 
 ``` r
+
 inspectdf::inspect_cat(
   df1 = ttd2[[1]][intersecting_columns],
   df2 = ttd2[[2]][intersecting_columns],
@@ -1210,28 +1284,30 @@ inspectdf::inspect_cat(
 ```
 
 ``` r
+
 inspect_plot(
   ttd = list(
     "agencies.csv" = ttd2[[1]][intersecting_columns],
     "launches.csv" = ttd2[[2]][intersecting_columns]
     ), 
   plots = "cat")
-#> INFO [2026-04-17 18:59:16] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:16] Beginning plot type 'cat'
+#> INFO [2026-05-22 17:54:44] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:44] Beginning plot type 'cat'
 #> Warning in geom_bar(stat = "identity", position = "stack", colour = "black", :
 #> Ignoring unknown parameters: `size`
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-61-1.png)
 
-    #> SUCCESS [2026-04-17 18:59:17] Completed plot type 'cat'
-    #> SUCCESS [2026-04-17 18:59:17] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-05-22 17:54:45] Completed plot type 'cat'
+    #> SUCCESS [2026-05-22 17:54:45] inspect_plot(): all requested plots finished
     #> NULL
 
 - if there aren’t any intersecting categorical columns, run the
   following on the dataset with the categorical column `ttd[[?]]`:
 
 ``` r
+
 inspectdf::inspect_cat(
   df1 = ttd[[1]],
   df2 = NULL,
@@ -1241,13 +1317,14 @@ inspectdf::inspect_cat(
 ```
 
 ``` r
+
 inspect_plot(
   ttd = list("netflix_titles.csv" = ttd[[1]]), 
   plots = "cat")
-#> INFO [2026-04-17 18:59:18] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:18] Beginning plot type 'cat'
-#> ERROR [2026-04-17 18:59:18] Error in plot type 'cat': In index: 1.
-#> SUCCESS [2026-04-17 18:59:18] inspect_plot(): all requested plots finished
+#> INFO [2026-05-22 17:54:46] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:46] Beginning plot type 'cat'
+#> ERROR [2026-05-22 17:54:46] Error in plot type 'cat': In index: 1.
+#> SUCCESS [2026-05-22 17:54:46] inspect_plot(): all requested plots finished
 #> NULL
 ```
 
@@ -1256,6 +1333,7 @@ inspect_plot(
 If more than two datasets in `ttd`:
 
 ``` r
+
 inspectdf::inspect_cat(
   df1 = ttd_many[[1]],
   df2 = NULL,
@@ -1265,12 +1343,13 @@ inspectdf::inspect_cat(
 ```
 
 ``` r
+
 inspect_plot(
   ttd = list("colors.csv.gz" = ttd_many[[1]]), 
   plots = "cat")
-#> INFO [2026-04-17 18:59:18] inspect_plot(): starting analysis
-#> INFO [2026-04-17 18:59:18] Beginning plot type 'cat'
-#> ERROR [2026-04-17 18:59:18] Error in plot type 'cat': In index: 1.
-#> SUCCESS [2026-04-17 18:59:18] inspect_plot(): all requested plots finished
+#> INFO [2026-05-22 17:54:46] inspect_plot(): starting analysis
+#> INFO [2026-05-22 17:54:46] Beginning plot type 'cat'
+#> ERROR [2026-05-22 17:54:46] Error in plot type 'cat': In index: 1.
+#> SUCCESS [2026-05-22 17:54:46] inspect_plot(): all requested plots finished
 #> NULL
 ```

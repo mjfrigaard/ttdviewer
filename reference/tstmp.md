@@ -20,11 +20,11 @@ A character string of the current date and time.
 
 ``` r
 tstmp()
-#> [1] "2026-04-17-18.57.56"
+#> [1] "2026-05-22-17.53.27"
 cat(paste("Last updated:", tstmp()))
-#> Last updated: 2026-04-17-18.57.56
+#> Last updated: 2026-05-22-17.53.27
 tstmp()
-#> [1] "2026-04-17-18.57.56"
+#> [1] "2026-05-22-17.53.27"
 cat(paste("Last updated:", tstmp()))
-#> Last updated: 2026-04-17-18.57.56
+#> Last updated: 2026-05-22-17.53.27
 ```

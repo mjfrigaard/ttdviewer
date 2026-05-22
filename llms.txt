@@ -1,7 +1,7 @@
 # The \#TidyTuesday data viewer
 
-The \#TidyTuesday data viewer (`ttdviewer`) is an Shiny
-app-package[¹](#fn1) for viewing the data from the [`#TidyTuesday`
+The \#TidyTuesday data viewer (`ttdviewer`) is an Shiny app-package[^1]
+for viewing the data from the [`#TidyTuesday`
 project.](https://github.com/rfordatascience/tidytuesday) This package
 started out as a small application to demonstrate various examples of
 downloadable reports (R Markdown, Quarto, etc.), but it’s grown to
@@ -106,6 +106,7 @@ You can install the development version of `ttdviewer` from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("mjfrigaard/ttdviewer")
 ```
@@ -115,13 +116,12 @@ pak::pak("mjfrigaard/ttdviewer")
 Launch the application using the standalone app function below:
 
 ``` r
+
 library(ttdviewer)
 launch()
 ```
 
-------------------------------------------------------------------------
-
-1.  An R package containing a Shiny application. Read more
+[^1]: An R package containing a Shiny application. Read more
     [here](https://mastering-shiny.org/scaling-packaging.html).
 
 # Package index
