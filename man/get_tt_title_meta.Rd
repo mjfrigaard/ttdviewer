@@ -46,6 +46,4 @@ print(meta)
 }
 \seealso{
 \code{\link[=load_tt_data]{load_tt_data()}}
-
-\code{\link[=load_tt_data]{load_tt_data()}}
 }
