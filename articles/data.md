@@ -32,15 +32,15 @@ function downloads the data using a date input.
 ``` r
 
 tt_data <- tt_load("2025-07-08")
-#> Error in `validate_gh_pat()`:
-#> ! Invalid GitHub PAT format
-#> ℹ A GitHub PAT must have one of three forms:
-#> • 40 hexadecimal digits (older PATs)
-#> • A 'ghp_' prefix followed by 36 to 251 more characters (newer PATs)
-#> • A 'github_pat_' prefix followed by 36 to 244 more characters (fine-grained
-#>   PATs)
-#> ℹ Read more at
-#>   <https://gh.r-lib.org/articles/managing-personal-access-tokens.html>.
+#> ---- Compiling #TidyTuesday Information for 2025-07-08 ----
+#> --- There are 3 files available ---
+#> 
+#> 
+#> ── Downloading files ───────────────────────────────────────────────────────────
+#> 
+#>   1 of 3: "answers.csv"
+#>   2 of 3: "color_ranks.csv"
+#>   3 of 3: "users.csv"
 ```
 
 The downloaded object is a list, but with a few additional attributes.
@@ -48,8 +48,55 @@ The downloaded object is a list, but with a few additional attributes.
 ``` r
 
 str(tt_data)
-#> Error:
-#> ! object 'tt_data' not found
+#> List of 3
+#>  $ answers    : spc_tbl_ [1,058,211 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#>   ..$ user_id: num [1:1058211] 1 2 2 2 2 2 2 2 4 4 ...
+#>   ..$ hex    : chr [1:1058211] "#8240EA" "#4B31EA" "#584601" "#DA239C" ...
+#>   ..$ rank   : num [1:1058211] 1 3 5 4 1 2 3 3 1 2 ...
+#>   ..- attr(*, "spec")=
+#>   .. .. cols(
+#>   .. ..   user_id = col_double(),
+#>   .. ..   hex = col_character(),
+#>   .. ..   rank = col_double()
+#>   .. .. )
+#>   ..- attr(*, "problems")=<pointer: 0x5593eed77950> 
+#>  $ color_ranks: spc_tbl_ [949 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#>   ..$ color: chr [1:949] "purple" "green" "blue" "pink" ...
+#>   ..$ rank : num [1:949] 1 2 3 4 5 6 7 8 9 10 ...
+#>   ..$ hex  : chr [1:949] "#7e1e9c" "#15b01a" "#0343df" "#ff81c0" ...
+#>   ..- attr(*, "spec")=
+#>   .. .. cols(
+#>   .. ..   color = col_character(),
+#>   .. ..   rank = col_double(),
+#>   .. ..   hex = col_character()
+#>   .. .. )
+#>   ..- attr(*, "problems")=<pointer: 0x5593eeb85900> 
+#>  $ users      : spc_tbl_ [152,401 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#>   ..$ user_id     : num [1:152401] 1 2 3 4 5 6 7 8 9 10 ...
+#>   ..$ monitor     : chr [1:152401] "LCD" "LCD" "LCD" "LCD" ...
+#>   ..$ y_chromosome: num [1:152401] 1 1 1 0 1 1 1 1 1 1 ...
+#>   ..$ colorblind  : num [1:152401] 0 0 0 0 0 0 0 0 0 0 ...
+#>   ..$ spam_prob   : num [1:152401] 0.00209 0.07458 0.0164 0.00156 0.00238 ...
+#>   ..- attr(*, "spec")=
+#>   .. .. cols(
+#>   .. ..   user_id = col_double(),
+#>   .. ..   monitor = col_character(),
+#>   .. ..   y_chromosome = col_double(),
+#>   .. ..   colorblind = col_double(),
+#>   .. ..   spam_prob = col_double()
+#>   .. .. )
+#>   ..- attr(*, "problems")=<pointer: 0x5593e73977f0> 
+#>  - attr(*, ".tt")= 'tt' chr [1:3] "answers.csv" "color_ranks.csv" "users.csv"
+#>   ..- attr(*, ".files")='data.frame':    3 obs. of  3 variables:
+#>   .. ..$ data_files: chr [1:3] "answers.csv" "color_ranks.csv" "users.csv"
+#>   .. ..$ data_type : chr [1:3] "csv" "csv" "csv"
+#>   .. ..$ delim     : chr [1:3] "," "," ","
+#>   ..- attr(*, ".readme")=List of 2
+#>   .. ..$ node:<pointer: 0x5593e75f3d60> 
+#>   .. ..$ doc :<pointer: 0x5593e664f6d0> 
+#>   .. ..- attr(*, "class")= chr [1:2] "xml_document" "xml_node"
+#>   ..- attr(*, ".date")= Date[1:1], format: "2025-07-08"
+#>  - attr(*, "class")= chr "tt_data"
 ```
 
 ### Class
@@ -59,8 +106,7 @@ The `tt_data` list has it’s own special class (`"tt_data"`).
 ``` r
 
 attr(tt_data, "class")
-#> Error:
-#> ! object 'tt_data' not found
+#> [1] "tt_data"
 ```
 
 The `.tt` attribute prints the available datasets for the `date`.
@@ -68,8 +114,11 @@ The `.tt` attribute prints the available datasets for the `date`.
 ``` r
 
 attr(tt_data, ".tt")
-#> Error:
-#> ! object 'tt_data' not found
+#> Available datasets in this TidyTuesday:
+#>  answers.csv 
+#>  color_ranks.csv 
+#>  users.csv 
+#>  
 ```
 
 The `.tt` attribute also lists the available datasets, a `.files`
@@ -79,8 +128,16 @@ dataset with file type and delim, the `.readme` (as html), and the
 ``` r
 
 str(attr(tt_data, ".tt"))
-#> Error:
-#> ! object 'tt_data' not found
+#>  'tt' chr [1:3] "answers.csv" "color_ranks.csv" "users.csv"
+#>  - attr(*, ".files")='data.frame':   3 obs. of  3 variables:
+#>   ..$ data_files: chr [1:3] "answers.csv" "color_ranks.csv" "users.csv"
+#>   ..$ data_type : chr [1:3] "csv" "csv" "csv"
+#>   ..$ delim     : chr [1:3] "," "," ","
+#>  - attr(*, ".readme")=List of 2
+#>   ..$ node:<pointer: 0x5593e75f3d60> 
+#>   ..$ doc :<pointer: 0x5593e664f6d0> 
+#>   ..- attr(*, "class")= chr [1:2] "xml_document" "xml_node"
+#>  - attr(*, ".date")= Date[1:1], format: "2025-07-08"
 ```
 
 The `.tt` attribute also has `.files`, `.readme`, and `.date`
@@ -92,8 +149,10 @@ attributes.
 
 attr(tt_data, ".tt") |> 
   attr(".files")
-#> Error:
-#> ! object 'tt_data' not found
+#>         data_files data_type delim
+#> 84     answers.csv       csv     ,
+#> 85 color_ranks.csv       csv     ,
+#> 86       users.csv       csv     ,
 ```
 
 #### .readme
@@ -102,8 +161,9 @@ attr(tt_data, ".tt") |>
 
 attr(tt_data, ".tt") |> 
   attr(".readme")
-#> Error:
-#> ! object 'tt_data' not found
+#> {html_document}
+#> <html>
+#> [1] <body><div id="file" class="md" data-path="data/2025/2025-07-08/readme.md ...
 ```
 
 #### .date
@@ -112,8 +172,7 @@ attr(tt_data, ".tt") |>
 
 attr(tt_data, ".tt") |> 
   attr(".date")
-#> Error:
-#> ! object 'tt_data' not found
+#> [1] "2025-07-08"
 ```
 
 ### [ttmeta](https://r4ds.github.io/ttmeta/)
@@ -136,27 +195,21 @@ TidyTuesday weeks in the requested timeframe*”
 ``` r
 
 tt_meta <- get_tt_tbl(min_year = 2025L, max_year = this_year())
-#> Error in `purrr::map()`:
-#> ℹ In index: 1.
-#> Caused by error in `validate_gh_pat()`:
-#> ! Invalid GitHub PAT format
-#> ℹ A GitHub PAT must have one of three forms:
-#> • 40 hexadecimal digits (older PATs)
-#> • A 'ghp_' prefix followed by 36 to 251 more characters (newer PATs)
-#> • A 'github_pat_' prefix followed by 36 to 244 more characters (fine-grained
-#>   PATs)
-#> ℹ Read more at
-#>   <https://gh.r-lib.org/articles/managing-personal-access-tokens.html>.
 ```
 
 ``` r
 
 dplyr::glimpse(tt_meta)
-#> function (path = "tt_submission", title, article_title, article_url, source_title, 
-#>     source_url, image_filename, image_alt, attribution = getOption("tidytuesdayR.attribution"), 
-#>     github = gh::gh_whoami()$login, bluesky = getOption("tidytuesdayR.bluesky"), 
-#>     linkedin = getOption("tidytuesdayR.linkedin"), mastodon = getOption("tidytuesdayR.mastodon"), 
-#>     open = rlang::is_interactive(), ignore = FALSE)
+#> Rows: 75
+#> Columns: 8
+#> $ year          <int> 2025, 2025, 2025, 2025, 2025, 2025, 2025, 2025, 2025, 20…
+#> $ week          <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1…
+#> $ date          <date> 2025-01-07, 2025-01-14, 2025-01-21, 2025-01-28, 2025-02…
+#> $ title         <chr> "Bring your own data from 2024!", "posit::conf talks", "…
+#> $ source_title  <chr> "NA", "posit::conf attendee portal 2023, posit::conf att…
+#> $ source_urls   <list> <>, <"https://reg.conf.posit.co/flow/posit/positconf23/…
+#> $ article_title <chr> "NA", "posit::conf(2025) in-person registration is now o…
+#> $ article_urls  <list> <>, "https://posit.co/blog/positconf2025-in-person-regi…
 ```
 
 ## GitHub URLs
@@ -184,7 +237,7 @@ tt_github_urls <- vroom::vroom(
     week = Week,
     date = Date
   ) 
-#> Rows: 850 Columns: 6
+#> Rows: 851 Columns: 6
 #> ── Column specification ────────────────────────────────────────────────────────
 #> Delimiter: ","
 #> chr  (3): data_files, data_type, delim
@@ -194,12 +247,12 @@ tt_github_urls <- vroom::vroom(
 #> ℹ Use `spec()` to retrieve the full column specification for this data.
 #> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 dplyr::glimpse(tt_github_urls)
-#> Rows: 850
+#> Rows: 851
 #> Columns: 7
-#> $ week       <dbl> 22, 21, 20, 20, 19, 19, 18, 18, 18, 17, 17, 17, 17, 16, 16,…
-#> $ date       <date> 2026-06-02, 2026-05-26, 2026-05-19, 2026-05-19, 2026-05-12…
+#> $ week       <dbl> 23, 22, 21, 20, 20, 19, 19, 18, 18, 18, 17, 17, 17, 17, 16,…
+#> $ date       <date> 2026-06-09, 2026-06-02, 2026-05-26, 2026-05-19, 2026-05-19…
 #> $ year       <dbl> 2026, 2026, 2026, 2026, 2026, 2026, 2026, 2026, 2026, 2026,…
-#> $ data_files <chr> "eplp.csv", "energy_cleaned.csv", "member_participation_sta…
+#> $ data_files <chr> "game_films.csv", "eplp.csv", "energy_cleaned.csv", "member…
 #> $ data_type  <chr> "csv", "csv", "csv", "csv", "csv", "csv", "csv", "csv", "cs…
 #> $ delim      <chr> ",", ",", ",", ",", ",", ",", ",", ",", ",", ",", ",", ",",…
 #> $ github_url <glue> "https://raw.githubusercontent.com/rfordatascience/tidytue…
@@ -322,8 +375,8 @@ single element:
 ``` r
 
 ttd <- load_tt_data("Netflix Titles")
-#> INFO [2026-05-22 17:53:38] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv
-#> SUCCESS [2026-05-22 17:53:39] Successfully loaded netflix_titles.csv
+#> INFO [2026-05-28 13:45:54] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv
+#> SUCCESS [2026-05-28 13:45:55] Successfully loaded netflix_titles.csv
 ```
 
 ``` r
@@ -350,10 +403,10 @@ position:
 ``` r
 
 ttd2 <- load_tt_data("Space Launches")
-#> INFO [2026-05-22 17:53:39] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv
-#> SUCCESS [2026-05-22 17:53:39] Successfully loaded agencies.csv
-#> INFO [2026-05-22 17:53:39] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv
-#> SUCCESS [2026-05-22 17:53:39] Successfully loaded launches.csv
+#> INFO [2026-05-28 13:45:55] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv
+#> SUCCESS [2026-05-28 13:45:55] Successfully loaded agencies.csv
+#> INFO [2026-05-28 13:45:55] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv
+#> SUCCESS [2026-05-28 13:45:55] Successfully loaded launches.csv
 # store names 
 ttd2_nms <- names(ttd2)
 # check attr
@@ -411,12 +464,12 @@ element in the list:
 ``` r
 
 ttd3 <- load_tt_data("Moore’s Law")
-#> INFO [2026-05-22 17:53:40] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
-#> SUCCESS [2026-05-22 17:53:40] Successfully loaded cpu.csv
-#> INFO [2026-05-22 17:53:40] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
-#> SUCCESS [2026-05-22 17:53:40] Successfully loaded gpu.csv
-#> INFO [2026-05-22 17:53:40] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
-#> SUCCESS [2026-05-22 17:53:40] Successfully loaded ram.csv
+#> INFO [2026-05-28 13:45:55] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
+#> SUCCESS [2026-05-28 13:45:55] Successfully loaded cpu.csv
+#> INFO [2026-05-28 13:45:55] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
+#> SUCCESS [2026-05-28 13:45:55] Successfully loaded gpu.csv
+#> INFO [2026-05-28 13:45:55] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
+#> SUCCESS [2026-05-28 13:45:55] Successfully loaded ram.csv
 ttd3_nms <- names(ttd3)
 # attr
 purrr::map(.x = ttd3, .f = attr, "clean_title")
@@ -470,30 +523,30 @@ If there are more than two datasets, the same rules apply.
 ``` r
 
 ttd_many <- load_tt_data("LEGO database")
-#> INFO [2026-05-22 17:53:40] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz
-#> SUCCESS [2026-05-22 17:53:40] Successfully loaded colors.csv.gz
-#> INFO [2026-05-22 17:53:40] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz
-#> SUCCESS [2026-05-22 17:53:40] Successfully loaded elements.csv.gz
-#> INFO [2026-05-22 17:53:40] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz
-#> SUCCESS [2026-05-22 17:53:40] Successfully loaded inventories.csv.gz
-#> INFO [2026-05-22 17:53:40] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz
-#> SUCCESS [2026-05-22 17:53:41] Successfully loaded inventory_minifigs.csv.gz
-#> INFO [2026-05-22 17:53:41] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz
-#> SUCCESS [2026-05-22 17:53:42] Successfully loaded inventory_parts.csv.gz
-#> INFO [2026-05-22 17:53:42] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz
-#> SUCCESS [2026-05-22 17:53:42] Successfully loaded inventory_sets.csv.gz
-#> INFO [2026-05-22 17:53:42] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz
-#> SUCCESS [2026-05-22 17:53:42] Successfully loaded minifigs.csv.gz
-#> INFO [2026-05-22 17:53:42] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz
-#> SUCCESS [2026-05-22 17:53:42] Successfully loaded part_categories.csv.gz
-#> INFO [2026-05-22 17:53:42] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz
-#> SUCCESS [2026-05-22 17:53:42] Successfully loaded part_relationships.csv.gz
-#> INFO [2026-05-22 17:53:42] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz
-#> SUCCESS [2026-05-22 17:53:43] Successfully loaded parts.csv.gz
-#> INFO [2026-05-22 17:53:43] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz
-#> SUCCESS [2026-05-22 17:53:43] Successfully loaded sets.csv.gz
-#> INFO [2026-05-22 17:53:43] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz
-#> SUCCESS [2026-05-22 17:53:43] Successfully loaded themes.csv.gz
+#> INFO [2026-05-28 13:45:56] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz
+#> SUCCESS [2026-05-28 13:45:56] Successfully loaded colors.csv.gz
+#> INFO [2026-05-28 13:45:56] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz
+#> SUCCESS [2026-05-28 13:45:56] Successfully loaded elements.csv.gz
+#> INFO [2026-05-28 13:45:56] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz
+#> SUCCESS [2026-05-28 13:45:56] Successfully loaded inventories.csv.gz
+#> INFO [2026-05-28 13:45:56] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz
+#> SUCCESS [2026-05-28 13:45:56] Successfully loaded inventory_minifigs.csv.gz
+#> INFO [2026-05-28 13:45:56] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz
+#> SUCCESS [2026-05-28 13:45:57] Successfully loaded inventory_parts.csv.gz
+#> INFO [2026-05-28 13:45:57] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz
+#> SUCCESS [2026-05-28 13:45:57] Successfully loaded inventory_sets.csv.gz
+#> INFO [2026-05-28 13:45:57] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz
+#> SUCCESS [2026-05-28 13:45:58] Successfully loaded minifigs.csv.gz
+#> INFO [2026-05-28 13:45:58] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz
+#> SUCCESS [2026-05-28 13:45:58] Successfully loaded part_categories.csv.gz
+#> INFO [2026-05-28 13:45:58] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz
+#> SUCCESS [2026-05-28 13:45:58] Successfully loaded part_relationships.csv.gz
+#> INFO [2026-05-28 13:45:58] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz
+#> SUCCESS [2026-05-28 13:45:58] Successfully loaded parts.csv.gz
+#> INFO [2026-05-28 13:45:58] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz
+#> SUCCESS [2026-05-28 13:45:58] Successfully loaded sets.csv.gz
+#> INFO [2026-05-28 13:45:58] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz
+#> SUCCESS [2026-05-28 13:45:59] Successfully loaded themes.csv.gz
 ttd_many_nms <- names(ttd_many)
 # check attr
 purrr::map(.x = ttd_many, .f = attr, "clean_title")
@@ -543,8 +596,8 @@ function returns info on the columns in each dataset in a `ttd` list.
 ``` r
 
 ttd_meta <- get_tt_title_meta(ttd = ttd)
-#> INFO [2026-05-22 17:53:43] Datasets in list: netflix_titles.csv
-#> INFO [2026-05-22 17:53:43] Created metadata tibble with 14 rows covering 1 datasets
+#> INFO [2026-05-28 13:45:59] Datasets in list: netflix_titles.csv
+#> INFO [2026-05-28 13:45:59] Created metadata tibble with 14 rows covering 1 datasets
 ttd_meta
 #> # A tibble: 14 × 4
 #>    clean_title    dataset            col          col_type 
@@ -580,8 +633,8 @@ ttd_meta |>
 ``` r
 
 ttd2_meta <- get_tt_title_meta(ttd = ttd2)
-#> INFO [2026-05-22 17:53:43] Datasets in list: agencies.csv, launches.csv
-#> INFO [2026-05-22 17:53:43] Created metadata tibble with 33 rows covering 2 datasets
+#> INFO [2026-05-28 13:45:59] Datasets in list: agencies.csv, launches.csv
+#> INFO [2026-05-28 13:45:59] Created metadata tibble with 33 rows covering 2 datasets
 head(ttd2_meta)
 #> # A tibble: 6 × 4
 #>   clean_title    dataset      col        col_type 
@@ -597,8 +650,8 @@ head(ttd2_meta)
 ``` r
 
 ttd3_meta <- get_tt_title_meta(ttd = ttd3)
-#> INFO [2026-05-22 17:53:43] Datasets in list: cpu.csv, gpu.csv, ram.csv
-#> INFO [2026-05-22 17:53:43] Created metadata tibble with 30 rows covering 3 datasets
+#> INFO [2026-05-28 13:45:59] Datasets in list: cpu.csv, gpu.csv, ram.csv
+#> INFO [2026-05-28 13:45:59] Created metadata tibble with 30 rows covering 3 datasets
 head(ttd3_meta)
 #> # A tibble: 6 × 4
 #>   clean_title dataset col                  col_type 
@@ -614,8 +667,8 @@ head(ttd3_meta)
 ``` r
 
 ttd_many_meta <- get_tt_title_meta(ttd = ttd_many)
-#> INFO [2026-05-22 17:53:44] Datasets in list: colors.csv.gz, elements.csv.gz, inventories.csv.gz, inventory_minifigs.csv.gz, inventory_parts.csv.gz, inventory_sets.csv.gz, minifigs.csv.gz, part_categories.csv.gz, part_relationships.csv.gz, parts.csv.gz, sets.csv.gz, themes.csv.gz
-#> INFO [2026-05-22 17:53:44] Created metadata tibble with 67 rows covering 12 datasets
+#> INFO [2026-05-28 13:45:59] Datasets in list: colors.csv.gz, elements.csv.gz, inventories.csv.gz, inventory_minifigs.csv.gz, inventory_parts.csv.gz, inventory_sets.csv.gz, minifigs.csv.gz, part_categories.csv.gz, part_relationships.csv.gz, parts.csv.gz, sets.csv.gz, themes.csv.gz
+#> INFO [2026-05-28 13:45:59] Created metadata tibble with 67 rows covering 12 datasets
 head(ttd_many_meta)
 #> # A tibble: 6 × 4
 #>   clean_title   dataset         col        col_type 
