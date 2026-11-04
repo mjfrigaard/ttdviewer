@@ -1,5 +1,5 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   app: app.html
@@ -7,7 +7,7 @@ articles:
   graphs: graphs.html
   lists: lists.html
   reports: reports.html
-last_built: 2026-05-28T13:45Z
+last_built: 2026-11-04T05:51Z
 urls:
   reference: https://mjfrigaard.github.io/ttdviewer/reference
   article: https://mjfrigaard.github.io/ttdviewer/articles

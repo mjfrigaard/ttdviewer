@@ -42,10 +42,10 @@ datasets are excluded.
 
 ``` r
 load_tt_data("posit::conf talks")
-#> INFO [2026-05-28 13:45:28] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv
-#> SUCCESS [2026-05-28 13:45:28] Successfully loaded conf2023.csv
-#> INFO [2026-05-28 13:45:28] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv
-#> SUCCESS [2026-05-28 13:45:28] Successfully loaded conf2024.csv
+#> INFO [2026-11-04 05:52:04] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv
+#> SUCCESS [2026-11-04 05:52:05] Successfully loaded conf2023.csv
+#> INFO [2026-11-04 05:52:05] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv
+#> SUCCESS [2026-11-04 05:52:05] Successfully loaded conf2024.csv
 #> $conf2023.csv
 #> # A tibble: 116 × 9
 #>    speaker_name speaker_affiliation session_type session_title block_track_title
