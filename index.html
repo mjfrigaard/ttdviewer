@@ -70,14 +70,15 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The #TidyTuesday data viewer (<code>ttdviewer</code>) is an Shiny app-package<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;An R package containing a Shiny application. Read more &lt;a href="https://mastering-shiny.org/scaling-packaging.html" class="external-link"&gt;here&lt;/a&gt;.&lt;/p&gt;'><sup>1</sup></a> for viewing the data from the <a href="https://github.com/rfordatascience/tidytuesday" class="external-link"><code>#TidyTuesday</code> project.</a> This package started out as a small application to demonstrate various examples of downloadable reports (R Markdown, Quarto, etc.), but it’s grown to include additional features:</p>
+<p>The #TidyTuesday data viewer (<code>ttdviewer</code>) is a Shiny app-package<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;An R package containing a Shiny application. Read more &lt;a href="https://mastering-shiny.org/scaling-packaging.html" class="external-link"&gt;here&lt;/a&gt;.&lt;/p&gt;'><sup>1</sup></a> for viewing data from the <a href="https://github.com/rfordatascience/tidytuesday" class="external-link"><code>#TidyTuesday</code> project</a>. It started as a small app to demonstrate downloadable reports (R Markdown and Quarto). It has since grown to include the features below:</p>
 <ol style="list-style-type: decimal">
-<li>The data are loaded directly from GitHub (i.e., with help from the <a href="https://dslc-io.github.io/tidytuesdayR/" class="external-link"><code>tidytuesdayR</code></a> and <a href="https://r4ds.github.io/ttmeta/" class="external-link"><code>ttmeta</code></a> packages).</li>
+<li>The data are loaded directly from GitHub. The index of titles and file URLs is built with the <a href="https://dslc-io.github.io/tidytuesdayR/" class="external-link"><code>tidytuesdayR</code></a> and <a href="https://r4ds.github.io/ttmeta/" class="external-link"><code>ttmeta</code></a> packages.</li>
 <li>The returned object is visible as a list on the first <code>nav_panel()</code> via the <a href="https://long39ng.github.io/listviewerlite/" class="external-link"><code>listviewerlite</code> package</a>.<br>
 </li>
 <li>The data are visible as a table compliments of the <a href="https://glin.github.io/reactable/" class="external-link"><code>reactable</code> package</a> in the second <code>nav_panel()</code>.<br>
 </li>
 <li>Data visualizations from the <a href="https://alastairrushworth.com/inspectdf/" class="external-link"><code>inspectdf</code> package</a> ‘<em>summarise missingness, categorical levels, numeric distribution, correlation, column types and memory usage</em>’ are available on the third <code>nav_panel()</code>.</li>
+<li>The sidebar downloads an R Markdown or Quarto report for the selected dataset.</li>
 </ol>
 <div class="section level2">
 <h2 id="architecture">Architecture<a class="anchor" aria-label="anchor" href="#architecture"></a>
@@ -149,10 +150,12 @@ flowchart TB
 <div class="section level2">
 <h2 id="launch-app">Launch app<a class="anchor" aria-label="anchor" href="#launch-app"></a>
 </h2>
-<p>Launch the application using the standalone app function below:</p>
+<p>Launch the application using the standalone app function below. By default <code><a href="reference/launch.html">launch()</a></code> runs the app in the background and returns a handle, so the console stays available:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/ttdviewer/">ttdviewer</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/launch.html">launch</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">handle</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/launch.html">launch</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">handle</span><span class="op">$</span><span class="kw">stop</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Use <code>launch(mode = "run")</code> to return the app object instead (e.g., in an <code>app.R</code> file for deployment).</p>
 </div>
 </div>
 

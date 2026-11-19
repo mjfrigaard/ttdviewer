@@ -1,6 +1,6 @@
-# Variable Input UI Module
+# Dataset Title Input UI Module
 
-Variable Input UI Module
+Dataset Title Input UI Module
 
 ## Usage
 

@@ -39,12 +39,12 @@ ttd <- load_tt_data("Moore's Law")
 get_intersecting_cols(ttd)
 #> Error: object 'ttd' not found
 ttd <- load_tt_data("Moore’s Law")
-#> INFO [2026-11-04 05:51:53] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
-#> SUCCESS [2026-11-04 05:51:53] Successfully loaded cpu.csv
-#> INFO [2026-11-04 05:51:53] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
-#> SUCCESS [2026-11-04 05:51:53] Successfully loaded gpu.csv
-#> INFO [2026-11-04 05:51:53] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
-#> SUCCESS [2026-11-04 05:51:53] Successfully loaded ram.csv
+#> INFO [2026-11-19 20:35:26] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
+#> SUCCESS [2026-11-19 20:35:26] Successfully loaded cpu.csv
+#> INFO [2026-11-19 20:35:26] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
+#> SUCCESS [2026-11-19 20:35:26] Successfully loaded gpu.csv
+#> INFO [2026-11-19 20:35:26] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
+#> SUCCESS [2026-11-19 20:35:26] Successfully loaded ram.csv
 get_intersecting_cols(ttd)
 #> character(0)
 ```

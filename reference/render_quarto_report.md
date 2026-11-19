@@ -1,4 +1,4 @@
-# Render Quarto Report with Enhanced Error Handling
+# Render Quarto Report
 
 Renders a Quarto (`.qmd`) report using the `quarto` R package when
 available, falling back to a system call or alternative rendering method

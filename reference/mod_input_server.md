@@ -1,6 +1,6 @@
-# Variable Input Server Module
+# Dataset Title Input Server Module
 
-Variable Input Server Module
+Dataset Title Input Server Module
 
 ## Usage
 

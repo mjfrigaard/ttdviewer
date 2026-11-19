@@ -81,7 +81,7 @@ logging and integrates JSON logging using the `jsonlite` package.
 - [`logger::log_formatter()`](https://daroczig.github.io/logger/reference/log_formatter.html)
   for customizing log message formats.
 
-- [`jsonlite::toJSON()`](https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html)
+- [`jsonlite::toJSON()`](https://rdrr.io/pkg/jsonlite/man/fromJSON.html)
   for converting R objects to JSON.
 
 ## Examples
@@ -89,7 +89,7 @@ logging and integrates JSON logging using the `jsonlite` package.
 ``` r
 # log a simple informational message to the console
 logr_msg("Application started.")
-#> INFO [2026-11-04 05:52:06] Application started.
+#> INFO [2026-11-19 20:35:38] Application started.
 
 # log an error message to the console and a file in plain text format
 logr_msg(
@@ -97,7 +97,7 @@ logr_msg(
   level = "ERROR",
   log_file = "error_log.txt"
 )
-#> ERROR [2026-11-04 05:52:06] Failed to connect to the database.
+#> ERROR [2026-11-19 20:35:38] Failed to connect to the database.
 
 # log a success message in JSON format
 logr_msg(
@@ -106,12 +106,12 @@ logr_msg(
   log_file = "app_log.json",
   json = TRUE
 )
-#> SUCCESS [2026-11-04 05:52:06] User login successful.
+#> SUCCESS [2026-11-19 20:35:38] User login successful.
 
 # log a warning message to the console only
 logr_msg(
   message = "Low memory warning.",
   level = "WARN"
 )
-#> {"time":"2026-11-04 05:52:06","level":"WARN","ns":"ttdviewer","ans":"global","topenv":"ttdviewer","fn":"logr_msg","node":"runnervmcwoy2","arch":"x86_64","os_name":"Linux","os_release":"6.8.0-1070-azure","os_version":"#78~22.04.1-Ubuntu SMP Thu Sep 24 18:46:45 UTC 2026","pid":6651,"user":"runner","msg":"Low memory warning."}
+#> {"time":"2026-11-19 20:35:38","level":"WARN","ns":"ttdviewer","ans":"global","topenv":"ttdviewer","fn":"logr_msg","node":"runnervmxfy6o","arch":"x86_64","os_name":"Linux","os_release":"6.8.0-1070-azure","os_version":"#78~22.04.1-Ubuntu SMP Thu Sep 24 18:46:45 UTC 2026","pid":6618,"user":"runner","msg":"Low memory warning."}
 ```

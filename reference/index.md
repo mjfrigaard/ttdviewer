@@ -35,15 +35,15 @@
 - [`inspect_plot()`](https://mjfrigaard.github.io/ttdviewer/reference/inspect_plot.md)
   : Inspect and Plot TidyTuesday Data
 - [`launch()`](https://mjfrigaard.github.io/ttdviewer/reference/launch.md)
-  : Launch the Tidy Tuesday Explorer App
+  : Launch the \#TidyTuesday Data Viewer
 - [`load_tt_data()`](https://mjfrigaard.github.io/ttdviewer/reference/load_tt_data.md)
   : Load TidyTuesday Datasets from GitHub by Title
 - [`logr_msg()`](https://mjfrigaard.github.io/ttdviewer/reference/logr_msg.md)
   : Log Messages to Console and File with Optional JSON Format
 - [`mod_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_server.md)
-  : Variable Input Server Module
+  : Dataset Title Input Server Module
 - [`mod_input_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_ui.md)
-  : Variable Input UI Module
+  : Dataset Title Input UI Module
 - [`mod_list_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_list_server.md)
   : List Server Module (listviewerlite)
 - [`mod_list_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_list_ui.md)
@@ -55,11 +55,11 @@
 - [`mod_report_desc_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_desc_server.md)
   : Report Description Format Server Module
 - [`mod_report_desc_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_desc_ui.md)
-  : Report Description UI Module with Format Selection
+  : Report Description UI Module
 - [`mod_report_download_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_download_server.md)
-  : Report Download Server Module with Enhanced Quarto Error Handling
+  : Report Download Server Module
 - [`mod_report_download_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_download_ui.md)
-  : Report Download UI Module with Format Selection
+  : Report Download UI Module
 - [`mod_report_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_input_server.md)
   : Report Input Server Module
 - [`mod_report_input_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_input_ui.md)

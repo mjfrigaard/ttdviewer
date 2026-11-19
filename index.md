@@ -1,15 +1,15 @@
 # The \#TidyTuesday data viewer
 
-The \#TidyTuesday data viewer (`ttdviewer`) is an Shiny app-package[^1]
-for viewing the data from the [`#TidyTuesday`
-project.](https://github.com/rfordatascience/tidytuesday) This package
-started out as a small application to demonstrate various examples of
-downloadable reports (R Markdown, Quarto, etc.), but it’s grown to
-include additional features:
+The \#TidyTuesday data viewer (`ttdviewer`) is a Shiny app-package[^1]
+for viewing data from the [`#TidyTuesday`
+project](https://github.com/rfordatascience/tidytuesday). It started as
+a small app to demonstrate downloadable reports (R Markdown and Quarto).
+It has since grown to include the features below:
 
-1.  The data are loaded directly from GitHub (i.e., with help from the
+1.  The data are loaded directly from GitHub. The index of titles and
+    file URLs is built with the
     [`tidytuesdayR`](https://dslc-io.github.io/tidytuesdayR/) and
-    [`ttmeta`](https://r4ds.github.io/ttmeta/) packages).
+    [`ttmeta`](https://r4ds.github.io/ttmeta/) packages.
 2.  The returned object is visible as a list on the first `nav_panel()`
     via the [`listviewerlite`
     package](https://long39ng.github.io/listviewerlite/).  
@@ -21,6 +21,8 @@ include additional features:
     missingness, categorical levels, numeric distribution, correlation,
     column types and memory usage*’ are available on the third
     `nav_panel()`.
+5.  The sidebar downloads an R Markdown or Quarto report for the
+    selected dataset.
 
 ## Architecture
 
@@ -113,13 +115,21 @@ pak::pak("mjfrigaard/ttdviewer")
 
 ## Launch app
 
-Launch the application using the standalone app function below:
+Launch the application using the standalone app function below. By
+default
+[`launch()`](https://mjfrigaard.github.io/ttdviewer/reference/launch.md)
+runs the app in the background and returns a handle, so the console
+stays available:
 
 ``` r
 
 library(ttdviewer)
-launch()
+handle <- launch()
+handle$stop()
 ```
+
+Use `launch(mode = "run")` to return the app object instead (e.g., in an
+`app.R` file for deployment).
 
 [^1]: An R package containing a Shiny application. Read more
     [here](https://mastering-shiny.org/scaling-packaging.html).

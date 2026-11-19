@@ -1,6 +1,6 @@
-# Report Description UI Module with Format Selection
+# Report Description UI Module
 
-Report Description UI Module with Format Selection
+Report Description UI Module
 
 ## Usage
 

@@ -1,6 +1,6 @@
-# Report Download UI Module with Format Selection
+# Report Download UI Module
 
-Report Download UI Module with Format Selection
+Report Download UI Module
 
 ## Usage
 

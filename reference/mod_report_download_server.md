@@ -1,6 +1,6 @@
-# Report Download Server Module with Enhanced Quarto Error Handling
+# Report Download Server Module
 
-Report Download Server Module with Enhanced Quarto Error Handling
+Report Download Server Module
 
 ## Usage
 

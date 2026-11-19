@@ -8,11 +8,11 @@ library(inspectdf)
 library(ttdviewer)
 ```
 
-The report generation in the \#TidyTuesday data viewer app consists of
-three interconnected modules that work together to provide users with
-downloadable Quarto and R Markdown reports. The modules include options
-for format selection, Quarto system capability detection, and reliable
-file generation with comprehensive error handling.
+Three modules build the downloadable reports in the \#TidyTuesday data
+viewer. Together they let users download a Quarto or R Markdown report.
+The modules include options for format selection, Quarto system
+capability detection, and reliable file generation with comprehensive
+error handling.
 
 ## Module Architecture
 
@@ -24,16 +24,28 @@ The report generation system consists of three main components:
 3.  **`mod_report_download`**: Report generation and download
     functionality
 
-``` default
-█─launch 
-├─█─app_ui 
-│ ├─█─mod_report_input_ui 
-│ ├─█─mod_report_desc_ui 
-│ └─█─mod_report_download_ui 
-└─█─app_server 
-  ├─█─mod_report_input_server 
-  ├─█─mod_report_desc_server 
-  └─█─mod_report_download_server 
+The call tree below comes from
+[`stackcallr::call_tree_dir()`](https://mjfrigaard.github.io/stackcallr/reference/call_tree_dir.html),
+which parses `R/` without running it. The three `mod_report_*` modules
+sit beside the list, table, and plot modules:
+
+``` r
+stackcallr::call_tree_dir("../R", root = "launch", modules_only = TRUE)
+█─launch
+├─mod_input_ui
+├─mod_report_input_ui
+├─mod_report_desc_ui
+├─mod_report_download_ui
+├─mod_list_ui
+├─mod_table_ui
+├─mod_plot_ui
+├─mod_input_server
+├─mod_report_input_server
+├─mod_report_desc_server
+├─mod_list_server
+├─mod_table_server
+├─mod_plot_server
+└─mod_report_download_server
 ```
 
 These three modules work together to handle multiple rendering formats,
@@ -64,7 +76,7 @@ selectInput(
 )
 ```
 
-The input includes bold, user-friendly labels to emphasizes
+The input includes bold, user-friendly labels to emphasize
 functionality. The default selected input (R Markdown) maximizes
 compatibility.
 
@@ -85,21 +97,24 @@ mod_report_input_server <- function(id) {
 }
 ```
 
-The `input$format` is returned directly via a named list (instead of
-internal state management). Debugging support is provided with
-comprehensive logging.
+The server returns `input$format` as a reactive (instead of storing it
+in internal state). Debugging support is provided with comprehensive
+logging.
 
 ## The Description Generator
 
-``` default
-█─launch 
-├─█─app_ui 
-│ ├─█─mod_report_input_ui 
-│ └─█─mod_report_desc_ui 
-└─█─app_server 
-  ├─█─mod_report_input_server 
-  └─█─mod_report_desc_server 
-    └─█─quarto_available
+The description server calls
+[`quarto_available()`](https://mjfrigaard.github.io/ttdviewer/reference/quarto_available.md)
+(and
+[`logr_msg()`](https://mjfrigaard.github.io/ttdviewer/reference/logr_msg.md)
+for logging):
+
+``` r
+stackcallr::call_tree_dir("../R", root = "mod_report_desc_server")
+█─mod_report_desc_server
+├─logr_msg
+└─█─quarto_available
+  └─logr_msg
 ```
 
 ### UI
@@ -174,6 +189,8 @@ The conditional checking behavior identifies when Quarto is selected and
 provides graceful fallback messaging when it’s unavailable on the
 system.
 
+#### Format descriptions
+
 The `description` returns information for `rmarkdown` and `quarto` with
 bootstrap `icon` for visual identification, `title`, informative
 `desc`riptions to guide user choice, and context-aware `note` that
@@ -225,18 +242,41 @@ observe({
 
 ## The Report Generator
 
-``` default
-█─launch 
-├─█─app_ui 
-│ ├─█─mod_report_input_ui 
-│ └─█─mod_report_download_ui 
-└─█─app_server 
-  ├─█─mod_report_input_server 
-  └─█─mod_report_download_server 
-    ├─█─quarto_available 
-    ├─█─inspect_plot 
-    ├─█─render_report 
-    └─█─create_error_report 
+The download server reaches the rendering functions through
+[`render_report()`](https://mjfrigaard.github.io/ttdviewer/reference/render_report.md):
+
+``` r
+stackcallr::call_tree_dir("../R", root = "mod_report_download_server")
+█─mod_report_download_server
+├─logr_msg
+├─█─quarto_available
+│ └─logr_msg
+├─█─render_report
+│ ├─logr_msg
+│ ├─get_template_path
+│ ├─█─create_fallback_template
+│ │ ├─logr_msg
+│ │ ├─create_fallback_rmd_template
+│ │ └─create_fallback_qmd_template
+│ ├─█─validate_and_clean_params
+│ │ └─logr_msg
+│ ├─█─render_rmarkdown_report
+│ │ └─logr_msg
+│ ├─█─render_quarto_report
+│ │ ├─logr_msg
+│ │ ├─█─quarto_available
+│ │ │ └─logr_msg
+│ │ ├─█─validate_quarto_params
+│ │ │ └─logr_msg
+│ │ ├─█─render_quarto_system_call
+│ │ │ └─logr_msg
+│ │ └─█─render_quarto_alternative
+│ │   ├─logr_msg
+│ │   └─convert_qmd_to_rmd
+│ └─█─create_error_report
+│   └─logr_msg
+└─█─create_error_report
+  └─logr_msg
 ```
 
 ### UI
@@ -279,11 +319,11 @@ function requires the following arguments:
   plot type  
 - `dataset_title`: A reactive expression returning the dataset title
 
-The `format` is returned from the
-[`mod_report_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_input_server.md)
-function, the `data` and `dataset_title` are returned from the
-[`mod_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_server.md),
-so we just need to make an adjustment to the
+The `format` comes from
+[`mod_report_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_input_server.md).
+The `data` and `dataset_title` come from
+[`mod_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_server.md).
+That leaves one adjustment to the
 [`mod_plot_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_plot_server.md)
 so it returns the selected `input$dataset` and `input$plots`:
 
@@ -311,11 +351,9 @@ The download handler (`downloadHandler()`) can be paired with any
 download UI function (`downloadButton()` or `downloadLink()`). Every
 `downloadHandler()` includes `filename` and `content` functions.
 
-- The `filename` portion handles file generation and error handling. The
-  `filename` function generates a data-driven file name based on dataset
-  content, timestamp inclusion for version control, safe character
-  handling for cross-platform compatibility, and a graceful fallback for
-  error conditions.
+- The `filename` function builds the file name from the first dataset
+  name, the format, and a timestamp. It replaces unsafe characters and
+  falls back to `tidytuesday_report.html` on error.
 
 ``` r
 
@@ -415,24 +453,36 @@ generation when all else fails.
 
 ### Rendering Reports
 
-The architecture of the
+The call tree for
 [`render_report()`](https://mjfrigaard.github.io/ttdviewer/reference/render_report.md)
-and it’s supporting utility functions is below:
+and its supporting utility functions is below:
 
-``` default
-█─render_report 
-├─█─get_template_path 
-├─█─create_fallback_template 
-│ ├─█─create_fallback_rmd_template 
-│ └─█─create_fallback_qmd_template 
-├─█─validate_and_clean_params 
-├─█─render_rmarkdown_report 
-└─█─render_quarto_report 
-  ├─█─quarto_available 
-  ├─█─validate_quarto_params 
-  ├─█─render_quarto_system_call 
-  └─█─render_quarto_alternative 
-    └─█─convert_qmd_to_rmd
+``` r
+stackcallr::call_tree_dir("../R", root = "render_report")
+█─render_report
+├─logr_msg
+├─get_template_path
+├─█─create_fallback_template
+│ ├─logr_msg
+│ ├─create_fallback_rmd_template
+│ └─create_fallback_qmd_template
+├─█─validate_and_clean_params
+│ └─logr_msg
+├─█─render_rmarkdown_report
+│ └─logr_msg
+├─█─render_quarto_report
+│ ├─logr_msg
+│ ├─█─quarto_available
+│ │ └─logr_msg
+│ ├─█─validate_quarto_params
+│ │ └─logr_msg
+│ ├─█─render_quarto_system_call
+│ │ └─logr_msg
+│ └─█─render_quarto_alternative
+│   ├─logr_msg
+│   └─convert_qmd_to_rmd
+└─█─create_error_report
+  └─logr_msg
 ```
 
 The core rendering function coordinates multiple rendering strategies:
@@ -569,8 +619,9 @@ with `NA` values.
 
 #### Error Handling and Report
 
-If the rendering functions attempts fail, the system generates an
-comprehensive error report:
+If every rendering attempt fails,
+[`create_error_report()`](https://mjfrigaard.github.io/ttdviewer/reference/create_error_report.md)
+writes an HTML error page:
 
 ``` r
 
@@ -673,7 +724,7 @@ between modules.
 
 The
 [`get_template_path()`](https://mjfrigaard.github.io/ttdviewer/reference/get_template_path.md)
-function return the specified
+function returns the specified
 
 ``` r
 
