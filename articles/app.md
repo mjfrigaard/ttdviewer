@@ -20,19 +20,15 @@ The call tree below is built with
 stackcallr::call_tree_dir("../R", root = "launch", modules_only = TRUE)
 █─launch
 ├─mod_input_ui
-├─mod_report_input_ui
-├─mod_report_desc_ui
-├─mod_report_download_ui
+├─mod_download_ui
 ├─mod_list_ui
-├─mod_table_ui
+├─mod_summary_ui
 ├─mod_plot_ui
 ├─mod_input_server
-├─mod_report_input_server
-├─mod_report_desc_server
+├─mod_download_server
+├─mod_summary_server
 ├─mod_list_server
-├─mod_table_server
-├─mod_plot_server
-└─mod_report_download_server
+└─mod_plot_server
 ```
 
 ### Variable inputs
@@ -133,221 +129,6 @@ output$list <- renderUI({
   listviewerlite::listview(data())
 })
 ```
-
-## Table
-
-The `mod_table` module is a Shiny module that provides interactive data
-table functionality for `#TidyTuesday` datasets using [the `reactable`
-package](https://glin.github.io/reactable/). This module provides users
-with a powerful interface for exploring tabular data with built-in
-search, sorting, and pagination capabilities.
-
-### Input Controls
-
-The UI function is wrapped in a
-[`bslib::card()`](https://rstudio.github.io/bslib/reference/card.html):
-
-``` r
-
-bslib::card(
-  bslib::card_body(
-    selectInput(
-      inputId = ns("ds_input"),
-      label = "Dataset",
-      choices = c(c("", NULL)),
-      selected = ""
-    ),
-    markdown("The table display below is provided by [`reactable`](https://glin.github.io/reactable/):"),
-    reactable::reactableOutput(ns("table"))
-  )
-)
-```
-
-The server function observes the selected
-[`data()`](https://rdrr.io/r/utils/data.html) list and populates the
-selector with available datasets:
-
-``` r
-
-observe({
-  req(data())
-  ds_names <- names(data())
-  updateSelectInput(
-    inputId = "ds_input",
-    choices = ds_names, 
-    selected = ds_names[1]
-  )
-}) |>
-  bindEvent(data())
-```
-
-This observe waits for data availability with `req(data())`, extracts
-dataset names from the reactive
-[`data()`](https://rdrr.io/r/utils/data.html), updates the select input
-with available choices, and responds to
-[`data()`](https://rdrr.io/r/utils/data.html) changes via `bindEvent()`.
-
-### Table Display
-
-The display functionality lies in the rendering observer. This pattern
-ensures the table is re-rendered whenever the underlying
-[`data()`](https://rdrr.io/r/utils/data.html) changes, but not on every
-reactive cycle.
-
-``` r
-
-observe({
-  req(data())
-  output$table <- reactable::renderReactable({
-    # Table generation logic
-  })
-}) |>
-  bindEvent(data())
-```
-
-Before the table is rendered, there are several data processing steps:
-
-1.  Confirmation the data exists  
-2.  The dataset input is properly selected from the
-    [`data()`](https://rdrr.io/r/utils/data.html) list  
-3.  The selected data is a valid data frame  
-4.  Appropriate logging for debugging and monitoring
-
-``` r
-
-tryCatch({
-  req(data())
-  if (length(data()) == 0) {
-    logr_msg(
-      message = "No data available for table rendering", 
-      level = "WARN")
-    return(NULL)
-  }
-  
-  ds_list <- data()
-  ds_selected <- as.character(input$ds_input)
-  display_ds <- ds_list[[ds_selected]]
-  
-  if (!is.data.frame(display_ds)) {
-    logr_msg(
-      message = "First dataset is not a data frame", 
-      level = "ERROR")
-    return(NULL)
-  }
-  # code continues...
-})
-```
-
-### Large Datasets
-
-Conditional logic handles large datasets:
-
-``` r
-
-display_ds <- if (nrow(display_ds) > 1000) {
-  logr_msg(
-    message = "Large dataset detected - limiting to first 1000 rows", 
-    level = "INFO")
-  head(display_ds, 1000)
-} else {
-  display_ds
-}
-```
-
-This prevents performance issues by limiting display to 1000 rows for
-large datasets and logs the limit.
-
-### Table Features
-
-The module leverages `reactable`’s extensive features for an enhanced
-user experience:
-
-``` r
-
-reactable::reactable(
-  display_ds,
-  searchable = TRUE,
-  sortable = TRUE,
-  pagination = TRUE,
-  defaultPageSize = 10,
-  showPageSizeOptions = TRUE,
-  pageSizeOptions = c(5, 10, 20, 50),
-  highlight = TRUE,
-  bordered = TRUE,
-  striped = TRUE,
-  resizable = TRUE,
-  wrap = FALSE,
-  defaultColDef = reactable::colDef(
-    minWidth = 100,
-    headerStyle = list(background = "#f7f7f8")
-  )
-)
-```
-
-This configuration provides:
-
-1.  Search functionality across all columns  
-2.  Sortable columns  
-3.  Pagination (set to 10 by default)  
-4.  Row highlighting  
-5.  Striped rows  
-6.  Bordered cells  
-7.  Custom header styling with subtle background color  
-8.  Minimum column width  
-9.  No text wrapping to maintain clean layout  
-10. Multiple page size options (5, 10, 20, 50 rows)  
-11. Show page size selector for user preference  
-12. Resizable columns for custom layouts
-
-### Error Handling
-
-The UI includes comprehensive error handling:
-
-``` r
-
-tryCatch({
-  # UI creation code
-}, error = function(e) {
-  logr_msg(message = paste("Error creating table UI:", e$message), level = "ERROR")
-  bslib::card(
-    bslib::card_header("Table Error"),
-    bslib::card_body(
-      h4("Error loading table interface", class = "text-danger")
-    )
-  )
-})
-```
-
-If UI creation fails, users see a graceful error message instead of a
-broken interface.
-
-``` r
-
-tryCatch({
-  # Table rendering logic
-}, error = function(e) {
-  logr_msg(
-    message = paste("Error rendering table:", e$message), 
-    level = "ERROR")
-  reactable::reactable(
-    data.frame(Error = paste("Failed to load data:", e$message)),
-    searchable = FALSE,
-    sortable = FALSE,
-    pagination = FALSE
-  )
-})
-```
-
-The server error handling logs errors for debugging and returns a
-functional table with error information. The interactive features are
-disabled on error tables with user-friendly error messages.
-
-`mod_table` creates a user-friendly data table interface with
-comprehensive error handling. The `reactable` integration provides data
-exploration while the design makes it easy to include in the
-[`app_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/app_ui.md)
-and
-[`app_server()`](https://mjfrigaard.github.io/ttdviewer/reference/app_server.md).
 
 ## Graphs
 
@@ -582,7 +363,51 @@ for graceful degradation with fallback UI elements. The
 function prints plot-level error handling at different severity levels
 with visual placeholders and user-friendly error messages.
 
-## Reports
+## Summary
 
-The report modules are covered in
-[`vignette("reports", package = "ttdviewer")`](https://mjfrigaard.github.io/ttdviewer/articles/reports.md).
+The Summary tab
+([`mod_summary_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_summary_ui.md)
+and
+[`mod_summary_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_summary_server.md))
+lists each file with its rows and columns. For the file picked in its
+dropdown, it shows three `reactable` tables:
+
+- Summary statistics: rows, columns, missing values, complete rows, and
+  data types, from
+  [`tt_file_summary()`](https://mjfrigaard.github.io/ttdviewer/reference/tt_file_summary.md).
+- Variable information: one row per column with its type, missing count,
+  missing percent, and unique values, from
+  [`tt_var_info()`](https://mjfrigaard.github.io/ttdviewer/reference/tt_var_info.md).
+  Missing percents over 10 are shaded yellow; over 50, red.
+- Data: the file itself in a searchable, sortable, paged table. Only the
+  first 1,000 rows are shown to keep the browser responsive; the sidebar
+  download has the full file.
+
+## Download
+
+The sidebar download
+([`mod_download_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_download_ui.md)
+and
+[`mod_download_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_download_server.md))
+saves the loaded data in one of three formats:
+
+| Format | What is written |
+|----|----|
+| CSV | each data frame written with [`vroom::vroom_write()`](https://vroom.tidyverse.org/reference/vroom_write.html) |
+| Parquet | each data frame written with [`nanoparquet::write_parquet()`](https://nanoparquet.r-lib.org/reference/write_parquet.html) |
+| Original format | each file fetched again from its `github_url` attribute (set by [`load_tt_data()`](https://mjfrigaard.github.io/ttdviewer/reference/load_tt_data.md)) |
+
+A title with one file downloads that file. A title with several files
+downloads one `.zip` named after the title and format (for example,
+`lego_database_csv.zip`). The internal helpers
+[`tt_download_filename()`](https://mjfrigaard.github.io/ttdviewer/reference/tt_download_filename.md)
+and
+[`write_tt_download()`](https://mjfrigaard.github.io/ttdviewer/reference/write_tt_download.md)
+pick the name and write the file:
+
+``` r
+
+ttd <- load_tt_data("Space Launches")
+ttdviewer:::tt_download_filename(ttd, "parquet", "Space Launches")
+ttdviewer:::write_tt_download(ttd, "parquet", file = "space_launches_parquet.zip")
+```

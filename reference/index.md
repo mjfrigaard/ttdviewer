@@ -39,7 +39,11 @@
 - [`load_tt_data()`](https://mjfrigaard.github.io/ttdviewer/reference/load_tt_data.md)
   : Load TidyTuesday Datasets from GitHub by Title
 - [`logr_msg()`](https://mjfrigaard.github.io/ttdviewer/reference/logr_msg.md)
-  : Log Messages to Console and File with Optional JSON Format
+  : Log Messages to Console and File
+- [`mod_download_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_download_server.md)
+  : Data Download Server Module
+- [`mod_download_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_download_ui.md)
+  : Data Download UI Module
 - [`mod_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_server.md)
   : Dataset Title Input Server Module
 - [`mod_input_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_ui.md)
@@ -52,22 +56,10 @@
   : Inspect Plot Module Server
 - [`mod_plot_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_plot_ui.md)
   : Inspect Plot Module UI
-- [`mod_report_desc_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_desc_server.md)
-  : Report Description Format Server Module
-- [`mod_report_desc_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_desc_ui.md)
-  : Report Description UI Module
-- [`mod_report_download_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_download_server.md)
-  : Report Download Server Module
-- [`mod_report_download_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_download_ui.md)
-  : Report Download UI Module
-- [`mod_report_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_input_server.md)
-  : Report Input Server Module
-- [`mod_report_input_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_input_ui.md)
-  : Report Input UI Module with Format Selection
-- [`mod_table_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_table_server.md)
-  : Table Server Module (reactable)
-- [`mod_table_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_table_ui.md)
-  : Table UI Module (reactable)
+- [`mod_summary_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_summary_server.md)
+  : Summary Server Module
+- [`mod_summary_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_summary_ui.md)
+  : Summary UI Module
 - [`test_title_cleaning()`](https://mjfrigaard.github.io/ttdviewer/reference/test_title_cleaning.md)
   : Test Dataset Title Cleaning
 - [`tstmp()`](https://mjfrigaard.github.io/ttdviewer/reference/tstmp.md)

@@ -42,7 +42,6 @@
     <li><a class="dropdown-item" href="articles/data.html">Data</a></li>
     <li><a class="dropdown-item" href="articles/graphs.html">Graphs</a></li>
     <li><a class="dropdown-item" href="articles/lists.html">Lists</a></li>
-    <li><a class="dropdown-item" href="articles/reports.html">Reports</a></li>
   </ul>
 </li>
       </ul>
@@ -70,15 +69,15 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The #TidyTuesday data viewer (<code>ttdviewer</code>) is a Shiny app-package<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;An R package containing a Shiny application. Read more &lt;a href="https://mastering-shiny.org/scaling-packaging.html" class="external-link"&gt;here&lt;/a&gt;.&lt;/p&gt;'><sup>1</sup></a> for viewing data from the <a href="https://github.com/rfordatascience/tidytuesday" class="external-link"><code>#TidyTuesday</code> project</a>. It started as a small app to demonstrate downloadable reports (R Markdown and Quarto). It has since grown to include the features below:</p>
+<p>The #TidyTuesday data viewer (<code>ttdviewer</code>) is a Shiny app-package<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;An R package containing a Shiny application. Read more &lt;a href="https://mastering-shiny.org/scaling-packaging.html" class="external-link"&gt;here&lt;/a&gt;.&lt;/p&gt;'><sup>1</sup></a> for viewing data from the <a href="https://github.com/rfordatascience/tidytuesday" class="external-link"><code>#TidyTuesday</code> project</a>. It has the features below:</p>
 <ol style="list-style-type: decimal">
 <li>The data are loaded directly from GitHub. The index of titles and file URLs is built with the <a href="https://dslc-io.github.io/tidytuesdayR/" class="external-link"><code>tidytuesdayR</code></a> and <a href="https://r4ds.github.io/ttmeta/" class="external-link"><code>ttmeta</code></a> packages.</li>
 <li>The returned object is visible as a list on the first <code>nav_panel()</code> via the <a href="https://long39ng.github.io/listviewerlite/" class="external-link"><code>listviewerlite</code> package</a>.<br>
 </li>
-<li>The data are visible as a table compliments of the <a href="https://glin.github.io/reactable/" class="external-link"><code>reactable</code> package</a> in the second <code>nav_panel()</code>.<br>
+<li>The Summary tab shows the number of files, summary statistics, variable information (type, missing values, unique values), and the data itself (first 1,000 rows) for each file, using the <a href="https://glin.github.io/reactable/" class="external-link"><code>reactable</code> package</a>.<br>
 </li>
-<li>Data visualizations from the <a href="https://alastairrushworth.com/inspectdf/" class="external-link"><code>inspectdf</code> package</a> ‘<em>summarise missingness, categorical levels, numeric distribution, correlation, column types and memory usage</em>’ are available on the third <code>nav_panel()</code>.</li>
-<li>The sidebar downloads an R Markdown or Quarto report for the selected dataset.</li>
+<li>Data visualizations from the <a href="https://alastairrushworth.com/inspectdf/" class="external-link"><code>inspectdf</code> package</a> ‘<em>summarise missingness, categorical levels, numeric distribution, correlation, column types and memory usage</em>’ are available on the Graphs tab.</li>
+<li>The sidebar downloads the data as CSV, parquet, or the original file format. Titles with several files download as one <code>.zip</code>.</li>
 </ol>
 <div class="section level2">
 <h2 id="architecture">Architecture<a class="anchor" aria-label="anchor" href="#architecture"></a>
@@ -90,28 +89,25 @@ flowchart LR
   Launch --&gt; Server["app_server()"]
   Server --&gt; Input["mod_input_server()"]
   Input --&gt; Data["load_tt_data()"]
-  Server --&gt; ReportInput["mod_report_input_server()"]
-  ReportInput --&gt; ReportDesc["mod_report_desc_server()"]
-  ReportInput --&gt; ReportDownload["mod_report_download_server()"]
-  ReportDownload --&gt; RenderReport["render_report()"]
+  Server --&gt; Download["mod_download_server()"]
+  Download --&gt; WriteDownload["write_tt_download()"]
+  Server --&gt; Summary["mod_summary_server()"]
   Server --&gt; List["mod_list_server()"]
-  Server --&gt; Table["mod_table_server()"]
   Server --&gt; Plot["mod_plot_server()"]
   Plot --&gt; InspectPlot["inspect_plot()"]
+  Data --&gt; Summary
+  Data --&gt; Download
   Data --&gt; List
-  Data --&gt; Table
   Data --&gt; Plot</code></pre>
-<p>The UI arranges module outputs into panels while the sidebar hosts the dataset selector and report generation options.</p>
+<p>The UI arranges module outputs into panels while the sidebar hosts the dataset selector and the data download.</p>
 <pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'13px'}}}%%
 flowchart LR
   Sidebar["Sidebar inputs"] --&gt; InputUI["mod_input_ui()"]
-  Sidebar --&gt; ReportUI["mod_report_input_ui()"]
-  Sidebar --&gt; ReportDescUI["mod_report_desc_ui()"]
-  Sidebar --&gt; ReportDownloadUI["mod_report_download_ui()"]
+  Sidebar --&gt; DownloadUI["mod_download_ui()"]
   Tabs["Tab panels"] --&gt; ListUI["mod_list_ui()"]
-  Tabs --&gt; TableUI["mod_table_ui()"]
+  Tabs --&gt; SummaryUI["mod_summary_ui()"]
   Tabs --&gt; PlotUI["mod_plot_ui()"]</code></pre>
-<p>Supporting utilities and tests wrap the core modules. Logging, data helpers, and report builders are kept in standalone R files, while <code>tests/testthat</code> validates module behavior and data helpers.</p>
+<p>Supporting utilities and tests wrap the core modules. Logging, data helpers, and download writers are kept in standalone R files, while <code>tests/testthat</code> validates module behavior and data helpers.</p>
 <pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
 flowchart TB
   subgraph Utilities
@@ -119,14 +115,15 @@ flowchart TB
     Ctr["ctr()"]
     Load["load_tt_data()"]
     Inspect["inspect_plot()"]
-    Render["render_report()"]
+    Write["write_tt_download()"]
+    Summarise["tt_file_summary() / tt_var_info()"]
   end
   subgraph Modules
     ModInput["mod_input_*"]
     ModList["mod_list_*"]
-    ModTable["mod_table_*"]
     ModPlot["mod_plot_*"]
-    ModReport["mod_report_*"]
+    ModSummary["mod_summary_*"]
+    ModDownload["mod_download_*"]
   end
   Utilities --&gt; Modules</code></pre>
 <pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
@@ -134,7 +131,7 @@ flowchart TB
   subgraph Tests
     TestApp["test-app_*"]
     TestModules["test-mod_*"]
-    TestUtils["test-load_tt_data / test-inspect_plot / test-render_report / test-logr_msg"]
+    TestUtils["test-load_tt_data / test-inspect_plot / test-download_tt_data / test-logr_msg"]
   end
   Modules --&gt; Tests
   Utilities --&gt; Tests</code></pre>

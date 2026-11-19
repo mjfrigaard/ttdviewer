@@ -1,13 +1,12 @@
-# Log Messages to Console and File with Optional JSON Format
+# Log Messages to Console and File
 
-A utility function for logging messages to the console or (optionally)
-to a log file. Messages can be stored as plain text (default) or in JSON
-format.
+A utility function for logging messages to the console and (optionally)
+to a plain text log file.
 
 ## Usage
 
 ``` r
-logr_msg(message, level = "INFO", log_file = NULL, json = FALSE)
+logr_msg(message, level = "INFO", log_file = NULL)
 ```
 
 ## Arguments
@@ -40,12 +39,6 @@ logr_msg(message, level = "INFO", log_file = NULL, json = FALSE)
   logs are not saved to a file, and only console logging is performed.
   Defaults to `NULL`.
 
-- json:
-
-  A logical value indicating whether to save logs in JSON format.
-  Defaults to `FALSE`. When `TRUE`, logs are written to the specified
-  `log_file` as JSON objects.
-
 ## Value
 
 The function is called for its side effects of logging messages and does
@@ -55,23 +48,12 @@ not return a value.
 
 - **Console Logging**: All messages are always logged to the console.
 
-- **File Logging**: If `log_file` is specified, messages are logged to
-  the file in either plain text or JSON format, depending on the value
-  of `json`.
-
-- **JSON Logs**: When `json = TRUE`, log messages are stored as
-  structured JSON objects with the fields:
-
-  - `timestamp`: The time the message was logged.
-
-  - `level`: The severity level of the log.
-
-  - `message`: The actual log message.
+- **File Logging**: If `log_file` is specified, messages are also
+  written to the file as plain text lines.
 
 ## Note
 
-`logr_msg()` uses the `logger` package for console and plain text
-logging and integrates JSON logging using the `jsonlite` package.
+`logr_msg()` uses the `logger` package for console and file logging.
 
 ## See also
 
@@ -81,37 +63,25 @@ logging and integrates JSON logging using the `jsonlite` package.
 - [`logger::log_formatter()`](https://daroczig.github.io/logger/reference/log_formatter.html)
   for customizing log message formats.
 
-- [`jsonlite::toJSON()`](https://rdrr.io/pkg/jsonlite/man/fromJSON.html)
-  for converting R objects to JSON.
-
 ## Examples
 
 ``` r
 # log a simple informational message to the console
 logr_msg("Application started.")
-#> INFO [2026-11-19 20:35:38] Application started.
+#> INFO [2026-11-19 21:51:18] Application started.
 
-# log an error message to the console and a file in plain text format
+# log an error message to the console and a plain text file
 logr_msg(
   message = "Failed to connect to the database.",
   level = "ERROR",
-  log_file = "error_log.txt"
+  log_file = file.path(tempdir(), "error_log.txt")
 )
-#> ERROR [2026-11-19 20:35:38] Failed to connect to the database.
-
-# log a success message in JSON format
-logr_msg(
-  message = "User login successful.",
-  level = "SUCCESS",
-  log_file = "app_log.json",
-  json = TRUE
-)
-#> SUCCESS [2026-11-19 20:35:38] User login successful.
+#> ERROR [2026-11-19 21:51:18] Failed to connect to the database.
 
 # log a warning message to the console only
 logr_msg(
   message = "Low memory warning.",
   level = "WARN"
 )
-#> {"time":"2026-11-19 20:35:38","level":"WARN","ns":"ttdviewer","ans":"global","topenv":"ttdviewer","fn":"logr_msg","node":"runnervmxfy6o","arch":"x86_64","os_name":"Linux","os_release":"6.8.0-1070-azure","os_version":"#78~22.04.1-Ubuntu SMP Thu Sep 24 18:46:45 UTC 2026","pid":6618,"user":"runner","msg":"Low memory warning."}
+#> WARN [2026-11-19 21:51:18] Low memory warning.
 ```

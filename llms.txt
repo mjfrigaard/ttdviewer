@@ -2,9 +2,8 @@
 
 The \#TidyTuesday data viewer (`ttdviewer`) is a Shiny app-package[^1]
 for viewing data from the [`#TidyTuesday`
-project](https://github.com/rfordatascience/tidytuesday). It started as
-a small app to demonstrate downloadable reports (R Markdown and Quarto).
-It has since grown to include the features below:
+project](https://github.com/rfordatascience/tidytuesday). It has the
+features below:
 
 1.  The data are loaded directly from GitHub. The index of titles and
     file URLs is built with the
@@ -13,16 +12,16 @@ It has since grown to include the features below:
 2.  The returned object is visible as a list on the first `nav_panel()`
     via the [`listviewerlite`
     package](https://long39ng.github.io/listviewerlite/).  
-3.  The data are visible as a table compliments of the [`reactable`
-    package](https://glin.github.io/reactable/) in the second
-    `nav_panel()`.  
+3.  The Summary tab shows the number of files, summary statistics,
+    variable information (type, missing values, unique values), and the
+    data itself (first 1,000 rows) for each file, using the [`reactable`
+    package](https://glin.github.io/reactable/).  
 4.  Data visualizations from the [`inspectdf`
     package](https://alastairrushworth.com/inspectdf/) ‘*summarise
     missingness, categorical levels, numeric distribution, correlation,
-    column types and memory usage*’ are available on the third
-    `nav_panel()`.
-5.  The sidebar downloads an R Markdown or Quarto report for the
-    selected dataset.
+    column types and memory usage*’ are available on the Graphs tab.
+5.  The sidebar downloads the data as CSV, parquet, or the original file
+    format. Titles with several files download as one `.zip`.
 
 ## Architecture
 
@@ -38,36 +37,33 @@ flowchart LR
   Launch --> Server["app_server()"]
   Server --> Input["mod_input_server()"]
   Input --> Data["load_tt_data()"]
-  Server --> ReportInput["mod_report_input_server()"]
-  ReportInput --> ReportDesc["mod_report_desc_server()"]
-  ReportInput --> ReportDownload["mod_report_download_server()"]
-  ReportDownload --> RenderReport["render_report()"]
+  Server --> Download["mod_download_server()"]
+  Download --> WriteDownload["write_tt_download()"]
+  Server --> Summary["mod_summary_server()"]
   Server --> List["mod_list_server()"]
-  Server --> Table["mod_table_server()"]
   Server --> Plot["mod_plot_server()"]
   Plot --> InspectPlot["inspect_plot()"]
+  Data --> Summary
+  Data --> Download
   Data --> List
-  Data --> Table
   Data --> Plot
 ```
 
 The UI arranges module outputs into panels while the sidebar hosts the
-dataset selector and report generation options.
+dataset selector and the data download.
 
 ``` mermaid
 %%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'13px'}}}%%
 flowchart LR
   Sidebar["Sidebar inputs"] --> InputUI["mod_input_ui()"]
-  Sidebar --> ReportUI["mod_report_input_ui()"]
-  Sidebar --> ReportDescUI["mod_report_desc_ui()"]
-  Sidebar --> ReportDownloadUI["mod_report_download_ui()"]
+  Sidebar --> DownloadUI["mod_download_ui()"]
   Tabs["Tab panels"] --> ListUI["mod_list_ui()"]
-  Tabs --> TableUI["mod_table_ui()"]
+  Tabs --> SummaryUI["mod_summary_ui()"]
   Tabs --> PlotUI["mod_plot_ui()"]
 ```
 
 Supporting utilities and tests wrap the core modules. Logging, data
-helpers, and report builders are kept in standalone R files, while
+helpers, and download writers are kept in standalone R files, while
 `tests/testthat` validates module behavior and data helpers.
 
 ``` mermaid
@@ -78,14 +74,15 @@ flowchart TB
     Ctr["ctr()"]
     Load["load_tt_data()"]
     Inspect["inspect_plot()"]
-    Render["render_report()"]
+    Write["write_tt_download()"]
+    Summarise["tt_file_summary() / tt_var_info()"]
   end
   subgraph Modules
     ModInput["mod_input_*"]
     ModList["mod_list_*"]
-    ModTable["mod_table_*"]
     ModPlot["mod_plot_*"]
-    ModReport["mod_report_*"]
+    ModSummary["mod_summary_*"]
+    ModDownload["mod_download_*"]
   end
   Utilities --> Modules
 ```
@@ -96,7 +93,7 @@ flowchart TB
   subgraph Tests
     TestApp["test-app_*"]
     TestModules["test-mod_*"]
-    TestUtils["test-load_tt_data / test-inspect_plot / test-render_report / test-logr_msg"]
+    TestUtils["test-load_tt_data / test-inspect_plot / test-download_tt_data / test-logr_msg"]
   end
   Modules --> Tests
   Utilities --> Tests
@@ -175,7 +172,11 @@ Use `launch(mode = "run")` to return the app object instead (e.g., in an
 - [`load_tt_data()`](https://mjfrigaard.github.io/ttdviewer/reference/load_tt_data.md)
   : Load TidyTuesday Datasets from GitHub by Title
 - [`logr_msg()`](https://mjfrigaard.github.io/ttdviewer/reference/logr_msg.md)
-  : Log Messages to Console and File with Optional JSON Format
+  : Log Messages to Console and File
+- [`mod_download_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_download_server.md)
+  : Data Download Server Module
+- [`mod_download_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_download_ui.md)
+  : Data Download UI Module
 - [`mod_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_server.md)
   : Dataset Title Input Server Module
 - [`mod_input_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_ui.md)
@@ -188,22 +189,10 @@ Use `launch(mode = "run")` to return the app object instead (e.g., in an
   : Inspect Plot Module Server
 - [`mod_plot_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_plot_ui.md)
   : Inspect Plot Module UI
-- [`mod_report_desc_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_desc_server.md)
-  : Report Description Format Server Module
-- [`mod_report_desc_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_desc_ui.md)
-  : Report Description UI Module
-- [`mod_report_download_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_download_server.md)
-  : Report Download Server Module
-- [`mod_report_download_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_download_ui.md)
-  : Report Download UI Module
-- [`mod_report_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_input_server.md)
-  : Report Input Server Module
-- [`mod_report_input_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_report_input_ui.md)
-  : Report Input UI Module with Format Selection
-- [`mod_table_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_table_server.md)
-  : Table Server Module (reactable)
-- [`mod_table_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_table_ui.md)
-  : Table UI Module (reactable)
+- [`mod_summary_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_summary_server.md)
+  : Summary Server Module
+- [`mod_summary_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_summary_ui.md)
+  : Summary UI Module
 - [`test_title_cleaning()`](https://mjfrigaard.github.io/ttdviewer/reference/test_title_cleaning.md)
   : Test Dataset Title Cleaning
 - [`tstmp()`](https://mjfrigaard.github.io/ttdviewer/reference/tstmp.md)
@@ -219,4 +208,3 @@ Use `launch(mode = "run")` to return the app object instead (e.g., in an
 - [Data](https://mjfrigaard.github.io/ttdviewer/articles/data.md):
 - [Graphs](https://mjfrigaard.github.io/ttdviewer/articles/graphs.md):
 - [Lists](https://mjfrigaard.github.io/ttdviewer/articles/lists.md):
-- [Reports](https://mjfrigaard.github.io/ttdviewer/articles/reports.md):
