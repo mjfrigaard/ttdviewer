@@ -29,6 +29,36 @@
   vroom::vroom(files, delim = delim, show_col_types = FALSE)
 }
 
+# Some upstream files mix Windows-1252 or Mac Roman text into UTF-8 columns;
+# invalid strings break downstream rendering (e.g., listviewerlite), so
+# re-encode them. Mac Roman smart quotes are bytes D0-D5; Windows-1252 uses
+# 80-9F, which Mac Roman spends on accented letters.
+.guess_encoding <- function(x) {
+  bytes <- as.integer(charToRaw(x))
+  if (any(bytes >= 0xD0 & bytes <= 0xD5) && !any(bytes >= 0x80 & bytes <= 0x9F)) {
+    "macintosh"
+  } else {
+    "windows-1252"
+  }
+}
+
+.fix_utf8 <- function(df) {
+  if (!is.data.frame(df)) return(df)
+  for (col in names(df)) {
+    x <- df[[col]]
+    if (is.character(x)) {
+      bad <- !is.na(x) & !validUTF8(x)
+      if (any(bad)) {
+        x[bad] <- vapply(x[bad], function(s) {
+          iconv(s, from = .guess_encoding(s), to = "UTF-8", sub = "?")
+        }, character(1), USE.NAMES = FALSE)
+        df[[col]] <- x
+      }
+    }
+  }
+  df
+}
+
 ### \--- LOAD TIDY TUESDAY DATA --\ ----
 
 #' Load TidyTuesday Datasets from GitHub by Title
@@ -50,8 +80,9 @@
 #' @param title A character string matching the `title` field in
 #'   `all_tt_combined`.
 #'
-#' @return A named list of tibbles or data frames (one per file). Failed or
-#'   skipped datasets are excluded.
+#' @return A named list of tibbles or data frames (one per file), each with
+#'   `clean_title` and `github_url` attributes. Failed or skipped datasets are
+#'   excluded.
 #'
 #' @export
 #'
@@ -124,7 +155,9 @@ load_tt_data <- function(title) {
         logr_msg(
           message = glue::glue("Successfully loaded {file}"),
           level = "SUCCESS")
+        result$result <- .fix_utf8(result$result)
         attr(result$result, "clean_title") <- cname
+        attr(result$result, "github_url") <- url
         return(result$result)
       } else {
         logr_msg(

@@ -53,13 +53,25 @@ mod_input_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     logr_msg("Initializing variable input server module", level = "DEBUG")
 
+    # Load in two passes: first set the title to NULL so every tab clears,
+    # then load the new title once that cleared state reaches the browser.
+    # Outputs recalculate during the load, which shows the busy spinners.
+    title <- reactiveVal(NULL)
+
+    observe({
+      title(NULL)
+      new_title <- input$ds_title
+      session$onFlushed(function() title(new_title), once = TRUE)
+    }) |>
+      bindEvent(input$ds_title)
+
     data <- reactive({
-      req(input$ds_title)
+      if (is.null(title())) return(NULL)
       logr_msg(
-        message = paste("User selected dataset:", input$ds_title),
+        message = paste("User selected dataset:", title()),
         level = "INFO")
       tryCatch({
-          result <- load_tt_data(input$ds_title)
+          result <- load_tt_data(title())
           if (length(result) == 0) {
             logr_msg(
               message = "Empty dataset returned",
@@ -83,8 +95,7 @@ mod_input_server <- function(id) {
           )
           return(list())
         })
-    }) |>
-      bindEvent(input$ds_title)
+    })
 
     output$vals <- renderPrint({
       req(data())

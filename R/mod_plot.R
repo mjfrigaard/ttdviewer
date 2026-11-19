@@ -62,6 +62,10 @@ mod_plot_server <- function(id, ttd) {
 
     # populate the dataset dropdown once ttd is available
     observe({
+      if (is.null(ttd_r())) {
+        updateSelectInput(session, "dataset", choices = character(0))
+        return()
+      }
       tryCatch({
         ds <- names(ttd_r())
         if (is.null(ds) || length(ds) == 0) {
@@ -83,7 +87,7 @@ mod_plot_server <- function(id, ttd) {
           level = "ERROR")
       })
     }) |>
-      bindEvent(ttd_r(), once = FALSE)
+      bindEvent(ttd_r(), ignoreNULL = FALSE)
 
     # render each selected plot type for chosen dataset
     observe({
@@ -120,12 +124,12 @@ mod_plot_server <- function(id, ttd) {
             level = "ERROR")
         })
       }) |>
-      bindEvent(list(input$dataset, input$plots), ignoreNULL = TRUE)
+      bindEvent(list(ttd_r(), input$dataset, input$plots), ignoreNULL = TRUE)
 
     # dynamically generate UI for selected plot types
     output$plots_ui <- renderUI({
+      req(ttd_r(), input$dataset, input$plots)
       tryCatch({
-        req(input$dataset, input$plots)
         logr_msg(
           message = sprintf("Rendering UI for dataset '%s' and plots: %s",
             input$dataset, paste(input$plots, collapse = ", ")),
@@ -158,6 +162,6 @@ mod_plot_server <- function(id, ttd) {
         )
       })
     ) |>
-      bindEvent(list(input$dataset, input$plots), ignoreNULL = TRUE)
+      bindEvent(list(ttd_r(), input$dataset, input$plots), ignoreNULL = TRUE)
   })
 }

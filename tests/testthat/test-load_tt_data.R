@@ -291,3 +291,43 @@ test_that("returns empty list when every file fails to load", {
 
   expect_length(result, 0L)
 })
+
+# ── Encoding ──────────────────────────────────────────────────────────────────
+
+test_that(".fix_utf8() converts Windows-1252 strings to valid UTF-8", {
+  bad <- "Kai\x92s sire was \x93Stormy\x94"
+  df <- tibble::tibble(notes = c("ok", bad), n = 1:2)
+
+  result <- .fix_utf8(df)
+
+  expect_true(all(validUTF8(result$notes)))
+  expect_equal(result$notes[2], "Kai’s sire was “Stormy”")
+  expect_equal(result$notes[1], "ok")
+  expect_equal(result$n, 1:2)
+})
+
+test_that(".fix_utf8() converts Mac Roman smart quotes to valid UTF-8", {
+  bad <- "Kai\xd5s sire was \xd2Stormy\xd3"
+  result <- .fix_utf8(tibble::tibble(notes = bad))
+  expect_equal(result$notes, "Kai\u2019s sire was \u201cStormy\u201d")
+})
+
+test_that("load_tt_data() returns valid UTF-8 text columns", {
+  setup_tt_env(make_tt_fixture("data.csv", "csv"))
+  local_mocked_bindings(
+    vroom = function(...) tibble::tibble(notes = "caf\xe9"),
+    .package = "vroom"
+  )
+
+  result <- load_tt_data("Test Dataset")
+
+  expect_true(validUTF8(result[["data.csv"]]$notes))
+  expect_equal(result[["data.csv"]]$notes, "café")
+})
+
+test_that("each element carries its github_url attribute", {
+  setup_tt_env(make_tt_fixture("data.csv", "csv"))
+  local_mocked_bindings(vroom = function(...) .fake_df, .package = "vroom")
+  result <- load_tt_data("Test Dataset")
+  expect_equal(attr(result[["data.csv"]], "github_url"), "https://example.com/data.csv")
+})

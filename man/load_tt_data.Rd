@@ -11,8 +11,9 @@ load_tt_data(title)
 \code{all_tt_combined}.}
 }
 \value{
-A named list of tibbles or data frames (one per file). Failed or
-skipped datasets are excluded.
+A named list of tibbles or data frames (one per file), each with
+\code{clean_title} and \code{github_url} attributes. Failed or skipped datasets are
+excluded.
 }
 \description{
 Filters the internal dataset \code{all_tt_combined} by \code{title} and loads the

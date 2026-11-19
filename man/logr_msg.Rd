@@ -2,9 +2,9 @@
 % Please edit documentation in R/logr_msg.R
 \name{logr_msg}
 \alias{logr_msg}
-\title{Log Messages to Console and File with Optional JSON Format}
+\title{Log Messages to Console and File}
 \usage{
-logr_msg(message, level = "INFO", log_file = NULL, json = FALSE)
+logr_msg(message, level = "INFO", log_file = NULL)
 }
 \arguments{
 \item{message}{A character string representing the message to be logged.}
@@ -23,55 +23,34 @@ logr_msg(message, level = "INFO", log_file = NULL, json = FALSE)
 \item{log_file}{A character string specifying the path to the log file. If
 \code{NULL}, logs are not saved to a file, and only console logging is performed.
 Defaults to \code{NULL}.}
-
-\item{json}{A logical value indicating whether to save logs in JSON format.
-Defaults to \code{FALSE}. When \code{TRUE}, logs are written to the specified
-\code{log_file} as JSON objects.}
 }
 \value{
 The function is called for its side effects of logging messages and does
 not return a value.
 }
 \description{
-A utility function for logging messages to the console or (optionally) to a
-log file. Messages can be stored as plain text (default) or in JSON
-format.
+A utility function for logging messages to the console and (optionally) to
+a plain text log file.
 }
 \details{
 \itemize{
 \item \strong{Console Logging}: All messages are always logged to the console.
-\item \strong{File Logging}: If \code{log_file} is specified, messages are logged to the
-file in either plain text or JSON format, depending on the value of \code{json}.
-\item \strong{JSON Logs}: When \code{json = TRUE}, log messages are stored as structured
-JSON objects with the fields:
-\itemize{
-\item \code{timestamp}: The time the message was logged.
-\item \code{level}: The severity level of the log.
-\item \code{message}: The actual log message.
-}
+\item \strong{File Logging}: If \code{log_file} is specified, messages are also written
+to the file as plain text lines.
 }
 }
 \note{
-\code{logr_msg()} uses the \code{logger} package for console and plain text
-logging and integrates JSON logging using the \code{jsonlite} package.
+\code{logr_msg()} uses the \code{logger} package for console and file logging.
 }
 \examples{
 # log a simple informational message to the console
 logr_msg("Application started.")
 
-# log an error message to the console and a file in plain text format
+# log an error message to the console and a plain text file
 logr_msg(
   message = "Failed to connect to the database.",
   level = "ERROR",
-  log_file = "error_log.txt"
-)
-
-# log a success message in JSON format
-logr_msg(
-  message = "User login successful.",
-  level = "SUCCESS",
-  log_file = "app_log.json",
-  json = TRUE
+  log_file = file.path(tempdir(), "error_log.txt")
 )
 
 # log a warning message to the console only
@@ -85,6 +64,5 @@ logr_msg(
 \itemize{
 \item \code{\link[logger:log_appender]{logger::log_appender()}} for configuring log destinations.
 \item \code{\link[logger:log_formatter]{logger::log_formatter()}} for customizing log message formats.
-\item \code{\link[jsonlite:toJSON]{jsonlite::toJSON()}} for converting R objects to JSON.
 }
 }

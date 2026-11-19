@@ -10,16 +10,13 @@
 #' @export
 app_ui <- function() {
   bslib::page_sidebar(
+    useBusyIndicators(spinners = TRUE, pulse = TRUE),
     title = h4(strong("#TidyTuesday Viewer")),
     sidebar = bslib::sidebar(
       padding = c(12, 12, 12, 12),
       width = "300px",
       mod_input_ui("input"),
-      # br(),
-      mod_report_input_ui("rep_form"),
-      br(),
-      mod_report_desc_ui("rep_desc"),
-      mod_report_download_ui("rep_dwnld"),
+      mod_download_ui("download"),
       tags$details(
         tags$summary(
           strong(
@@ -35,8 +32,8 @@ app_ui <- function() {
         mod_list_ui("listviewerlite")
       ),
       bslib::nav_panel(
-        "Table",
-        mod_table_ui("table")
+        "Summary",
+        mod_summary_ui("summary")
       ),
       bslib::nav_panel(
         "Graphs",

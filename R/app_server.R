@@ -31,15 +31,17 @@ app_server <- function(input, output, session) {
         level = "DEBUG"
       )
 
-      # initialize report modules
-      report_format <- mod_report_input_server("rep_form")
-      mod_report_desc_server("rep_desc", format = report_format)
+      mod_download_server("download", data = selected_data, title = dataset_title)
 
       logr_msg(
-        message = "Report description module initialized",
+        message = "Download module initialized",
         level = "DEBUG")
 
+      mod_summary_server("summary", data = selected_data)
 
+      logr_msg(
+        message = "Summary module initialized",
+        level = "DEBUG")
 
       # reactive values for list
       mod_list_server(id = "listviewerlite", data = selected_data)
@@ -48,30 +50,11 @@ app_server <- function(input, output, session) {
         message = "List module initialized",
         level = "DEBUG")
 
-      # reactive values for table
-      mod_table_server(id = "table", data = selected_data)
-
-      logr_msg(
-        message = "Table module initialized",
-        level = "DEBUG")
-
       # reactive values for visualization
       selected_plots <- mod_plot_server("viz", ttd = selected_data)
 
       logr_msg(
         message = "Plot module initialized",
-        level = "DEBUG")
-
-       mod_report_download_server(
-         id = "rep_dwnld",
-         format = report_format,
-         data = selected_data,
-         selected_plot_type = selected_plots,
-         dataset_title = dataset_title
-       )
-
-      logr_msg(
-        message = "Report description module initialized",
         level = "DEBUG")
 
       logr_msg(

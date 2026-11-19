@@ -15,3 +15,14 @@ test_that("mod_plot_server builds one plot output per selected type", {
     expect_match(html, "plt_mem")
   })
 })
+
+test_that("mod_plot_server removes plots when data is purged", {
+  ttd <- reactiveVal(list(a.csv = data.frame(x = 1:3)))
+  testServer(mod_plot_server, args = list(ttd = ttd), {
+    session$setInputs(dataset = "a.csv", plots = "types")
+    expect_match(output$plots_ui$html, "plt_types")
+    ttd(NULL)
+    session$flushReact()
+    expect_error(output$plots_ui)
+  })
+})
