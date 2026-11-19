@@ -167,9 +167,9 @@ The functions above allow us to collect the following:
 6. Determine the names of any intersecting categorical columns in each dataset in the `ttd` list		
 7. Determine the number of logical columns in each dataset in the `ttd` list	
 8. Determine the number of date columns in each dataset in the `ttd` list		
-8. Determine the names of any date columns in each dataset in the `ttd` list		
-9. Determine the number of list columns in each dataset in the `ttd` list	
-10. Determine the names of any list columns in each dataset in the `ttd` list	
+9. Determine the names of any date columns in each dataset in the `ttd` list		
+10. Determine the number of list columns in each dataset in the `ttd` list	
+11. Determine the names of any list columns in each dataset in the `ttd` list	
 
 ## Function logic
 
@@ -650,7 +650,7 @@ inspect_plot(
   plots = "num")
 ```
 
-If will work if the list has two numeric columns: 
+It will work if the list has two numeric columns: 
 
 ```{r}
 inspect_plot(

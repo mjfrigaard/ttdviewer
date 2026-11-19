@@ -72,24 +72,25 @@ test_that("convert_qmd_to_rmd converts basic Quarto syntax", {
 # -------------------------------------------------------------------------
 test_that("quarto_available detects system quarto & full failure", {
   ## (1) System call succeeds ---------------------------------------------
-  local_mocked_bindings(
-    requireNamespace = function(pkg, ...) FALSE,  # skip package route
-    system2          = function(cmd, args, ...) "1.3.0",
-    file.exists      = function(...) FALSE,
-    .env = globalenv(),
-    .add = TRUE                     # ← NEW
-  )
-  expect_true(quarto_available())
+  local({
+    local_mocked_bindings(
+      requireNamespace = function(pkg, ...) FALSE,  # skip package route
+      system2          = function(cmd, args, ...) "1.3.0",
+      .package = "base"
+    )
+    expect_true(quarto_available())
+  })
 
   ## (2) Nothing available -------------------------------------------------
-  local_mocked_bindings(
-    requireNamespace = function(pkg, ...) FALSE,
-    system2          = function(...) stop("no quarto"),
-    file.exists      = function(...) FALSE,
-    .env = globalenv(),
-    .add = TRUE                     # ← NEW
-  )
-  expect_false(quarto_available())
+  local({
+    local_mocked_bindings(
+      requireNamespace = function(pkg, ...) FALSE,
+      system2          = function(...) stop("no quarto"),
+      file.exists      = function(...) FALSE,
+      .package = "base"
+    )
+    expect_false(quarto_available())
+  })
 })
 
 # -------------------------------------------------------------------------
@@ -102,11 +103,7 @@ test_that("render_quarto_system_call writes param file & calls system2", {
   called <- FALSE
   fake_sys2 <- function(cmd, args, ...) { called <<- TRUE; "ok" }
 
-  local_mocked_bindings(
-    system2 = fake_sys2,
-    .env    = globalenv(),
-    .add    = TRUE                  # ← NEW
-  )
+  local_mocked_bindings(system2 = fake_sys2, .package = "base")
 
   with_tempdir({
     render_quarto_system_call(
@@ -147,11 +144,7 @@ test_that("render_rmarkdown_report delegates to rmarkdown::render", {
     NULL
   }
 
-  local_mocked_bindings(
-    render = fake_render,
-    .env   = getNamespace("rmarkdown"),
-    .add   = TRUE                   # ← NEW
-  )
+  local_mocked_bindings(render = fake_render, .package = "rmarkdown")
 
   render_rmarkdown_report(
     template_path = tpl,

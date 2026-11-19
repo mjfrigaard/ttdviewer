@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_input.R
 \name{mod_input_ui}
 \alias{mod_input_ui}
-\title{Variable Input UI Module}
+\title{Dataset Title Input UI Module}
 \usage{
 mod_input_ui(id)
 }
@@ -13,5 +13,5 @@ mod_input_ui(id)
 UI elements for dataset title selection
 }
 \description{
-Variable Input UI Module
+Dataset Title Input UI Module
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_report_download.R
 \name{mod_report_download_server}
 \alias{mod_report_download_server}
-\title{Report Download Server Module with Enhanced Quarto Error Handling}
+\title{Report Download Server Module}
 \usage{
 mod_report_download_server(id, format, data, dataset_title, selected_plot_type)
 }
@@ -18,5 +18,5 @@ mod_report_download_server(id, format, data, dataset_title, selected_plot_type)
 \item{selected_plot_type}{A reactive expression returning the selected plot type}
 }
 \description{
-Report Download Server Module with Enhanced Quarto Error Handling
+Report Download Server Module
 }

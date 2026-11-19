@@ -1,4 +1,4 @@
-#' Create Enhanced Error Report
+#' Create Error Report
 #'
 #' Writes a self-contained HTML file that describes a report-generation
 #' failure, including the error message, dataset title, format, and a

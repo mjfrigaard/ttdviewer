@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_report_download.R
 \name{mod_report_download_ui}
 \alias{mod_report_download_ui}
-\title{Report Download UI Module with Format Selection}
+\title{Report Download UI Module}
 \usage{
 mod_report_download_ui(id)
 }
@@ -13,5 +13,5 @@ mod_report_download_ui(id)
 UI elements for report generation with format options
 }
 \description{
-Report Download UI Module with Format Selection
+Report Download UI Module
 }

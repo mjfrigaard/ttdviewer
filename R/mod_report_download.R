@@ -1,4 +1,4 @@
-#' Report Download UI Module with Format Selection
+#' Report Download UI Module
 #'
 #' @param id Namespace ID
 #'
@@ -43,7 +43,7 @@ mod_report_download_ui <- function(id) {
   )
 }
 
-#' Report Download Server Module with Enhanced Quarto Error Handling
+#' Report Download Server Module
 #'
 #' @param id Module ID
 #' @param format A reactive expression returning the report format

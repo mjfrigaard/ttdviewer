@@ -1,55 +1,52 @@
-#' Launch the Tidy Tuesday Explorer App
+#' Launch the #TidyTuesday Data Viewer
 #'
-#' This function launches the Shiny application for exploring Tidy Tuesday
-#' datasets.
+#' @param mode `"start"` (default) calls [shiny::startApp()] and returns the
+#'   `ShinyAppHandle`. The app runs in the background and the console stays
+#'   available (see Details). `"run"` returns the `shiny.appobj` for
+#'   [shiny::runApp()] to run; the console is blocked until the app stops.
+#'   Use `"run"` in an `app.R` file for deployment.
+#' @param options List of options passed to [shiny::shinyApp()].
+#' @param run Display mode for interactive RStudio or Positron sessions,
+#'   passed to [display_type()]. Default `"b"` (external browser).
+#' @param ... In `mode = "start"`, additional arguments passed to
+#'   [shiny::startApp()] (e.g., `port`, `host`). Ignored in `mode = "run"`.
 #'
-#' @param ... Additional arguments passed to shinyApp()
-#' @param log_file Optional path to log file for application logs
-#' @param json Logical, whether to use JSON logging format
+#' @details
+#' `mode = "start"` needs Shiny >= 1.14.0. The returned handle has
+#' `status()`, `url()`, `result()`, and `stop()`. Call `handle$stop()` from
+#' the console to shut the app down; starting a new app stops the one
+#' already running.
+#'
+#' @return `mode = "run"`: a `shiny.appobj`. `mode = "start"`: a
+#'   `ShinyAppHandle`.
 #'
 #' @import shiny
 #'
-#' @return A Shiny app object
-#'
 #' @export
 #'
-launch <- function(..., log_file = NULL, json = FALSE) {
-  # initialize logging
-  if (!is.null(log_file)) {
-    logr_msg("Application starting with file logging enabled",
-      level = "INFO", log_file = log_file
-    )
-  } else {
-    logr_msg("Application starting", level = "INFO")
+#' @examples
+#' \dontrun{
+#' if (interactive()) {
+#'   # non-blocking: the console stays available while the app runs
+#'   handle <- launch()
+#'   handle$url()
+#'   handle$stop()
+#'
+#'   # blocking: what app.R uses for deployment
+#'   launch(mode = "run")
+#' }
+#' }
+launch <- function(mode = c("start", "run"), options = list(), run = "b", ...) {
+  mode <- match.arg(mode)
+  display_type(run = run)
+  # load_tt_data() looks up all_tt_combined in the global environment
+  if (!exists("all_tt_combined", envir = .GlobalEnv)) {
+    utils::data("all_tt_combined", package = "ttdviewer", envir = .GlobalEnv)
   }
+  app <- shinyApp(ui = app_ui(), server = app_server, options = options)
 
-  tryCatch(
-    {
-      # check data availability
-      if (!exists("all_tt_combined")) {
-        logr_msg("Loading required data objects", level = "INFO")
-        data("all_tt_combined", package = "ttdviewer", envir = .GlobalEnv)
-      }
-
-      logr_msg("Data objects verified", level = "SUCCESS")
-
-      # Create and launch app
-      app <- shinyApp(
-        ui = app_ui(),
-        server = app_server,
-        ...
-      )
-
-      logr_msg("Shiny app object created successfully", level = "SUCCESS")
-
-      return(app)
-    },
-    error = function(e) {
-      logr_msg(
-        message = paste("Failed to launch application:", e$message),
-        level = "FATAL"
-      )
-      stop("Application failed to launch: ", e$message)
-    }
-  )
+  if (mode == "start") {
+    return(startApp(app, ...))
+  }
+  app
 }

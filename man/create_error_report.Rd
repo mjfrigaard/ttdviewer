@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_error_report.R
 \name{create_error_report}
 \alias{create_error_report}
-\title{Create Enhanced Error Report}
+\title{Create Error Report}
 \usage{
 create_error_report(
   file,

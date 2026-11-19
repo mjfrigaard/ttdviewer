@@ -33,9 +33,8 @@ library(inspectdf)
 library(ttdviewer)
 ```
 
-The report generation in the #TidyTuesday data viewer app consists of three
-interconnected modules that work together to provide users with 
-downloadable Quarto and R Markdown reports. The modules include options for
+Three modules build the downloadable reports in the #TidyTuesday data viewer.
+Together they let users download a Quarto or R Markdown report. The modules include options for
 format selection, Quarto system capability detection, and reliable file 
 generation with comprehensive error handling.
 
@@ -47,39 +46,15 @@ The report generation system consists of three main components:
 2.  **`mod_report_desc`**: Dynamic format description and system status\
 3.  **`mod_report_download`**: Report generation and download functionality
 
+The call tree below comes from `stackcallr::call_tree_dir()`, which parses
+`R/` without running it. The three `mod_report_*` modules sit beside the
+list, table, and plot modules:
+
 ```{r}
 #| label: module-structure
-#| message: false 
-#| warning: false
-#| echo: false 
-#| eval: false
+#| eval: !expr requireNamespace("stackcallr", quietly = TRUE)
 #| comment: ""
-lobstr::ast(
-  launch(
-    app_ui(
-      mod_report_input_ui(),
-      mod_report_desc_ui(),
-      mod_report_download_ui()
-    ),
-    app_server(
-      mod_report_input_server(),
-      mod_report_desc_server(),
-      mod_report_download_server()
-    )
-  )
-)
-```
-
-```{verbatim}
-█─launch 
-├─█─app_ui 
-│ ├─█─mod_report_input_ui 
-│ ├─█─mod_report_desc_ui 
-│ └─█─mod_report_download_ui 
-└─█─app_server 
-  ├─█─mod_report_input_server 
-  ├─█─mod_report_desc_server 
-  └─█─mod_report_download_server 
+stackcallr::call_tree_dir("../R", root = "launch", modules_only = TRUE)
 ```
 
 These three modules work together to handle multiple rendering formats, 
@@ -108,7 +83,7 @@ selectInput(
 )
 ```
 
-The input includes bold, user-friendly labels to emphasizes functionality. 
+The input includes bold, user-friendly labels to emphasize functionality. 
 The default selected input (R Markdown) maximizes compatibility.
 
 ### Server
@@ -128,45 +103,20 @@ mod_report_input_server <- function(id) {
 }
 ```
 
-The `input$format` is returned directly via a named list (instead of
-internal state management). Debugging support is provided with
+The server returns `input$format` as a reactive (instead of storing it in
+internal state). Debugging support is provided with
 comprehensive logging.
 
 ## The Description Generator
 
+The description server calls `quarto_available()` (and `logr_msg()` for
+logging):
+
 ```{r}
 #| label: mod_report_desc-structure
-#| message: false 
-#| warning: false
-#| echo: false 
-#| eval: false
+#| eval: !expr requireNamespace("stackcallr", quietly = TRUE)
 #| comment: ""
-lobstr::ast(
-  launch(
-    app_ui(
-      mod_report_input_ui(),
-      mod_report_desc_ui()
-    ),
-    app_server(
-      mod_report_input_server(),
-      mod_report_desc_server(
-        quarto_available()
-      )
-    )
-  )
-)
-```
-
-
-```{verbatim}
-█─launch 
-├─█─app_ui 
-│ ├─█─mod_report_input_ui 
-│ └─█─mod_report_desc_ui 
-└─█─app_server 
-  ├─█─mod_report_input_server 
-  └─█─mod_report_desc_server 
-    └─█─quarto_available
+stackcallr::call_tree_dir("../R", root = "mod_report_desc_server")
 ```
 
 ### UI
@@ -237,6 +187,8 @@ quarto_status <- if (format()$format == "quarto") {
 The conditional checking behavior identifies when Quarto is selected and
 provides graceful fallback messaging when it's unavailable on the system.
 
+#### Format descriptions
+
 The `description` returns information for `rmarkdown` and `quarto` with
 bootstrap `icon` for visual identification, `title`, informative
 `desc`riptions to guide user choice, and context-aware `note` that reflect
@@ -289,44 +241,14 @@ observe({
 
 ## The Report Generator 
 
+The download server reaches the rendering functions through
+`render_report()`:
+
 ```{r}
 #| label: mod_report_download-structure
-#| message: false 
-#| warning: false
-#| echo: false 
-#| eval: false
+#| eval: !expr requireNamespace("stackcallr", quietly = TRUE)
 #| comment: ""
-lobstr::ast(
-  launch(
-    app_ui(
-      mod_report_input_ui(),
-      mod_report_download_ui()
-    ),
-    app_server(
-      mod_report_input_server(),
-      mod_report_download_server(
-        quarto_available(),
-        inspect_plot(),
-        render_report(),
-        create_error_report()
-      )
-    )
-  )
-)
-```
-
-```{verbatim}
-█─launch 
-├─█─app_ui 
-│ ├─█─mod_report_input_ui 
-│ └─█─mod_report_download_ui 
-└─█─app_server 
-  ├─█─mod_report_input_server 
-  └─█─mod_report_download_server 
-    ├─█─quarto_available 
-    ├─█─inspect_plot 
-    ├─█─render_report 
-    └─█─create_error_report 
+stackcallr::call_tree_dir("../R", root = "mod_report_download_server")
 ```
 
 ### UI
@@ -366,9 +288,8 @@ The `mod_report_download_server()` function requires the following arguments:
   type    
   - `dataset_title`: A reactive expression returning the dataset title   
 
-The `format` is returned from the `mod_report_input_server()` function, the 
-`data` and `dataset_title` are returned from the `mod_input_server()`, so we 
-just need to make an adjustment to the `mod_plot_server()` so it returns the selected `input$dataset` and `input$plots`: 
+The `format` comes from `mod_report_input_server()`. The `data` and
+`dataset_title` come from `mod_input_server()`. That leaves one adjustment to the `mod_plot_server()` so it returns the selected `input$dataset` and `input$plots`: 
 
 ```{r}
 #| label: mod_plot_server-return
@@ -390,57 +311,14 @@ just need to make an adjustment to the `mod_plot_server()` so it returns the sel
 
 ## The Rendering Engine
 
-```{r}
-#| label: mod_report_download-render_report-structure
-#| message: false 
-#| warning: false
-#| echo: false 
-#| eval: false
-#| comment: ""
-lobstr::ast(
-  launch(
-    app_ui(
-      mod_report_input_ui(),
-      mod_report_download_ui()
-    ),
-    app_server(
-      mod_report_input_server(),
-      mod_report_download_server(
-        quarto_available(),
-        inspect_plot(),
-        render_report(
-          get_template_path(),
-          create_fallback_template(
-            create_fallback_rmd_template(),
-            create_fallback_qmd_template()
-          ),
-          validate_and_clean_params(),
-          render_rmarkdown_report(),
-          render_quarto_report(
-            quarto_available(),
-            validate_quarto_params(),
-            render_quarto_system_call(),
-            render_quarto_alternative(
-              convert_qmd_to_rmd()
-            )
-          )
-        ),
-        create_error_report()
-      )
-    )
-  )
-)
-```
 
 The download handler (`downloadHandler()`) can be paired with any download
 UI function (`downloadButton()` or `downloadLink()`). Every
 `downloadHandler()` includes `filename` and `content` functions.
 
--   The `filename` portion handles file generation and error handling. The
-    `filename` function generates a data-driven file name based on dataset
-    content, timestamp inclusion for version control, safe character
-    handling for cross-platform compatibility, and a graceful fallback for
-    error conditions.
+-   The `filename` function builds the file name from the first dataset
+    name, the format, and a timestamp. It replaces unsafe characters and
+    falls back to `tidytuesday_report.html` on error.
 
 ```{r}
 #| label: filename
@@ -540,50 +418,13 @@ else fails.
 
 ### Rendering Reports
 
-The architecture of the `render_report()` and it's supporting utility functions is below:
+The call tree for `render_report()` and its supporting utility functions is below:
 
 ```{r}
 #| label: render_report-structure
-#| message: false 
-#| warning: false
-#| echo: false 
-#| eval: false
+#| eval: !expr requireNamespace("stackcallr", quietly = TRUE)
 #| comment: ""
-lobstr::ast(
-  render_report(
-    get_template_path(),
-    create_fallback_template(
-      create_fallback_rmd_template(),
-      create_fallback_qmd_template()
-    ),
-    validate_and_clean_params(),
-    render_rmarkdown_report(),
-    render_quarto_report(
-      quarto_available(),
-      validate_quarto_params(),
-      render_quarto_system_call(),
-      render_quarto_alternative(
-        convert_qmd_to_rmd()
-      )
-    )
-  )
-)
-```
-
-```{verbatim}
-█─render_report 
-├─█─get_template_path 
-├─█─create_fallback_template 
-│ ├─█─create_fallback_rmd_template 
-│ └─█─create_fallback_qmd_template 
-├─█─validate_and_clean_params 
-├─█─render_rmarkdown_report 
-└─█─render_quarto_report 
-  ├─█─quarto_available 
-  ├─█─validate_quarto_params 
-  ├─█─render_quarto_system_call 
-  └─█─render_quarto_alternative 
-    └─█─convert_qmd_to_rmd
+stackcallr::call_tree_dir("../R", root = "render_report")
 ```
 
 The core rendering function coordinates multiple rendering strategies:
@@ -705,8 +546,8 @@ render_quarto_report <- function(template_path, output_file, params) {
 
 #### Error Handling and Report
 
-If the rendering functions attempts fail, the system generates an 
-comprehensive error report:
+If every rendering attempt fails, `create_error_report()` writes an HTML
+error page:
 
 ```{r}
 #| label: create_error_report
@@ -895,7 +736,7 @@ modules.
 
 ## Utility functions
 
-The `get_template_path()` function return the specified
+The `get_template_path()` function returns the specified
 
 ```{r}
 #| label: get_template_path_rmd

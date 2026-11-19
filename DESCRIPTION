@@ -27,15 +27,17 @@ Imports:
     readxl,
     rlang,
     rmarkdown,
-    shiny,
+    shiny (>= 1.14.0),
     snakecase,
     tibble,
     tools,
+    utils,
     vroom,
     yaml
 Suggests:
     crayon,
     lobstr,
+    stackcallr,
     testthat (>= 3.0.0),
     tidyr,
     tidytuesdayR,
@@ -43,7 +45,8 @@ Suggests:
 Remotes:
     alastairrushworth/inspectdf,
     long39ng/listviewerlite,
-    r4ds/ttmeta
+    r4ds/ttmeta,
+    mjfrigaard/stackcallr
 VignetteBuilder:
     knitr
 Config/Needs/website: pkgdown
@@ -51,4 +54,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.1

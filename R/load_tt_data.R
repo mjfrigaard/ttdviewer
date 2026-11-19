@@ -16,6 +16,19 @@
   readRDS(con)
 }
 
+.load_zip <- function(url) {
+  tmp <- tempfile(fileext = ".zip")
+  dir <- tempfile("unzip_")
+  on.exit(unlink(c(tmp, dir), recursive = TRUE), add = TRUE)
+  download.file(url, tmp, quiet = TRUE, mode = "wb")
+  files <- utils::unzip(tmp, exdir = dir)
+  files <- files[grepl("\\.(csv|tsv)$", files, ignore.case = TRUE) &
+                 !grepl("__MACOSX", files, fixed = TRUE)]
+  if (length(files) == 0) stop("No CSV or TSV files found in zip archive")
+  delim <- if (all(grepl("\\.tsv$", files, ignore.case = TRUE))) "\t" else ","
+  vroom::vroom(files, delim = delim, show_col_types = FALSE)
+}
+
 ### \--- LOAD TIDY TUESDAY DATA --\ ----
 
 #' Load TidyTuesday Datasets from GitHub by Title
@@ -28,9 +41,11 @@
 #' * `"tsv"` - [vroom::vroom()]
 #' * `"xlsx"` - [readxl::read_excel()]
 #' * `"rds"` - [readRDS()] via a URL connection
+#' * `"zip"` - downloaded and unzipped; every CSV (or TSV) inside is read
+#'   with [vroom::vroom()] and stacked into one data frame
 #'
 #' @section Unsupported:
-#' * `"vgz"`, `"zip"`, or `NA` — skipped with error logging
+#' * Any other `data_type`, or `NA`: skipped with error logging
 #'
 #' @param title A character string matching the `title` field in
 #'   `all_tt_combined`.
@@ -78,10 +93,11 @@ load_tt_data <- function(title) {
         grepl("\\.tsv$",      file, ignore.case = TRUE) ~ "tsv",
         grepl("\\.xlsx$",     file, ignore.case = TRUE) ~ "xlsx",
         grepl("\\.rds$",      file, ignore.case = TRUE) ~ "rds",
+        grepl("\\.zip$",      file, ignore.case = TRUE) ~ "zip",
         TRUE ~ tolower(type)
       )
 
-      if (is.na(effective_type) || effective_type %in% c("vgz", "zip")) {
+      if (is.na(effective_type) || effective_type == "vgz") {
         logr_msg(
           message = glue::glue("Skipping unsupported file type '{type}' for {file}"),
           level = "ERROR")
@@ -99,6 +115,7 @@ load_tt_data <- function(title) {
           "tsv"    = vroom::vroom(url, delim = "\t", show_col_types = FALSE),
           "xlsx"   = .load_xlsx(url),
           "rds"    = .load_rds(url),
+          "zip"    = .load_zip(url),
           stop(glue::glue("Unknown or unsupported file type: {effective_type}"))
         )
       })()

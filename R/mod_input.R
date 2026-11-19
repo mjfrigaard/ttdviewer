@@ -1,4 +1,4 @@
-#' Variable Input UI Module
+#' Dataset Title Input UI Module
 #'
 #' @param id Namespace ID
 #'
@@ -41,7 +41,7 @@ mod_input_ui <- function(id) {
   )
 }
 
-#' Variable Input Server Module
+#' Dataset Title Input Server Module
 #'
 #' @param id Module ID
 #'

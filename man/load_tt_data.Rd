@@ -25,13 +25,15 @@ associated data files using a method appropriate for each \code{data_type}.
 \item \code{"tsv"} - \code{\link[vroom:vroom]{vroom::vroom()}}
 \item \code{"xlsx"} - \code{\link[readxl:read_excel]{readxl::read_excel()}}
 \item \code{"rds"} - \code{\link[=readRDS]{readRDS()}} via a URL connection
+\item \code{"zip"} - downloaded and unzipped; every CSV (or TSV) inside is read
+with \code{\link[vroom:vroom]{vroom::vroom()}} and stacked into one data frame
 }
 }
 
 \section{Unsupported}{
 
 \itemize{
-\item \code{"vgz"}, \code{"zip"}, or \code{NA} — skipped with error logging
+\item Any other \code{data_type}, or \code{NA}: skipped with error logging
 }
 }
 

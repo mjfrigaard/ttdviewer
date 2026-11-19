@@ -7,8 +7,8 @@
 ctr(x = as.list(), depth = 10L, length = 50L)
 }
 \arguments{
-\item{x}{An R object—typically a list or other recursive structure—to
-visualize. Defaults to an empty list created by \code{as.list()}.}
+\item{x}{An R object to visualize (typically a list or other recursive
+structure). Defaults to an empty list created by \code{as.list()}.}
 
 \item{depth}{Integer scalar. Maximum depth of recursion for the tree
 traversal. Defaults to \code{10L}.}
@@ -22,7 +22,7 @@ function is its side effect of printing the tree.
 }
 \description{
 This function displays a compact, colored tree of the structure of \code{x}
-using \href{https://lobstr.r-lib.org/reference/ast.html}{lobstr::ast()} with
+using \href{https://lobstr.r-lib.org/reference/tree.html}{lobstr::tree()} with
 sensible defaults. Environments and attributes are hidden, scalar types
 are collapsed, class names are printed in blue, and values are printed
 in green. Newlines in values are removed to keep the output concise.

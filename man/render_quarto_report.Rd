@@ -2,7 +2,7 @@
 % Please edit documentation in R/render_quarto_report.R
 \name{render_quarto_report}
 \alias{render_quarto_report}
-\title{Render Quarto Report with Enhanced Error Handling}
+\title{Render Quarto Report}
 \usage{
 render_quarto_report(template_path, output_file, params)
 }

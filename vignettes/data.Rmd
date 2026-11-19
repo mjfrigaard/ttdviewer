@@ -62,7 +62,7 @@ str(tt_data)
 
 ### Class
 
-The `tt_data` list has it's own special class (`"tt_data"`).
+The `tt_data` list has its own class (`"tt_data"`).
 ```{r}
 attr(tt_data, "class")
 ```
@@ -151,7 +151,7 @@ The `tt_github_urls` data comes from the [.csv file in TidyTuesday repo](https:/
 
 ### All TidyTuesday Data 
 
-The `all_tt_data.rda` dataset contains all years (2018 - current) from the `ttmeta::get_tt_tbl()` function. This datasets contain the following columns:
+The `all_tt_data.rda` dataset contains all years (2018 to present) from the `ttmeta::get_tt_tbl()` function. This dataset contains the following columns:
 
 ```{r}
 #| label: all_tt_data
@@ -160,7 +160,7 @@ dplyr::glimpse(all_tt_data)
 
 ### All TidyTuesday Meta 
 
-The `all_tt_meta.rda` dataset contains all years (2018 - current) from the `ttmeta::load_tt_datasets_metadata()`. This dataset the following columns:
+The `all_tt_meta.rda` dataset contains all years (2018 to present) from `ttmeta::load_tt_datasets_metadata()`. This dataset contains the following columns:
 
 ```{r}
 #| label: all_tt_meta
@@ -189,11 +189,11 @@ The `clean_title` variable has been added to create an attribute we can use to j
 
 ## load_tt_data()
 
-The `load_tt_data()` function uses the `title` from `all_tt_combined`  to the return the datasets from the GitHub repo. 
+The `load_tt_data()` function uses the `title` from `all_tt_combined` to return the datasets from the GitHub repo. 
 
 ### A single dataset
 
-If the tile contains a single dataset, the list returns `ttd` with a single element: 
+If the title contains a single dataset, the list returns `ttd` with a single element: 
 
 ```{r}
 #| label: ttd
@@ -247,7 +247,7 @@ dplyr::glimpse(ttd3[[ttd3_nms[3]]])
 
 ### Many datasets
 
-If there are more than two datasets, the same rules apply.
+If there are more than three datasets, the same rules apply.
 
 ```{r}
 #| label: ttd_many
@@ -255,6 +255,35 @@ ttd_many <- load_tt_data("LEGO database")
 ttd_many_nms <- names(ttd_many)
 # check attr
 purrr::map(.x = ttd_many, .f = attr, "clean_title")
+```
+
+### File formats
+
+`load_tt_data()` picks a reader from each file's extension, so every format returns the same kind of list:
+
+| Extension | Reader |
+|---|---|
+| `.csv`, `.csv.gz` | `vroom::vroom()` with `delim = ","` |
+| `.tsv` | `vroom::vroom()` with `delim = "\t"` |
+| `.xlsx` | downloaded to a temp file, then `readxl::read_excel()` |
+| `.rds` | `readRDS()` on a URL connection |
+| `.zip` | unzipped to a temp folder; every `.csv` (or `.tsv`) inside is stacked into one data frame |
+
+Any other type is skipped and logged as an error. The Craft Beer USA week is a single `.xlsx` file:
+
+```{r}
+#| label: ttd_xlsx
+ttd_xlsx <- load_tt_data("Craft Beer USA")
+names(ttd_xlsx)
+```
+
+The Biketown Bikeshare week holds two `.zip` files. Each comes back as one data frame named after the zip file (the archives are large, so this chunk doesn't run):
+
+```{r}
+#| label: ttd_zip
+#| eval: false
+ttd_zip <- load_tt_data("Biketown Bikeshare")
+names(ttd_zip)
 ```
 
 ## Meta data

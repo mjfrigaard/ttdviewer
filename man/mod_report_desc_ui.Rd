@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_report_desc.R
 \name{mod_report_desc_ui}
 \alias{mod_report_desc_ui}
-\title{Report Description UI Module with Format Selection}
+\title{Report Description UI Module}
 \usage{
 mod_report_desc_ui(id)
 }
@@ -13,5 +13,5 @@ mod_report_desc_ui(id)
 UI elements for report format descriptions
 }
 \description{
-Report Description UI Module with Format Selection
+Report Description UI Module
 }

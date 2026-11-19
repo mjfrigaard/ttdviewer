@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_input.R
 \name{mod_input_server}
 \alias{mod_input_server}
-\title{Variable Input Server Module}
+\title{Dataset Title Input Server Module}
 \usage{
 mod_input_server(id)
 }
@@ -13,5 +13,5 @@ mod_input_server(id)
 A list with the reactive data from \code{load_tt_data()} and the dataset title.
 }
 \description{
-Variable Input Server Module
+Dataset Title Input Server Module
 }

@@ -170,10 +170,56 @@ test_that("skips files whose effective type resolves to 'vgz'", {
   expect_length(result, 0L)
 })
 
-test_that("skips files whose effective type resolves to 'zip'", {
+# ── ZIP ───────────────────────────────────────────────────────────────────────
+
+test_that("loads ZIP files by delegating to .load_zip()", {
   setup_tt_env(make_tt_fixture("data.zip", "zip"))
+
+  local_mocked_bindings(.load_zip = function(url) .fake_df)
+
   result <- load_tt_data("Test Dataset")
-  expect_length(result, 0L)
+
+  expect_named(result, "data.zip")
+  expect_s3_class(result[["data.zip"]], "data.frame")
+})
+
+test_that(".load_zip() reads every CSV inside the archive into one data frame", {
+  src <- withr::local_tempdir()
+  utils::write.csv(.fake_df, file.path(src, "a.csv"), row.names = FALSE)
+  utils::write.csv(.fake_df, file.path(src, "b.csv"), row.names = FALSE)
+  zip_path <- withr::local_tempfile(fileext = ".zip")
+  withr::with_dir(src, utils::zip(zip_path, c("a.csv", "b.csv"), flags = "-q"))
+
+  local_mocked_bindings(
+    download.file = function(url, destfile, ...) {
+      file.copy(zip_path, destfile, overwrite = TRUE)
+      invisible(0L)
+    },
+    .package = "utils"
+  )
+
+  result <- .load_zip("https://example.com/data.zip")
+
+  expect_s3_class(result, "data.frame")
+  expect_equal(nrow(result), 6L)
+  expect_named(result, c("x", "label"))
+})
+
+test_that(".load_zip() errors when the archive holds no CSV or TSV files", {
+  src <- withr::local_tempdir()
+  writeLines("hello", file.path(src, "notes.txt"))
+  zip_path <- withr::local_tempfile(fileext = ".zip")
+  withr::with_dir(src, utils::zip(zip_path, "notes.txt", flags = "-q"))
+
+  local_mocked_bindings(
+    download.file = function(url, destfile, ...) {
+      file.copy(zip_path, destfile, overwrite = TRUE)
+      invisible(0L)
+    },
+    .package = "utils"
+  )
+
+  expect_error(.load_zip("https://example.com/data.zip"), "No CSV or TSV")
 })
 
 test_that("filters out NA data_files before attempting to load", {

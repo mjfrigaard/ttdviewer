@@ -2,21 +2,48 @@
 % Please edit documentation in R/launch.R
 \name{launch}
 \alias{launch}
-\title{Launch the Tidy Tuesday Explorer App}
+\title{Launch the #TidyTuesday Data Viewer}
 \usage{
-launch(..., log_file = NULL, json = FALSE)
+launch(mode = c("start", "run"), options = list(), run = "b", ...)
 }
 \arguments{
-\item{...}{Additional arguments passed to shinyApp()}
+\item{mode}{\code{"start"} (default) calls \code{\link[shiny:startApp]{shiny::startApp()}} and returns the
+\code{ShinyAppHandle}. The app runs in the background and the console stays
+available (see Details). \code{"run"} returns the \code{shiny.appobj} for
+\code{\link[shiny:runApp]{shiny::runApp()}} to run; the console is blocked until the app stops.
+Use \code{"run"} in an \code{app.R} file for deployment.}
 
-\item{log_file}{Optional path to log file for application logs}
+\item{options}{List of options passed to \code{\link[shiny:shinyApp]{shiny::shinyApp()}}.}
 
-\item{json}{Logical, whether to use JSON logging format}
+\item{run}{Display mode for interactive RStudio or Positron sessions,
+passed to \code{\link[=display_type]{display_type()}}. Default \code{"b"} (external browser).}
+
+\item{...}{In \code{mode = "start"}, additional arguments passed to
+\code{\link[shiny:startApp]{shiny::startApp()}} (e.g., \code{port}, \code{host}). Ignored in \code{mode = "run"}.}
 }
 \value{
-A Shiny app object
+\code{mode = "run"}: a \code{shiny.appobj}. \code{mode = "start"}: a
+\code{ShinyAppHandle}.
 }
 \description{
-This function launches the Shiny application for exploring Tidy Tuesday
-datasets.
+Launch the #TidyTuesday Data Viewer
+}
+\details{
+\code{mode = "start"} needs Shiny >= 1.14.0. The returned handle has
+\code{status()}, \code{url()}, \code{result()}, and \code{stop()}. Call \code{handle$stop()} from
+the console to shut the app down; starting a new app stops the one
+already running.
+}
+\examples{
+\dontrun{
+if (interactive()) {
+  # non-blocking: the console stays available while the app runs
+  handle <- launch()
+  handle$url()
+  handle$stop()
+
+  # blocking: what app.R uses for deployment
+  launch(mode = "run")
+}
+}
 }
