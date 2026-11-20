@@ -6,13 +6,9 @@ Returns the current system time formatted as `"YYYY-MM-DD-HH.MM.SS"`.
 
 ``` r
 tstmp()
-
-tstmp()
 ```
 
 ## Value
-
-character string of date/time.
 
 A character string of the current date and time.
 
@@ -20,11 +16,7 @@ A character string of the current date and time.
 
 ``` r
 tstmp()
-#> [1] "2026-11-19-21.51.20"
+#> [1] "2026-11-20-21.12.42"
 cat(paste("Last updated:", tstmp()))
-#> Last updated: 2026-11-19-21.51.20
-tstmp()
-#> [1] "2026-11-19-21.51.20"
-cat(paste("Last updated:", tstmp()))
-#> Last updated: 2026-11-19-21.51.20
+#> Last updated: 2026-11-20-21.12.42
 ```

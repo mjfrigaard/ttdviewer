@@ -2,13 +2,9 @@
 
 Checks all datasets in a TidyTuesday data list for list columns.
 
-Checks all datasets in a TidyTuesday data list for list columns.
-
 ## Usage
 
 ``` r
-check_ttd_list_cols(ttd)
-
 check_ttd_list_cols(ttd)
 ```
 
@@ -23,6 +19,3 @@ check_ttd_list_cols(ttd)
 
 A named list where each element contains column names of list type, or
 `0` if no list columns exist in that dataset
-
-A named list where each element contains column names of list type, or 0
-if no list columns exist in that dataset

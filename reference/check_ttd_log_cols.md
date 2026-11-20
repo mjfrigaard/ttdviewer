@@ -2,13 +2,9 @@
 
 Checks all datasets in a TidyTuesday data list for logical columns.
 
-Checks all datasets in a TidyTuesday data list for logical columns.
-
 ## Usage
 
 ``` r
-check_ttd_log_cols(ttd)
-
 check_ttd_log_cols(ttd)
 ```
 
@@ -23,6 +19,3 @@ check_ttd_log_cols(ttd)
 
 A named list where each element contains column names of logical type,
 or `0` if no logical columns exist in that dataset
-
-A named list where each element contains column names of logical type,
-or 0 if no logical columns exist in that dataset

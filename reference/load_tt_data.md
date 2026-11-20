@@ -18,8 +18,8 @@ load_tt_data(title)
 ## Value
 
 A named list of tibbles or data frames (one per file), each with
-`clean_title` and `github_url` attributes. Failed or skipped datasets
-are excluded.
+`clean_title`, `github_url`, and `date` (TidyTuesday release date)
+attributes. Failed or skipped datasets are excluded.
 
 ## Supported file types
 
@@ -48,10 +48,10 @@ are excluded.
 
 ``` r
 load_tt_data("posit::conf talks")
-#> INFO [2026-11-19 21:51:17] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv
-#> SUCCESS [2026-11-19 21:51:17] Successfully loaded conf2023.csv
-#> INFO [2026-11-19 21:51:17] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv
-#> SUCCESS [2026-11-19 21:51:17] Successfully loaded conf2024.csv
+#> INFO [2026-11-20 21:12:40] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv
+#> SUCCESS [2026-11-20 21:12:40] Successfully loaded conf2023.csv
+#> INFO [2026-11-20 21:12:40] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv
+#> SUCCESS [2026-11-20 21:12:40] Successfully loaded conf2024.csv
 #> $conf2023.csv
 #> # A tibble: 116 × 9
 #>    speaker_name speaker_affiliation session_type session_title block_track_title

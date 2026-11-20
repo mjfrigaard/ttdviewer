@@ -2,13 +2,9 @@
 
 Checks all datasets in a TidyTuesday data list for numeric columns.
 
-Checks all datasets in a TidyTuesday data list for numeric columns.
-
 ## Usage
 
 ``` r
-check_ttd_num_cols(ttd)
-
 check_ttd_num_cols(ttd)
 ```
 
@@ -23,6 +19,3 @@ check_ttd_num_cols(ttd)
 
 A named list where each element contains column names of numeric type,
 or `0` if no numeric columns exist in that dataset
-
-A named list where each element contains column names of numeric type,
-or 0 if no numeric columns exist in that dataset

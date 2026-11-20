@@ -2,13 +2,9 @@
 
 Checks all datasets in a TidyTuesday data list for character columns.
 
-Checks all datasets in a TidyTuesday data list for character columns.
-
 ## Usage
 
 ``` r
-check_ttd_cat_cols(ttd)
-
 check_ttd_cat_cols(ttd)
 ```
 
@@ -23,6 +19,3 @@ check_ttd_cat_cols(ttd)
 
 A named list where each element contains column names of character type,
 or `0` if no character columns exist in that dataset
-
-A named list where each element contains column names of character type,
-or 0 if no character columns exist in that dataset

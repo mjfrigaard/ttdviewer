@@ -198,7 +198,7 @@ Use `launch(mode = "run")` to return the app object instead (e.g., in an
 - [`tstmp()`](https://mjfrigaard.github.io/ttdviewer/reference/tstmp.md)
   : Timestamp
 - [`ttd_length()`](https://mjfrigaard.github.io/ttdviewer/reference/ttd_length.md)
-  : Determine length of TidyTuesday Data
+  : Determine Length of TidyTuesday Data
 
 # Articles
 

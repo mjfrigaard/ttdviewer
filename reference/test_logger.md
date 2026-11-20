@@ -7,26 +7,22 @@ bracketing test blocks with start/end markers.
 
 ``` r
 test_logger(start = NULL, end = NULL, msg)
-
-test_logger(start = NULL, end = NULL, msg)
 ```
 
 ## Arguments
 
 - start:
 
-  test start message
+  Optional character string for the start-of-test label.
 
 - end:
 
-  test end message
+  Optional character string for the end-of-test label.
 
 - msg:
 
-  test message
+  Character string for the log message body.
 
 ## Value
 
 Called for its side-effect of writing to the log output.
-
-message to test output

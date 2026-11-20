@@ -68,7 +68,8 @@ associated data files using a method appropriate for each <code>data_type</code>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A named list of tibbles or data frames (one per file), each with
-<code>clean_title</code> and <code>github_url</code> attributes. Failed or skipped datasets are
+<code>clean_title</code>, <code>github_url</code>, and <code>date</code> (TidyTuesday release date)
+attributes. Failed or skipped datasets are
 excluded.</p>
     </div>
     <div class="section level2">
@@ -92,10 +93,10 @@ with <code><a href="https://vroom.tidyverse.org/reference/vroom.html" class="ext
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">load_tt_data</span><span class="op">(</span><span class="st">"posit::conf talks"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2026-11-19 21:51:17] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2026-11-19 21:51:17] Successfully loaded conf2023.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2026-11-19 21:51:17] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2026-11-19 21:51:17] Successfully loaded conf2024.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2026-11-20 21:12:40] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2026-11-20 21:12:40] Successfully loaded conf2023.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2026-11-20 21:12:40] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2026-11-20 21:12:40] Successfully loaded conf2024.csv</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $conf2023.csv</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 116 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    speaker_name speaker_affiliation session_type session_title block_track_title</span>

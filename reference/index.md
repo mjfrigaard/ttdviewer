@@ -65,4 +65,4 @@
 - [`tstmp()`](https://mjfrigaard.github.io/ttdviewer/reference/tstmp.md)
   : Timestamp
 - [`ttd_length()`](https://mjfrigaard.github.io/ttdviewer/reference/ttd_length.md)
-  : Determine length of TidyTuesday Data
+  : Determine Length of TidyTuesday Data
