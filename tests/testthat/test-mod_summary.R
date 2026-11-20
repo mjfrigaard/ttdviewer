@@ -63,3 +63,13 @@ test_that("mod_summary_server clears the data table when data is purged", {
     expect_match(output$table, '"x":null', fixed = TRUE)
   })
 })
+
+test_that("mod_summary_server shows the TidyTuesday date", {
+  a <- data.frame(x = 1)
+  attr(a, "date") <- as.Date("2024-08-06")
+  dat <- reactiveVal(list(a.csv = a))
+  testServer(mod_summary_server, args = list(data = dat), {
+    session$setInputs(ds_input = "a.csv")
+    expect_match(output$overview$html, "2024-08-06")
+  })
+})

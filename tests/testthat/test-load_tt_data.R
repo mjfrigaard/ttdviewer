@@ -13,7 +13,8 @@ make_tt_fixture <- function(data_files, data_type,
     clean_title = "test_dataset",
     data_files  = data_files,
     data_type   = data_type,
-    github_url  = github_url
+    github_url  = github_url,
+    date        = as.Date("2026-01-06")
   )
 }
 
@@ -330,4 +331,11 @@ test_that("each element carries its github_url attribute", {
   local_mocked_bindings(vroom = function(...) .fake_df, .package = "vroom")
   result <- load_tt_data("Test Dataset")
   expect_equal(attr(result[["data.csv"]], "github_url"), "https://example.com/data.csv")
+})
+
+test_that("each element carries its TidyTuesday date attribute", {
+  setup_tt_env(make_tt_fixture("data.csv", "csv"))
+  local_mocked_bindings(vroom = function(...) .fake_df, .package = "vroom")
+  result <- load_tt_data("Test Dataset")
+  expect_equal(attr(result[["data.csv"]], "date"), as.Date("2026-01-06"))
 })

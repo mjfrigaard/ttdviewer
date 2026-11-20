@@ -58,7 +58,10 @@ mod_summary_server <- function(id, data) {
       dims <- vapply(data(), function(df) {
         paste0(format(nrow(df), big.mark = ","), " rows x ", ncol(df), " columns")
       }, character(1))
+      dates <- unique(purrr::map_chr(data(), ~ format(attr(.x, "date") %||% NA)))
+      dates <- dates[dates != "NA"]
       tagList(
+        if (length(dates)) p("TidyTuesday date: ", paste(dates, collapse = ", ")),
         p(strong(paste(length(data()), if (length(data()) == 1) "file" else "files"))),
         tags$ul(purrr::map2(names(dims), dims, function(nm, d) {
           tags$li(code(nm), ": ", d)

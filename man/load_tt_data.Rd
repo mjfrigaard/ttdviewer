@@ -12,7 +12,8 @@ load_tt_data(title)
 }
 \value{
 A named list of tibbles or data frames (one per file), each with
-\code{clean_title} and \code{github_url} attributes. Failed or skipped datasets are
+\code{clean_title}, \code{github_url}, and \code{date} (TidyTuesday release date)
+attributes. Failed or skipped datasets are
 excluded.
 }
 \description{
