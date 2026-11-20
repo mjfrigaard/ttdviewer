@@ -73,34 +73,27 @@ The `.tt` attribute prints the available datasets for the `date`.
 attr(tt_data, ".tt")
 ```
 
-The `.tt` attribute also lists the available datasets, a `.files` dataset with file type and delim, the `.readme` (as html), and the `.date`:
+If we dig a little deeper into the structure of the `.tt` attributes, we see the following: 
 
 ```{r}
 str(attr(tt_data, ".tt"))
 ```
 
-The `.tt` attribute also has `.files`, `.readme`, and `.date` attributes.
-
-#### .files
-
-```{r}
-attr(tt_data, ".tt") |> 
-  attr(".files")
-```
-
-#### .readme
-
-```{r}
-attr(tt_data, ".tt") |> 
-  attr(".readme")
-```
-
-#### .date
-
-```{r}
-attr(tt_data, ".tt") |> 
-  attr(".date")
-```
+* a small `.files` dataset with `data_files`, `data_type` and `delim`  
+    ```{r}
+    attr(tt_data, ".tt") |> 
+      attr(".files")
+    ```
+* the `.readme` list (as `html_document`), and  
+    ```{r}
+    attr(tt_data, ".tt") |> 
+      attr(".readme")
+    ```
+* the `.date` we passed to `tt_load`   
+    ```{r}
+    attr(tt_data, ".tt") |> 
+      attr(".date")
+    ```
 
 
 ### [ttmeta](https://r4ds.github.io/ttmeta/)
