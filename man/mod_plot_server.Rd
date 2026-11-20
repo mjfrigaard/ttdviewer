@@ -11,6 +11,12 @@ mod_plot_server(id, ttd)
 
 \item{ttd}{Reactive or a static named list of data.frames}
 }
+\value{
+A reactive list with the selected \code{dataset} and \code{plots}
+}
 \description{
-Renders one plot per (dataset x plot-type)
+Sends the file names to the client (\code{output$datasets}) and renders one
+plot per type (\verb{output$plt_<type>}) for the file in \code{input$dataset}. A plot
+renders only while its type is in \code{input$plots}. The client side is
+\code{js/src/components/GraphsTab.tsx}.
 }

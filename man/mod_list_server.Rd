@@ -12,5 +12,5 @@ mod_list_server(id, data)
 \item{data}{A reactive expression returning the dataset list}
 }
 \description{
-List Server Module (listviewerlite)
+The client side is \code{js/src/components/ListTab.tsx}.
 }

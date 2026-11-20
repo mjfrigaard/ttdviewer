@@ -1,12 +1,3 @@
-test_that("mod_summary_ui contains the overview, file selector and tables", {
-  ui <- as.character(mod_summary_ui("sum"))
-  expect_match(ui, "sum-overview")
-  expect_match(ui, "sum-ds_input")
-  expect_match(ui, "sum-stats")
-  expect_match(ui, "sum-vars")
-  expect_match(ui, "sum-table")
-})
-
 test_that("mod_summary_server shows the overview and tables for the selected file", {
   dat <- reactiveVal(list(
     a.csv = data.frame(x = 1:3, y = c("p", NA, "q")),
@@ -14,8 +5,10 @@ test_that("mod_summary_server shows the overview and tables for the selected fil
   ))
   testServer(mod_summary_server, args = list(data = dat), {
     session$setInputs(ds_input = "a.csv")
-    expect_match(output$overview$html, "2 files")
-    expect_match(output$overview$html, "a.csv")
+    ov <- output$overview
+    expect_length(ov$files, 2)
+    expect_equal(ov$files[[1]], list(name = "a.csv", rows = 3L, cols = 2L))
+    expect_equal(output$choices, c("a.csv", "b.csv"))
     expect_match(output$stats, "Complete rows")
     expect_match(output$vars, "\"y\"")
   })
@@ -27,7 +20,8 @@ test_that("mod_summary_server clears when data is purged", {
     session$setInputs(ds_input = "a.csv")
     dat(NULL)
     session$flushReact()
-    expect_error(output$overview)
+    expect_null(output$overview)
+    expect_null(output$choices)
     expect_match(output$vars, '"x":null', fixed = TRUE)
   })
 })
@@ -70,6 +64,6 @@ test_that("mod_summary_server shows the TidyTuesday date", {
   dat <- reactiveVal(list(a.csv = a))
   testServer(mod_summary_server, args = list(data = dat), {
     session$setInputs(ds_input = "a.csv")
-    expect_match(output$overview$html, "2024-08-06")
+    expect_equal(output$overview$dates, "2024-08-06")
   })
 })

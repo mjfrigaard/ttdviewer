@@ -10,8 +10,7 @@ app_ui()
 A UI definition for a Shiny app
 }
 \description{
-Constructs the user interface using \code{bslib} components.
-}
-\note{
-last edited: 2025-06-14-23.23.36
+Serves the React client built from \verb{js/} into \verb{inst/www/} (\code{ui.js} and
+\code{ui.css}) with \code{\link[shinyreact:page_react]{shinyreact::page_react()}}. Bootstrap 5 comes from
+\code{\link[bslib:bs_theme]{bslib::bs_theme()}} so the client can use Bootstrap classes.
 }

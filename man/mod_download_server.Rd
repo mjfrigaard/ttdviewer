@@ -14,5 +14,6 @@ mod_download_server(id, data, title)
 \item{title}{Reactive dataset title}
 }
 \description{
-Data Download Server Module
+\code{output$download} binds to the download link in
+\code{js/src/components/Download.tsx}, which also sends \code{input$format}.
 }

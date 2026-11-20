@@ -12,5 +12,8 @@ mod_summary_server(id, data)
 \item{data}{Reactive named list of data frames from \code{\link[=load_tt_data]{load_tt_data()}}}
 }
 \description{
-Summary Server Module
+Sends a file overview (\code{output$overview}) and the file names
+(\code{output$choices}) to the client, and renders summary statistics, variable
+information, and the data (first 1,000 rows) for the file in
+\code{input$ds_input}. The client side is \code{js/src/components/SummaryTab.tsx}.
 }

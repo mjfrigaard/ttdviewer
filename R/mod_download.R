@@ -1,33 +1,7 @@
-#' Data Download UI Module
-#'
-#' @param id Namespace ID
-#'
-#' @return A format selector and download button
-#'
-#' @export
-#'
-mod_download_ui <- function(id) {
-  ns <- NS(id)
-  tagList(
-    selectInput(
-      inputId = ns("format"),
-      label = strong("Download Data:"),
-      choices = list(
-        "CSV" = "csv",
-        "Parquet" = "parquet",
-        "Original format" = "original"
-      ),
-      selected = "csv",
-      width = "100%"
-    ),
-    downloadButton(ns("download"), "Download Data",
-      class = "btn-primary", style = "width: 100%;"),
-    p(class = "text-muted small mt-2",
-      "Several files download as one .zip.")
-  )
-}
-
 #' Data Download Server Module
+#'
+#' `output$download` binds to the download link in
+#' `js/src/components/Download.tsx`, which also sends `input$format`.
 #'
 #' @param id Module ID
 #' @param data Reactive named list of data frames from [load_tt_data()]

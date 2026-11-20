@@ -1,27 +1,23 @@
-test_that("app_ui returns a bslib page with all module ids", {
+test_that("app_ui serves the React client with shinyreact", {
   ui <- app_ui()
-  expect_s3_class(ui, "shiny.tag.list")
-  html <- as.character(ui)
-  for (id in c("input-ds_title", "download-format", "download-download", "summary-vars",
-               "listviewerlite-list", "summary-table", "viz-plots")) {
-    expect_match(html, id, fixed = TRUE)
-  }
+  head <- htmltools::renderTags(ui)$head
+  expect_match(head, "shinyreact-config", fixed = TRUE)
+  deps <- htmltools::findDependencies(ui)
+  dep_names <- vapply(deps, `[[`, character(1), "name")
+  expect_true("shinyreact" %in% dep_names)
+  client <- deps[[which(vapply(deps, function(d) "ui.js" %in% unlist(d$script), logical(1)))]]
+  expect_true(file.exists(file.path(client$src$file, "ui.js")))
+  expect_true(file.exists(file.path(client$src$file, "ui.css")))
+})
+
+test_that("app_ui loads Bootstrap 5 for the client's classes", {
+  deps <- htmltools::findDependencies(app_ui())
+  bs <- Filter(function(d) d$name == "bootstrap", deps)
+  expect_length(bs, 1)
+  expect_match(bs[[1]]$version, "^5")
 })
 
 test_that("app_ui turns on busy indicators (spinners)", {
   html <- as.character(app_ui())
   expect_match(html, "busy", ignore.case = TRUE)
-})
-
-test_that("app_ui has a Summary tab and a data download, not a report", {
-  html <- as.character(app_ui())
-  expect_match(html, "Summary")
-  expect_match(html, "download-download")
-  expect_no_match(html, "rep_dwnld")
-})
-
-test_that("app_ui has no separate Table tab", {
-  html <- as.character(app_ui())
-  expect_no_match(html, "table-table", fixed = TRUE)
-  expect_no_match(html, ">Table<", fixed = TRUE)
 })

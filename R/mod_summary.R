@@ -1,37 +1,9 @@
-#' Summary UI Module
-#'
-#' Shows an overview of the loaded files, then summary statistics, variable
-#' information, and the data (first 1,000 rows) for one file.
-#'
-#' @param id Namespace ID
-#'
-#' @return UI elements for the Summary tab
-#'
-#' @export
-#'
-mod_summary_ui <- function(id) {
-  ns <- NS(id)
-  bslib::card(
-    bslib::card_body(
-      uiOutput(ns("overview")),
-      selectInput(
-        inputId = ns("ds_input"),
-        label = "Dataset",
-        choices = ""
-      ),
-      h5("Summary statistics"),
-      reactable::reactableOutput(ns("stats")),
-      h5("Variable information"),
-      reactable::reactableOutput(ns("vars")),
-      h5("Data"),
-      p(class = "text-muted small",
-        "Shows the first 1,000 rows. Download the data for the full file."),
-      reactable::reactableOutput(ns("table"))
-    )
-  )
-}
-
 #' Summary Server Module
+#'
+#' Sends a file overview (`output$overview`) and the file names
+#' (`output$choices`) to the client, and renders summary statistics, variable
+#' information, and the data (first 1,000 rows) for the file in
+#' `input$ds_input`. The client side is `js/src/components/SummaryTab.tsx`.
 #'
 #' @param id Module ID
 #' @param data Reactive named list of data frames from [load_tt_data()]
@@ -41,30 +13,23 @@ mod_summary_ui <- function(id) {
 mod_summary_server <- function(id, data) {
   moduleServer(id, function(input, output, session) {
 
-    observe({
-      ds_names <- names(data())
-      updateSelectInput(session, "ds_input",
-        choices = ds_names %||% character(0), selected = ds_names[1])
-    }) |>
-      bindEvent(data(), ignoreNULL = FALSE)
+    output$choices <- shinyreact::reactive_output({
+      if (is.null(data())) return(NULL)
+      names(data())
+    })
 
     selected_df <- reactive({
       req(data(), input$ds_input %in% names(data()))
       data()[[input$ds_input]]
     })
 
-    output$overview <- renderUI({
-      req(data())
-      dims <- vapply(data(), function(df) {
-        paste0(format(nrow(df), big.mark = ","), " rows x ", ncol(df), " columns")
-      }, character(1))
+    output$overview <- shinyreact::reactive_output({
+      if (is.null(data())) return(NULL)
       dates <- unique(purrr::map_chr(data(), ~ format(attr(.x, "date") %||% NA)))
-      dates <- dates[dates != "NA"]
-      tagList(
-        if (length(dates)) p("TidyTuesday date: ", paste(dates, collapse = ", ")),
-        p(strong(paste(length(data()), if (length(data()) == 1) "file" else "files"))),
-        tags$ul(purrr::map2(names(dims), dims, function(nm, d) {
-          tags$li(code(nm), ": ", d)
+      list(
+        dates = dates[dates != "NA"],
+        files = unname(purrr::imap(data(), function(df, nm) {
+          list(name = nm, rows = nrow(df), cols = ncol(df))
         }))
       )
     })

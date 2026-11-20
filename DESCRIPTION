@@ -25,6 +25,7 @@ Imports:
     readxl,
     rlang,
     shiny (>= 1.14.0),
+    shinyreact,
     snakecase,
     stats,
     tibble,
@@ -34,8 +35,10 @@ Imports:
     zip
 Suggests:
     crayon,
+    htmltools,
     knitr,
     lobstr,
+    quarto,
     rmarkdown,
     stackcallr,
     testthat (>= 3.0.0),
@@ -47,9 +50,11 @@ Remotes:
     alastairrushworth/inspectdf,
     long39ng/listviewerlite,
     r4ds/ttmeta,
-    mjfrigaard/stackcallr
+    mjfrigaard/stackcallr,
+    posit-dev/shinyreact/pkg-r
 VignetteBuilder:
-    knitr
+    knitr,
+    quarto
 Config/Needs/website: pkgdown
 Config/testthat/edition: 3
 Encoding: UTF-8

@@ -6,23 +6,29 @@ test_that("mod_plot_server returns the selected dataset and plots", {
   })
 })
 
-test_that("mod_plot_server builds one plot output per selected type", {
-  ttd <- reactiveVal(list(a.csv = data.frame(x = 1:3)))
+test_that("mod_plot_server sends the file names to the client", {
+  ttd <- reactiveVal(list(a.csv = data.frame(x = 1:3), b.csv = data.frame(y = 4:6)))
   testServer(mod_plot_server, args = list(ttd = ttd), {
-    session$setInputs(dataset = "a.csv", plots = c("types", "mem"))
-    html <- output$plots_ui$html
-    expect_match(html, "plt_types")
-    expect_match(html, "plt_mem")
+    expect_equal(output$datasets, c("a.csv", "b.csv"))
   })
 })
 
-test_that("mod_plot_server removes plots when data is purged", {
+test_that("mod_plot_server renders only the selected plot types", {
+  ttd <- reactiveVal(list(a.csv = data.frame(x = 1:3, y = c("a", "b", "c"))))
+  testServer(mod_plot_server, args = list(ttd = ttd), {
+    session$setInputs(dataset = "a.csv", plots = "types")
+    expect_match(output$plt_types$src, "^data:image/png")
+    expect_error(output$plt_mem)
+  })
+})
+
+test_that("mod_plot_server clears when data is purged", {
   ttd <- reactiveVal(list(a.csv = data.frame(x = 1:3)))
   testServer(mod_plot_server, args = list(ttd = ttd), {
     session$setInputs(dataset = "a.csv", plots = "types")
-    expect_match(output$plots_ui$html, "plt_types")
     ttd(NULL)
     session$flushReact()
-    expect_error(output$plots_ui)
+    expect_null(output$datasets)
+    expect_error(output$plt_types)
   })
 })

@@ -1,0 +1,190 @@
+---
+title: "shinyreact conversion"
+vignette: >
+  %\VignetteIndexEntry{shinyreact conversion}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+---
+
+This vignette records what we learned before converting `ttdviewer` from a bslib UI to [`shinyreact`](https://posit-dev.github.io/shinyreact/). We built a small prototype (a spike) to test the pieces the shinyreact documentation does not cover, and every piece worked. The code below is shown but not run, so building this vignette does not require shinyreact.
+
+## What shinyreact is
+
+shinyreact moves the UI out of R. The server still holds the reactive graph (`input`, `reactive()`, `req()`, `bindEvent()` all behave as usual), but the page is a React client we write ourselves. shinyreact ships the plumbing between the two and no UI components.
+
+The R package is version 0.1.0 and the documentation calls it pre-release. It is not on CRAN:
+
+```{r}
+#| eval: false
+pak::pak("posit-dev/shinyreact/pkg-r")
+```
+
+The spike used GitHub commit `42c500f`.
+
+## R side
+
+The R package exports seven functions:
+
+```{r}
+#| eval: false
+ls("package:shinyreact")
+#> [1] "page_bare"       "page_react"      "page_react_dep"  "page_react_html"
+#> [5] "reactive_output" "send_message"    "wire_tap"
+```
+
+`page_react()` replaces the UI function. It serves `ui.js` (and `ui.css`, if present) from `src_dir`:
+
+```{r}
+#| eval: false
+args(shinyreact::page_react)
+#> function (..., src_dir = "www", js_file = "ui.js", css_file = "ui.css",
+#>     title = NULL, lang = "en", shinyreact_js = "server")
+```
+
+`reactive_output()` sends any R value to the client as JSON:
+
+```{r}
+#| eval: false
+output$titles <- shinyreact::reactive_output(
+  sort(unique(all_tt_combined$title))
+)
+```
+
+## Client side
+
+The client reads and writes Shiny values with hooks on `window.shinyreact`:
+
+* `useShinyInput(id, default)`: returns `[value, setValue]` and sets `input[[id]]` on the server.
+* `useShinyOutputValue(id, default)`: the value from a `reactive_output()`.
+* `useShinyOutputStatus(id)`: `"pending"`, `"ready"`, `"recalculating"`, or `"error"`.
+* `useShinyInitialized()` and `useShinyBusy()`: connection and busy state (a replacement for `useBusyIndicators()`).
+* `ShinyOutput`: hosts a classic Shiny output (any output binding) inside React.
+* `ImageOutput`: hosts a `renderPlot()` image.
+* `ShinyModuleProvider`: namespaces hook ids, for Shiny modules.
+
+## What the spike tested
+
+The documentation shows R examples only for plotly and reactable. It says nothing about `listviewerlite`, `renderPlot()`, `downloadHandler()`, or packaging the client inside an installed R package. Those are four of the app's five outputs, so the spike tested each one with Netflix Titles (one file) and Space Launches (two files).
+
+### Lists
+
+`listviewerlite::listview()` returns HTML, so the server keeps `renderUI()` and the client hosts it with the `shiny-html-output` class:
+
+```{r}
+#| eval: false
+output$list <- renderUI({
+  req(data())
+  listviewerlite::listview(data())
+})
+```
+
+```js
+h(ShinyOutput, { id: "list", className: "shiny-html-output" })
+```
+
+### Tables
+
+`reactable` works the documented way. shinyreact finds the widget's JavaScript from the render function, so no `reactableOutput()` placeholder is needed:
+
+```{r}
+#| eval: false
+output$table <- reactable::renderReactable({
+  req(data())
+  reactable::reactable(utils::head(data()[[1]], 1000), searchable = TRUE)
+})
+```
+
+```js
+h(ShinyOutput, {
+  id: "table",
+  className: "reactable html-widget html-widget-output",
+  "data-reactable-output": "table"
+})
+```
+
+### Plots
+
+`ImageOutput` is documented for Python only, but it follows the same contract as R's `renderPlot()`. The client reports its size through `.clientdata_output_<id>_width` and `_height`, and draws the `src` that `renderPlot()` returns. The `inspect_plot()` ggplots rendered unchanged:
+
+```{r}
+#| eval: false
+output$plt_types <- renderPlot({
+  req(data())
+  inspect_plot(data()[1], plots = "types")
+})
+```
+
+```js
+h(ImageOutput, { id: "plt_types", width: "100%", height: "300px" })
+```
+
+### Downloads
+
+`downloadHandler()` binds to an anchor with the `shiny-download-link` class, so `ShinyOutput` with `tagName: "a"` works. The CSV download returned 3.0 MB, and the two file zip returned 104 KB:
+
+```{r}
+#| eval: false
+output$download <- downloadHandler(
+  filename = function() tt_download_filename(data(), input$format, input$title),
+  content = function(file) write_tt_download(data(), input$format, file)
+)
+```
+
+```js
+h(ShinyOutput, {
+  id: "download", tagName: "a", className: "btn shiny-download-link",
+  href: "", target: "_blank", download: ""
+}, "Download")
+```
+
+### Packaging
+
+`page_react()` passes `src_dir` to `page_react_dep()`, which builds an `htmltools::htmlDependency()` with a file source. A file source works from an installed package, so the built client belongs in `inst/www/`:
+
+```{r}
+#| eval: false
+app_ui <- function() {
+  shinyreact::page_react(
+    src_dir = system.file("www", package = "ttdviewer"),
+    title = "ttdviewer"
+  )
+}
+```
+
+An installed build serves `ui.js` from `ttdviewer/www/` (checked with `R CMD INSTALL` into a temporary library).
+
+## Gotcha: length one vectors
+
+`reactive_output()` serializes with `auto_unbox`, so a character vector of length one arrives as a string, not an array. The spike crashed on `files.names.join()` for a dataset with one file. Either wrap on the client or protect the vector on the server:
+
+```js
+[].concat(files.names).join(", ")
+```
+
+```{r}
+#| eval: false
+list(names = I(names(d)))
+```
+
+## The conversion
+
+The conversion followed the spike:
+
+* Client: `js/` holds a Vite and TSX project (`npm run build`) that writes `inst/www/ui.js` and `ui.css`. JSX compiles to `React.createElement`, and Vite maps `react` to the global `shinyreact.React`, so the bundle carries no copy of React. `js/` is in `.Rbuildignore`; the built bundle is committed, so installing the package needs no Node.
+* `app_ui()`: calls `page_react()` with `theme = bslib::bs_theme(version = 5)` (so the client can use Bootstrap classes) and `useBusyIndicators()`.
+* Modules: the `mod_*_ui()` functions are gone. Each server module keeps its id; the client wraps each component in a `ShinyModuleProvider` with the same namespace. Plain values (titles, file names, the file overview) moved to `reactive_output()`.
+* `mod_plot_server()`: one `renderPlot()` per plot type, each gated by `req(plt %in% input$plots)`, in place of `renderUI()` and an observer.
+
+| Module | R output | Client |
+|---|---|---|
+| `mod_input` | `titles` (`reactive_output()`) | `TitleInput.tsx` |
+| `mod_download` | `download` (`downloadHandler()`) | `Download.tsx` |
+| `mod_list` | `list` (`renderUI()`) | `ListTab.tsx` |
+| `mod_summary` | `overview`, `choices` (`reactive_output()`); `stats`, `vars`, `table` (`renderReactable()`) | `SummaryTab.tsx` |
+| `mod_plot` | `datasets` (`reactive_output()`); `plt_<type>` (`renderPlot()`) | `GraphsTab.tsx` |
+
+One surprise: `output$dev` (the `app_server()` reactive values panel) errored at startup. Inside a closed `<details>` in bslib it was never rendered; inside React it is, and `listviewerlite::listview()` fails on `NULL` elements. It now drops them with `purrr::compact()`.

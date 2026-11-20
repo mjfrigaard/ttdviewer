@@ -17,3 +17,4 @@ docs
 .Rprofile
 renv.lock
 .positai
+js/node_modules/

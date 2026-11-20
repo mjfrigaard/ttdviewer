@@ -1,47 +1,8 @@
-#' Dataset Title Input UI Module
-#'
-#' @param id Namespace ID
-#'
-#' @return UI elements for dataset title selection
-#'
-#' @export
-#'
-mod_input_ui <- function(id) {
-  ns <- NS(id)
-  logr_msg(
-    message = "Initializing variable input UI module",
-    level = "DEBUG")
-  tryCatch({
-      choices <- unique(all_tt_combined$title)
-      logr_msg(
-        message = paste("Available dataset choices:", length(choices)),
-        level = "INFO")
-      tagList(
-        selectInput(
-          inputId = ns("ds_title"),
-          label = strong("Choose Dataset Title:"),
-          choices = choices,
-          selected = "Space Launches"
-        ),
-        tags$details(
-          tags$summary(
-            em("View download details:")
-          ),
-          verbatimTextOutput(ns("vals"))
-        )
-      )
-    },
-    error = function(e) {
-      logr_msg(paste("Error creating variable input UI:", e$message), level = "ERROR")
-      tagList(
-        h4("Error loading dataset choices", class = "text-danger"),
-        p("Please check the data availability.")
-      )
-    }
-  )
-}
-
 #' Dataset Title Input Server Module
+#'
+#' Sends the dataset titles to the client (`output$titles`) and loads the
+#' title the client sends back (`input$ds_title`). The client side is
+#' `js/src/components/TitleInput.tsx`.
 #'
 #' @param id Module ID
 #'
@@ -57,6 +18,8 @@ mod_input_server <- function(id) {
     # then load the new title once that cleared state reaches the browser.
     # Outputs recalculate during the load, which shows the busy spinners.
     title <- reactiveVal(NULL)
+
+    output$titles <- shinyreact::reactive_output(unique(all_tt_combined$title))
 
     observe({
       title(NULL)
@@ -97,15 +60,6 @@ mod_input_server <- function(id) {
         })
     })
 
-    output$vals <- renderPrint({
-      req(data())
-      ds_names <- names(data())
-      cat(
-        paste("Downloaded", ds_names, "data.",
-          collapse = "\n"
-        )
-      )
-    })
     return(
       list(
         data = data,

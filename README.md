@@ -14,8 +14,7 @@ features below:
     file URLs is built with the
     [`tidytuesdayR`](https://dslc-io.github.io/tidytuesdayR/) and
     [`ttmeta`](https://r4ds.github.io/ttmeta/) packages.
-2.  The returned object is visible as a list on the first `nav_panel()`
-    via the [`listviewerlite`
+2.  The returned object is visible as a list on the List tab via the [`listviewerlite`
     package](https://long39ng.github.io/listviewerlite/).  
 3.  The Summary tab shows the number of files, summary statistics,
     variable information (type, missing values, unique values), and the
@@ -27,6 +26,10 @@ features below:
     column types and memory usage*’ are available on the Graphs tab.
 5.  The sidebar downloads the data as CSV, parquet, or the original
     file format. Titles with several files download as one `.zip`.
+6.  The UI is a React client built with
+    [`shinyreact`](https://posit-dev.github.io/shinyreact/). The
+    source is in `js/src/`; `npm run build` (in `js/`) writes the
+    bundle to `inst/www/`.
 
 ## Architecture
 
@@ -54,17 +57,19 @@ flowchart LR
   Data --> Plot
 ```
 
-The UI arranges module outputs into panels while the sidebar hosts the
-dataset selector and the data download.
+The React client (`js/src/`) arranges module outputs into tabs while
+the sidebar hosts the dataset selector and the data download. Each
+component sits in a `ShinyModuleProvider` whose namespace matches its
+module id.
 
 ``` mermaid
 %%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'13px'}}}%%
 flowchart LR
-  Sidebar["Sidebar inputs"] --> InputUI["mod_input_ui()"]
-  Sidebar --> DownloadUI["mod_download_ui()"]
-  Tabs["Tab panels"] --> ListUI["mod_list_ui()"]
-  Tabs --> SummaryUI["mod_summary_ui()"]
-  Tabs --> PlotUI["mod_plot_ui()"]
+  Sidebar["Sidebar"] --> InputUI["TitleInput.tsx"]
+  Sidebar --> DownloadUI["Download.tsx"]
+  Tabs["Tabs"] --> ListUI["ListTab.tsx"]
+  Tabs --> SummaryUI["SummaryTab.tsx"]
+  Tabs --> PlotUI["GraphsTab.tsx"]
 ```
 
 Supporting utilities and tests wrap the core modules. Logging, data

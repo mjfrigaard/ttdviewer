@@ -1,12 +1,3 @@
-test_that("mod_download_ui offers csv, parquet and original formats", {
-  ui <- as.character(mod_download_ui("dl"))
-  expect_match(ui, "dl-format")
-  expect_match(ui, "\"csv\"")
-  expect_match(ui, "\"parquet\"")
-  expect_match(ui, "\"original\"")
-  expect_match(ui, "dl-download")
-})
-
 test_that("mod_download_server downloads a single CSV", {
   dat <- reactiveVal(list(data.csv = data.frame(x = 1:2)))
   ttl <- reactiveVal("Test Dataset")

@@ -6,7 +6,6 @@ test_that("mod_input_server loads data for the selected title", {
     session$flushReact()
     expect_equal(session$returned$data(), fake)
     expect_equal(session$returned$ds_title(), "Space Launches")
-    expect_match(output$vals, "Downloaded a.csv data.")
   })
 })
 
@@ -16,12 +15,6 @@ test_that("mod_input_server returns an empty list when loading fails", {
     session$setInputs(ds_title = "Space Launches")
     expect_equal(session$returned$data(), list())
   })
-})
-
-test_that("mod_input_ui lists dataset titles", {
-  ui <- as.character(mod_input_ui("input"))
-  expect_match(ui, "input-ds_title")
-  expect_match(ui, "Space Launches")
 })
 
 test_that("mod_input_server purges old data before loading a new title", {
@@ -42,5 +35,14 @@ test_that("mod_input_server purges old data before loading a new title", {
     session$flushReact()
     expect_equal(tail(seen, 3), c("a.csv", "NULL", "b.csv"))
     expect_equal(names(session$returned$data()), "b.csv")
+  })
+})
+
+test_that("mod_input_server sends the dataset titles to the client", {
+  testServer(mod_input_server, {
+    titles <- output$titles
+    expect_type(titles, "character")
+    expect_true("Space Launches" %in% titles)
+    expect_false(anyDuplicated(titles) > 0)
   })
 })

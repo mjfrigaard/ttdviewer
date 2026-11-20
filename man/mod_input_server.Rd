@@ -13,5 +13,7 @@ mod_input_server(id)
 A list with the reactive data from \code{load_tt_data()} and the dataset title.
 }
 \description{
-Dataset Title Input Server Module
+Sends the dataset titles to the client (\code{output$titles}) and loads the
+title the client sends back (\code{input$ds_title}). The client side is
+\code{js/src/components/TitleInput.tsx}.
 }

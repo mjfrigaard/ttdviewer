@@ -1,167 +1,60 @@
-#' Inspect Plot Module UI
+#' Plot types for `mod_plot_server()`
 #'
-#' Let the user pick plots and see one panel per dataset x plot
+#' Must match `PLOT_TYPES` in `js/src/components/GraphsTab.tsx`.
 #'
-#' @param id Module id
-#'
-#' @return Shiny UI
-#'
-#' @export
-#'
-mod_plot_ui <- function(id) {
-  ns <- NS(id)
-  tagList(
-    selectInput(
-      ns("dataset"),
-      "Choose dataset:",
-      choices = NULL,
-      selected = NULL
-    ),
-    checkboxGroupInput(
-      ns("plots"),
-      "Select plot type:",
-      choices = c(
-        "types"       = "types",
-        "memory"      = "mem",
-        "missing"     = "na",
-        "correlation" = "cor",
-        "imbalance"   = "imb",
-        "numeric"     = "num",
-        "categorical" = "cat"
-      ),
-      selected = c("types","mem","na")
-    ),
-    uiOutput(ns("plots_ui"))
-  )
-}
+#' @noRd
+PLOT_TYPES <- c("types", "mem", "na", "cor", "imb", "num", "cat")
 
 #' Inspect Plot Module Server
 #'
-#' Renders one plot per (dataset x plot-type)
+#' Sends the file names to the client (`output$datasets`) and renders one
+#' plot per type (`output$plt_<type>`) for the file in `input$dataset`. A plot
+#' renders only while its type is in `input$plots`. The client side is
+#' `js/src/components/GraphsTab.tsx`.
 #'
 #' @param id Module id
 #' @param ttd Reactive or a static named list of data.frames
+#'
+#' @return A reactive list with the selected `dataset` and `plots`
 #'
 #' @export
 #'
 mod_plot_server <- function(id, ttd) {
   moduleServer(id, function(input, output, session) {
-    ns <- session$ns
     logr_msg(
-      message = sprintf("mod_single_plot_server[%s]: initializing", id),
+      message = sprintf("mod_plot_server[%s]: initializing", id),
       level = "INFO")
 
-    # wrap static into reactive if needed
-    ttd_r <- if (is.reactive(ttd)) {
-      logr_msg(message = "ttd is reactive", level = "DEBUG")
-      ttd
-    } else {
-      logr_msg(message = "ttd is static; wrapping in reactive()", level = "DEBUG")
-      reactive(ttd)
-    }
+    ttd_r <- if (is.reactive(ttd)) ttd else reactive(ttd)
 
-    # populate the dataset dropdown once ttd is available
-    observe({
-      if (is.null(ttd_r())) {
-        updateSelectInput(session, "dataset", choices = character(0))
-        return()
-      }
-      tryCatch({
-        ds <- names(ttd_r())
-        if (is.null(ds) || length(ds) == 0) {
-          ds <- as.character(seq_along(ttd_r()))
-          logr_msg(message = "No names in ttd; using indices", level = "WARN")
-        }
-        updateSelectInput(
-          session, "dataset",
-          choices  = ds,
-          selected = ds[[1]]
+    output$datasets <- shinyreact::reactive_output({
+      if (is.null(ttd_r())) return(NULL)
+      names(ttd_r())
+    })
+
+    selected <- reactive({
+      req(ttd_r(), input$dataset %in% names(ttd_r()))
+      ttd_r()[input$dataset]
+    })
+
+    purrr::walk(PLOT_TYPES, function(plt) {
+      output[[paste0("plt_", plt)]] <- renderPlot({
+        req(plt %in% input$plots)
+        ds <- selected() # outside tryCatch() so req() is not caught as an error
+        tryCatch(
+          inspect_plot(ttd = ds, plots = plt),
+          error = function(err) {
+            logr_msg(
+              message = sprintf("Error plotting %s:%s: %s",
+                input$dataset, plt, err$message),
+              level = "ERROR")
+            plot.new()
+            text(0.5, 0.5, "Error generating plot", cex = 1.2, col = "red")
+          }
         )
-        logr_msg(
-          message = sprintf("Populated dataset selector with: %s",
-            paste(ds, collapse = ", ")),
-          level = "SUCCESS")
-      }, error = function(err) {
-        logr_msg(
-          message = sprintf("Error populating dataset selector: %s", err$message),
-          level = "ERROR")
-      })
-    }) |>
-      bindEvent(ttd_r(), ignoreNULL = FALSE)
-
-    # render each selected plot type for chosen dataset
-    observe({
-        tryCatch({
-          ds_list <- req(ttd_r())
-          sel_ds  <- input$dataset
-          req(sel_ds %in% names(ds_list))
-          df <- ds_list[[sel_ds]]
-          logr_msg(
-            message = sprintf("Rendering plots for dataset '%s'", sel_ds),
-            level = "INFO")
-
-          purrr::walk(input$plots, function(plt) {
-            out_id <- paste0("plt_", plt)
-            output[[out_id]] <- renderPlot({
-              tryCatch({
-                inspect_plot(
-                  ttd = setNames(list(df), sel_ds),
-                  plots = plt
-                )
-              }, error = function(err2) {
-                logr_msg(
-                  message = sprintf("Error plotting %s:%s — %s",
-                    sel_ds, plt, err2$message),
-                  level = "ERROR")
-                plot.new()
-                text(0.5, 0.5, "Error generating plot", cex = 1.2, col = "red")
-              })
-            })
-          })
-        }, error = function(err) {
-          logr_msg(
-            message = sprintf("Error in plot observer: %s", err$message),
-            level = "ERROR")
-        })
-      }) |>
-      bindEvent(list(ttd_r(), input$dataset, input$plots), ignoreNULL = TRUE)
-
-    # dynamically generate UI for selected plot types
-    output$plots_ui <- renderUI({
-      req(ttd_r(), input$dataset, input$plots)
-      tryCatch({
-        logr_msg(
-          message = sprintf("Rendering UI for dataset '%s' and plots: %s",
-            input$dataset, paste(input$plots, collapse = ", ")),
-          level = "DEBUG")
-
-        purrr::map(input$plots, function(plt) {
-          plot_id <- ns(paste0("plt_", plt))
-          tagList(
-            h4(plt),
-            plotOutput(plot_id, height = "300px")
-          )
-        })
-      }, error = function(err) {
-        logr_msg(
-          message = sprintf("Error in plots_ui renderUI: %s", err$message),
-          level = "ERROR")
-        tagList(p(style = "color:red;", "Failed to generate plot UI."))
       })
     })
 
-    logr_msg(
-      message = sprintf("mod_plot_server[%s]: setup complete", id),
-      level = "SUCCESS")
-
-    return(
-      reactive({
-        list(
-          "dataset" = input$dataset,
-          "plots" = input$plots
-        )
-      })
-    ) |>
-      bindEvent(list(ttd_r(), input$dataset, input$plots), ignoreNULL = TRUE)
+    reactive(list(dataset = input$dataset, plots = input$plots))
   })
 }
