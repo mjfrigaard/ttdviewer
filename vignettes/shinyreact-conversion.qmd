@@ -1,5 +1,5 @@
 ---
-title: "shinyreact conversion"
+title: "shinyreact branch"
 vignette: >
   %\VignetteIndexEntry{shinyreact conversion}
   %\VignetteEngine{quarto::html}
@@ -10,11 +10,11 @@ knitr:
     comment: "#>"
 ---
 
-This vignette records what we learned before converting `ttdviewer` from a bslib UI to [`shinyreact`](https://posit-dev.github.io/shinyreact/). We built a small prototype (a spike) to test the pieces the shinyreact documentation does not cover, and every piece worked. The code below is shown but not run, so building this vignette does not require shinyreact.
+This vignette records what we learned before converting `ttdviewer` from a `bslib` UI to [`shinyreact`](https://posit-dev.github.io/shinyreact/). We built a small prototype (a spike) to test the pieces the `shinyreact` documentation does not cover, and every piece worked. The code below is shown but not run, so building this vignette does not require `shinyreact`.
 
-## What shinyreact is
+## What `shinyreact` is
 
-shinyreact moves the UI out of R. The server still holds the reactive graph (`input`, `reactive()`, `req()`, `bindEvent()` all behave as usual), but the page is a React client we write ourselves. shinyreact ships the plumbing between the two and no UI components.
+`shinyreact` moves the UI out of R. The server still holds the reactive graph (`input`, `reactive()`, `req()`, `bindEvent()` all behave as usual), but the page is a React client we write ourselves. `shinyreact` ships the plumbing between the two and no UI components.
 
 The R package is version 0.1.0 and the documentation calls it pre-release. It is not on CRAN:
 
@@ -24,6 +24,8 @@ pak::pak("posit-dev/shinyreact/pkg-r")
 ```
 
 The spike used GitHub commit `42c500f`.
+
+
 
 ## R side
 
@@ -68,7 +70,7 @@ The client reads and writes Shiny values with hooks on `window.shinyreact`:
 
 ## What the spike tested
 
-The documentation shows R examples only for plotly and reactable. It says nothing about `listviewerlite`, `renderPlot()`, `downloadHandler()`, or packaging the client inside an installed R package. Those are four of the app's five outputs, so the spike tested each one with Netflix Titles (one file) and Space Launches (two files).
+The documentation shows R examples only for `plotly` and `reactable`. It says nothing about `listviewerlite`, `renderPlot()`, `downloadHandler()`, or packaging the client inside an installed R package. Those are four of the app's five outputs, so the spike tested each one with Netflix Titles (one file) and Space Launches (two files).
 
 ### Lists
 
@@ -88,7 +90,7 @@ h(ShinyOutput, { id: "list", className: "shiny-html-output" })
 
 ### Tables
 
-`reactable` works the documented way. shinyreact finds the widget's JavaScript from the render function, so no `reactableOutput()` placeholder is needed:
+`reactable` works the documented way. `shinyreact` finds the widget's JavaScript from the render function, so no `reactableOutput()` placeholder is needed:
 
 ```{r}
 #| eval: false
