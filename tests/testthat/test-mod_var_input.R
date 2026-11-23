@@ -44,5 +44,8 @@ test_that("mod_input_server sends the dataset titles to the client", {
     expect_type(titles, "character")
     expect_true("Space Launches" %in% titles)
     expect_false(anyDuplicated(titles) > 0)
+    expect_true("Base R Penguins" %in% titles)
+    expect_false("Making maps with R" %in% titles)
+    expect_false("Bring your own data from 2025!" %in% titles)
   })
 })

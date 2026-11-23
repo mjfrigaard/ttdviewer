@@ -179,7 +179,7 @@ purrr::walk(PLOT_TYPES, function(plt) {
 })
 ```
 
-`PLOT_TYPES` in `R/mod_plot.R` must match `PLOT_TYPES` in `GraphsTab.tsx`. The module returns a reactive list with the selected `dataset` and `plots`.
+`PLOT_TYPES` in `R/mod_plot.R` must match `PLOT_TYPES` in `GraphsTab.tsx`, which also holds the readable labels (Column types, Memory usage, Missing values, Correlations, Most common values, Numeric distributions, Categorical levels) used for the checkboxes and plot headings. The module returns a reactive list with the selected `dataset` and `plots`.
 
 #### inspect_plot()
 

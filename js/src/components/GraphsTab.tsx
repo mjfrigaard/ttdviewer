@@ -4,13 +4,13 @@ import { DatasetSelect } from "./DatasetSelect";
 
 // Must match PLOT_TYPES in R/mod_plot.R.
 const PLOT_TYPES = [
-  { value: "types", label: "types" },
-  { value: "mem", label: "memory" },
-  { value: "na", label: "missing" },
-  { value: "cor", label: "correlation" },
-  { value: "imb", label: "imbalance" },
-  { value: "num", label: "numeric" },
-  { value: "cat", label: "categorical" },
+  { value: "types", label: "Column types" },
+  { value: "mem", label: "Memory usage" },
+  { value: "na", label: "Missing values" },
+  { value: "cor", label: "Correlations" },
+  { value: "imb", label: "Most common values" },
+  { value: "num", label: "Numeric distributions" },
+  { value: "cat", label: "Categorical levels" },
 ];
 
 // Server: mod_plot_server(). One renderPlot() per type: output$plt_<type>.
@@ -43,7 +43,7 @@ export function GraphsTab() {
         </fieldset>
         {PLOT_TYPES.filter((p) => plots.includes(p.value)).map((p) => (
           <div key={p.value}>
-            <h4>{p.value}</h4>
+            <h4>{p.label}</h4>
             <ImageOutput id={`plt_${p.value}`} width="100%" height="300px" />
           </div>
         ))}

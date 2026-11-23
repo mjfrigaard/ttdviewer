@@ -19,7 +19,9 @@ mod_input_server <- function(id) {
     # Outputs recalculate during the load, which shows the busy spinners.
     title <- reactiveVal(NULL)
 
-    output$titles <- shinyreact::reactive_output(unique(all_tt_combined$title))
+    # titles with at least one data file ("Bring your own data" weeks have none)
+    output$titles <- shinyreact::reactive_output(
+      unique(all_tt_combined$title[!is.na(all_tt_combined$data_files)]))
 
     observe({
       title(NULL)
