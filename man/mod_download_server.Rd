@@ -14,5 +14,6 @@ mod_download_server(id, data, title)
 \item{title}{Reactive dataset title}
 }
 \description{
-Data Download Server Module
+\code{input$file} is \code{"all"} or one file name from \code{data()}. A file name that
+is not in \code{data()} (e.g., after a new title loads) downloads all files.
 }

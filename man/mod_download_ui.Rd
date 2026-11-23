@@ -10,7 +10,7 @@ mod_download_ui(id)
 \item{id}{Namespace ID}
 }
 \value{
-A format selector and download button
+A file selector, a format selector, and a download button
 }
 \description{
 Data Download UI Module

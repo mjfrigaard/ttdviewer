@@ -4,12 +4,12 @@
 \alias{write_tt_download}
 \title{Write TidyTuesday data for download}
 \usage{
-write_tt_download(data, format = c("csv", "parquet", "original"), file)
+write_tt_download(data, format = c("csv", "parquet"), file)
 }
 \arguments{
 \item{data}{Named list of data frames from \code{\link[=load_tt_data]{load_tt_data()}}.}
 
-\item{format}{One of \code{"csv"}, \code{"parquet"}, or \code{"original"}.}
+\item{format}{One of \code{"csv"} or \code{"parquet"}.}
 
 \item{file}{Path to write the download to.}
 }
@@ -17,8 +17,7 @@ write_tt_download(data, format = c("csv", "parquet", "original"), file)
 \code{file}, invisibly.
 }
 \description{
-Writes every data frame in \code{data} as CSV or parquet, or fetches the
-original file from its \code{github_url} attribute. One file is written
+Writes every data frame in \code{data} as CSV or parquet. One file is written
 straight to \code{file}; several files are zipped into \code{file}.
 }
 \keyword{internal}
