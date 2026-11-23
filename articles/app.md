@@ -21,9 +21,9 @@ stackcallr::call_tree_dir("../R", root = "launch", modules_only = TRUE)
 █─launch
 ├─mod_input_ui
 ├─mod_download_ui
-├─mod_list_ui
 ├─mod_summary_ui
 ├─mod_plot_ui
+├─mod_list_ui
 ├─mod_input_server
 ├─mod_download_server
 ├─mod_summary_server
