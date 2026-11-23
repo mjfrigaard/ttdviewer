@@ -107,7 +107,9 @@ functions that call <code>NS()</code> or
 </h3>
 <p>The dataset title input (<code>input$ds_title</code>) is collected in
 the <code><a href="../reference/mod_input_ui.html">mod_input_ui()</a></code> and <code><a href="../reference/mod_input_server.html">mod_input_server()</a></code>
-functions and passed to the <code><a href="../reference/load_tt_data.html">load_tt_data()</a></code> function:</p>
+functions (the dropdown lists only titles with at least one data file;
+see the Data vignette) and passed to the <code><a href="../reference/load_tt_data.html">load_tt_data()</a></code>
+function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">dataset_title</span><span class="op">)</span></span>

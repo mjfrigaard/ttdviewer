@@ -37,7 +37,8 @@ The dataset title input (`input$ds_title`) is collected in the
 [`mod_input_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_ui.md)
 and
 [`mod_input_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_input_server.md)
-functions and passed to the
+functions (the dropdown lists only titles with at least one data file;
+see the Data vignette) and passed to the
 [`load_tt_data()`](https://mjfrigaard.github.io/ttdviewer/reference/load_tt_data.md)
 function:
 
