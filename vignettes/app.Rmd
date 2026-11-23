@@ -42,7 +42,7 @@ stackcallr::call_tree_dir("../R", root = "launch", modules_only = TRUE)
 
 ### Variable inputs 
 
-The dataset title input (`input$ds_title`) is collected in the `mod_input_ui()` and `mod_input_server()` functions and passed to the `load_tt_data()` function: 
+The dataset title input (`input$ds_title`) is collected in the `mod_input_ui()` and `mod_input_server()` functions (the dropdown lists only titles with at least one data file; see the Data vignette) and passed to the `load_tt_data()` function: 
 
 ```{r}
 #| eval: false
