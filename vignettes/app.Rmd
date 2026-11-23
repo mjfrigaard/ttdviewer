@@ -54,7 +54,7 @@ npm run build
 
 ### Variable inputs 
 
-The dataset title input (`input$ds_title`) comes from the React client (`js/src/components/TitleInput.tsx`). `mod_input_server()` sends the client the list of titles (`output$titles`) and passes the selected title to `load_tt_data()`: 
+The dataset title input (`input$ds_title`) comes from the React client (`js/src/components/TitleInput.tsx`). `mod_input_server()` sends the client the list of titles (`output$titles`; only titles with at least one data file, see the Data vignette) and passes the selected title to `load_tt_data()`: 
 
 ```{r}
 #| eval: false

@@ -184,7 +184,7 @@ The conversion followed the spike:
 | Module | R output | Client |
 |---|---|---|
 | `mod_input` | `titles` (`reactive_output()`) | `TitleInput.tsx` |
-| `mod_download` | `download` (`downloadHandler()`) | `Download.tsx` |
+| `mod_download` | `files` (`reactive_output()`); `download` (`downloadHandler()`) | `Download.tsx` |
 | `mod_list` | `list` (`renderUI()`) | `ListTab.tsx` |
 | `mod_summary` | `overview`, `choices` (`reactive_output()`); `stats`, `vars`, `table` (`renderReactable()`) | `SummaryTab.tsx` |
 | `mod_plot` | `datasets` (`reactive_output()`); `plt_<type>` (`renderPlot()`) | `GraphsTab.tsx` |
