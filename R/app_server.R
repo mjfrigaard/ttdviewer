@@ -95,7 +95,8 @@ app_server <- function(input, output, session) {
     )
     # vals <- reactiveValuesToList(x = input, all.names = TRUE)
     # listviewerlite::listview(selected_plots())
-    listviewerlite::listview(vals)
+    # drop NULLs: listview() errors on them (e.g., while a new title loads)
+    listviewerlite::listview(Filter(Negate(is.null), vals))
   })
 
 }

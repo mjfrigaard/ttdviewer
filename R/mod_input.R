@@ -12,7 +12,8 @@ mod_input_ui <- function(id) {
     message = "Initializing variable input UI module",
     level = "DEBUG")
   tryCatch({
-      choices <- unique(all_tt_combined$title)
+      # titles with at least one data file ("Bring your own data" weeks have none)
+      choices <- unique(all_tt_combined$title[!is.na(all_tt_combined$data_files)])
       logr_msg(
         message = paste("Available dataset choices:", length(choices)),
         level = "INFO")

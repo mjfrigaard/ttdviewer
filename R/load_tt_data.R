@@ -26,7 +26,22 @@
                  !grepl("__MACOSX", files, fixed = TRUE)]
   if (length(files) == 0) stop("No CSV or TSV files found in zip archive")
   delim <- if (all(grepl("\\.tsv$", files, ignore.case = TRUE))) "\t" else ","
-  vroom::vroom(files, delim = delim, show_col_types = FALSE)
+  tryCatch(
+    vroom::vroom(files, delim = delim, show_col_types = FALSE),
+    error = function(e) {
+      # files don't share columns (e.g., a clean table plus raw exports):
+      # keep the widest file, then the longest
+      dfs <- lapply(files, function(f) {
+        suppressWarnings(vroom::vroom(f, delim = delim, show_col_types = FALSE))
+      })
+      best <- order(-vapply(dfs, ncol, integer(1)), -vapply(dfs, nrow, integer(1)))[1]
+      logr_msg(
+        message = paste0("Zip files have different columns; kept ", basename(files[best]),
+          ", skipped ", paste(basename(files[-best]), collapse = ", ")),
+        level = "WARN")
+      dfs[[best]]
+    }
+  )
 }
 
 # Some upstream files mix Windows-1252 or Mac Roman text into UTF-8 columns;
@@ -72,7 +87,8 @@
 #' * `"xlsx"` - [readxl::read_excel()]
 #' * `"rds"` - [readRDS()] via a URL connection
 #' * `"zip"` - downloaded and unzipped; every CSV (or TSV) inside is read
-#'   with [vroom::vroom()] and stacked into one data frame
+#'   with [vroom::vroom()] and stacked into one data frame. If the files have
+#'   different columns, only the widest file is kept (with a warning in the log)
 #'
 #' @section Unsupported:
 #' * Any other `data_type`, or `NA`: skipped with error logging

@@ -45,6 +45,8 @@ inspect_plot <- function(ttd, plots = "all") {
 
     n_datasets <- ttd_length(ttd)
     num_cols   <- check_col_types(ttd, "num")
+    cat_cols   <- purrr::map2(check_col_types(ttd, "cat"),
+      check_col_types(ttd, "log"), c)
 
     funs <- list(
       types = inspectdf::inspect_types,
@@ -76,6 +78,17 @@ inspect_plot <- function(ttd, plots = "all") {
                 paste0("Skipping '", nm, "' for plot '", plt, "' (insufficient numeric columns)"),
                 level = "TRACE"
               )
+              return()
+            }
+            if (plt %in% c("imb", "cat") &&
+                !has_min_cols(cat_cols, which(names(ttd) == nm), min_count = 1) &&
+                !any(vapply(df, is.factor, logical(1)))) {
+              logr_msg(
+                paste0("Skipping '", nm, "' for plot '", plt, "' (no categorical columns)"),
+                level = "INFO"
+              )
+              graphics::plot.new()
+              graphics::text(0.5, 0.5, "No categorical columns to plot", cex = 1.2)
               return()
             }
             p <- fn(df1 = df, df2 = NULL)

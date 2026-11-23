@@ -339,3 +339,28 @@ test_that("each element carries its TidyTuesday date attribute", {
   result <- load_tt_data("Test Dataset")
   expect_equal(attr(result[["data.csv"]], "date"), as.Date("2026-01-06"))
 })
+
+test_that(".load_zip() keeps the widest file when the CSVs can't be stacked", {
+  src <- withr::local_tempdir()
+  utils::write.csv(data.frame(a = 1:2, b = 3:4, c = 5:6, d = 7:8),
+    file.path(src, "clean.csv"), row.names = FALSE)
+  utils::write.csv(data.frame(x = 1:9), file.path(src, "raw.csv"), row.names = FALSE)
+  zip_path <- withr::local_tempfile(fileext = ".zip")
+  withr::with_dir(src, utils::zip(zip_path, c("clean.csv", "raw.csv"), flags = "-q"))
+
+  local_mocked_bindings(
+    download.file = function(url, destfile, ...) {
+      file.copy(zip_path, destfile, overwrite = TRUE)
+      invisible(0L)
+    },
+    .package = "utils"
+  )
+  levels <- character(0)
+  local_mocked_bindings(logr_msg = function(message, level = "INFO", ...) levels <<- c(levels, level))
+
+  result <- .load_zip("https://example.com/data.zip")
+
+  expect_named(result, c("a", "b", "c", "d"))
+  expect_equal(nrow(result), 2L)
+  expect_true("WARN" %in% levels)
+})

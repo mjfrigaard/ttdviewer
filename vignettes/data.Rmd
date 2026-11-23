@@ -171,7 +171,16 @@ dplyr::glimpse(all_tt_var_details)
 
 ### All TidyTuesday Combined  
 
-The `all_tt_combined.rda` dataset is `all_tt_meta` left-joined with `all_tt_data` by `year` and `week`.
+The `all_tt_combined.rda` dataset is `all_tt_meta` left-joined with `all_tt_data` by `year` and `week`. Weeks without variable details are kept (`tidyr::unnest(keep_empty = TRUE)`), and the `github_url` column from `tt_github_urls` is joined by `year` and `week` only (`ttmeta` dates for early 2018 are one day off from the .csv file).
+
+The app's dropdown lists only titles with at least one data file:
+
+```{r}
+#| label: titles_with_files
+length(unique(all_tt_combined$title[!is.na(all_tt_combined$data_files)]))
+```
+
+The `test-data.R` tests confirm every file in `tt_github_urls` appears in `all_tt_combined`.
 
 ```{r}
 #| label: all_tt_combined
@@ -260,7 +269,7 @@ purrr::map(.x = ttd_many, .f = attr, "clean_title")
 | `.tsv` | `vroom::vroom()` with `delim = "\t"` |
 | `.xlsx` | downloaded to a temp file, then `readxl::read_excel()` |
 | `.rds` | `readRDS()` on a URL connection |
-| `.zip` | unzipped to a temp folder; every `.csv` (or `.tsv`) inside is stacked into one data frame |
+| `.zip` | unzipped to a temp folder; every `.csv` (or `.tsv`) inside is stacked into one data frame; if their columns differ, the file with the most columns is kept and a warning is logged |
 
 Any other type is skipped and logged as an error. The Craft Beer USA week is a single `.xlsx` file:
 

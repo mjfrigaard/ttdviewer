@@ -1,3 +1,22 @@
+#' Readable names for the inspectdf plot types
+#'
+#' @return A named character vector: names are the labels shown in the app,
+#'   values are the plot codes passed to [inspect_plot()].
+#'
+#' @keywords internal
+#'
+plot_labels <- function() {
+  c(
+    "Column types"          = "types",
+    "Memory usage"          = "mem",
+    "Missing values"        = "na",
+    "Correlations"          = "cor",
+    "Most common values"    = "imb",
+    "Numeric distributions" = "num",
+    "Categorical levels"    = "cat"
+  )
+}
+
 #' Inspect Plot Module UI
 #'
 #' Let the user pick plots and see one panel per dataset x plot
@@ -20,15 +39,7 @@ mod_plot_ui <- function(id) {
     checkboxGroupInput(
       ns("plots"),
       "Select plot type:",
-      choices = c(
-        "types"       = "types",
-        "memory"      = "mem",
-        "missing"     = "na",
-        "correlation" = "cor",
-        "imbalance"   = "imb",
-        "numeric"     = "num",
-        "categorical" = "cat"
-      ),
+      choices = plot_labels(),
       selected = c("types","mem","na")
     ),
     uiOutput(ns("plots_ui"))
@@ -91,10 +102,11 @@ mod_plot_server <- function(id, ttd) {
 
     # render each selected plot type for chosen dataset
     observe({
+        # req() outside tryCatch() so a silent stop isn't logged as an error
+        ds_list <- req(ttd_r())
+        sel_ds  <- input$dataset
+        req(sel_ds %in% names(ds_list))
         tryCatch({
-          ds_list <- req(ttd_r())
-          sel_ds  <- input$dataset
-          req(sel_ds %in% names(ds_list))
           df <- ds_list[[sel_ds]]
           logr_msg(
             message = sprintf("Rendering plots for dataset '%s'", sel_ds),
@@ -138,7 +150,7 @@ mod_plot_server <- function(id, ttd) {
         purrr::map(input$plots, function(plt) {
           plot_id <- ns(paste0("plt_", plt))
           tagList(
-            h4(plt),
+            h4(names(plot_labels())[plot_labels() == plt]),
             plotOutput(plot_id, height = "300px")
           )
         })

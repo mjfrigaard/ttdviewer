@@ -44,3 +44,10 @@ test_that("mod_input_server purges old data before loading a new title", {
     expect_equal(names(session$returned$data()), "b.csv")
   })
 })
+
+test_that("mod_input_ui lists only titles that have data files", {
+  ui <- as.character(mod_input_ui("input"))
+  expect_match(ui, "Base R Penguins")
+  expect_no_match(ui, "Making maps with R", fixed = TRUE)
+  expect_no_match(ui, "Bring your own data from 2025!", fixed = TRUE)
+})
