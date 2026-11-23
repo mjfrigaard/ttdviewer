@@ -36,7 +36,7 @@ dataset, routes it through module servers, and then exposes the
 reactive outputs to the UI panels.
 
 ```mermaid
-%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'11px'}}}%%
+%%{init: {'theme': 'neutral','themeVariables': { 'fontFamily': 'monospace', 'fontSize':'11px'}}}%%
 flowchart LR
   Launch["launch()"] --> UI["app_ui()"]
   Launch --> Server["app_server()"]
@@ -58,7 +58,7 @@ The UI arranges module outputs into panels while the sidebar hosts the
 dataset selector and the data download.
 
 ``` mermaid
-%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'13px'}}}%%
+%%{init: {'theme': 'neutral','themeVariables': { 'fontFamily': 'monospace', 'fontSize':'13px'}}}%%
 flowchart LR
   Sidebar["Sidebar inputs"] --> InputUI["mod_input_ui()"]
   Sidebar --> DownloadUI["mod_download_ui()"]
@@ -72,7 +72,7 @@ helpers, and download writers are kept in standalone R files, while
 `tests/testthat` validates module behavior and data helpers.
 
 ``` mermaid
-%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
+%%{init: {'theme': 'neutral','themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
 flowchart TB
   subgraph Utilities
     Log["logr_msg()"]
@@ -93,7 +93,7 @@ flowchart TB
 ```
 
 ``` mermaid
-%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
+%%{init: {'theme': 'neutral','themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
 flowchart TB
   subgraph Tests
     TestApp["test-app_*"]
