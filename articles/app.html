@@ -215,17 +215,48 @@ datasets.</p>
 <code class="sourceCode R"><span><span class="fu">checkboxGroupInput</span><span class="op">(</span></span>
 <span>  <span class="fu">ns</span><span class="op">(</span><span class="st">"plots"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"Select plot type:"</span>,</span>
-<span>  choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"types"</span>       <span class="op">=</span> <span class="st">"types"</span>,</span>
-<span>    <span class="st">"memory"</span>      <span class="op">=</span> <span class="st">"mem"</span>, </span>
-<span>    <span class="st">"missing"</span>     <span class="op">=</span> <span class="st">"na"</span>,</span>
-<span>    <span class="st">"correlation"</span> <span class="op">=</span> <span class="st">"cor"</span>,</span>
-<span>    <span class="st">"imbalance"</span>   <span class="op">=</span> <span class="st">"imb"</span>,</span>
-<span>    <span class="st">"numeric"</span>     <span class="op">=</span> <span class="st">"num"</span>,</span>
-<span>    <span class="st">"categorical"</span> <span class="op">=</span> <span class="st">"cat"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>  choices <span class="op">=</span> <span class="fu"><a href="../reference/plot_labels.html">plot_labels</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"types"</span>,<span class="st">"mem"</span>,<span class="st">"na"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="../reference/plot_labels.html">plot_labels()</a></code> maps readable names to the plot codes
+<code><a href="../reference/inspect_plot.html">inspect_plot()</a></code> expects; the same names are used for the
+plot headings:</p>
+<table class="table">
+<thead><tr class="header">
+<th>Label</th>
+<th>Code</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Column types</td>
+<td><code>"types"</code></td>
+</tr>
+<tr class="even">
+<td>Memory usage</td>
+<td><code>"mem"</code></td>
+</tr>
+<tr class="odd">
+<td>Missing values</td>
+<td><code>"na"</code></td>
+</tr>
+<tr class="even">
+<td>Correlations</td>
+<td><code>"cor"</code></td>
+</tr>
+<tr class="odd">
+<td>Most common values</td>
+<td><code>"imb"</code></td>
+</tr>
+<tr class="even">
+<td>Numeric distributions</td>
+<td><code>"num"</code></td>
+</tr>
+<tr class="odd">
+<td>Categorical levels</td>
+<td><code>"cat"</code></td>
+</tr>
+</tbody>
+</table>
 <p>The checkbox group lets users select multiple plot types
 simultaneously. The default selection includes three fundamental plots:
 column types, memory usage, and missing values analysis.</p>

@@ -81,7 +81,8 @@ excluded.</p>
 <li><p><code>"xlsx"</code> - <code><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">readxl::read_excel()</a></code></p></li>
 <li><p><code>"rds"</code> - <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code> via a URL connection</p></li>
 <li><p><code>"zip"</code> - downloaded and unzipped; every CSV (or TSV) inside is read
-with <code><a href="https://vroom.tidyverse.org/reference/vroom.html" class="external-link">vroom::vroom()</a></code> and stacked into one data frame</p></li>
+with <code><a href="https://vroom.tidyverse.org/reference/vroom.html" class="external-link">vroom::vroom()</a></code> and stacked into one data frame. If the files have
+different columns, only the widest file is kept (with a warning in the log)</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="unsupported">Unsupported<a class="anchor" aria-label="anchor" href="#unsupported"></a></h2>
@@ -93,10 +94,10 @@ with <code><a href="https://vroom.tidyverse.org/reference/vroom.html" class="ext
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">load_tt_data</span><span class="op">(</span><span class="st">"posit::conf talks"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2026-11-23 07:30:02] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2026-11-23 07:30:02] Successfully loaded conf2023.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2026-11-23 07:30:02] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2026-11-23 07:30:02] Successfully loaded conf2024.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2026-11-23 16:24:35] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2026-11-23 16:24:35] Successfully loaded conf2023.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INFO [2026-11-23 16:24:35] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SUCCESS [2026-11-23 16:24:35] Successfully loaded conf2024.csv</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $conf2023.csv</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 116 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    speaker_name speaker_affiliation session_type session_title block_track_title</span>

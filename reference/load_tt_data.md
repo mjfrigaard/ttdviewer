@@ -38,7 +38,8 @@ attributes. Failed or skipped datasets are excluded.
 - `"zip"` - downloaded and unzipped; every CSV (or TSV) inside is read
   with
   [`vroom::vroom()`](https://vroom.tidyverse.org/reference/vroom.html)
-  and stacked into one data frame
+  and stacked into one data frame. If the files have different columns,
+  only the widest file is kept (with a warning in the log)
 
 ## Unsupported
 
@@ -48,10 +49,10 @@ attributes. Failed or skipped datasets are excluded.
 
 ``` r
 load_tt_data("posit::conf talks")
-#> INFO [2026-11-23 07:30:02] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv
-#> SUCCESS [2026-11-23 07:30:02] Successfully loaded conf2023.csv
-#> INFO [2026-11-23 07:30:02] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv
-#> SUCCESS [2026-11-23 07:30:02] Successfully loaded conf2024.csv
+#> INFO [2026-11-23 16:24:35] Starting import for conf2023.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2023.csv
+#> SUCCESS [2026-11-23 16:24:35] Successfully loaded conf2023.csv
+#> INFO [2026-11-23 16:24:35] Starting import for conf2024.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-14/conf2024.csv
+#> SUCCESS [2026-11-23 16:24:35] Successfully loaded conf2024.csv
 #> $conf2023.csv
 #> # A tibble: 116 × 9
 #>    speaker_name speaker_affiliation session_type session_title block_track_title

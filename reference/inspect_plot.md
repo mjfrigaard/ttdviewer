@@ -44,73 +44,73 @@ Invisibly returns `NULL`. Called for side effects (plots are displayed).
 
 ``` r
 ttd <- load_tt_data("Moore’s Law")
-#> INFO [2026-11-23 07:29:51] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
-#> SUCCESS [2026-11-23 07:29:52] Successfully loaded cpu.csv
-#> INFO [2026-11-23 07:29:52] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
-#> SUCCESS [2026-11-23 07:29:52] Successfully loaded gpu.csv
-#> INFO [2026-11-23 07:29:52] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
-#> SUCCESS [2026-11-23 07:29:52] Successfully loaded ram.csv
+#> INFO [2026-11-23 16:24:24] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
+#> SUCCESS [2026-11-23 16:24:24] Successfully loaded cpu.csv
+#> INFO [2026-11-23 16:24:24] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
+#> SUCCESS [2026-11-23 16:24:25] Successfully loaded gpu.csv
+#> INFO [2026-11-23 16:24:25] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
+#> SUCCESS [2026-11-23 16:24:25] Successfully loaded ram.csv
 
 inspect_plot(ttd)
-#> INFO [2026-11-23 07:29:52] inspect_plot(): starting analysis
-#> INFO [2026-11-23 07:29:52] Beginning plot type 'types'
+#> INFO [2026-11-23 16:24:25] inspect_plot(): starting analysis
+#> INFO [2026-11-23 16:24:25] Beginning plot type 'types'
 
 
 
-#> SUCCESS [2026-11-23 07:29:53] Completed plot type 'types'
-#> INFO [2026-11-23 07:29:53] Beginning plot type 'mem'
+#> SUCCESS [2026-11-23 16:24:26] Completed plot type 'types'
+#> INFO [2026-11-23 16:24:26] Beginning plot type 'mem'
 
 
 
-#> SUCCESS [2026-11-23 07:29:54] Completed plot type 'mem'
-#> INFO [2026-11-23 07:29:54] Beginning plot type 'na'
+#> SUCCESS [2026-11-23 16:24:27] Completed plot type 'mem'
+#> INFO [2026-11-23 16:24:27] Beginning plot type 'na'
 
 
 
-#> SUCCESS [2026-11-23 07:29:54] Completed plot type 'na'
-#> INFO [2026-11-23 07:29:54] Beginning plot type 'cor'
+#> SUCCESS [2026-11-23 16:24:27] Completed plot type 'na'
+#> INFO [2026-11-23 16:24:27] Beginning plot type 'cor'
 
 
 
-#> SUCCESS [2026-11-23 07:29:55] Completed plot type 'cor'
-#> INFO [2026-11-23 07:29:55] Beginning plot type 'imb'
+#> SUCCESS [2026-11-23 16:24:28] Completed plot type 'cor'
+#> INFO [2026-11-23 16:24:28] Beginning plot type 'imb'
 
 
 
-#> SUCCESS [2026-11-23 07:29:55] Completed plot type 'imb'
-#> INFO [2026-11-23 07:29:55] Beginning plot type 'num'
+#> SUCCESS [2026-11-23 16:24:28] Completed plot type 'imb'
+#> INFO [2026-11-23 16:24:28] Beginning plot type 'num'
 
 
 
-#> SUCCESS [2026-11-23 07:29:57] Completed plot type 'num'
-#> INFO [2026-11-23 07:29:57] Beginning plot type 'cat'
+#> SUCCESS [2026-11-23 16:24:30] Completed plot type 'num'
+#> INFO [2026-11-23 16:24:30] Beginning plot type 'cat'
 
 
 
-#> SUCCESS [2026-11-23 07:29:57] Completed plot type 'cat'
-#> SUCCESS [2026-11-23 07:29:57] inspect_plot(): all requested plots finished
+#> SUCCESS [2026-11-23 16:24:30] Completed plot type 'cat'
+#> SUCCESS [2026-11-23 16:24:30] inspect_plot(): all requested plots finished
 #> NULL
 inspect_plot(ttd, plots = c("types", "mem"))
-#> INFO [2026-11-23 07:29:57] inspect_plot(): starting analysis
-#> INFO [2026-11-23 07:29:57] Beginning plot type 'types'
+#> INFO [2026-11-23 16:24:30] inspect_plot(): starting analysis
+#> INFO [2026-11-23 16:24:30] Beginning plot type 'types'
 
 
 
-#> SUCCESS [2026-11-23 07:29:58] Completed plot type 'types'
-#> INFO [2026-11-23 07:29:58] Beginning plot type 'mem'
+#> SUCCESS [2026-11-23 16:24:31] Completed plot type 'types'
+#> INFO [2026-11-23 16:24:31] Beginning plot type 'mem'
 
 
 
-#> SUCCESS [2026-11-23 07:29:58] Completed plot type 'mem'
-#> SUCCESS [2026-11-23 07:29:58] inspect_plot(): all requested plots finished
+#> SUCCESS [2026-11-23 16:24:31] Completed plot type 'mem'
+#> SUCCESS [2026-11-23 16:24:31] inspect_plot(): all requested plots finished
 #> NULL
 inspect_plot(ttd, plots = "cor")
-#> INFO [2026-11-23 07:29:58] inspect_plot(): starting analysis
-#> INFO [2026-11-23 07:29:58] Beginning plot type 'cor'
+#> INFO [2026-11-23 16:24:31] inspect_plot(): starting analysis
+#> INFO [2026-11-23 16:24:31] Beginning plot type 'cor'
 
 
 
-#> SUCCESS [2026-11-23 07:29:59] Completed plot type 'cor'
-#> SUCCESS [2026-11-23 07:29:59] inspect_plot(): all requested plots finished
+#> SUCCESS [2026-11-23 16:24:32] Completed plot type 'cor'
+#> SUCCESS [2026-11-23 16:24:32] inspect_plot(): all requested plots finished
 #> NULL
 ```

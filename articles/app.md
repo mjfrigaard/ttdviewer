@@ -165,18 +165,25 @@ datasets.
 checkboxGroupInput(
   ns("plots"),
   "Select plot type:",
-  choices = c(
-    "types"       = "types",
-    "memory"      = "mem", 
-    "missing"     = "na",
-    "correlation" = "cor",
-    "imbalance"   = "imb",
-    "numeric"     = "num",
-    "categorical" = "cat"
-  ),
+  choices = plot_labels(),
   selected = c("types","mem","na")
 )
 ```
+
+[`plot_labels()`](https://mjfrigaard.github.io/ttdviewer/reference/plot_labels.md)
+maps readable names to the plot codes
+[`inspect_plot()`](https://mjfrigaard.github.io/ttdviewer/reference/inspect_plot.md)
+expects; the same names are used for the plot headings:
+
+| Label                 | Code      |
+|-----------------------|-----------|
+| Column types          | `"types"` |
+| Memory usage          | `"mem"`   |
+| Missing values        | `"na"`    |
+| Correlations          | `"cor"`   |
+| Most common values    | `"imb"`   |
+| Numeric distributions | `"num"`   |
+| Categorical levels    | `"cat"`   |
 
 The checkbox group lets users select multiple plot types simultaneously.
 The default selection includes three fundamental plots: column types,
