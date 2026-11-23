@@ -25,17 +25,17 @@ function to collect four lists of data from the
 ``` r
 
 ttd <- load_tt_data("Netflix Titles")
-#> INFO [2026-11-23 17:00:13] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv
-#> SUCCESS [2026-11-23 17:00:13] Successfully loaded netflix_titles.csv
+#> INFO [2026-11-23 22:44:58] Starting import for netflix_titles.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2021/2021-04-20/netflix_titles.csv
+#> SUCCESS [2026-11-23 22:44:58] Successfully loaded netflix_titles.csv
 purrr::map(.x = ttd, .f = attr, "clean_title")
 #> $netflix_titles.csv
 #> [1] "netflix_titles"
 # for a list with two datasets, we'll use the `"Space Launches"` data
 ttd2 <- load_tt_data("Space Launches")
-#> INFO [2026-11-23 17:00:13] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv
-#> SUCCESS [2026-11-23 17:00:13] Successfully loaded agencies.csv
-#> INFO [2026-11-23 17:00:13] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv
-#> SUCCESS [2026-11-23 17:00:13] Successfully loaded launches.csv
+#> INFO [2026-11-23 22:44:58] Starting import for agencies.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/agencies.csv
+#> SUCCESS [2026-11-23 22:44:58] Successfully loaded agencies.csv
+#> INFO [2026-11-23 22:44:58] Starting import for launches.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-01-15/launches.csv
+#> SUCCESS [2026-11-23 22:44:58] Successfully loaded launches.csv
 purrr::map(.x = ttd2, .f = attr, "clean_title")
 #> $agencies.csv
 #> [1] "space_launches"
@@ -44,12 +44,12 @@ purrr::map(.x = ttd2, .f = attr, "clean_title")
 #> [1] "space_launches"
 # "Moore's Law" contains three datasets
 ttd3 <- load_tt_data("Moore’s Law")
-#> INFO [2026-11-23 17:00:13] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
-#> SUCCESS [2026-11-23 17:00:13] Successfully loaded cpu.csv
-#> INFO [2026-11-23 17:00:13] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
-#> SUCCESS [2026-11-23 17:00:13] Successfully loaded gpu.csv
-#> INFO [2026-11-23 17:00:13] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
-#> SUCCESS [2026-11-23 17:00:13] Successfully loaded ram.csv
+#> INFO [2026-11-23 22:44:58] Starting import for cpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/cpu.csv
+#> SUCCESS [2026-11-23 22:44:58] Successfully loaded cpu.csv
+#> INFO [2026-11-23 22:44:58] Starting import for gpu.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/gpu.csv
+#> SUCCESS [2026-11-23 22:44:59] Successfully loaded gpu.csv
+#> INFO [2026-11-23 22:44:59] Starting import for ram.csv from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2019/2019-09-03/ram.csv
+#> SUCCESS [2026-11-23 22:44:59] Successfully loaded ram.csv
 purrr::map(.x = ttd3, .f = attr, "clean_title")
 #> $cpu.csv
 #> [1] "moores_law"
@@ -62,30 +62,30 @@ purrr::map(.x = ttd3, .f = attr, "clean_title")
 # finally, we'll download the "LEGO database" data with 12 datasets into the
 # ttd_many list:
 ttd_many <- load_tt_data("LEGO database")
-#> INFO [2026-11-23 17:00:13] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz
-#> SUCCESS [2026-11-23 17:00:13] Successfully loaded colors.csv.gz
-#> INFO [2026-11-23 17:00:13] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz
-#> SUCCESS [2026-11-23 17:00:13] Successfully loaded elements.csv.gz
-#> INFO [2026-11-23 17:00:13] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz
-#> SUCCESS [2026-11-23 17:00:13] Successfully loaded inventories.csv.gz
-#> INFO [2026-11-23 17:00:13] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz
-#> SUCCESS [2026-11-23 17:00:13] Successfully loaded inventory_minifigs.csv.gz
-#> INFO [2026-11-23 17:00:13] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz
-#> SUCCESS [2026-11-23 17:00:14] Successfully loaded inventory_parts.csv.gz
-#> INFO [2026-11-23 17:00:15] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz
-#> SUCCESS [2026-11-23 17:00:15] Successfully loaded inventory_sets.csv.gz
-#> INFO [2026-11-23 17:00:15] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz
-#> SUCCESS [2026-11-23 17:00:15] Successfully loaded minifigs.csv.gz
-#> INFO [2026-11-23 17:00:15] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz
-#> SUCCESS [2026-11-23 17:00:15] Successfully loaded part_categories.csv.gz
-#> INFO [2026-11-23 17:00:15] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz
-#> SUCCESS [2026-11-23 17:00:15] Successfully loaded part_relationships.csv.gz
-#> INFO [2026-11-23 17:00:15] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz
-#> SUCCESS [2026-11-23 17:00:15] Successfully loaded parts.csv.gz
-#> INFO [2026-11-23 17:00:15] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz
-#> SUCCESS [2026-11-23 17:00:15] Successfully loaded sets.csv.gz
-#> INFO [2026-11-23 17:00:15] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz
-#> SUCCESS [2026-11-23 17:00:15] Successfully loaded themes.csv.gz
+#> INFO [2026-11-23 22:44:59] Starting import for colors.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/colors.csv.gz
+#> SUCCESS [2026-11-23 22:44:59] Successfully loaded colors.csv.gz
+#> INFO [2026-11-23 22:44:59] Starting import for elements.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/elements.csv.gz
+#> SUCCESS [2026-11-23 22:44:59] Successfully loaded elements.csv.gz
+#> INFO [2026-11-23 22:44:59] Starting import for inventories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventories.csv.gz
+#> SUCCESS [2026-11-23 22:44:59] Successfully loaded inventories.csv.gz
+#> INFO [2026-11-23 22:44:59] Starting import for inventory_minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_minifigs.csv.gz
+#> SUCCESS [2026-11-23 22:44:59] Successfully loaded inventory_minifigs.csv.gz
+#> INFO [2026-11-23 22:44:59] Starting import for inventory_parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_parts.csv.gz
+#> SUCCESS [2026-11-23 22:45:00] Successfully loaded inventory_parts.csv.gz
+#> INFO [2026-11-23 22:45:00] Starting import for inventory_sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/inventory_sets.csv.gz
+#> SUCCESS [2026-11-23 22:45:00] Successfully loaded inventory_sets.csv.gz
+#> INFO [2026-11-23 22:45:00] Starting import for minifigs.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/minifigs.csv.gz
+#> SUCCESS [2026-11-23 22:45:00] Successfully loaded minifigs.csv.gz
+#> INFO [2026-11-23 22:45:00] Starting import for part_categories.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_categories.csv.gz
+#> SUCCESS [2026-11-23 22:45:00] Successfully loaded part_categories.csv.gz
+#> INFO [2026-11-23 22:45:00] Starting import for part_relationships.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/part_relationships.csv.gz
+#> SUCCESS [2026-11-23 22:45:00] Successfully loaded part_relationships.csv.gz
+#> INFO [2026-11-23 22:45:00] Starting import for parts.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/parts.csv.gz
+#> SUCCESS [2026-11-23 22:45:00] Successfully loaded parts.csv.gz
+#> INFO [2026-11-23 22:45:01] Starting import for sets.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/sets.csv.gz
+#> SUCCESS [2026-11-23 22:45:01] Successfully loaded sets.csv.gz
+#> INFO [2026-11-23 22:45:01] Starting import for themes.csv.gz from https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2022/2022-09-06/themes.csv.gz
+#> SUCCESS [2026-11-23 22:45:01] Successfully loaded themes.csv.gz
 purrr::map(.x = ttd_many, .f = attr, "clean_title")
 #> $colors.csv.gz
 #> [1] "lego_database"
@@ -325,14 +325,14 @@ inspectdf::inspect_types(
 inspect_plot(ttd = 
     list("agencies.csv" = ttd2[[1]]), 
   plots = "types")
-#> INFO [2026-11-23 17:00:17] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:17] Beginning plot type 'types'
+#> INFO [2026-11-23 22:45:02] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:02] Beginning plot type 'types'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-2-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:17] Completed plot type 'types'
-    #> SUCCESS [2026-11-23 17:00:17] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:03] Completed plot type 'types'
+    #> SUCCESS [2026-11-23 22:45:03] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -389,14 +389,14 @@ inspect_plot(
   ttd = list("cpu.csv" = ttd3[[1]]),
   plots = "types"
   )
-#> INFO [2026-11-23 17:00:21] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:21] Beginning plot type 'types'
+#> INFO [2026-11-23 22:45:07] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:07] Beginning plot type 'types'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-6-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:21] Completed plot type 'types'
-    #> SUCCESS [2026-11-23 17:00:21] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:07] Completed plot type 'types'
+    #> SUCCESS [2026-11-23 22:45:07] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
@@ -416,14 +416,14 @@ inspect_plot(
   ttd = list("gpu.csv" = ttd3[[2]]), 
   plots = "types"
   )
-#> INFO [2026-11-23 17:00:24] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:24] Beginning plot type 'types'
+#> INFO [2026-11-23 22:45:09] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:09] Beginning plot type 'types'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-8-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:24] Completed plot type 'types'
-    #> SUCCESS [2026-11-23 17:00:24] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:10] Completed plot type 'types'
+    #> SUCCESS [2026-11-23 22:45:10] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
@@ -443,14 +443,14 @@ inspect_plot(
   ttd = list("ram.csv" = ttd3[[3]]), 
   plots = "types"
   )
-#> INFO [2026-11-23 17:00:27] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:27] Beginning plot type 'types'
+#> INFO [2026-11-23 22:45:12] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:12] Beginning plot type 'types'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-10-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:27] Completed plot type 'types'
-    #> SUCCESS [2026-11-23 17:00:27] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:12] Completed plot type 'types'
+    #> SUCCESS [2026-11-23 22:45:12] inspect_plot(): all requested plots finished
     #> NULL
 
 ### inspect_mem()
@@ -475,14 +475,14 @@ inspect_plot(
   ttd = list("netflix_titles.csv" = ttd[[1]]), 
   plots = "mem"
   )
-#> INFO [2026-11-23 17:00:29] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:29] Beginning plot type 'mem'
+#> INFO [2026-11-23 22:45:15] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:15] Beginning plot type 'mem'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-12-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:29] Completed plot type 'mem'
-    #> SUCCESS [2026-11-23 17:00:29] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:15] Completed plot type 'mem'
+    #> SUCCESS [2026-11-23 22:45:15] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -507,14 +507,14 @@ inspect_plot(
     "launches.csv" = ttd2[[2]]
     ), 
   plots = "mem")
-#> INFO [2026-11-23 17:00:32] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:32] Beginning plot type 'mem'
+#> INFO [2026-11-23 22:45:18] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:18] Beginning plot type 'mem'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-14-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:33] Completed plot type 'mem'
-    #> SUCCESS [2026-11-23 17:00:33] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:19] Completed plot type 'mem'
+    #> SUCCESS [2026-11-23 22:45:19] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) >= 3)`
@@ -538,14 +538,14 @@ inspect_plot(
   ttd = list("cpu.csv" = ttd3[[1]]), 
   plots = "mem"
   )
-#> INFO [2026-11-23 17:00:35] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:35] Beginning plot type 'mem'
+#> INFO [2026-11-23 22:45:21] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:21] Beginning plot type 'mem'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-16-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:35] Completed plot type 'mem'
-    #> SUCCESS [2026-11-23 17:00:35] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:21] Completed plot type 'mem'
+    #> SUCCESS [2026-11-23 22:45:21] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
@@ -565,14 +565,14 @@ inspect_plot(
   ttd = list("gpu.csv" = ttd3[[2]]), 
   plots = "mem"
   )
-#> INFO [2026-11-23 17:00:37] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:37] Beginning plot type 'mem'
+#> INFO [2026-11-23 22:45:23] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:23] Beginning plot type 'mem'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-18-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:37] Completed plot type 'mem'
-    #> SUCCESS [2026-11-23 17:00:37] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:23] Completed plot type 'mem'
+    #> SUCCESS [2026-11-23 22:45:23] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
@@ -597,14 +597,14 @@ inspect_plot(
   ttd = list("ram.csv" = ttd3[[3]]), 
   plots = "mem"
   )
-#> INFO [2026-11-23 17:00:39] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:39] Beginning plot type 'mem'
+#> INFO [2026-11-23 22:45:25] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:25] Beginning plot type 'mem'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-20-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:39] Completed plot type 'mem'
-    #> SUCCESS [2026-11-23 17:00:39] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:25] Completed plot type 'mem'
+    #> SUCCESS [2026-11-23 22:45:25] inspect_plot(): all requested plots finished
     #> NULL
 
 ### inspect_cor()
@@ -658,14 +658,14 @@ inspect_plot(
     ), 
   plots = "cor"
   )
-#> INFO [2026-11-23 17:00:41] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:41] Beginning plot type 'cor'
+#> INFO [2026-11-23 22:45:27] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:27] Beginning plot type 'cor'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-22-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:41] Completed plot type 'cor'
-    #> SUCCESS [2026-11-23 17:00:41] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:27] Completed plot type 'cor'
+    #> SUCCESS [2026-11-23 22:45:27] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -728,14 +728,14 @@ inspect_plot(
   ), 
   plots = "cor"
   )
-#> INFO [2026-11-23 17:00:43] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:43] Beginning plot type 'cor'
+#> INFO [2026-11-23 22:45:29] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:29] Beginning plot type 'cor'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-26-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:44] Completed plot type 'cor'
-    #> SUCCESS [2026-11-23 17:00:44] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:30] Completed plot type 'cor'
+    #> SUCCESS [2026-11-23 22:45:30] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) >= 3)`
@@ -782,14 +782,14 @@ inspectdf::inspect_cor(
 inspect_plot(
   ttd = list("cpu.csv" = ttd3[[1]]), 
   plots = "cor")
-#> INFO [2026-11-23 17:00:46] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:46] Beginning plot type 'cor'
+#> INFO [2026-11-23 22:45:31] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:31] Beginning plot type 'cor'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-29-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:46] Completed plot type 'cor'
-    #> SUCCESS [2026-11-23 17:00:46] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:32] Completed plot type 'cor'
+    #> SUCCESS [2026-11-23 22:45:32] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
@@ -811,14 +811,14 @@ inspectdf::inspect_cor(
 inspect_plot(
   ttd = list("gpu.csv" = ttd3[[2]]), 
   plots = "cor")
-#> INFO [2026-11-23 17:00:48] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:48] Beginning plot type 'cor'
+#> INFO [2026-11-23 22:45:33] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:33] Beginning plot type 'cor'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-31-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:48] Completed plot type 'cor'
-    #> SUCCESS [2026-11-23 17:00:48] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:34] Completed plot type 'cor'
+    #> SUCCESS [2026-11-23 22:45:34] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
@@ -840,14 +840,14 @@ inspectdf::inspect_cor(
 inspect_plot(
   ttd = list("ram.csv" = ttd3[[3]]), 
   plots = "cor")
-#> INFO [2026-11-23 17:00:50] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:50] Beginning plot type 'cor'
+#> INFO [2026-11-23 22:45:36] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:36] Beginning plot type 'cor'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-33-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:50] Completed plot type 'cor'
-    #> SUCCESS [2026-11-23 17:00:50] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:36] Completed plot type 'cor'
+    #> SUCCESS [2026-11-23 22:45:36] inspect_plot(): all requested plots finished
     #> NULL
     # for all other dataset in the list
 
@@ -874,14 +874,14 @@ inspectdf::inspect_imb(
 inspect_plot(
   ttd = list("netflix_titles.csv" = ttd[[1]]), 
   plots = "imb")
-#> INFO [2026-11-23 17:00:52] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:52] Beginning plot type 'imb'
+#> INFO [2026-11-23 22:45:38] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:38] Beginning plot type 'imb'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-35-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:53] Completed plot type 'imb'
-    #> SUCCESS [2026-11-23 17:00:53] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:38] Completed plot type 'imb'
+    #> SUCCESS [2026-11-23 22:45:38] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -908,14 +908,14 @@ inspect_plot(
     "launches.csv" = ttd2[[2]]
     ), 
   plots = "imb")
-#> INFO [2026-11-23 17:00:55] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:55] Beginning plot type 'imb'
+#> INFO [2026-11-23 22:45:41] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:41] Beginning plot type 'imb'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-37-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:55] Completed plot type 'imb'
-    #> SUCCESS [2026-11-23 17:00:55] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:41] Completed plot type 'imb'
+    #> SUCCESS [2026-11-23 22:45:41] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) >= 3)`
@@ -939,14 +939,14 @@ inspectdf::inspect_imb(
 inspect_plot(
   ttd = list("cpu.csv" = ttd3[[1]]), 
   plots = "imb")
-#> INFO [2026-11-23 17:00:57] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:00:57] Beginning plot type 'imb'
+#> INFO [2026-11-23 22:45:43] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:43] Beginning plot type 'imb'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-39-1.png)
 
-    #> SUCCESS [2026-11-23 17:00:58] Completed plot type 'imb'
-    #> SUCCESS [2026-11-23 17:00:58] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:43] Completed plot type 'imb'
+    #> SUCCESS [2026-11-23 22:45:43] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
@@ -966,14 +966,14 @@ inspectdf::inspect_imb(
 inspect_plot(
   ttd = list("gpu.csv" = ttd3[[2]]), 
   plots = "imb")
-#> INFO [2026-11-23 17:01:00] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:00] Beginning plot type 'imb'
+#> INFO [2026-11-23 22:45:45] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:45] Beginning plot type 'imb'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-41-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:00] Completed plot type 'imb'
-    #> SUCCESS [2026-11-23 17:01:00] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:46] Completed plot type 'imb'
+    #> SUCCESS [2026-11-23 22:45:46] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
@@ -993,14 +993,14 @@ inspectdf::inspect_imb(
 inspect_plot(
   ttd = list("ram.csv" = ttd3[[3]]), 
   plots = "imb")
-#> INFO [2026-11-23 17:01:02] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:02] Beginning plot type 'imb'
+#> INFO [2026-11-23 22:45:47] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:47] Beginning plot type 'imb'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-43-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:02] Completed plot type 'imb'
-    #> SUCCESS [2026-11-23 17:01:02] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:48] Completed plot type 'imb'
+    #> SUCCESS [2026-11-23 22:45:48] inspect_plot(): all requested plots finished
     #> NULL
     # ... for all datasets in ttd list
 
@@ -1048,10 +1048,10 @@ column.
 inspect_plot(
   ttd = list("agencies.csv" = ttd2[[1]]), 
   plots = "num")
-#> INFO [2026-11-23 17:01:04] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:04] Beginning plot type 'num'
-#> SUCCESS [2026-11-23 17:01:04] Completed plot type 'num'
-#> SUCCESS [2026-11-23 17:01:04] inspect_plot(): all requested plots finished
+#> INFO [2026-11-23 22:45:49] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:49] Beginning plot type 'num'
+#> SUCCESS [2026-11-23 22:45:49] Completed plot type 'num'
+#> SUCCESS [2026-11-23 22:45:49] inspect_plot(): all requested plots finished
 #> NULL
 ```
 
@@ -1062,14 +1062,14 @@ It will work if the list has two numeric columns:
 inspect_plot(
   ttd = list("launches.csv" = ttd2[[2]]), 
   plots = "num")
-#> INFO [2026-11-23 17:01:04] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:04] Beginning plot type 'num'
+#> INFO [2026-11-23 22:45:49] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:49] Beginning plot type 'num'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-47-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:04] Completed plot type 'num'
-    #> SUCCESS [2026-11-23 17:01:04] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:50] Completed plot type 'num'
+    #> SUCCESS [2026-11-23 22:45:50] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -1101,14 +1101,14 @@ inspect_plot(
   "agencies.csv" = ttd2[[1]],
   "launches.csv" = ttd2[[2]]),
   plots = "num")
-#> INFO [2026-11-23 17:01:07] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:07] Beginning plot type 'num'
+#> INFO [2026-11-23 22:45:53] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:53] Beginning plot type 'num'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-49-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:07] Completed plot type 'num'
-    #> SUCCESS [2026-11-23 17:01:07] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:53] Completed plot type 'num'
+    #> SUCCESS [2026-11-23 22:45:53] inspect_plot(): all requested plots finished
     #> NULL
 
 - if there is only one numeric column, run the code above on the dataset
@@ -1136,14 +1136,14 @@ inspectdf::inspect_num(
 inspect_plot(
   ttd = list("cpu.csv" = ttd3[[1]]), 
   plots = "num")
-#> INFO [2026-11-23 17:01:10] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:10] Beginning plot type 'num'
+#> INFO [2026-11-23 22:45:56] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:56] Beginning plot type 'num'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-51-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:10] Completed plot type 'num'
-    #> SUCCESS [2026-11-23 17:01:10] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:56] Completed plot type 'num'
+    #> SUCCESS [2026-11-23 22:45:56] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
@@ -1164,14 +1164,14 @@ inspectdf::inspect_num(
 inspect_plot(
   ttd = list("gpu.csv" = ttd3[[2]]), 
   plots = "num")
-#> INFO [2026-11-23 17:01:13] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:13] Beginning plot type 'num'
+#> INFO [2026-11-23 22:45:59] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:45:59] Beginning plot type 'num'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-53-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:13] Completed plot type 'num'
-    #> SUCCESS [2026-11-23 17:01:13] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:45:59] Completed plot type 'num'
+    #> SUCCESS [2026-11-23 22:45:59] inspect_plot(): all requested plots finished
     #> NULL
 
 ``` r
@@ -1197,14 +1197,14 @@ inspectdf::inspect_num(
 inspect_plot(
   ttd = list("ram.csv" = ttd3[[3]]), 
   plots = "num")
-#> INFO [2026-11-23 17:01:15] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:15] Beginning plot type 'num'
+#> INFO [2026-11-23 22:46:01] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:46:01] Beginning plot type 'num'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-55-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:16] Completed plot type 'num'
-    #> SUCCESS [2026-11-23 17:01:16] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:46:02] Completed plot type 'num'
+    #> SUCCESS [2026-11-23 22:46:02] inspect_plot(): all requested plots finished
     #> NULL
 
 ### inspect_cat()
@@ -1232,14 +1232,14 @@ inspectdf::inspect_cat(
 inspect_plot(
   ttd = list("netflix_titles.csv" = ttd[[1]]),
   plots = "cat")
-#> INFO [2026-11-23 17:01:17] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:17] Beginning plot type 'cat'
+#> INFO [2026-11-23 22:46:03] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:46:03] Beginning plot type 'cat'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-57-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:19] Completed plot type 'cat'
-    #> SUCCESS [2026-11-23 17:01:19] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:46:05] Completed plot type 'cat'
+    #> SUCCESS [2026-11-23 22:46:05] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) == 2)`
@@ -1286,14 +1286,14 @@ inspect_plot(
     "launches.csv" = ttd2[[2]][intersecting_columns]
     ), 
   plots = "cat")
-#> INFO [2026-11-23 17:01:20] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:20] Beginning plot type 'cat'
+#> INFO [2026-11-23 22:46:06] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:46:06] Beginning plot type 'cat'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-61-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:21] Completed plot type 'cat'
-    #> SUCCESS [2026-11-23 17:01:21] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:46:07] Completed plot type 'cat'
+    #> SUCCESS [2026-11-23 22:46:07] inspect_plot(): all requested plots finished
     #> NULL
 
 - if there aren’t any intersecting categorical columns, run the
@@ -1314,14 +1314,14 @@ inspectdf::inspect_cat(
 inspect_plot(
   ttd = list("netflix_titles.csv" = ttd[[1]]), 
   plots = "cat")
-#> INFO [2026-11-23 17:01:21] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:21] Beginning plot type 'cat'
+#> INFO [2026-11-23 22:46:07] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:46:07] Beginning plot type 'cat'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-63-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:23] Completed plot type 'cat'
-    #> SUCCESS [2026-11-23 17:01:23] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:46:09] Completed plot type 'cat'
+    #> SUCCESS [2026-11-23 22:46:09] inspect_plot(): all requested plots finished
     #> NULL
 
 #### `if (length(ttd) >= 3)`
@@ -1343,12 +1343,12 @@ inspectdf::inspect_cat(
 inspect_plot(
   ttd = list("colors.csv.gz" = ttd_many[[1]]), 
   plots = "cat")
-#> INFO [2026-11-23 17:01:24] inspect_plot(): starting analysis
-#> INFO [2026-11-23 17:01:24] Beginning plot type 'cat'
+#> INFO [2026-11-23 22:46:10] inspect_plot(): starting analysis
+#> INFO [2026-11-23 22:46:10] Beginning plot type 'cat'
 ```
 
 ![](graphs_files/figure-html/unnamed-chunk-65-1.png)
 
-    #> SUCCESS [2026-11-23 17:01:25] Completed plot type 'cat'
-    #> SUCCESS [2026-11-23 17:01:25] inspect_plot(): all requested plots finished
+    #> SUCCESS [2026-11-23 22:46:10] Completed plot type 'cat'
+    #> SUCCESS [2026-11-23 22:46:10] inspect_plot(): all requested plots finished
     #> NULL

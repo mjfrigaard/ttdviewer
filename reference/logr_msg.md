@@ -68,7 +68,7 @@ not return a value.
 ``` r
 # log a simple informational message to the console
 logr_msg("Application started.")
-#> INFO [2026-11-23 16:59:40] Application started.
+#> INFO [2026-11-23 22:44:24] Application started.
 
 # log an error message to the console and a plain text file
 logr_msg(
@@ -76,12 +76,12 @@ logr_msg(
   level = "ERROR",
   log_file = file.path(tempdir(), "error_log.txt")
 )
-#> ERROR [2026-11-23 16:59:40] Failed to connect to the database.
+#> ERROR [2026-11-23 22:44:24] Failed to connect to the database.
 
 # log a warning message to the console only
 logr_msg(
   message = "Low memory warning.",
   level = "WARN"
 )
-#> WARN [2026-11-23 16:59:40] Low memory warning.
+#> WARN [2026-11-23 22:44:24] Low memory warning.
 ```
