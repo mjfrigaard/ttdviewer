@@ -28,16 +28,16 @@ app_ui <- function() {
     ),
     bslib::navset_tab(
       bslib::nav_panel(
-        "List",
-        mod_list_ui("listviewerlite")
-      ),
-      bslib::nav_panel(
         "Summary",
         mod_summary_ui("summary")
       ),
       bslib::nav_panel(
         "Graphs",
         mod_plot_ui("viz")
+      ),
+      bslib::nav_panel(
+        "List",
+        mod_list_ui("listviewerlite")
       )
     )
   )
