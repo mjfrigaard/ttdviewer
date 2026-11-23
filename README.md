@@ -134,5 +134,22 @@ handle$stop()
 Use `launch(mode = "run")` to return the app object instead (e.g., in an
 `app.R` file for deployment).
 
+## Building the client
+
+The built bundle (`inst/www/ui.js` and `ui.css`) is committed, so
+installing the package needs no Node. To change the React client, edit
+`js/src/` and rebuild with Node and npm:
+
+``` bash
+cd js
+npm ci          # installs js/node_modules/ (ignored by git)
+npm run typecheck
+npm run build   # writes inst/www/ui.js and ui.css
+```
+
+Run `npm ci` again after a fresh clone, or after deleting
+`js/node_modules/`. Delete `js/node_modules/` before switching to the
+`main` branch, which has no `js/` folder.
+
 [^1]: An R package containing a Shiny application. Read more
     [here](https://mastering-shiny.org/scaling-packaging.html).
