@@ -6,7 +6,7 @@ Several files are bundled into one `.zip` named after the dataset title.
 ## Usage
 
 ``` r
-tt_download_filename(data, format, title)
+tt_download_filename(data, format = c("csv", "parquet"), title)
 ```
 
 ## Arguments
@@ -18,7 +18,7 @@ tt_download_filename(data, format, title)
 
 - format:
 
-  One of `"csv"`, `"parquet"`, or `"original"`.
+  One of `"csv"` or `"parquet"`.
 
 - title:
 

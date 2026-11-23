@@ -396,15 +396,17 @@ The sidebar download
 ([`mod_download_ui()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_download_ui.md)
 and
 [`mod_download_server()`](https://mjfrigaard.github.io/ttdviewer/reference/mod_download_server.md))
-saves the loaded data in one of three formats:
+saves the loaded data. The first dropdown picks “All files” or one file
+from the title (the server fills it with `names(data())` each time a
+title loads); the second picks the format:
 
 | Format | What is written |
 |----|----|
 | CSV | each data frame written with [`vroom::vroom_write()`](https://vroom.tidyverse.org/reference/vroom_write.html) |
 | Parquet | each data frame written with [`nanoparquet::write_parquet()`](https://nanoparquet.r-lib.org/reference/write_parquet.html) |
-| Original format | each file fetched again from its `github_url` attribute (set by [`load_tt_data()`](https://mjfrigaard.github.io/ttdviewer/reference/load_tt_data.md)) |
 
-A title with one file downloads that file. A title with several files
+One file downloads under its own name with the format’s extension (for
+example, `sets.parquet`). “All files” from a title with several files
 downloads one `.zip` named after the title and format (for example,
 `lego_database_csv.zip`). The internal helpers
 [`tt_download_filename()`](https://mjfrigaard.github.io/ttdviewer/reference/tt_download_filename.md)

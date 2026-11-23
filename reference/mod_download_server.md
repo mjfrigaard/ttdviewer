@@ -1,6 +1,9 @@
 # Data Download Server Module
 
-Data Download Server Module
+`input$file` is `"all"` or one file name from
+[`data()`](https://rdrr.io/r/utils/data.html). A file name that is not
+in [`data()`](https://rdrr.io/r/utils/data.html) (e.g., after a new
+title loads) downloads all files.
 
 ## Usage
 

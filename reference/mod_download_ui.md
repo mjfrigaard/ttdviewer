@@ -16,4 +16,4 @@ mod_download_ui(id)
 
 ## Value
 
-A format selector and download button
+A file selector, a format selector, and a download button

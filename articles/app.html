@@ -453,8 +453,10 @@ sidebar download has the full file.</li>
 <h2 id="download">Download<a class="anchor" aria-label="anchor" href="#download"></a>
 </h2>
 <p>The sidebar download (<code><a href="../reference/mod_download_ui.html">mod_download_ui()</a></code> and
-<code><a href="../reference/mod_download_server.html">mod_download_server()</a></code>) saves the loaded data in one of
-three formats:</p>
+<code><a href="../reference/mod_download_server.html">mod_download_server()</a></code>) saves the loaded data. The first
+dropdown picks “All files” or one file from the title (the server fills
+it with <code>names(data())</code> each time a title loads); the second
+picks the format:</p>
 <table class="table">
 <colgroup>
 <col width="50%">
@@ -476,18 +478,14 @@ three formats:</p>
 <code><a href="https://nanoparquet.r-lib.org/reference/write_parquet.html" class="external-link">nanoparquet::write_parquet()</a></code>
 </td>
 </tr>
-<tr class="odd">
-<td>Original format</td>
-<td>each file fetched again from its <code>github_url</code> attribute
-(set by <code><a href="../reference/load_tt_data.html">load_tt_data()</a></code>)</td>
-</tr>
 </tbody>
 </table>
-<p>A title with one file downloads that file. A title with several files
-downloads one <code>.zip</code> named after the title and format (for
-example, <code>lego_database_csv.zip</code>). The internal helpers
-<code><a href="../reference/tt_download_filename.html">tt_download_filename()</a></code> and <code><a href="../reference/write_tt_download.html">write_tt_download()</a></code>
-pick the name and write the file:</p>
+<p>One file downloads under its own name with the format’s extension
+(for example, <code>sets.parquet</code>). “All files” from a title with
+several files downloads one <code>.zip</code> named after the title and
+format (for example, <code>lego_database_csv.zip</code>). The internal
+helpers <code><a href="../reference/tt_download_filename.html">tt_download_filename()</a></code> and
+<code><a href="../reference/write_tt_download.html">write_tt_download()</a></code> pick the name and write the file:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_tt_data.html">load_tt_data</a></span><span class="op">(</span><span class="st">"Space Launches"</span><span class="op">)</span></span>
 <span><span class="fu">ttdviewer</span><span class="fu">:::</span><span class="fu"><a href="../reference/tt_download_filename.html">tt_download_filename</a></span><span class="op">(</span><span class="va">ttd</span>, <span class="st">"parquet"</span>, <span class="st">"Space Launches"</span><span class="op">)</span></span>

@@ -1,13 +1,12 @@
 # Write TidyTuesday data for download
 
-Writes every data frame in `data` as CSV or parquet, or fetches the
-original file from its `github_url` attribute. One file is written
+Writes every data frame in `data` as CSV or parquet. One file is written
 straight to `file`; several files are zipped into `file`.
 
 ## Usage
 
 ``` r
-write_tt_download(data, format = c("csv", "parquet", "original"), file)
+write_tt_download(data, format = c("csv", "parquet"), file)
 ```
 
 ## Arguments
@@ -19,7 +18,7 @@ write_tt_download(data, format = c("csv", "parquet", "original"), file)
 
 - format:
 
-  One of `"csv"`, `"parquet"`, or `"original"`.
+  One of `"csv"` or `"parquet"`.
 
 - file:
 
