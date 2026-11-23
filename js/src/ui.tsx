@@ -15,15 +15,15 @@ import "./ui.css";
 
 // Each ShinyModuleProvider namespace matches the module id in app_server().
 const TABS = [
-  { id: "list", label: "List", ns: "listviewerlite", body: <ListTab /> },
   { id: "summary", label: "Summary", ns: "summary", body: <SummaryTab /> },
   { id: "graphs", label: "Graphs", ns: "viz", body: <GraphsTab /> },
+  { id: "list", label: "List", ns: "listviewerlite", body: <ListTab /> },
 ];
 
 function App() {
   const initialized = useShinyInitialized();
   const busy = useShinyBusy();
-  const [tab, setTab] = React.useState("list");
+  const [tab, setTab] = React.useState("summary");
 
   if (!initialized) return null;
 
