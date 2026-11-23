@@ -83,7 +83,7 @@
 <h2 id="architecture">Architecture<a class="anchor" aria-label="anchor" href="#architecture"></a>
 </h2>
 <p>The app is packaged as a Shiny application with a single entry point that wires UI and server logic together. The server loads the selected dataset, routes it through module servers, and then exposes the reactive outputs to the UI panels.</p>
-<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'11px'}}}%%
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral','themeVariables': { 'fontFamily': 'monospace', 'fontSize':'11px'}}}%%
 flowchart LR
   Launch["launch()"] --&gt; UI["app_ui()"]
   Launch --&gt; Server["app_server()"]
@@ -100,7 +100,7 @@ flowchart LR
   Data --&gt; List
   Data --&gt; Plot</code></pre>
 <p>The UI arranges module outputs into panels while the sidebar hosts the dataset selector and the data download.</p>
-<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'13px'}}}%%
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral','themeVariables': { 'fontFamily': 'monospace', 'fontSize':'13px'}}}%%
 flowchart LR
   Sidebar["Sidebar inputs"] --&gt; InputUI["mod_input_ui()"]
   Sidebar --&gt; DownloadUI["mod_download_ui()"]
@@ -108,7 +108,7 @@ flowchart LR
   Tabs --&gt; SummaryUI["mod_summary_ui()"]
   Tabs --&gt; PlotUI["mod_plot_ui()"]</code></pre>
 <p>Supporting utilities and tests wrap the core modules. Logging, data helpers, and download writers are kept in standalone R files, while <code>tests/testthat</code> validates module behavior and data helpers.</p>
-<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral','themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
 flowchart TB
   subgraph Utilities
     Log["logr_msg()"]
@@ -126,7 +126,7 @@ flowchart TB
     ModDownload["mod_download_*"]
   end
   Utilities --&gt; Modules</code></pre>
-<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'look': 'handDrawn', 'themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral','themeVariables': { 'fontFamily': 'monospace', 'fontSize':'14px'}}}%%
 flowchart TB
   subgraph Tests
     TestApp["test-app_*"]
