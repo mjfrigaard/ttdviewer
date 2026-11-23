@@ -4,12 +4,12 @@
 \alias{tt_download_filename}
 \title{Name a TidyTuesday data download}
 \usage{
-tt_download_filename(data, format, title)
+tt_download_filename(data, format = c("csv", "parquet"), title)
 }
 \arguments{
 \item{data}{Named list of data frames from \code{\link[=load_tt_data]{load_tt_data()}}.}
 
-\item{format}{One of \code{"csv"}, \code{"parquet"}, or \code{"original"}.}
+\item{format}{One of \code{"csv"} or \code{"parquet"}.}
 
 \item{title}{The dataset title.}
 }

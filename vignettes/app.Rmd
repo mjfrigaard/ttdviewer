@@ -217,15 +217,14 @@ The Summary tab (`mod_summary_server()` and `js/src/components/SummaryTab.tsx`) 
 
 ## Download
 
-The sidebar download (`mod_download_server()` and `js/src/components/Download.tsx`) saves the loaded data in one of three formats:
+The sidebar download (`mod_download_server()` and `js/src/components/Download.tsx`) saves the loaded data. The first dropdown picks "All files" or one file from the title (the server sends the names in `output$files`, and a new title resets the choice to "All files"); the second picks the format:
 
 | Format | What is written |
 |---|---|
 | CSV | each data frame written with `vroom::vroom_write()` |
 | Parquet | each data frame written with `nanoparquet::write_parquet()` |
-| Original format | each file fetched again from its `github_url` attribute (set by `load_tt_data()`) |
 
-A title with one file downloads that file. A title with several files downloads one `.zip` named after the title and format (for example, `lego_database_csv.zip`). The internal helpers `tt_download_filename()` and `write_tt_download()` pick the name and write the file:
+One file downloads under its own name with the format's extension (for example, `sets.parquet`). "All files" from a title with several files downloads one `.zip` named after the title and format (for example, `lego_database_csv.zip`). The internal helpers `tt_download_filename()` and `write_tt_download()` pick the name and write the file:
 
 ```{r}
 #| label: download-example

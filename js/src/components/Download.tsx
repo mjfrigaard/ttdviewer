@@ -1,21 +1,46 @@
 import * as React from "react";
-import { ShinyOutput, useShinyInput } from "../shinyreact";
+import { ShinyOutput, asArray, useShinyInput, useShinyOutputValue } from "../shinyreact";
 
 const FORMATS = [
   { value: "csv", label: "CSV" },
   { value: "parquet", label: "Parquet" },
-  { value: "original", label: "Original format" },
 ];
 
-// Server: mod_download_server(). Sends input$format; output$download is a
+// Server: mod_download_server(). Sends input$file ("all" or one file name)
+// and input$format; output$files holds the file names; output$download is a
 // downloadHandler(), which binds to an <a class="shiny-download-link">.
 export function Download() {
+  const files = asArray(useShinyOutputValue<string | string[] | null>("files", null));
+  const [file, setFile] = useShinyInput("file", "all");
   const [format, setFormat] = useShinyInput("format", "csv");
+  const key = files.join("\u0000");
+
+  // a new title resets the choice to all files
+  React.useEffect(() => {
+    setFile("all");
+  }, [key]);
 
   return (
     <div className="mb-3">
-      <label className="form-label fw-bold" htmlFor="dl-format">
+      <label className="form-label fw-bold" htmlFor="dl-file">
         Download Data:
+      </label>
+      <select
+        id="dl-file"
+        className="form-select mb-2"
+        value={file}
+        disabled={files.length === 0}
+        onChange={(e) => setFile(e.target.value)}
+      >
+        <option value="all">All files</option>
+        {files.map((f, i) => (
+          <option key={i} value={f}>
+            {f}
+          </option>
+        ))}
+      </select>
+      <label className="form-label" htmlFor="dl-format">
+        Format:
       </label>
       <select
         id="dl-format"
@@ -39,7 +64,7 @@ export function Download() {
       >
         Download Data
       </ShinyOutput>
-      <p className="text-muted small mt-2">Several files download as one .zip.</p>
+      <p className="text-muted small mt-2">All files from a title with several files download as one .zip.</p>
     </div>
   );
 }

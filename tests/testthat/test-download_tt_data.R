@@ -23,12 +23,11 @@ test_that("tt_file_stem() strips data file extensions", {
 test_that("tt_download_filename() names a single file by format", {
   expect_equal(tt_download_filename(ttd_one(), "csv", "Test Dataset"), "data.csv")
   expect_equal(tt_download_filename(ttd_one(), "parquet", "Test Dataset"), "data.parquet")
-  expect_equal(tt_download_filename(ttd_one(), "original", "Test Dataset"), "data.tsv")
 })
 
 test_that("tt_download_filename() uses a zip named after the title for several files", {
   expect_equal(tt_download_filename(ttd_two(), "csv", "Test Dataset"), "test_dataset_csv.zip")
-  expect_equal(tt_download_filename(ttd_two(), "original", "Test Dataset"), "test_dataset_original.zip")
+  expect_equal(tt_download_filename(ttd_two(), "parquet", "Test Dataset"), "test_dataset_parquet.zip")
 })
 
 test_that("write_tt_download() writes one CSV that reads back", {
@@ -47,42 +46,26 @@ test_that("write_tt_download() writes one parquet file that reads back", {
   expect_equal(back$x, 1:3)
 })
 
-test_that("write_tt_download() fetches the original file from its URL", {
-  fetched <- NULL
-  local_mocked_bindings(
-    download.file = function(url, destfile, ...) {
-      fetched <<- url
-      writeLines("x\ty", destfile)
-      invisible(0L)
-    },
-    .package = "utils"
-  )
-  out <- withr::local_tempfile(fileext = ".tsv")
-  write_tt_download(ttd_one(), "original", out)
-  expect_equal(fetched, "https://example.com/data.tsv")
-  expect_equal(readLines(out), "x\ty")
-})
-
 test_that("write_tt_download() zips several files with format extensions", {
   out <- withr::local_tempfile(fileext = ".zip")
   write_tt_download(ttd_two(), "csv", out)
   expect_setequal(zip::zip_list(out)$filename, c("a.csv", "b.csv"))
 })
 
-test_that("write_tt_download() zips original files under their own names", {
-  local_mocked_bindings(
-    download.file = function(url, destfile, ...) {
-      writeLines(url, destfile)
-      invisible(0L)
-    },
-    .package = "utils"
-  )
-  out <- withr::local_tempfile(fileext = ".zip")
-  write_tt_download(ttd_two(), "original", out)
-  expect_setequal(zip::zip_list(out)$filename, c("a.csv.gz", "b.xlsx"))
-})
-
 test_that("write_tt_download() rejects an unknown format", {
   out <- withr::local_tempfile()
   expect_error(write_tt_download(ttd_one(), "json", out))
+})
+
+test_that("downloads only offer csv and parquet", {
+  out <- withr::local_tempfile()
+  expect_error(write_tt_download(ttd_one(), "original", out))
+  expect_error(tt_download_filename(ttd_one(), "original", "Test Dataset"))
+})
+
+test_that("write_tt_download() zips several parquet files", {
+  skip_if_not_installed("nanoparquet")
+  out <- withr::local_tempfile(fileext = ".zip")
+  write_tt_download(ttd_two(), "parquet", out)
+  expect_setequal(zip::zip_list(out)$filename, c("a.parquet", "b.parquet"))
 })

@@ -15,5 +15,8 @@ mod_download_server(id, data, title)
 }
 \description{
 \code{output$download} binds to the download link in
-\code{js/src/components/Download.tsx}, which also sends \code{input$format}.
+\code{js/src/components/Download.tsx}, which also sends \code{input$file} and
+\code{input$format}. \code{output$files} sends the file names for the file choice.
+\code{input$file} is \code{"all"} or one file name from \code{data()}. A file name that
+is not in \code{data()} (e.g., after a new title loads) downloads all files.
 }

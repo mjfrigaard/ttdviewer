@@ -24,8 +24,8 @@ features below:
     package](https://alastairrushworth.com/inspectdf/) ‘*summarise
     missingness, categorical levels, numeric distribution, correlation,
     column types and memory usage*’ are available on the Graphs tab.
-5.  The sidebar downloads the data as CSV, parquet, or the original
-    file format. Titles with several files download as one `.zip`.
+5.  The sidebar downloads one file, or all files, as CSV or parquet.
+    All files from a title with several files download as one `.zip`.
 6.  The UI is a React client built with
     [`shinyreact`](https://posit-dev.github.io/shinyreact/). The
     source is in `js/src/`; `npm run build` (in `js/`) writes the
